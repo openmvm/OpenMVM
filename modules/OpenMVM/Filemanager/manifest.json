@@ -1,0 +1,34 @@
+{
+	"id":"module-filemanager",
+	"name":{
+		"en-US":"Module Filemanager"
+	},
+	"short_name":{
+		"en-US":"Filemanager"
+	},
+	"description":{
+		"en-US":"Module Filemanager for OpenMVM"
+	},
+	"short_description":{
+		"en-US":"Module Filemanager for OpenMVM"
+	},
+	"dir":{
+		"provider":"OpenMVM",
+		"module":"Filemanager"
+	},
+	"sidemenu":[
+			{
+			"id":"module-filemanager",
+			"level":2,
+			"parent":"",
+			"icon":"fas fa-photo-video fa-fw",
+			"text":{
+				"en-US":"Filemanager"
+			},
+			"href":"/filemanager",
+			"target":"_self",
+			"sort_order":7,
+			"children":[]
+		}
+	]
+}

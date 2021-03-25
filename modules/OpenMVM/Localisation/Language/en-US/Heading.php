@@ -1,0 +1,32 @@
+<?php
+
+// Heading
+return [
+	'heading_countries' => 'Countries',
+	'heading_country_add' => 'Add a Country',
+	'heading_country_edit' => 'Edit a Country',
+	'heading_states' => 'States',
+	'heading_state_add' => 'Add a State',
+	'heading_state_edit' => 'Edit a State',
+	'heading_cities' => 'Cities',
+	'heading_city_add' => 'Add a City',
+	'heading_city_edit' => 'Edit a City',
+	'heading_districts' => 'Districts',
+	'heading_district_add' => 'Add a District',
+	'heading_district_edit' => 'Edit a District',
+	'heading_languages' => 'Languages',
+	'heading_language_add' => 'Add a Language',
+	'heading_language_edit' => 'Edit a Language',
+	'heading_currencies' => 'Currencies',
+	'heading_currency_add' => 'Add a Currency',
+	'heading_currency_edit' => 'Edit a Currency',
+	'heading_weight_classes' => 'Weight Classes',
+	'heading_weight_class_add' => 'Add a Weight Class',
+	'heading_weight_class_edit' => 'Edit a Weight Class',
+	'heading_length_classes' => 'Length Classes',
+	'heading_length_class_add' => 'Add a Length Class',
+	'heading_length_class_edit' => 'Edit a Length Class',
+	'heading_order_statuses' => 'Order Statuses',
+	'heading_order_status_add' => 'Add an Order Status',
+	'heading_order_status_edit' => 'Edit an Order Status',
+];

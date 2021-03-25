@@ -1,0 +1,27 @@
+{
+	"id":"module-example-frontend-theme",
+	"name":{
+		"en-US":"Module Front-end Theme Example"
+	},
+	"short_name":{
+		"en-US":"Front-end Theme Example"
+	},
+	"description":{
+		"en-US":"Module Front-end Theme Example for OpenMVM"
+	},
+	"short_description":{
+		"en-US":"Module Front-end Theme Example for OpenMVM"
+	},
+	"dir":{
+		"provider":"Example",
+		"module":"FrontendTheme"
+	},
+	"theme_settings":[
+		{
+			"name":"Example Theme",
+			"provider":"Example",
+			"dir":"Example",
+			"uri_string":"/frontend_theme/example/example"
+		}
+	]
+}

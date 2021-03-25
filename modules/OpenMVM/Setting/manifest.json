@@ -1,0 +1,34 @@
+{
+	"id":"module-setting",
+	"name":{
+		"en-US":"Module Setting"
+	},
+	"short_name":{
+		"en-US":"Setting"
+	},
+	"description":{
+		"en-US":"Module Setting for OpenMVM"
+	},
+	"short_description":{
+		"en-US":"Module Setting for OpenMVM"
+	},
+	"dir":{
+		"provider":"OpenMVM",
+		"module":"Setting"
+	},
+	"sidemenu":[
+			{
+			"id":"module-setting",
+			"level":1,
+			"parent":"module-system",
+			"icon":"fas fa-cog fa-fw",
+			"text":{
+				"en-US":"Settings"
+			},
+			"href":"/setting",
+			"target":"_self",
+			"sort_order":99,
+			"children":[]
+		}
+	]
+}

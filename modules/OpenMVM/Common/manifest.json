@@ -1,0 +1,19 @@
+{
+	"id":"module-common",
+	"name":{
+		"en-US":"Module Common"
+	},
+	"short_name":{
+		"en-US":"Common"
+	},
+	"description":{
+		"en-US":"Module Common for OpenMVM"
+	},
+	"short_description":{
+		"en-US":"Module Common for OpenMVM"
+	},
+	"dir":{
+		"provider":"OpenMVM",
+		"module":"Common"
+	}
+}

@@ -1,0 +1,61 @@
+{
+	"id":"module-user",
+	"name":{
+		"en-US":"Module User"
+	},
+	"short_name":{
+		"en-US":"User"
+	},
+	"description":{
+		"en-US":"Module User for OpenMVM"
+	},
+	"short_description":{
+		"en-US":"Module User for OpenMVM"
+	},
+	"dir":{
+		"provider":"OpenMVM",
+		"module":"User"
+	},
+	"sidemenu":[
+			{
+			"id":"module-user",
+			"level":1,
+			"parent":"",
+			"icon":"fas fa-user fa-fw",
+			"text":{
+				"en-US":"Users"
+			},
+			"href":"",
+			"target":"_self",
+			"sort_order":2,
+			"children":[
+				{
+					"id":"module-user-group",
+					"level":1,
+					"parent":"module-user",
+					"icon":"fas fa-chevron-circle-right fa-fw",
+					"text":{
+						"en-US":"User Groups"
+					},
+					"href":"/user/groups",
+					"target":"_self",
+					"sort_order":1,
+					"children":[]
+				},
+				{
+					"id":"module-users",
+					"level":1,
+					"parent":"module-user",
+					"icon":"fas fa-chevron-circle-right fa-fw",
+					"text":{
+						"en-US":"Users"
+					},
+					"href":"/users",
+					"target":"_self",
+					"sort_order":2,
+					"children":[]
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,20 @@
+body {
+	font-family: 'Open Sans', sans-serif;
+}
+/* links */
+.clickable {
+	cursor: pointer;
+}
+/* image container */
+.image-container {
+  background: #ffffff;
+  width: 160px;
+}
+.image-container .image-thumb {
+  border: 1px solid #dddddd;
+  width: 160px;
+  height: 160px;
+}
+#image-container.card {
+  background: #efefef;
+}

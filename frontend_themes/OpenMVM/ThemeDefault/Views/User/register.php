@@ -1,0 +1,43 @@
+<?php echo $header; ?>
+<!-- Content -->
+<section class="container content min-vh-100 mt-3">
+	<div class="d-flex justify-content-center">
+		<div class="card">
+		  <div class="card-header">
+		    <h4 class="text-center"><?php echo lang('Heading.heading_register', array(), $lang->getFrontEndLocale()); ?></h4>
+		  </div>
+		  <div class="card-body">
+    		<?php echo form_open(base_url('register')); ?>
+		    <fieldset>
+			  	<div class="form-floating mb-3">
+					  <input type="text" name="email" value="<?php echo $email; ?>" class="form-control<?php if ($validation->hasError('email')) { ?> is-invalid<?php } ?>" id="input-email" placeholder="<?php echo lang('Entry.entry_email', array(), $lang->getFrontEndLocale()); ?>">
+					  <label for="input-email"><?php echo lang('Entry.entry_email', array(), $lang->getFrontEndLocale()); ?></label>
+					  <?php if ($validation->hasError('email')) { ?>
+            <div class="text-danger small"><?php echo $validation->getError('email'); ?></div>
+          	<?php } ?>
+					</div>
+			  	<div class="form-floating mb-3">
+					  <input type="password" name="password" value="<?php echo $password; ?>" class="form-control<?php if ($validation->hasError('password')) { ?> is-invalid<?php } ?>" id="input-password" placeholder="<?php echo lang('Entry.entry_password', array(), $lang->getFrontEndLocale()); ?>">
+					  <label for="input-password"><?php echo lang('Entry.entry_password', array(), $lang->getFrontEndLocale()); ?></label>
+					  <?php if ($validation->hasError('password')) { ?>
+            <div class="text-danger small"><?php echo $validation->getError('password'); ?></div>
+          	<?php } ?>
+					</div>
+			  	<div class="form-floating mb-3">
+					  <input type="password" name="passconf" value="<?php echo $passconf; ?>" class="form-control<?php if ($validation->hasError('passconf')) { ?> is-invalid<?php } ?>" id="input-passconf" placeholder="<?php echo lang('Entry.entry_passconf', array(), $lang->getFrontEndLocale()); ?>">
+					  <label for="input-passconf"><?php echo lang('Entry.entry_passconf', array(), $lang->getFrontEndLocale()); ?></label>
+					  <?php if ($validation->hasError('passconf')) { ?>
+            <div class="text-danger small"><?php echo $validation->getError('passconf'); ?></div>
+          	<?php } ?>
+					</div>
+		    </fieldset>
+        <div class="d-grid gap-2 my-2">
+        	<button type="submit" id="button-register" class="btn btn-primary"><?php echo lang('Button.button_register', array(), $lang->getFrontEndLocale()); ?></button>
+      	</div>
+    		<?php echo form_close(); ?>
+		  </div>
+		</div>
+	</div>
+</section>
+<!-- /.content -->
+<?php echo $footer; ?>

@@ -1,0 +1,101 @@
+{
+	"id":"module-theme",
+	"name":{
+		"en-US":"Module Theme"
+	},
+	"short_name":{
+		"en-US":"Theme"
+	},
+	"description":{
+		"en-US":"Module Theme for OpenMVM"
+	},
+	"short_description":{
+		"en-US":"Module Theme for OpenMVM"
+	},
+	"dir":{
+		"provider":"OpenMVM",
+		"module":"Theme"
+	},
+	"sidemenu":[
+		{
+			"id":"module-frontend-theme",
+			"level":1,
+			"parent":"",
+			"icon":"fas fa-images fa-fw",
+			"text":{
+				"en-US":"Front-end Themes"
+			},
+			"href":"",
+			"target":"_self",
+			"sort_order":8,
+			"children":[
+				{
+					"id":"module-frontend-themes",
+					"level":2,
+					"parent":"module-frontend-theme",
+					"icon":"fas fa-chevron-circle-right fa-fw",
+					"text":{
+						"en-US":"Themes"
+					},
+					"href":"/frontend_themes",
+					"target":"_self",
+					"sort_order":1,
+					"children":[]
+				},
+				{
+					"id":"module-frontend-layout",
+					"level":2,
+					"parent":"module-frontend-theme",
+					"icon":"fas fa-chevron-circle-right fa-fw",
+					"text":{
+						"en-US":"Layouts"
+					},
+					"href":"/frontend_layouts",
+					"target":"_self",
+					"sort_order":2,
+					"children":[]
+				},
+				{
+					"id":"module-frontend-widgets",
+					"level":2,
+					"parent":"module-frontend-theme",
+					"icon":"fas fa-chevron-circle-right fa-fw",
+					"text":{
+						"en-US":"Widgets"
+					},
+					"href":"/frontend_widgets",
+					"target":"_self",
+					"sort_order":3,
+					"children":[]
+				}
+			]
+		},
+		{
+			"id":"module-backend-theme",
+			"level":1,
+			"parent":"",
+			"icon":"fas fa-images fa-fw",
+			"text":{
+				"en-US":"Back-end Themes"
+			},
+			"href":"",
+			"target":"_self",
+			"sort_order":9,
+			"children":[
+				{
+					"id":"module-backend-themes",
+					"level":2,
+					"parent":"module-backend-theme",
+					"icon":"fas fa-chevron-circle-right fa-fw",
+					"text":{
+						"en-US":"Themes"
+					},
+					"href":"/backend_themes",
+					"target":"_self",
+					"sort_order":1,
+					"children":[]
+				}
+			]
+		}
+	]
+}

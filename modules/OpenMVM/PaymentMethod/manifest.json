@@ -1,0 +1,34 @@
+{
+	"id":"module-payment-methods",
+	"name":{
+		"en-US":"Module Payment Methods"
+	},
+	"short_name":{
+		"en-US":"Payment Methods"
+	},
+	"description":{
+		"en-US":"Module Payment Methods for OpenMVM"
+	},
+	"short_description":{
+		"en-US":"Module Payment Methods for OpenMVM"
+	},
+	"dir":{
+		"provider":"OpenMVM",
+		"module":"PaymentMethod"
+	},
+	"sidemenu":[
+			{
+			"id":"module-payment-methods",
+			"level":2,
+			"parent":"",
+			"icon":"fas fa-credit-card fa-fw",
+			"text":{
+				"en-US":"Payment Methods"
+			},
+			"href":"/payment_methods",
+			"target":"_self",
+			"sort_order":4,
+			"children":[]
+		}
+	]
+}
