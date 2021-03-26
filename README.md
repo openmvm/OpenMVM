@@ -8,7 +8,7 @@
 	2. Import the openmvm.sql file located in public/install/ directory
 	3. Login to the Administrator area by visiting the admin url defined in the .env file: [app.baseURL]/[app.adminDir]. Username: openmvm ; Password: openmvm
 
-### Current Features
+### Current Features:
 	* User (buyer and seller) can create an account
 	* Seller can open a store and add products
 	* Buyer can purchase products and view order details
@@ -21,3 +21,16 @@
 	* Widget System
 	* Widget Layout System
 	* Filemanager
+
+### Pre-registered Administrator & Users
+	OpenMVM version ZERO comes with some pre-registered accounts, so you can easily test the platform by using the pre-registered accounts.
+
+	Administrator account:
+	* Administrator 1 - Username: openmvm ; Password: openmvm
+
+	User accounts:
+	* Sellers:
+		* Seller 1 Store - Email: seller1@openmvm.example.com ; Password: seller1
+		* Seller 2 Store - Email: seller2@openmvm.example.com ; Password: seller2
+	* Buyers:
+		* User 1 - Email: user1@openmvm.example.com ; Password: user1
