@@ -94,7 +94,19 @@
 			                  <?php } ?>
 									  	<?php } ?>
 									  </select>
-									  <label for="input-status"><?php echo lang('Entry.entry_status', array(), $lang->getBackEndLocale()); ?></label>
+									  <label for="input-order-status-id"><?php echo lang('Entry.entry_order_status', array(), $lang->getBackEndLocale()); ?></label>
+									</div>
+									<div class="form-floating mb-3">
+									  <select name="payment_bank_transfer_geo_zone_id" class="form-select" id="input-geo-zone-id" aria-label="geo-zone-id">
+									  	<?php foreach ($geo_zones as $geo_zone) { ?>
+			                  <?php if ($geo_zone['geo_zone_id'] == $payment_bank_transfer_geo_zone_id) { ?>
+			                    <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected><?php echo $geo_zone['name']; ?></option>
+			                  <?php } else { ?>
+			                    <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+			                  <?php } ?>
+									  	<?php } ?>
+									  </select>
+									  <label for="input-geo-zone"><?php echo lang('Entry.entry_geo_zone', array(), $lang->getBackEndLocale()); ?></label>
 									</div>
 							  	<div class="form-floating mb-3">
 									  <input type="number" name="payment_bank_transfer_sort_order" value="<?php echo $payment_bank_transfer_sort_order; ?>" class="form-control" id="input-sort-order" placeholder="<?php echo lang('Entry.entry_sort_order', array(), $lang->getBackEndLocale()); ?>">

@@ -63,6 +63,23 @@ class StoreModel extends \CodeIgniter\Model
 			$builder->set('date_modified', date("Y-m-d H:i:s",now()));
 		}
 
+		// Shipping origin
+		if ($data['shipping_origin_country_id'] !== null) {
+			$builder->set('shipping_origin_country_id', $data['shipping_origin_country_id']);
+		}
+
+		if ($data['shipping_origin_state_id'] !== null) {
+			$builder->set('shipping_origin_state_id', $data['shipping_origin_state_id']);
+		}
+
+		if ($data['shipping_origin_city_id'] !== null) {
+			$builder->set('shipping_origin_city_id', $data['shipping_origin_city_id']);
+		}
+
+		if ($data['shipping_origin_district_id'] !== null) {
+			$builder->set('shipping_origin_district_id', $data['shipping_origin_district_id']);
+		}
+
 		$builder->insert($query_data);
 
 		$store_id = $this->db->insertID();
@@ -88,7 +105,103 @@ class StoreModel extends \CodeIgniter\Model
 		return $store_id;
 	}
 
-	public function getStores($data = array())
+	public function editStore($data = array(), $store_id, $user_id)
+	{
+		$builder = $this->db->table('store');
+
+		if ($data['name'] !== null) {
+			$builder->set('name', $data['name']);
+			$builder->set('slug', $this->text->slugify($data['name']));
+		}
+
+		if ($data['logo'] !== null) {
+			$builder->set('logo', $data['logo']);
+		}
+
+		if ($data['wallpaper'] !== null) {
+			$builder->set('wallpaper', $data['wallpaper']);
+		}
+
+		if ($data['viewed'] !== null) {
+			$builder->set('viewed', $data['viewed']);
+		}
+
+		if ($data['sort_order'] !== null) {
+			$builder->set('sort_order', $data['sort_order']);
+		}
+
+		if ($data['status'] !== null) {
+			$builder->set('status', $data['status']);
+		}
+
+		if ($data['date_added'] !== null) {
+			$builder->set('date_added', date("Y-m-d H:i:s",now()));
+		}
+
+		if ($data['date_modified'] !== null) {
+			$builder->set('date_modified', date("Y-m-d H:i:s",now()));
+		}
+
+		// Shipping origin
+		if ($data['shipping_origin_country_id'] !== null) {
+			$builder->set('shipping_origin_country_id', $data['shipping_origin_country_id']);
+		}
+
+		if ($data['shipping_origin_state_id'] !== null) {
+			$builder->set('shipping_origin_state_id', $data['shipping_origin_state_id']);
+		}
+
+		if ($data['shipping_origin_city_id'] !== null) {
+			$builder->set('shipping_origin_city_id', $data['shipping_origin_city_id']);
+		}
+
+		if ($data['shipping_origin_district_id'] !== null) {
+			$builder->set('shipping_origin_district_id', $data['shipping_origin_district_id']);
+		}
+
+    $builder->where('store_id', $store_id);
+    $builder->where('user_id', $user_id);
+		$builder->update($query_data);
+
+		// Delete Old Page Description
+		$builder = $this->db->table('store_description');
+		$builder->where('store_id', $store_id);
+		$builder->where('user_id', $user_id);
+		$builder->delete();
+
+    foreach ($data['description'] as $language_id => $value) {
+      $query_data_2 = array(
+        'store_id'          => $store_id,
+        'user_id'           => $user_id,
+        'language_id'       => $language_id,
+        'description'       => $value['description'],
+        'short_description' => $value['short_description'],
+        'meta_title'        => $value['meta_title'],
+        'meta_description'  => $value['meta_description'],
+        'meta_keywords'     => $value['meta_keywords'],
+        'tags'              => $value['tags'],
+      );
+
+			$builder = $this->db->table('store_description');
+
+			$builder->insert($query_data_2);
+		}
+
+		return $store_id;
+	}
+
+	public function deleteStore($store_id, $user_id)
+	{
+		$builder = $this->db->table('store');
+		$builder->where('store_id', $store_id);
+		$builder->delete();
+
+		$builder = $this->db->table('store_description');
+		$builder->where('store_id', $store_id);
+		$builder->delete();
+	}
+
+	public function getStores($data = array(), $language_id)
 	{
 		$builder = $this->db->table('store');
 		$builder->select('*');
@@ -98,7 +211,7 @@ class StoreModel extends \CodeIgniter\Model
       $builder->like('store.name', $data['filter_name']);
 		}
 
-		$builder->where('store_description.language_id', $this->language->getFrontEndId());
+		$builder->where('store_description.language_id', $language_id);
 
 		if (!empty($data['sort']) && !empty($data['order'])) {
 			$builder->orderBy($data['sort'], $data['order']);
@@ -234,173 +347,29 @@ class StoreModel extends \CodeIgniter\Model
 		return $results;
 	}
 
-	public function editStore($data = array(), $store_id)
+	public function getTotalStores($data = array(), $language_id)
 	{
-		// Update Store
-		if (!empty($data['user_id'])) {
-			$user_id = $data['user_id'];
-		} elseif ($this->session->get('user_id' . $this->session->user_session_id)) {
-			$user_id = $this->session->get('user_id' . $this->session->user_session_id);
-		} else {
-			$user_id = 0;
-		}
-
-    $query_data = array(
-      'administrator_edit_id' => $administrator_id,
-      'parent_id'             => $data['parent_id'],
-      'image_display'         => $data['image_display'],
-      'type'                  => $data['type'],
-      'allow_comment'         => $data['allow_comment'],
-      'comment_moderation'    => $data['comment_moderation'],
-      'sort_order'            => $data['sort_order'],
-      'status'                => $data['status'],
-      'date_modified'         => date("Y-m-d H:i:s",now()),
-    );
-
-		$builder = $this->db->table('article');
-    $builder->where('article_id', $article_id);
-		$builder->update($query_data);
-
-		// Delete Old Page Description
-		$builder = $this->db->table('article_description');
-		$builder->where('article_id', $article_id);
-		$builder->delete();
-
-		// Insert New Page Description
-    foreach ($data['description'] as $language_id => $value) {
-      $query_data_2 = array(
-        'article_id'    => $article_id,
-        'language_id'       => $language_id,
-        'title'             => $value['title'],
-        'description'       => $value['description'],
-        'short_description' => $value['short_description'],
-        'meta_title'        => $value['meta_title'],
-        'meta_description'  => $value['meta_description'],
-        'meta_keywords'     => $value['meta_keywords'],
-        'tags'              => $value['tags'],
-        'slug'              => $this->slugify($value['title']),
-      );
-
-			$builder = $this->db->table('article_description');
-      $builder->where('article_id', $article_id);
-			$builder->insert($query_data_2);
-		}
-
-		$builder = $this->db->table('article_to_category');
-		$builder->where('article_id', $article_id);
-		$builder->delete();
-
-    if (!empty($data['article_category'])) {
-			foreach ($data['article_category'] as $category_id) {
-        $query_data_3 = array(
-          'article_id'          => $article_id,
-          'article_category_id' => $category_id
-        );
-
-				$builder = $this->db->table('article_to_category');
-
-        $builder->insert($query_data_3);
-			}
-		}
-
-		if (!empty($data['image'])) {
-	    $query_data_4 = array(
-	      'image' => $data['image'],
-	    );
-
-			$builder = $this->db->table('article');
-	    $builder->where('article_id', $article_id);
-			$builder->update($query_data_4);
-		}
-
-		if (!empty($data['wallpaper'])) {
-	    $query_data_5 = array(
-	      'wallpaper' => $data['wallpaper'],
-	    );
-
-			$builder = $this->db->table('article');
-	    $builder->where('article_id', $article_id);
-			$builder->update($query_data_5);
-		}
-
-		// Delete Article Images
-		$builder = $this->db->table('article_image');
-		$builder->where('article_id', $article_id);
-		$builder->delete();
-
-		// Delete Old Article Image Description
-		$builder = $this->db->table('article_image_description');
-		$builder->where('article_id', $article_id);
-		$builder->delete();
-
-		// Insert New Article Images
-		if ($data['images']) {
-	    foreach ($data['images'] as $image) {
-				if (!empty($image['image'])) {
-		      $query_data_6 = array(
-		        'article_id'  => $article_id,
-		        'image'       => $image['image'],
-		        'sort_order'  => $image['sort_order'],
-		      );
-
-					$builder = $this->db->table('article_image');
-					$builder->insert($query_data_6);
-
-					$article_image_id = $this->db->insertID();
-
-					// Insert New Article Image Description
-			    foreach ($image['description'] as $language_id => $value) {
-			      $query_data_7 = array(
-			        'article_image_id'  => $article_image_id,
-			        'article_id'        => $article_id,
-			        'language_id'       => $language_id,
-			        'title'             => $value['title'],
-			        'description'       => $value['description'],
-			      );
-
-						$builder = $this->db->table('article_image_description');
-						$builder->insert($query_data_7);
-					}
-				}
-			}
-		}
-
-		return $article_id;
-	}
-
-	public function deleteArticle($article_id)
-	{
-		$builder = $this->db->table('article');
-		$builder->where('article_id', $article_id);
-		$builder->delete();
-
-		$builder = $this->db->table('article_description');
-		$builder->where('article_id', $article_id);
-		$builder->delete();
-	}
-
-	public function getTotalArticles($data = array())
-	{
-		$builder = $this->db->table('article');
+		$builder = $this->db->table('store');
 		$builder->select('*');
-		$builder->join('article_description', 'article_description.article_id = article.article_id');
+		$builder->join('store_description', 'store_description.store_id = store.store_id');
 
 		if (!empty($data['filter_name'])) {
-      $builder->like('article_description.title', $data['filter_name']);
+      $builder->like('store.name', $data['filter_name']);
 		}
 
-		$builder->where('article_description.language_id', $this->admin_current_lang_id);
+		$builder->where('store_description.language_id', $language_id);
+
     
 		$query = $builder->countAllResults();
 
 		return $query;
 	}
 
-	public function updateViewed($article_id)
+	public function updateViewed($store_id)
 	{
-		$builder = $this->db->table('article');
+		$builder = $this->db->table('store');
 		$builder->set('viewed', 'viewed+1', FALSE);
-    $builder->where('article_id', $article_id);
+    $builder->where('store_id', $store_id);
 		$builder->update();
 	}
 }

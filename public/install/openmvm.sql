@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 25, 2021 at 04:21 PM
+-- Generation Time: Mar 28, 2021 at 07:11 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.3.21
 
@@ -68,7 +68,7 @@ CREATE TABLE `omvm_administrator_group` (
 --
 
 INSERT INTO `omvm_administrator_group` (`administrator_group_id`, `name`, `permission`) VALUES
-(1, 'Administrator', '{\"access\":[\"modules\\/Example\\/FrontendTheme\\/Controllers\\/BackEnd\\/Example\",\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/Administrator\",\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/AdministratorGroup\",\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/Dashboard\",\"modules\\/OpenMVM\\/Filemanager\\/Controllers\\/BackEnd\\/Filemanager\",\"modules\\/OpenMVM\\/FrontendTheme\\/Controllers\\/BackEnd\\/ThemeDefault\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/City\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/Country\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/Currency\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/District\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/Language\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/LengthClass\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/OrderStatus\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/State\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/WeightClass\",\"modules\\/OpenMVM\\/PaymentMethod\\/Controllers\\/BackEnd\\/PaymentMethod\",\"modules\\/OpenMVM\\/PaymentMethod\\/Controllers\\/BackEnd\\/PaymentMethod\\/BankTransfer\",\"modules\\/OpenMVM\\/PaymentMethod\\/Controllers\\/BackEnd\\/PaymentMethod\\/Cod\",\"modules\\/OpenMVM\\/Setting\\/Controllers\\/BackEnd\\/Setting\",\"modules\\/OpenMVM\\/ShippingMethod\\/Controllers\\/BackEnd\\/ShippingMethod\",\"modules\\/OpenMVM\\/ShippingMethod\\/Controllers\\/BackEnd\\/ShippingMethod\\/Flat\",\"modules\\/OpenMVM\\/ShippingMethod\\/Controllers\\/BackEnd\\/ShippingMethod\\/Weight\",\"modules\\/OpenMVM\\/Store\\/Controllers\\/BackEnd\\/Category\",\"modules\\/OpenMVM\\/Store\\/Controllers\\/BackEnd\\/FrontendWidgets\\/Category\",\"modules\\/OpenMVM\\/Store\\/Controllers\\/BackEnd\\/FrontendWidgets\\/Latest\",\"modules\\/OpenMVM\\/Theme\\/Controllers\\/BackEnd\\/FrontendLayout\",\"modules\\/OpenMVM\\/Theme\\/Controllers\\/BackEnd\\/FrontendTheme\",\"modules\\/OpenMVM\\/Theme\\/Controllers\\/BackEnd\\/FrontendWidget\",\"modules\\/OpenMVM\\/User\\/Controllers\\/BackEnd\\/User\",\"modules\\/OpenMVM\\/User\\/Controllers\\/BackEnd\\/UserGroup\"],\"modify\":[\"modules\\/Example\\/FrontendTheme\\/Controllers\\/BackEnd\\/Example\",\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/Administrator\",\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/AdministratorGroup\",\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/Dashboard\",\"modules\\/OpenMVM\\/Filemanager\\/Controllers\\/BackEnd\\/Filemanager\",\"modules\\/OpenMVM\\/FrontendTheme\\/Controllers\\/BackEnd\\/ThemeDefault\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/City\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/Country\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/Currency\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/District\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/Language\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/LengthClass\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/OrderStatus\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/State\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/WeightClass\",\"modules\\/OpenMVM\\/PaymentMethod\\/Controllers\\/BackEnd\\/PaymentMethod\",\"modules\\/OpenMVM\\/PaymentMethod\\/Controllers\\/BackEnd\\/PaymentMethod\\/BankTransfer\",\"modules\\/OpenMVM\\/PaymentMethod\\/Controllers\\/BackEnd\\/PaymentMethod\\/Cod\",\"modules\\/OpenMVM\\/Setting\\/Controllers\\/BackEnd\\/Setting\",\"modules\\/OpenMVM\\/ShippingMethod\\/Controllers\\/BackEnd\\/ShippingMethod\",\"modules\\/OpenMVM\\/ShippingMethod\\/Controllers\\/BackEnd\\/ShippingMethod\\/Flat\",\"modules\\/OpenMVM\\/ShippingMethod\\/Controllers\\/BackEnd\\/ShippingMethod\\/Weight\",\"modules\\/OpenMVM\\/Store\\/Controllers\\/BackEnd\\/Category\",\"modules\\/OpenMVM\\/Store\\/Controllers\\/BackEnd\\/FrontendWidgets\\/Category\",\"modules\\/OpenMVM\\/Store\\/Controllers\\/BackEnd\\/FrontendWidgets\\/Latest\",\"modules\\/OpenMVM\\/Theme\\/Controllers\\/BackEnd\\/FrontendLayout\",\"modules\\/OpenMVM\\/Theme\\/Controllers\\/BackEnd\\/FrontendTheme\",\"modules\\/OpenMVM\\/Theme\\/Controllers\\/BackEnd\\/FrontendWidget\",\"modules\\/OpenMVM\\/User\\/Controllers\\/BackEnd\\/User\",\"modules\\/OpenMVM\\/User\\/Controllers\\/BackEnd\\/UserGroup\"]}'),
+(1, 'Administrator', '{\"access\":[\"modules\\/Example\\/FrontendTheme\\/Controllers\\/BackEnd\\/Example\",\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/Administrator\",\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/AdministratorGroup\",\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/Dashboard\",\"modules\\/OpenMVM\\/Filemanager\\/Controllers\\/BackEnd\\/Filemanager\",\"modules\\/OpenMVM\\/FrontendTheme\\/Controllers\\/BackEnd\\/ThemeDefault\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/City\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/Country\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/Currency\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/District\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/GeoZone\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/Language\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/LengthClass\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/OrderStatus\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/State\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/WeightClass\",\"modules\\/OpenMVM\\/PaymentMethod\\/Controllers\\/BackEnd\\/PaymentMethod\",\"modules\\/OpenMVM\\/PaymentMethod\\/Controllers\\/BackEnd\\/PaymentMethod\\/BankTransfer\",\"modules\\/OpenMVM\\/PaymentMethod\\/Controllers\\/BackEnd\\/PaymentMethod\\/Cod\",\"modules\\/OpenMVM\\/Setting\\/Controllers\\/BackEnd\\/Setting\",\"modules\\/OpenMVM\\/ShippingMethod\\/Controllers\\/BackEnd\\/ShippingMethod\",\"modules\\/OpenMVM\\/ShippingMethod\\/Controllers\\/BackEnd\\/ShippingMethod\\/Flat\",\"modules\\/OpenMVM\\/ShippingMethod\\/Controllers\\/BackEnd\\/ShippingMethod\\/Weight\",\"modules\\/OpenMVM\\/Store\\/Controllers\\/BackEnd\\/Category\",\"modules\\/OpenMVM\\/Store\\/Controllers\\/BackEnd\\/FrontendWidgets\\/Category\",\"modules\\/OpenMVM\\/Store\\/Controllers\\/BackEnd\\/FrontendWidgets\\/Latest\",\"modules\\/OpenMVM\\/Theme\\/Controllers\\/BackEnd\\/FrontendLayout\",\"modules\\/OpenMVM\\/Theme\\/Controllers\\/BackEnd\\/FrontendTheme\",\"modules\\/OpenMVM\\/Theme\\/Controllers\\/BackEnd\\/FrontendWidget\",\"modules\\/OpenMVM\\/User\\/Controllers\\/BackEnd\\/User\",\"modules\\/OpenMVM\\/User\\/Controllers\\/BackEnd\\/UserGroup\"],\"modify\":[\"modules\\/Example\\/FrontendTheme\\/Controllers\\/BackEnd\\/Example\",\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/Administrator\",\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/AdministratorGroup\",\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/Dashboard\",\"modules\\/OpenMVM\\/Filemanager\\/Controllers\\/BackEnd\\/Filemanager\",\"modules\\/OpenMVM\\/FrontendTheme\\/Controllers\\/BackEnd\\/ThemeDefault\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/City\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/Country\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/Currency\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/District\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/GeoZone\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/Language\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/LengthClass\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/OrderStatus\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/State\",\"modules\\/OpenMVM\\/Localisation\\/Controllers\\/BackEnd\\/WeightClass\",\"modules\\/OpenMVM\\/PaymentMethod\\/Controllers\\/BackEnd\\/PaymentMethod\",\"modules\\/OpenMVM\\/PaymentMethod\\/Controllers\\/BackEnd\\/PaymentMethod\\/BankTransfer\",\"modules\\/OpenMVM\\/PaymentMethod\\/Controllers\\/BackEnd\\/PaymentMethod\\/Cod\",\"modules\\/OpenMVM\\/Setting\\/Controllers\\/BackEnd\\/Setting\",\"modules\\/OpenMVM\\/ShippingMethod\\/Controllers\\/BackEnd\\/ShippingMethod\",\"modules\\/OpenMVM\\/ShippingMethod\\/Controllers\\/BackEnd\\/ShippingMethod\\/Flat\",\"modules\\/OpenMVM\\/ShippingMethod\\/Controllers\\/BackEnd\\/ShippingMethod\\/Weight\",\"modules\\/OpenMVM\\/Store\\/Controllers\\/BackEnd\\/Category\",\"modules\\/OpenMVM\\/Store\\/Controllers\\/BackEnd\\/FrontendWidgets\\/Category\",\"modules\\/OpenMVM\\/Store\\/Controllers\\/BackEnd\\/FrontendWidgets\\/Latest\",\"modules\\/OpenMVM\\/Theme\\/Controllers\\/BackEnd\\/FrontendLayout\",\"modules\\/OpenMVM\\/Theme\\/Controllers\\/BackEnd\\/FrontendTheme\",\"modules\\/OpenMVM\\/Theme\\/Controllers\\/BackEnd\\/FrontendWidget\",\"modules\\/OpenMVM\\/User\\/Controllers\\/BackEnd\\/User\",\"modules\\/OpenMVM\\/User\\/Controllers\\/BackEnd\\/UserGroup\"]}'),
 (4, 'Demonstration', '{\"access\":[\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/Administrator\",\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/AdministratorGroup\",\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/Dashboard\",\"modules\\/OpenMVM\\/Setting\\/Controllers\\/BackEnd\\/Setting\"],\"modify\":[\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/Administrator\",\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/AdministratorGroup\",\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/Dashboard\",\"modules\\/OpenMVM\\/Setting\\/Controllers\\/BackEnd\\/Setting\"]}'),
 (5, 'Full Demonstration', '{\"access\":[\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/Administrator\",\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/AdministratorGroup\",\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/Dashboard\",\"modules\\/OpenMVM\\/Setting\\/Controllers\\/BackEnd\\/Setting\"],\"modify\":[\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/Administrator\",\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/AdministratorGroup\",\"modules\\/OpenMVM\\/Administrator\\/Controllers\\/BackEnd\\/Dashboard\",\"modules\\/OpenMVM\\/Setting\\/Controllers\\/BackEnd\\/Setting\"]}');
 
@@ -95,8 +95,8 @@ CREATE TABLE `omvm_cart` (
 
 INSERT INTO `omvm_cart` (`cart_id`, `user_id`, `store_id`, `cart_session_id`, `product_id`, `option`, `quantity`, `date_added`) VALUES
 (1, 0, 1, '605ae09909eb1', 1, '[]', 3, '2021-03-24 04:05:06'),
-(3, 1, 1, '605b44d6374de', 1, '\"[]\"', 3, '2021-03-24 10:41:54'),
-(4, 1, 2, '605b44d6374de', 3, '[]', 1, '2021-03-24 10:42:40');
+(3, 1, 1, '60603c16248f8', 1, '\"[]\"', 3, '2021-03-24 10:41:54'),
+(4, 1, 2, '60603c16248f8', 3, '[]', 1, '2021-03-24 10:42:40');
 
 -- --------------------------------------------------------
 
@@ -362,6 +362,47 @@ CREATE TABLE `omvm_extension` (
   `type` varchar(32) NOT NULL,
   `code` varchar(32) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `omvm_geo_zone`
+--
+
+CREATE TABLE `omvm_geo_zone` (
+  `geo_zone_id` int(11) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `omvm_geo_zone`
+--
+
+INSERT INTO `omvm_geo_zone` (`geo_zone_id`, `date_added`, `date_modified`) VALUES
+(1, '2021-03-27 13:21:29', '2021-03-28 12:10:02'),
+(2, '2021-03-27 13:42:27', '2021-03-28 12:10:14');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `omvm_geo_zone_description`
+--
+
+CREATE TABLE `omvm_geo_zone_description` (
+  `geo_zone_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `description` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `omvm_geo_zone_description`
+--
+
+INSERT INTO `omvm_geo_zone_description` (`geo_zone_id`, `language_id`, `name`, `description`) VALUES
+(1, 1, 'World Shipping', 'Ships to all countries'),
+(2, 1, 'Indonesia Shipping', 'Ships to Indonesia');
 
 -- --------------------------------------------------------
 
@@ -667,6 +708,14 @@ CREATE TABLE `omvm_payment_method_install` (
   `code` varchar(32) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `omvm_payment_method_install`
+--
+
+INSERT INTO `omvm_payment_method_install` (`payment_method_install_id`, `provider`, `code`) VALUES
+(2, 'OpenMVM', 'bank_transfer'),
+(3, 'OpenMVM', 'cod');
+
 -- --------------------------------------------------------
 
 --
@@ -775,25 +824,28 @@ CREATE TABLE `omvm_setting` (
 --
 
 INSERT INTO `omvm_setting` (`setting_id`, `code`, `key`, `value`, `serialized`) VALUES
-(697, 'shipping_weight', 'shipping_weight_rate', '500:3,1000:6,1500:9,2000:12,2500:15,3000:18', 0),
-(698, 'shipping_weight', 'shipping_weight_sort_order', '2', 0),
+(1038, 'shipping_weight', 'shipping_weight_status', '1', 0),
+(1035, 'shipping_weight', 'shipping_weight_rate', '500:3,1000:6,1500:9,2000:12,2500:15,3000:18', 0),
+(1037, 'shipping_weight', 'shipping_weight_sort_order', '2', 0),
+(1030, 'shipping_flat', 'shipping_flat_status', '1', 0),
 (919, 'frontend_theme_openmvm_default', 'frontend_theme_openmvm_default_layout_widget_1', '{\"page_top\":[\"2\"]}', 1),
 (937, 'frontend_theme_example_example', 'frontend_theme_example_example_name', 'Example Third Party Theme for OpenMVM', 0),
 (917, 'frontend_theme_openmvm_default', 'frontend_theme_openmvm_default_name', 'OpenMVM Default Front-end Theme', 0),
 (918, 'frontend_theme_openmvm_default', 'frontend_theme_openmvm_default_layout_widget_3', '{\"widget_start\":[\"3\"]}', 1),
-(654, 'shipping_flat', 'shipping_flat_cost', '9', 0),
-(655, 'shipping_flat', 'shipping_flat_sort_order', '1', 0),
-(656, 'shipping_flat', 'shipping_flat_status', '1', 0),
-(699, 'shipping_weight', 'shipping_weight_status', '1', 0),
-(650, 'payment_cod', 'payment_cod_status', '1', 0),
-(649, 'payment_cod', 'payment_cod_sort_order', '2', 0),
-(648, 'payment_cod', 'payment_cod_order_status_id', '1', 0),
-(647, 'payment_cod', 'payment_cod_total', '10', 0),
-(638, 'payment_bank_transfer', 'payment_bank_transfer_status', '1', 0),
-(636, 'payment_bank_transfer', 'payment_bank_transfer_order_status_id', '1', 0),
-(637, 'payment_bank_transfer', 'payment_bank_transfer_sort_order', '1', 0),
-(634, 'payment_bank_transfer', 'payment_bank_transfer_bank2', 'Nama Bank: BCA', 0),
-(635, 'payment_bank_transfer', 'payment_bank_transfer_total', '2', 0),
+(1029, 'shipping_flat', 'shipping_flat_sort_order', '1', 0),
+(1028, 'shipping_flat', 'shipping_flat_geo_zone_id', '2', 0),
+(1027, 'shipping_flat', 'shipping_flat_cost', '9', 0),
+(1036, 'shipping_weight', 'shipping_weight_geo_zone_id', '1', 0),
+(1021, 'payment_cod', 'payment_cod_sort_order', '2', 0),
+(1020, 'payment_cod', 'payment_cod_geo_zone_id', '1', 0),
+(1019, 'payment_cod', 'payment_cod_order_status_id', '1', 0),
+(1018, 'payment_cod', 'payment_cod_total', '10', 0),
+(1013, 'payment_bank_transfer', 'payment_bank_transfer_total', '2', 0),
+(1014, 'payment_bank_transfer', 'payment_bank_transfer_order_status_id', '1', 0),
+(1015, 'payment_bank_transfer', 'payment_bank_transfer_geo_zone_id', '2', 0),
+(1016, 'payment_bank_transfer', 'payment_bank_transfer_sort_order', '1', 0),
+(1017, 'payment_bank_transfer', 'payment_bank_transfer_status', '1', 0),
+(1022, 'payment_cod', 'payment_cod_status', '1', 0),
 (770, 'openmvm_frontend_theme_default', 'openmvm_frontend_theme_default_name', 'Theme Default for OpenMVM', 0),
 (1005, 'setting', 'setting_logo', 'openmvm.png', 0),
 (1004, 'setting', 'setting_backend_weight_class_id', '1', 0),
@@ -810,7 +862,7 @@ INSERT INTO `omvm_setting` (`setting_id`, `code`, `key`, `value`, `serialized`) 
 (993, 'setting', 'setting_meta_keywords', 'openmvm,multi-vendor,multi vendor,marketplace', 0),
 (992, 'setting', 'setting_meta_description', 'OpenMVM is an open-source multi-vendor e-commerce marketplace platform.', 0),
 (991, 'setting', 'setting_meta_title', 'OpenMVM', 0),
-(633, 'payment_bank_transfer', 'payment_bank_transfer_bank1', 'Bank Name: BCA', 0),
+(1012, 'payment_bank_transfer', 'payment_bank_transfer_bank1', 'Bank Name: BCA', 0),
 (990, 'setting', 'setting_description', '{\"1\":\"\\u003Cp\\u003EDescription in English\\u003C\\/p\\u003E\"}', 1),
 (989, 'setting', 'setting_website_name', 'OpenMVM', 0);
 
@@ -825,6 +877,14 @@ CREATE TABLE `omvm_shipping_method_install` (
   `provider` varchar(255) NOT NULL,
   `code` varchar(32) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `omvm_shipping_method_install`
+--
+
+INSERT INTO `omvm_shipping_method_install` (`shipping_method_install_id`, `provider`, `code`) VALUES
+(1, 'OpenMVM', 'flat'),
+(2, 'OpenMVM', 'weight');
 
 -- --------------------------------------------------------
 
@@ -851,6 +911,30 @@ INSERT INTO `omvm_state` (`state_id`, `name`, `code`, `country_id`, `sort_order`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `omvm_state_to_geo_zone`
+--
+
+CREATE TABLE `omvm_state_to_geo_zone` (
+  `state_to_geo_zone_id` int(11) NOT NULL,
+  `country_id` int(11) NOT NULL,
+  `state_id` int(11) NOT NULL DEFAULT 0,
+  `geo_zone_id` int(11) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `omvm_state_to_geo_zone`
+--
+
+INSERT INTO `omvm_state_to_geo_zone` (`state_to_geo_zone_id`, `country_id`, `state_id`, `geo_zone_id`, `date_added`, `date_modified`) VALUES
+(15, 3, 0, 1, '2021-03-28 12:10:02', '0000-00-00 00:00:00'),
+(14, 2, 0, 1, '2021-03-28 12:10:02', '0000-00-00 00:00:00'),
+(16, 2, 0, 2, '2021-03-28 12:10:14', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `omvm_store`
 --
 
@@ -865,16 +949,20 @@ CREATE TABLE `omvm_store` (
   `status` tinyint(1) NOT NULL DEFAULT 1,
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
-  `slug` varchar(255) NOT NULL
+  `slug` varchar(255) NOT NULL,
+  `shipping_origin_country_id` int(11) NOT NULL,
+  `shipping_origin_state_id` int(11) NOT NULL,
+  `shipping_origin_city_id` int(11) NOT NULL,
+  `shipping_origin_district_id` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `omvm_store`
 --
 
-INSERT INTO `omvm_store` (`store_id`, `user_id`, `name`, `logo`, `wallpaper`, `viewed`, `sort_order`, `status`, `date_added`, `date_modified`, `slug`) VALUES
-(1, 2, 'Seller 1 Store', '', '', 0, 0, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'seller-1-store'),
-(2, 3, 'Seller 2 Store', '', '', 0, 0, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'seller-2-store');
+INSERT INTO `omvm_store` (`store_id`, `user_id`, `name`, `logo`, `wallpaper`, `viewed`, `sort_order`, `status`, `date_added`, `date_modified`, `slug`, `shipping_origin_country_id`, `shipping_origin_state_id`, `shipping_origin_city_id`, `shipping_origin_district_id`) VALUES
+(1, 2, 'Seller 1 Store', '', '', 0, 0, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'seller-1-store', 2, 3, 0, 0),
+(2, 3, 'Seller 2 Store', '', '', 0, 0, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'seller-2-store', 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1202,6 +1290,18 @@ ALTER TABLE `omvm_extension`
   ADD PRIMARY KEY (`extension_id`);
 
 --
+-- Indexes for table `omvm_geo_zone`
+--
+ALTER TABLE `omvm_geo_zone`
+  ADD PRIMARY KEY (`geo_zone_id`);
+
+--
+-- Indexes for table `omvm_geo_zone_description`
+--
+ALTER TABLE `omvm_geo_zone_description`
+  ADD PRIMARY KEY (`geo_zone_id`,`language_id`);
+
+--
 -- Indexes for table `omvm_language`
 --
 ALTER TABLE `omvm_language`
@@ -1319,6 +1419,12 @@ ALTER TABLE `omvm_shipping_method_install`
 ALTER TABLE `omvm_state`
   ADD PRIMARY KEY (`state_id`),
   ADD KEY `name` (`name`);
+
+--
+-- Indexes for table `omvm_state_to_geo_zone`
+--
+ALTER TABLE `omvm_state_to_geo_zone`
+  ADD PRIMARY KEY (`state_to_geo_zone_id`);
 
 --
 -- Indexes for table `omvm_store`
@@ -1459,6 +1565,12 @@ ALTER TABLE `omvm_extension`
   MODIFY `extension_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `omvm_geo_zone`
+--
+ALTER TABLE `omvm_geo_zone`
+  MODIFY `geo_zone_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `omvm_language`
 --
 ALTER TABLE `omvm_language`
@@ -1528,7 +1640,7 @@ ALTER TABLE `omvm_order_total`
 -- AUTO_INCREMENT for table `omvm_payment_method_install`
 --
 ALTER TABLE `omvm_payment_method_install`
-  MODIFY `payment_method_install_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `payment_method_install_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `omvm_product`
@@ -1540,19 +1652,25 @@ ALTER TABLE `omvm_product`
 -- AUTO_INCREMENT for table `omvm_setting`
 --
 ALTER TABLE `omvm_setting`
-  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1006;
+  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1039;
 
 --
 -- AUTO_INCREMENT for table `omvm_shipping_method_install`
 --
 ALTER TABLE `omvm_shipping_method_install`
-  MODIFY `shipping_method_install_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `shipping_method_install_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `omvm_state`
 --
 ALTER TABLE `omvm_state`
   MODIFY `state_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `omvm_state_to_geo_zone`
+--
+ALTER TABLE `omvm_state_to_geo_zone`
+  MODIFY `state_to_geo_zone_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `omvm_store`

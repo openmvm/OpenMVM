@@ -9,6 +9,7 @@ return [
 	'caption_list_of_languages' => 'List of languages',
 	'caption_list_of_currencies' => 'List of currencies',
 	'caption_list_of_weight_classes' => 'List of weight classes',
+	'caption_list_of_geo_zones' => 'List of geo zones',
 	'caption_list_of_length_classes' => 'List of length classes',
 	'caption_list_of_order_statuses' => 'List of order statuses',
 ];

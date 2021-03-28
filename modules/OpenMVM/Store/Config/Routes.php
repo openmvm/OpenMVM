@@ -38,8 +38,8 @@ $routes->match(['get', 'post', 'patch', 'delete'], '/account/store/products/(:an
 $routes->match(['get', 'post', 'patch', 'delete'], '/account/store/products', 'Modules\OpenMVM\Store\Controllers\FrontEnd\Product::index');
 
 // Store
-$routes->match(['get', 'post', 'patch', 'delete'], '/account/store/edit/(:any)', 'Modules\OpenMVM\Store\Controllers\FrontEnd\Store::edit');
-$routes->match(['get', 'post', 'patch', 'delete'], '/account/store/edit', 'Modules\OpenMVM\Store\Controllers\FrontEnd\Store::edit');
+$routes->match(['get', 'post', 'patch', 'delete'], '/account/store/edit/(:num)/(:any)', 'Modules\OpenMVM\Store\Controllers\FrontEnd\Store::edit');
+$routes->match(['get', 'post', 'patch', 'delete'], '/account/store/edit/(:num)', 'Modules\OpenMVM\Store\Controllers\FrontEnd\Store::edit');
 $routes->match(['get', 'post', 'patch', 'delete'], '/account/store/add/(:any)', 'Modules\OpenMVM\Store\Controllers\FrontEnd\Store::add');
 $routes->match(['get', 'post', 'patch', 'delete'], '/account/store/add', 'Modules\OpenMVM\Store\Controllers\FrontEnd\Store::add');
 

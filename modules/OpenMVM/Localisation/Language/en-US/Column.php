@@ -7,4 +7,5 @@ return [
 	'column_city' => 'City',
 	'column_district' => 'District',
 	'column_title' => 'Title',
+	'column_description' => 'Description',
 ];

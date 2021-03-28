@@ -10,6 +10,14 @@ $routes->match(['get', 'post', 'patch', 'delete'], $_SERVER['app.adminDir'] . '/
 $routes->match(['get', 'post', 'patch', 'delete'], $_SERVER['app.adminDir'] . '/localisation/order_statuses/(:any)', 'Modules\OpenMVM\Localisation\Controllers\BackEnd\OrderStatus::index');
 $routes->match(['get', 'post', 'patch', 'delete'], $_SERVER['app.adminDir'] . '/localisation/order_statuses', 'Modules\OpenMVM\Localisation\Controllers\BackEnd\OrderStatus::index');
 
+// Geo Zone
+$routes->match(['get', 'post', 'patch', 'delete'], $_SERVER['app.adminDir'] . '/localisation/geo_zones/edit/(:num)/(:any)', 'Modules\OpenMVM\Localisation\Controllers\BackEnd\GeoZone::edit');
+$routes->match(['get', 'post', 'patch', 'delete'], $_SERVER['app.adminDir'] . '/localisation/geo_zones/edit/(:num)', 'Modules\OpenMVM\Localisation\Controllers\BackEnd\GeoZone::edit');
+$routes->match(['get', 'post', 'patch', 'delete'], $_SERVER['app.adminDir'] . '/localisation/geo_zones/add/(:any)', 'Modules\OpenMVM\Localisation\Controllers\BackEnd\GeoZone::add');
+$routes->match(['get', 'post', 'patch', 'delete'], $_SERVER['app.adminDir'] . '/localisation/geo_zones/add', 'Modules\OpenMVM\Localisation\Controllers\BackEnd\GeoZone::add');
+$routes->match(['get', 'post', 'patch', 'delete'], $_SERVER['app.adminDir'] . '/localisation/geo_zones/(:any)', 'Modules\OpenMVM\Localisation\Controllers\BackEnd\GeoZone::index');
+$routes->match(['get', 'post', 'patch', 'delete'], $_SERVER['app.adminDir'] . '/localisation/geo_zones', 'Modules\OpenMVM\Localisation\Controllers\BackEnd\GeoZone::index');
+
 // Length Class
 $routes->match(['get', 'post', 'patch', 'delete'], $_SERVER['app.adminDir'] . '/localisation/length_classes/edit/(:num)/(:any)', 'Modules\OpenMVM\Localisation\Controllers\BackEnd\LengthClass::edit');
 $routes->match(['get', 'post', 'patch', 'delete'], $_SERVER['app.adminDir'] . '/localisation/length_classes/edit/(:num)', 'Modules\OpenMVM\Localisation\Controllers\BackEnd\LengthClass::edit');

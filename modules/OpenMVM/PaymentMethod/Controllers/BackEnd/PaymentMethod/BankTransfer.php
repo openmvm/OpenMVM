@@ -10,6 +10,7 @@ class BankTransfer extends \App\Controllers\BaseController
 		$this->settingModel = new \Modules\OpenMVM\Setting\Models\SettingModel;
 		$this->languageModel = new \Modules\OpenMVM\Localisation\Models\LanguageModel;
 		$this->orderStatusModel = new \Modules\OpenMVM\Localisation\Models\OrderStatusModel;
+		$this->geoZoneModel = new \Modules\OpenMVM\Localisation\Models\GeoZoneModel();
 	}
 
 	public function index()
@@ -141,6 +142,14 @@ class BankTransfer extends \App\Controllers\BaseController
 		}
 
 		$data['order_statuses'] = $this->orderStatusModel->getOrderStatuses();
+
+		if ($this->request->getPost('payment_bank_transfer_geo_zone_id')) {
+			$data['payment_bank_transfer_geo_zone_id'] = $this->request->getPost('payment_bank_transfer_geo_zone_id');
+		} else {
+			$data['payment_bank_transfer_geo_zone_id'] = $this->setting->get('payment_bank_transfer', 'payment_bank_transfer_geo_zone_id');
+		}
+
+		$data['geo_zones'] = $this->geoZoneModel->getGeoZones(array(), $this->language->getBackEndId());
 
 		if ($this->request->getPost('payment_bank_transfer_status')) {
 			$data['payment_bank_transfer_status'] = $this->request->getPost('payment_bank_transfer_status');

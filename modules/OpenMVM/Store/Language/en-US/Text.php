@@ -12,4 +12,5 @@ return [
 	'text_horizontal' => 'Horizontal',
 	'text_vertical' => 'Vertical',
 	'text_latest_products' => 'Latest Products',
+	'text_shipping_origin' => 'Shipping Origin',
 ];

@@ -75,6 +75,18 @@
 									  <input type="number" min="0" step="any" name="shipping_flat_cost" value="<?php echo $shipping_flat_cost; ?>" class="form-control" id="input-cost" placeholder="<?php echo lang('Entry.entry_cost', array(), $lang->getBackEndLocale()); ?>">
 									  <label for="input-cost"><?php echo lang('Entry.entry_cost', array(), $lang->getBackEndLocale()); ?></label>
 									</div>
+									<div class="form-floating mb-3">
+									  <select name="shipping_flat_geo_zone_id" class="form-select" id="input-geo-zone-id" aria-label="geo-zone-id">
+									  	<?php foreach ($geo_zones as $geo_zone) { ?>
+			                  <?php if ($geo_zone['geo_zone_id'] == $shipping_flat_geo_zone_id) { ?>
+			                    <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected><?php echo $geo_zone['name']; ?></option>
+			                  <?php } else { ?>
+			                    <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+			                  <?php } ?>
+									  	<?php } ?>
+									  </select>
+									  <label for="input-geo-zone"><?php echo lang('Entry.entry_geo_zone', array(), $lang->getBackEndLocale()); ?></label>
+									</div>
 							  	<div class="form-floating mb-3">
 									  <input type="number" name="shipping_flat_sort_order" value="<?php echo $shipping_flat_sort_order; ?>" class="form-control" id="input-sort-order" placeholder="<?php echo lang('Entry.entry_sort_order', array(), $lang->getBackEndLocale()); ?>">
 									  <label for="input-sort-order"><?php echo lang('Entry.entry_sort_order', array(), $lang->getBackEndLocale()); ?></label>

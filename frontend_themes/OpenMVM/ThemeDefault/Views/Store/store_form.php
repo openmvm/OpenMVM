@@ -27,6 +27,9 @@
 						  <li class="nav-item" role="presentation">
 						    <button class="nav-link" id="images-tab" data-bs-toggle="tab" data-bs-target="#images" type="button" role="tab" aria-controls="images" aria-selected="false"><?php echo lang('Tab.tab_images', array(), $lang->getFrontEndLocale()); ?></button>
 						  </li>
+						  <li class="nav-item" role="presentation">
+						    <button class="nav-link" id="shipping-tab" data-bs-toggle="tab" data-bs-target="#shipping" type="button" role="tab" aria-controls="shipping" aria-selected="false"><?php echo lang('Tab.tab_shipping', array(), $lang->getFrontEndLocale()); ?></button>
+						  </li>
 						</ul>
 						<div class="tab-content" id="storeTabContent">
 						  <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
@@ -109,6 +112,38 @@
 			            </div>
 			          </fieldset>
 						  </div>
+						  <div class="tab-pane fade" id="shipping" role="tabpanel" aria-labelledby="shipping-tab">
+			          <fieldset>
+									<h5 class="border-bottom border-dark pb-2 mb-3"><?php echo lang('Text.text_shipping_origin', array(), $lang->getBackEndLocale()); ?></h5>
+									<div class="form-floating mb-3">
+									  <select name="shipping_origin_country_id" class="form-select" id="input-shipping-origin-country-id" aria-label="input-shipping-origin-country-id">
+		                  <?php foreach ($countries as $country) { ?>
+		                    <?php if ($country['country_id'] == $shipping_origin_country_id) { ?>
+		                      <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
+		                    <?php } else { ?>
+		                      <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+		                    <?php } ?>
+		                  <?php } ?>
+									  </select>
+									  <label for="input-shipping-origin-country-id"><?php echo lang('Entry.entry_country', array(), $lang->getFrontEndLocale()); ?></label>
+									</div>
+									<div class="form-floating mb-3">
+									  <select name="shipping_origin_state_id" class="form-select" id="input-shipping-origin-state-id" aria-label="input-shipping-origin-state-id">
+									  </select>
+									  <label for="input-shipping-origin-state-id"><?php echo lang('Entry.entry_state', array(), $lang->getFrontEndLocale()); ?></label>
+									</div>
+									<div class="form-floating mb-3">
+									  <select name="shipping_origin_city_id" class="form-select" id="input-shipping-origin-city-id" aria-label="input-shipping-origin-city-id">
+									  </select>
+									  <label for="input-shipping-origin-city-id"><?php echo lang('Entry.entry_city', array(), $lang->getFrontEndLocale()); ?></label>
+									</div>
+									<div class="form-floating mb-3">
+									  <select name="shipping_origin_district_id" class="form-select" id="input-shipping-origin-district-id" aria-label="input-shipping-origin-district-id">
+									  </select>
+									  <label for="input-shipping-origin-district-id"><?php echo lang('Entry.entry_district', array(), $lang->getFrontEndLocale()); ?></label>
+									</div>
+			          </fieldset>
+						  </div>
 						</div>
 	        </div>
 
@@ -119,4 +154,148 @@
   <?php echo form_close(); ?>
 </section>
 <!-- /.content -->
+<script type="text/javascript"><!--
+$('select[name=\'shipping_origin_country_id\']').on('change', function() {
+  $.ajax({
+    url: '<?php echo base_url('/localisation/get_country'); ?>',
+    type: 'post',
+    dataType: 'json',
+    data : {
+      country_id : $('select[name=\'shipping_origin_country_id\']').val()
+    },
+    beforeSend: function() {
+      $('select[name=\'shipping_origin_country_id\']').prop('disabled', true);
+    },
+    complete: function() {
+      $('select[name=\'shipping_origin_country_id\']').prop('disabled', false);
+    },
+    success: function(json) {
+      html = '<option value=""><?php echo lang('Text.text_select', array(), $lang->getBackEndLocale()); ?></option>';
+      
+      if (json['states'] && json['states'] != '') {
+        for (i = 0; i < json['states'].length; i++) {
+          state = json['states'][i];
+
+          html += '<option value="' + state['state_id'] + '"';
+          
+          if (state['state_id'] == '<?php echo $shipping_origin_state_id; ?>') {
+            html += ' selected="selected"';
+          }
+          
+          html += '>' + state['name'] + '</option>';
+        }
+      } else {
+        html += '<option value="0" selected="selected"><?php echo lang('Text.text_none', array(), $lang->getBackEndLocale()); ?></option>';
+      }
+      
+      $('select[name=\'shipping_origin_state_id\']').html(html);
+      $('select[name=\'shipping_origin_state_id\']').trigger('change');
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+      alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+    }
+  });
+});
+
+$('select[name=\'shipping_origin_country_id\']').trigger('change');
+//--></script> 
+<script type="text/javascript"><!--
+$('select[name=\'shipping_origin_state_id\']').on('change', function() {
+  setTimeout(function(){
+    var state_id = $('select[name=\'shipping_origin_state_id\']').val();
+    $.ajax({
+      url: '<?php echo base_url('/localisation/get_state'); ?>',
+      type: 'post',
+      dataType: 'json',
+      data : {
+        state_id : state_id
+      },
+      beforeSend: function() {
+        $('select[name=\'shipping_origin_state_id\']').prop('disabled', true);
+        $('select[name=\'shipping_origin_city_id\']').prop('disabled', true);
+      },
+      complete: function() {
+        $('select[name=\'shipping_origin_state_id\']').prop('disabled', false);
+        $('select[name=\'shipping_origin_city_id\']').prop('disabled', false);
+      },
+      success: function(json) {
+        html = '<option value=""><?php echo lang('Text.text_select', array(), $lang->getBackEndLocale()); ?></option>';
+        
+        if (json['cities'] && json['cities'] != '') {
+          for (i = 0; i < json['cities'].length; i++) {
+            city = json['cities'][i];
+
+            html += '<option value="' + city['city_id'] + '"';
+            
+            if (city['city_id'] == '<?php echo $shipping_origin_city_id; ?>') {
+              html += ' selected="selected"';
+            }
+            
+            html += '>' + city['name'] + '</option>';
+          }
+        } else {
+          html += '<option value="0" selected="selected"><?php echo lang('Text.text_none', array(), $lang->getBackEndLocale()); ?></option>';
+        }
+        
+        $('select[name=\'shipping_origin_city_id\']').html(html);
+        $('select[name=\'shipping_origin_city_id\']').trigger('change');
+      },
+      error: function(xhr, ajaxOptions, thrownError) {
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  }, 200);
+});
+
+$('select[name=\'shipping_origin_state_id\']').trigger('change');
+//--></script> 
+<script type="text/javascript"><!--
+$('select[name=\'shipping_origin_city_id\']').on('change', function() {
+  setTimeout(function(){
+    var city_id = $('select[name=\'shipping_origin_city_id\']').val();
+    $.ajax({
+      url: '<?php echo base_url('/localisation/get_city'); ?>',
+      type: 'post',
+      dataType: 'json',
+      data : {
+        city_id : city_id
+      },
+      beforeSend: function() {
+        $('select[name=\'shipping_origin_city_id\']').prop('disabled', true);
+        $('select[name=\'shipping_origin_district_id\']').prop('disabled', true);
+      },
+      complete: function() {
+        $('select[name=\'shipping_origin_city_id\']').prop('disabled', false);
+        $('select[name=\'shipping_origin_district_id\']').prop('disabled', false);
+      },
+      success: function(json) {
+        html = '<option value=""><?php echo lang('Text.text_select', array(), $lang->getBackEndLocale()); ?></option>';
+        
+        if (json['districts'] && json['districts'] != '') {
+          for (i = 0; i < json['districts'].length; i++) {
+            district = json['districts'][i];
+
+            html += '<option value="' + district['district_id'] + '"';
+            
+            if (district['district_id'] == '<?php echo $shipping_origin_district_id; ?>') {
+              html += ' selected="selected"';
+            }
+            
+            html += '>' + district['name'] + '</option>';
+          }
+        } else {
+          html += '<option value="0" selected="selected"><?php echo lang('Text.text_none', array(), $lang->getBackEndLocale()); ?></option>';
+        }
+        
+        $('select[name=\'shipping_origin_district_id\']').html(html);
+      },
+      error: function(xhr, ajaxOptions, thrownError) {
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  }, 400);
+});
+
+$('select[name=\'shipping_origin_city_id\']').trigger('change');
+//--></script> 
 <?php echo $footer; ?>

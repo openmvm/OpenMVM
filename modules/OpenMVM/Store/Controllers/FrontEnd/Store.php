@@ -10,6 +10,7 @@ class Store extends \App\Controllers\BaseController
 		$this->userModel = new \Modules\OpenMVM\User\Models\UserModel();
 		$this->languageModel = new \Modules\OpenMVM\Localisation\Models\LanguageModel();
 		$this->storeModel = new \Modules\OpenMVM\Store\Models\StoreModel();
+		$this->countryModel = new \Modules\OpenMVM\Localisation\Models\CountryModel();
 	}
 
 	public function index()
@@ -152,7 +153,7 @@ class Store extends \App\Controllers\BaseController
 		$data['heading_title'] = lang('Heading.heading_my_store', array(), $this->language->getFrontEndLocale());
 
 		// Data Link
-		$data['action'] = base_url('/account/store/edit/' . $this->user->getToken());
+		$data['action'] = base_url('/account/store/edit/' . $this->user->getStoreId() . '/' . $this->user->getToken());
 
 		// Form Validation
 		$languages = $this->languageModel->getLanguages();
@@ -180,7 +181,7 @@ class Store extends \App\Controllers\BaseController
 
 		if ($this->validation->withRequest($this->request)->run() == TRUE) {
       // Query
-    	$query = $this->storeModel->editStore($this->request->getPost(), $this->user->getId());
+    	$query = $this->storeModel->editStore($this->request->getPost(), $this->user->getStoreId(), $this->user->getId());
       
       if ($query) {
       	$this->session->set('success', lang('Success.success_store_edit', array(), $this->language->getFrontEndLocale()));
@@ -278,6 +279,41 @@ class Store extends \App\Controllers\BaseController
 		} else {
 			$data['wallpaper'] = '';
 		}
+
+		// Shipping
+		if($this->request->getPost('shipping_origin_country_id')) {
+			$data['shipping_origin_country_id'] = $this->request->getPost('shipping_origin_country_id');
+		} elseif ($store_info) {
+			$data['shipping_origin_country_id'] = $store_info['shipping_origin_country_id'];
+		} else {
+			$data['shipping_origin_country_id'] = 0;
+		}
+
+		if($this->request->getPost('shipping_origin_state_id')) {
+			$data['shipping_origin_state_id'] = $this->request->getPost('shipping_origin_state_id');
+		} elseif ($store_info) {
+			$data['shipping_origin_state_id'] = $store_info['shipping_origin_state_id'];
+		} else {
+			$data['shipping_origin_state_id'] = 0;
+		}
+
+		if($this->request->getPost('shipping_origin_city_id')) {
+			$data['shipping_origin_city_id'] = $this->request->getPost('shipping_origin_city_id');
+		} elseif ($store_info) {
+			$data['shipping_origin_city_id'] = $store_info['shipping_origin_city_id'];
+		} else {
+			$data['shipping_origin_city_id'] = 0;
+		}
+
+		if($this->request->getPost('shipping_origin_district_id')) {
+			$data['shipping_origin_district_id'] = $this->request->getPost('shipping_origin_district_id');
+		} elseif ($store_info) {
+			$data['shipping_origin_district_id'] = $store_info['shipping_origin_district_id'];
+		} else {
+			$data['shipping_origin_district_id'] = 0;
+		}
+
+		$data['countries'] = $this->countryModel->getCountries();
 
 		// Load Header
 		$scripts = array(

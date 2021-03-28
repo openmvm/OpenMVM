@@ -182,8 +182,12 @@
 														  <label for="input-user-address-lastname-<?php echo $user_address_row; ?>"><?php echo lang('Entry.entry_lastname', array(), $lang->getBackEndLocale()); ?></label>
 														</div>
 												  	<div class="form-floating mb-3">
-														  <input type="text" name="user_address[<?php echo $user_address_row; ?>][address]" value="<?php echo $user_address['address']; ?>" class="form-control" id="input-user-address-address-<?php echo $user_address_row; ?>" placeholder="<?php echo lang('Entry.entry_address', array(), $lang->getBackEndLocale()); ?>">
-														  <label for="input-user-address-address-<?php echo $user_address_row; ?>"><?php echo lang('Entry.entry_address', array(), $lang->getBackEndLocale()); ?></label>
+														  <textarea style="height: 100px" name="user_address[<?php echo $user_address_row; ?>][address_1]" class="form-control" id="input-user-address-address-1-<?php echo $user_address_row; ?>" placeholder="<?php echo lang('Entry.entry_address_1', array(), $lang->getFrontEndLocale()); ?>"><?php echo $address_1; ?></textarea>
+														  <label for="input-user-address-address-1-<?php echo $user_address_row; ?>"><?php echo lang('Entry.entry_address_1', array(), $lang->getFrontEndLocale()); ?></label>
+														</div>
+												  	<div class="form-floating mb-3">
+														  <textarea style="height: 100px" name="user_address[<?php echo $user_address_row; ?>][address_2]" class="form-control" id="input-user-address-address-2-<?php echo $user_address_row; ?>" placeholder="<?php echo lang('Entry.entry_address_2', array(), $lang->getFrontEndLocale()); ?>"><?php echo $address_2; ?></textarea>
+														  <label for="input-user-address-address-2-<?php echo $user_address_row; ?>"><?php echo lang('Entry.entry_address_2', array(), $lang->getFrontEndLocale()); ?></label>
 														</div>
 														<div class="form-floating mb-3">
 														  <select name="user_address[<?php echo $user_address_row; ?>][country_id]" class="form-select" id="input-user-address-country-id-<?php echo $user_address_row; ?>" aria-label="input-user-address-country-id-<?php echo $user_address_row; ?>">
@@ -279,8 +283,12 @@ function addUserAddress() {
 	html += '		   <label for="input-user-address-lastname-' + user_address_row + '"><?php echo lang('Entry.entry_lastname', array(), $lang->getBackEndLocale()); ?></label>';
 	html += '		 </div>';
 	html += '		 <div class="form-floating mb-3">';
-	html += '		   <input type="text" name="user_address[' + user_address_row + '][address]" value="" class="form-control" id="input-user-address-address-' + user_address_row + '" placeholder="<?php echo lang('Entry.entry_address', array(), $lang->getBackEndLocale()); ?>">';
-	html += '		   <label for="input-user-address-address-' + user_address_row + '"><?php echo lang('Entry.entry_address', array(), $lang->getBackEndLocale()); ?></label>';
+	html += '		   <textarea style="height: 100px" name="user_address[' + user_address_row + '][address_1]" class="form-control" id="input-user-address-address-1-[' + user_address_row + '" placeholder="<?php echo lang('Entry.entry_address_1', array(), $lang->getFrontEndLocale()); ?>"></textarea>';
+	html += '		   <label for="input-user-address-address-1-[' + user_address_row + '"><?php echo lang('Entry.entry_address_1', array(), $lang->getFrontEndLocale()); ?></label>';
+	html += '		 </div>';
+	html += '		 <div class="form-floating mb-3">';
+	html += '		   <textarea style="height: 100px" name="user_address[' + user_address_row + '][address_2]" class="form-control" id="input-user-address-address-2-[' + user_address_row + '" placeholder="<?php echo lang('Entry.entry_address_2', array(), $lang->getFrontEndLocale()); ?>"></textarea>';
+	html += '		   <label for="input-user-address-address-2-[' + user_address_row + '"><?php echo lang('Entry.entry_address_2', array(), $lang->getFrontEndLocale()); ?></label>';
 	html += '		 </div>';
 	html += '    <div class="form-floating mb-3">';
 	html += '      <select name="user_address[' + user_address_row + '][country_id]" class="form-select" id="input-user-address-country-id-' + user_address_row + '" aria-label="input-user-address-country-id-' + user_address_row + '">';
