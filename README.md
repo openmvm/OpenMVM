@@ -1,6 +1,8 @@
 # OpenMVM
 	OpenMVM is an open-source multi-vendor e-commerce marketplace platform.
 
+	Latest Version: OpenMVM ZERO
+
 	It still lacks a lot of basic features. So, it is not ready for production yet.
 
 ### How to Install:
