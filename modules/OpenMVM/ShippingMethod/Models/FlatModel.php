@@ -18,16 +18,31 @@ class FlatModel extends \CodeIgniter\Model
 
 	public function getQuote($store_id, $shipping_address_id, $user_id)
 	{
+		$quote_data = array();
+
 		// Get address info
-		$builder = $this->db->table('user_address');
-		$builder->where('user_address_id', $shipping_address_id);
-		$builder->where('user_id', $user_id);
+		$builder_user_address = $this->db->table('user_address');
+		$builder_user_address->where('user_address_id', $shipping_address_id);
+		$builder_user_address->where('user_id', $user_id);
 
-		$query   = $builder->get();
+		$query_user_address   = $builder_user_address->get();
 
-		$address = $query->getRow();
+		$address = $query_user_address->getRow();
 
-		if ($this->setting->get('shipping_flat', 'shipping_flat_status')) {
+		// Get state to geo zone
+		$builder_state_to_geo_zone = $this->db->table('state_to_geo_zone');
+		$builder_state_to_geo_zone->where('geo_zone_id', $this->setting->get('payment_bank_transfer', 'payment_bank_transfer_geo_zone_id'));
+		$builder_state_to_geo_zone->where('country_id', $address->country_id);
+		$builder_state_to_geo_zone->groupStart();
+		$builder_state_to_geo_zone->where('state_id', $address->state_id);
+		$builder_state_to_geo_zone->orWhere('state_id', 0);
+		$builder_state_to_geo_zone->groupEnd();
+
+		$total_results = $builder_state_to_geo_zone->countAllResults();
+
+		if (empty($this->setting->get('shipping_flat', 'shipping_flat_geo_zone_id'))) {
+			$status = true;
+		} elseif ($total_results > 0) {
 			$status = true;
 		} else {
 			$status = false;
@@ -36,8 +51,6 @@ class FlatModel extends \CodeIgniter\Model
 		$method_data = array();
 
 		if ($status) {
-			$quote_data = array();
-
 			$cost = $this->setting->get('shipping_flat', 'shipping_flat_cost');
 
 			$quote_data['flat'] = array(

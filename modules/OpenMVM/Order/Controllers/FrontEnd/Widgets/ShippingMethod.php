@@ -110,34 +110,36 @@ class ShippingMethod extends \App\Controllers\BaseController
 			$results = array('flat', 'weight');
 
 			foreach ($results as $result) {
-				$codes = explode('_', $result);
-				
-				$code = array();
+				if (!empty($this->setting->get('shipping_' . $result, 'shipping_' . $result . '_status'))) {
+					$codes = explode('_', $result);
+					
+					$code = array();
 
-				foreach ($codes as $key => $value) {
-					if ($key == 0) {
-						$code[] = $value;
-					} else {
-						$code[] = ucwords($value);
+					foreach ($codes as $key => $value) {
+						if ($key == 0) {
+							$code[] = $value;
+						} else {
+							$code[] = ucwords($value);
+						}
 					}
-				}
 
-				$code = implode('', $code);
+					$code = implode('', $code);
 
-				$model = lcfirst($result . 'Model');
-				$namespace = '\Modules\OpenMVM\ShippingMethod\Models\\' . $result . 'Model';
-				$this->$model = new $namespace;
+					$model = lcfirst($code . 'Model');
+					$namespace = '\Modules\OpenMVM\ShippingMethod\Models\\' . $code . 'Model';
+					$this->$model = new $namespace;
 
-				$quote = $this->{$result . 'Model'}->getQuote($store['store_id'], $this->session->get('shipping_address_id'), $this->user->getId());
+					$quote = $this->{$code . 'Model'}->getQuote($store['store_id'], $this->session->get('shipping_address_id'), $this->user->getId());
 
-				if ($quote) {
-					$method_data[$result] = array(
-						'code'       => $quote['code'],
-						'title'      => $quote['title'],
-						'quote'      => $quote['quote'],
-						'sort_order' => $quote['sort_order'],
-						'error'      => $quote['error']
-					);
+					if ($quote) {
+						$method_data[$result] = array(
+							'code'       => $quote['code'],
+							'title'      => $quote['title'],
+							'quote'      => $quote['quote'],
+							'sort_order' => $quote['sort_order'],
+							'error'      => $quote['error']
+						);
+					}
 				}
 			}
 

@@ -133,23 +133,39 @@ class PaymentMethod extends \App\Controllers\BaseController
 		// Payment methods
 		$method_data = array();
 
-		$results = array('BankTransfer', 'Cod');
+		$results = array('bank_transfer', 'cod');
 
 		foreach ($results as $result) {
-			$model = lcfirst($result . 'Model');
-			$namespace = '\Modules\OpenMVM\PaymentMethod\Models\\' . $result . 'Model';
-			$this->$model = new $namespace;
+			if (!empty($this->setting->get('payment_' . $result, 'payment_' . $result . '_status'))) {
+				$codes = explode('_', $result);
+				
+				$code = array();
 
-			$method = $this->{$model}->getMethod($this->session->get('payment_address_id'), $total_value, $this->user->getId());
+				foreach ($codes as $key => $value) {
+					if ($key == 0) {
+						$code[] = $value;
+					} else {
+						$code[] = ucwords($value);
+					}
+				}
 
-			if ($method) {
-				$method_data[$result] = $method;
-			}
+				$code = implode('', $code);
 
-			$sort_order = array();
+				$model = lcfirst($code . 'Model');
+				$namespace = '\Modules\OpenMVM\PaymentMethod\Models\\' . $code . 'Model';
+				$this->$model = new $namespace;
 
-			foreach ($method_data as $key => $value) {
-				$sort_order[$key] = $value['sort_order'];
+				$method = $this->{$model}->getMethod($this->session->get('payment_address_id'), $total_value, $this->user->getId());
+
+				if ($method) {
+					$method_data[$result] = $method;
+				}
+
+				$sort_order = array();
+
+				foreach ($method_data as $key => $value) {
+					$sort_order[$key] = $value['sort_order'];
+				}
 			}
 		}
 
