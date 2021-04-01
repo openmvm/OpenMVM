@@ -7,6 +7,7 @@ class Setting extends \App\Controllers\BaseController
 	public function __construct()
 	{
 		// Load Models
+		$this->administratorGroupModel = new \Modules\OpenMVM\Administrator\Models\AdministratorGroupModel();
 		$this->userGroupModel = new \Modules\OpenMVM\User\Models\UserGroupModel();
 		$this->settingModel = new \Modules\OpenMVM\Setting\Models\SettingModel;
 		$this->languageModel = new \Modules\OpenMVM\Localisation\Models\LanguageModel;
@@ -157,6 +158,14 @@ class Setting extends \App\Controllers\BaseController
 		$data['frontend_themes'] = $this->frontend_theme->getThemes();
 
 		// Options
+		$data['administrator_groups'] = $this->administratorGroupModel->getAdministratorGroups();
+
+		if($this->request->getPost('setting_default_administrator_group_id')) {
+			$data['setting_default_administrator_group_id'] = $this->request->getPost('setting_default_administrator_group_id');
+		} else {
+			$data['setting_default_administrator_group_id'] = $this->settingModel->getSettingValue('setting', 'setting_default_administrator_group_id');
+		}
+
 		$data['user_groups'] = $this->userGroupModel->getUserGroups();
 
 		if($this->request->getPost('setting_default_user_group_id')) {

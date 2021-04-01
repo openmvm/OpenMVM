@@ -34,6 +34,12 @@ $paths = new Config\Paths();
 $bootstrap = rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
 $app       = require realpath($bootstrap) ?: $bootstrap;
 
+// Install
+if (empty($_SERVER['app.baseURL']) || empty($_SERVER['app.adminDir'])) {
+	header("Location: " . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http") . "://".$_SERVER['HTTP_HOST'] . str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']) . '/install/public');
+	exit();
+}
+
 /*
  *---------------------------------------------------------------
  * LAUNCH THE APPLICATION

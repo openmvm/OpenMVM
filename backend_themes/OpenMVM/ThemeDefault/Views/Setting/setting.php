@@ -151,6 +151,19 @@
 						  <div class="tab-pane fade" id="data" role="tabpanel" aria-labelledby="data-tab">...</div>
 						  <div class="tab-pane fade" id="options" role="tabpanel" aria-labelledby="options-tab">
 		            <fieldset>
+							  	<h5 class="border-bottom border-dark pb-2 mb-3"><?php echo lang('Text.text_administrator', array(), $lang->getBackEndLocale()); ?></h5>
+									<div class="form-floating mb-3">
+									  <select name="setting_default_administrator_group_id" class="form-select" id="input-default-administrator-group-id" aria-label="administrator-default-group-id">
+			                <?php foreach ($administrator_groups as $administrator_group) { ?>
+			                  <?php if ($administrator_group['administrator_group_id'] == $setting_default_administrator_group_id) { ?>
+			                    <option value="<?php echo $administrator_group['administrator_group_id']; ?>" selected="selected"><?php echo $administrator_group['name']; ?></option>
+			                  <?php } else { ?>
+			                    <option value="<?php echo $administrator_group['administrator_group_id']; ?>"><?php echo $administrator_group['name']; ?></option>
+			                  <?php } ?>
+			                <?php } ?>
+									  </select>
+									  <label for="input-default-administrator-group-id"><?php echo lang('Entry.entry_administrator_group', array(), $lang->getBackEndLocale()); ?></label>
+									</div>
 							  	<h5 class="border-bottom border-dark pb-2 mb-3"><?php echo lang('Text.text_user', array(), $lang->getBackEndLocale()); ?></h5>
 									<div class="form-floating mb-3">
 									  <select name="setting_default_user_group_id" class="form-select" id="input-default-user-group-id" aria-label="user-default-group-id">

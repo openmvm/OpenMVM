@@ -21,6 +21,7 @@
 #--------------------------------------------------------------------
 
 # app.baseURL = ''
+# app.adminDir = ''
 # app.forceGlobalSecureRequests = false
 
 # app.sessionDriver = 'CodeIgniter\Session\Handlers\FileHandler'

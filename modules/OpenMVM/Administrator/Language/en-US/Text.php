@@ -13,4 +13,5 @@ return [
 	'text_enabled' => 'Enabled',
 	'text_disabled' => 'Disabled',
 	'text_login' => 'Login',
+	'text_administrator' => 'Administrator',
 ];
