@@ -220,7 +220,7 @@ class CategoryModel extends \CodeIgniter\Model
       }
       $query_data_5 = array(
         'category_id' => $category_id,
-        'path_id'     => $article_category_id,
+        'path_id'     => $category_id,
         'level'       => $level,
       );
 			$builder = $this->db->table('category_path');

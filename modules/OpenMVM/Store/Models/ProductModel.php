@@ -538,11 +538,11 @@ class ProductModel extends \CodeIgniter\Model
 		return $query;
 	}
 
-	public function updateViewed($article_id)
+	public function updateViewed($product_id)
 	{
-		$builder = $this->db->table('article');
+		$builder = $this->db->table('product');
 		$builder->set('viewed', 'viewed+1', FALSE);
-    $builder->where('article_id', $article_id);
+    $builder->where('product_id', $product_id);
 		$builder->update();
 	}
 }
