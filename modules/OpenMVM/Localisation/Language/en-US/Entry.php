@@ -24,4 +24,8 @@ return [
 	'entry_decimal_place' => 'Decimal Place',
 	'entry_frontend_weight_class' => 'FrontEnd Weight Class',
 	'entry_backend_weight_class' => 'BackEnd Weight Class',
+	'entry_state_input_type' => 'State Input Type',
+	'entry_city_input_type' => 'City Input Type',
+	'entry_district_input_type' => 'District Input Type',
+	'entry_address_format' => 'Address Format',
 ];

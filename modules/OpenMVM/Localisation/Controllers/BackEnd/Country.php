@@ -387,6 +387,38 @@ class Country extends \App\Controllers\BaseController
 			$data['code_dial_in'] = '';
 		}
 
+		if($this->request->getPost('state_input_type')) {
+			$data['state_input_type'] = $this->request->getPost('state_input_type');
+		} elseif ($country_info) {
+			$data['state_input_type'] = $country_info['state_input_type'];
+		} else {
+			$data['state_input_type'] = 'select_box';
+		}
+
+		if($this->request->getPost('city_input_type')) {
+			$data['city_input_type'] = $this->request->getPost('city_input_type');
+		} elseif ($country_info) {
+			$data['city_input_type'] = $country_info['city_input_type'];
+		} else {
+			$data['city_input_type'] = 'text_input';
+		}
+
+		if($this->request->getPost('district_input_type')) {
+			$data['district_input_type'] = $this->request->getPost('district_input_type');
+		} elseif ($country_info) {
+			$data['district_input_type'] = $country_info['district_input_type'];
+		} else {
+			$data['district_input_type'] = 'text_input';
+		}
+
+		if($this->request->getPost('address_format')) {
+			$data['address_format'] = $this->request->getPost('address_format');
+		} elseif ($country_info) {
+			$data['address_format'] = $country_info['address_format'];
+		} else {
+			$data['address_format'] = '';
+		}
+
 		if($this->request->getPost('sort_order')) {
 			$data['sort_order'] = $this->request->getPost('sort_order');
 		} elseif ($country_info) {

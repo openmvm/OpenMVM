@@ -18,4 +18,6 @@ return [
 	'text_language' => 'Language',
 	'text_weight' => 'Weight',
 	'text_all_states' => '--- All States ---',
+	'text_select_box' => 'Select Box',
+	'text_text_input' => 'Text Input',
 ];

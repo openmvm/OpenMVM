@@ -22,18 +22,57 @@ class CountryModel extends \CodeIgniter\Model
 		$builder = $this->db->table('country');
 
     $query_data = array(
-      'name'             => $data['name'],
-      'iso_code_2'       => $data['iso_code_2'],
-      'iso_code_3'       => $data['iso_code_3'],
-      'iso_code_numeric' => $data['iso_code_numeric'],
-      'code_dial_in'     => $data['code_dial_in'],
-      'sort_order'       => $data['sort_order'],
-      'status'           => $data['status'],
+      'name'                => $data['name'],
+      'iso_code_2'          => $data['iso_code_2'],
+      'iso_code_3'          => $data['iso_code_3'],
+      'iso_code_numeric'    => $data['iso_code_numeric'],
+      'code_dial_in'        => $data['code_dial_in'],
+      'state_input_type'    => $data['state_input_type'],
+      'city_input_type'     => $data['city_input_type'],
+      'district_input_type' => $data['district_input_type'],
+      'address_format'      => $data['address_format'],
+      'sort_order'          => $data['sort_order'],
+      'status'              => $data['status'],
     );
 
 		$builder->insert($query_data);
 
 		return $this->db->insertID();
+	}
+
+	public function editCountry($data = array(), $country_id)
+	{
+		$builder = $this->db->table('country');
+
+    $query_data = array(
+      'name'                => $data['name'],
+      'iso_code_2'          => $data['iso_code_2'],
+      'iso_code_3'          => $data['iso_code_3'],
+      'iso_code_numeric'    => $data['iso_code_numeric'],
+      'code_dial_in'        => $data['code_dial_in'],
+      'state_input_type'    => $data['state_input_type'],
+      'city_input_type'     => $data['city_input_type'],
+      'district_input_type' => $data['district_input_type'],
+      'address_format'      => $data['address_format'],
+      'sort_order'          => $data['sort_order'],
+      'status'              => $data['status'],
+    );
+
+		$builder->where('country_id', $country_id);
+		$query = $builder->update($query_data);
+
+		if ($query) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function deleteCountry($country_id)
+	{
+		$builder = $this->db->table('country');
+		$builder->where('country_id', $country_id);
+		$builder->delete();
 	}
 
 	public function getCountries($data = array())
@@ -62,14 +101,18 @@ class CountryModel extends \CodeIgniter\Model
 		foreach ($query->getResult() as $row)
 		{
 		  $results[] = array(
-        'country_id'       => $row->country_id,
-		  	'name'             => $row->name,
-	      'iso_code_2'       => $row->iso_code_2,
-	      'iso_code_3'       => $row->iso_code_3,
-	      'iso_code_numeric' => $row->iso_code_numeric,
-	      'code_dial_in'     => $row->code_dial_in,
-	      'sort_order'       => $row->sort_order,
-	      'status'           => $row->status,
+        'country_id'          => $row->country_id,
+		  	'name'                => $row->name,
+	      'iso_code_2'          => $row->iso_code_2,
+	      'iso_code_3'          => $row->iso_code_3,
+	      'iso_code_numeric'    => $row->iso_code_numeric,
+	      'code_dial_in'        => $row->code_dial_in,
+	      'state_input_type'    => $row->state_input_type,
+	      'city_input_type'     => $row->city_input_type,
+	      'district_input_type' => $row->district_input_type,
+	      'address_format'      => $row->address_format,
+	      'sort_order'          => $row->sort_order,
+	      'status'              => $row->status,
 		  );
 		}
 
@@ -84,37 +127,6 @@ class CountryModel extends \CodeIgniter\Model
 	public function getCountryByCode($code)
 	{
 		return $this->asArray()->where(['code' => $code])->first();
-	}
-
-	public function editCountry($data = array(), $country_id)
-	{
-		$builder = $this->db->table('country');
-
-    $query_data = array(
-      'name'             => $data['name'],
-      'iso_code_2'       => $data['iso_code_2'],
-      'iso_code_3'       => $data['iso_code_3'],
-      'iso_code_numeric' => $data['iso_code_numeric'],
-      'code_dial_in'     => $data['code_dial_in'],
-      'sort_order'       => $data['sort_order'],
-      'status'           => $data['status'],
-    );
-
-		$builder->where('country_id', $country_id);
-		$query = $builder->update($query_data);
-
-		if ($query) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public function deleteCountry($country_id)
-	{
-		$builder = $this->db->table('country');
-		$builder->where('country_id', $country_id);
-		$builder->delete();
 	}
 
 	public function getTotalCountries($data = array())

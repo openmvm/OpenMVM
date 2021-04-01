@@ -157,7 +157,7 @@ $('#button-geo-zone').on('click', function() {
 	html += '    <div class="form-floating mb-3">';
 	html += '      <select name="state_to_geo_zone[' + state_to_geo_zone_row + '][country_id]" class="form-select" id="input-state-to-geo-zone-country-id-' + state_to_geo_zone_row + '" aria-label="input-state-to-geo-zone-country-id-' + state_to_geo_zone_row + '" data-index="' + state_to_geo_zone_row + '">';
 	<?php foreach ($countries as $country) { ?>
-	html += '        <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>';
+	html += '        <option value="<?php echo $country['country_id']; ?>"><?php echo addslashes($country['name']); ?></option>';
 	<?php } ?>
 	html += '      </select>';
 	html += '      <label for="input-state-to-geo-zone-country-id-' + state_to_geo_zone_row + '"><?php echo lang('Entry.entry_country', array(), $lang->getBackEndLocale()); ?></label>';
