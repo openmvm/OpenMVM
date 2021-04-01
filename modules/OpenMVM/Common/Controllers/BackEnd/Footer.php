@@ -21,7 +21,8 @@ class Footer extends \App\Controllers\BaseController
 
 		// Data Text
 		$footer_data['website_name'] = $this->setting->get('setting', 'setting_website_name');
-		$footer_data['version'] = $_SERVER['app.Version'];
+		$footer_data['version_number'] = APP_VERSION_NUMBER;
+		$footer_data['version_name'] = APP_VERSION_NAME;
 
 		// Return view
 		return $this->template->render('BackendThemes', 'Common\footer', $footer_data);
