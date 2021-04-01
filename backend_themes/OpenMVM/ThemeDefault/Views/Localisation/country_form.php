@@ -106,8 +106,48 @@
 	                  <div class="text-danger small"><?php echo $validation->getError('code_dial_in'); ?></div>
 	                	<?php } ?>
 									</div>
+									<div class="form-floating mb-3">
+									  <select name="state_input_type" class="form-select" id="input-state-input-type" aria-label="state-input-type">
+		                  <?php if ($state_input_type == 'select_box') { ?>
+		                    <option value="select_box" selected><?php echo lang('Text.text_select_box', array(), $lang->getBackEndLocale()); ?></option>
+		                    <option value="text_input"><?php echo lang('Text.text_text_input', array(), $lang->getBackEndLocale()); ?></option>
+		                  <?php } else { ?>
+		                    <option value="select_box"><?php echo lang('Text.text_select_box', array(), $lang->getBackEndLocale()); ?></option>
+		                    <option value="text_input" selected><?php echo lang('Text.text_text_input', array(), $lang->getBackEndLocale()); ?></option>
+		                  <?php } ?>
+									  </select>
+									  <label for="input-state-input-type"><?php echo lang('Entry.entry_state_input_type', array(), $lang->getBackEndLocale()); ?></label>
+									</div>
+									<div class="form-floating mb-3">
+									  <select name="city_input_type" class="form-select" id="input-city-input-type" aria-label="city-input-type">
+		                  <?php if ($city_input_type == 'select_box') { ?>
+		                    <option value="select_box" selected><?php echo lang('Text.text_select_box', array(), $lang->getBackEndLocale()); ?></option>
+		                    <option value="text_input"><?php echo lang('Text.text_text_input', array(), $lang->getBackEndLocale()); ?></option>
+		                  <?php } else { ?>
+		                    <option value="select_box"><?php echo lang('Text.text_select_box', array(), $lang->getBackEndLocale()); ?></option>
+		                    <option value="text_input" selected><?php echo lang('Text.text_text_input', array(), $lang->getBackEndLocale()); ?></option>
+		                  <?php } ?>
+									  </select>
+									  <label for="input-city-input-type"><?php echo lang('Entry.entry_city_input_type', array(), $lang->getBackEndLocale()); ?></label>
+									</div>
+									<div class="form-floating mb-3">
+									  <select name="district_input_type" class="form-select" id="input-district-input-type" aria-label="district-input-type">
+		                  <?php if ($district_input_type == 'select_box') { ?>
+		                    <option value="select_box" selected><?php echo lang('Text.text_select_box', array(), $lang->getBackEndLocale()); ?></option>
+		                    <option value="text_input"><?php echo lang('Text.text_text_input', array(), $lang->getBackEndLocale()); ?></option>
+		                  <?php } else { ?>
+		                    <option value="select_box"><?php echo lang('Text.text_select_box', array(), $lang->getBackEndLocale()); ?></option>
+		                    <option value="text_input" selected><?php echo lang('Text.text_text_input', array(), $lang->getBackEndLocale()); ?></option>
+		                  <?php } ?>
+									  </select>
+									  <label for="input-district-input-type"><?php echo lang('Entry.entry_district_input_type', array(), $lang->getBackEndLocale()); ?></label>
+									</div>
 							  	<div class="form-floating mb-3">
-									  <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" class="form-control<?php if ($validation->hasError('sort_order')) { ?> is-invalid<?php } ?>" id="input-sort-order" placeholder="<?php echo lang('Entry.entry_sort_order', array(), $lang->getBackEndLocale()); ?>">
+									  <textarea style="height: 100px" name="address_format" class="form-control" id="input-address-format" placeholder="<?php echo lang('Entry.entry_address_format', array(), $lang->getBackEndLocale()); ?>"><?php echo $address_format; ?></textarea>
+									  <label for="input-address-format"><?php echo lang('Entry.entry_address_format', array(), $lang->getBackEndLocale()); ?></label>
+									</div>
+							  	<div class="form-floating mb-3">
+									  <input type="number" name="sort_order" value="<?php echo $sort_order; ?>" class="form-control<?php if ($validation->hasError('sort_order')) { ?> is-invalid<?php } ?>" id="input-sort-order" placeholder="<?php echo lang('Entry.entry_sort_order', array(), $lang->getBackEndLocale()); ?>">
 									  <label for="input-sort-order"><?php echo lang('Entry.entry_sort_order', array(), $lang->getBackEndLocale()); ?></label>
 									  <?php if ($validation->hasError('sort_order')) { ?>
 	                  <div class="text-danger small"><?php echo $validation->getError('sort_order'); ?></div>
