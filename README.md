@@ -6,11 +6,12 @@
 	It still lacks a lot of basic features. So, it is not ready for production yet.
 
 ### How to Install:
-	1. Edit the .env file to match your local server environtment
-	2. Import the openmvm.sql file located in public/install/ directory
-	3. Login to the Administrator area by visiting the admin url defined in the .env file: [app.baseURL]/[app.adminDir]. Username: openmvm ; Password: openmvm
+	1. Open the installer page by visiting your app URL 
+	2. Follow the installation steps
+	3. Login to the Administrator area by visiting the admin url defined in the .env file: [app.baseURL]/[app.adminDir]. Use your administrator username and password.
 
 ### Current Features:
+	* Application installer
 	* User (buyer and seller) can create an account
 	* Seller can open a store and add products
 	* Buyer can purchase products and view order details
@@ -23,12 +24,10 @@
 	* Widget System
 	* Widget Layout System
 	* Filemanager
+	* Geo zones
 
 ### Pre-registered Administrator & Users
 	OpenMVM version ZERO comes with some pre-registered accounts, so you can easily test the platform by using the pre-registered accounts.
-
-	Administrator account:
-	* Administrator 1 - Username: openmvm ; Password: openmvm
 
 	User accounts:
 	* Sellers:
