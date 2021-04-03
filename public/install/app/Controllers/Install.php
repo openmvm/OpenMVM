@@ -109,7 +109,7 @@ class Install extends BaseController
 		$data['heading_title'] = lang('Text.text_openmvm', array(), 'en-US') . ' - ' . lang('Heading.heading_installation', array(), 'en-US');
 
 		// Get license
-		$data['license'] = nl2br(file_get_contents( '../LICENSE' ));
+		$data['license'] = nl2br(file_get_contents( '../../../LICENSE' ));
 
 		// Get Locale
 		$data['front_locale'] = 'en-US';

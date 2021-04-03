@@ -1,2 +1,0 @@
-<?php
-// You did it!
