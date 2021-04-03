@@ -6,9 +6,10 @@
 	It still lacks a lot of basic features. So, it is not ready for production yet.
 
 ### How to Install:
-	1. Open the installer page by visiting your app URL 
-	2. Follow the installation steps
-	3. Login to the Administrator area by visiting the admin url defined in the .env file: [app.baseURL]/[app.adminDir]. Use your administrator username and password.
+	1. Rename env file to .env
+	2. Open the installer page by visiting your app URL 
+	3. Follow the installation steps
+	4. Login to the Administrator area by visiting the admin url defined in the .env file: [app.baseURL]/[app.adminDir]. Use your administrator username and password.
 
 ### Current Features:
 	* Application installer
