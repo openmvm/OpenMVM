@@ -475,7 +475,7 @@ class Product extends \App\Controllers\BaseController
 
 		// Load Header
 		$scripts = array(
-			'<script src="https://cdn.tiny.cloud/1/dbn26al47vjyo0bxis21dzudvrxslublqnw46jc6n4d9g74w/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>',
+			'<script src="' . base_url('assets/plugins/tinymce-5.7.0/js/tinymce/tinymce.min.js') . '" referrerpolicy="origin"></script>',
 		);
 
 		$header_parameter = array(
