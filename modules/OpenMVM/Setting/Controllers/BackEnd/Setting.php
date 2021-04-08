@@ -269,11 +269,79 @@ class Setting extends \App\Controllers\BaseController
 			$data['placeholder'] = $this->image->resize('placeholder.png', 150, 150, true, 'auto');
 		}
 
+		// Mail
+		$data['mail_protocols'] = array(
+			array(
+				'name' => 'SMTP',
+				'value' => 'smtp',
+			),
+		);
+
+    if ($this->request->getPost('setting_mail_protocol') !== null) {
+			$data['setting_mail_protocol'] = $this->request->getPost('setting_mail_protocol');
+    } else {
+			$data['setting_mail_protocol'] = $this->settingModel->getSettingValue('setting', 'setting_mail_protocol');
+		}
+
+    if ($this->request->getPost('setting_smtp_hostname') !== null) {
+			$data['setting_smtp_hostname'] = $this->request->getPost('setting_smtp_hostname');
+    } else {
+			$data['setting_smtp_hostname'] = $this->settingModel->getSettingValue('setting', 'setting_smtp_hostname');
+		}
+
+    if ($this->request->getPost('setting_smtp_username') !== null) {
+			$data['setting_smtp_username'] = $this->request->getPost('setting_smtp_username');
+    } else {
+			$data['setting_smtp_username'] = $this->settingModel->getSettingValue('setting', 'setting_smtp_username');
+		}
+
+    if ($this->request->getPost('setting_smtp_password') !== null) {
+			$data['setting_smtp_password'] = $this->request->getPost('setting_smtp_password');
+    } else {
+			$data['setting_smtp_password'] = $this->settingModel->getSettingValue('setting', 'setting_smtp_password');
+		}
+
+    if ($this->request->getPost('setting_smtp_port') !== null) {
+			$data['setting_smtp_port'] = $this->request->getPost('setting_smtp_port');
+    } else {
+			$data['setting_smtp_port'] = $this->settingModel->getSettingValue('setting', 'setting_smtp_port');
+		}
+
+    if ($this->request->getPost('setting_smtp_timeout') !== null) {
+			$data['setting_smtp_timeout'] = $this->request->getPost('setting_smtp_timeout');
+    } else {
+			$data['setting_smtp_timeout'] = $this->settingModel->getSettingValue('setting', 'setting_smtp_timeout');
+		}
+
+    if ($this->request->getPost('setting_additional_alert_mail') !== null) {
+			$data['setting_additional_alert_mail'] = $this->request->getPost('setting_additional_alert_mail');
+    } else {
+			$data['setting_additional_alert_mail'] = $this->settingModel->getSettingValue('setting', 'setting_additional_alert_mail');
+		}
+
+    if ($this->request->getPost('setting_smtp_verify_peer') !== null) {
+			$data['setting_smtp_verify_peer'] = $this->request->getPost('setting_smtp_verify_peer');
+    } else {
+			$data['setting_smtp_verify_peer'] = $this->settingModel->getSettingValue('setting', 'setting_smtp_verify_peer');
+		}
+
+    if ($this->request->getPost('setting_smtp_verify_peer_name') !== null) {
+			$data['setting_smtp_verify_peer_name'] = $this->request->getPost('setting_smtp_verify_peer_name');
+    } else {
+			$data['setting_smtp_verify_peer_name'] = $this->settingModel->getSettingValue('setting', 'setting_smtp_verify_peer_name');
+		}
+
+    if ($this->request->getPost('setting_smtp_allow_self_signed') !== null) {
+			$data['setting_smtp_allow_self_signed'] = $this->request->getPost('setting_smtp_allow_self_signed');
+    } else {
+			$data['setting_smtp_allow_self_signed'] = $this->settingModel->getSettingValue('setting', 'setting_smtp_allow_self_signed');
+		}
+
 		$data['administrator_token'] = $this->administrator->getToken();
 
 		// Load Header
 		$scripts = array(
-			'<script src="https://cdn.tiny.cloud/1/dbn26al47vjyo0bxis21dzudvrxslublqnw46jc6n4d9g74w/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>',
+			'<script src="' . base_url('assets/plugins/tinymce-5.7.0/js/tinymce/tinymce.min.js') . '" referrerpolicy="origin"></script>',
 		);
 
 		$header_parameter = array(

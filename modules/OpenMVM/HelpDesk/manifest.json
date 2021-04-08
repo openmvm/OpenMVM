@@ -1,0 +1,20 @@
+{
+	"id":"module-help-desk",
+	"name":{
+		"en-US":"Module Help Desk"
+	},
+	"short_name":{
+		"en-US":"Help Desk"
+	},
+	"description":{
+		"en-US":"Module Help Desk for OpenMVM"
+	},
+	"short_description":{
+		"en-US":"Module Help Desk for OpenMVM"
+	},
+	"dir":{
+		"provider":"OpenMVM",
+		"module":"Help Desk"
+	},
+	"sidemenu":[]
+}

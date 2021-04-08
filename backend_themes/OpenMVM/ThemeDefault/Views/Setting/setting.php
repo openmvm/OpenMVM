@@ -78,6 +78,9 @@
 						  <li class="nav-item" role="presentation">
 						    <button class="nav-link" id="images-tab" data-bs-toggle="tab" data-bs-target="#images" type="button" role="tab" aria-controls="images" aria-selected="false"><?php echo lang('Tab.tab_images', array(), $lang->getBackEndLocale()); ?></button>
 						  </li>
+						  <li class="nav-item" role="presentation">
+						    <button class="nav-link" id="mail-tab" data-bs-toggle="tab" data-bs-target="#mail" type="button" role="tab" aria-controls="mail" aria-selected="false"><?php echo lang('Tab.tab_mail', array(), $lang->getBackEndLocale()); ?></button>
+						  </li>
 						</ul>
 						<div class="tab-content" id="myTabContent">
 						  <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
@@ -286,6 +289,82 @@
 		                </div>
 			            </div>
 			          </fieldset>
+						  </div>
+						  <div class="tab-pane fade" id="mail" role="tabpanel" aria-labelledby="mail-tab">
+		            <fieldset>
+									<div class="form-floating mb-3">
+									  <select name="setting_mail_protocol" class="form-select" id="input-mail-protocol" aria-label="mail-protocol">
+			                <?php foreach ($mail_protocols as $mail_protocol) { ?>
+			                  <?php if ($mail_protocol['value'] == $setting_mail_protocol) { ?>
+			                    <option value="<?php echo $mail_protocol['value']; ?>" selected="selected"><?php echo $mail_protocol['name']; ?></option>
+			                  <?php } else { ?>
+			                    <option value="<?php echo $mail_protocol['value']; ?>"><?php echo $mail_protocol['name']; ?></option>
+			                  <?php } ?>
+			                <?php } ?>
+									  </select>
+									  <label for="input-mail-protocol"><?php echo lang('Entry.entry_mail_protocol', array(), $lang->getBackEndLocale()); ?></label>
+									</div>
+							  	<div class="form-floating mb-3">
+									  <input type="text" name="setting_smtp_hostname" value="<?php echo $setting_smtp_hostname; ?>" class="form-control" id="input-smtp-hostname" placeholder="<?php echo lang('Entry.entry_smtp_hostname', array(), $lang->getBackEndLocale()); ?>">
+									  <label for="input-smtp-hostname"><?php echo lang('Entry.entry_smtp_hostname', array(), $lang->getBackEndLocale()); ?></label>
+									</div>
+							  	<div class="form-floating mb-3">
+									  <input type="text" name="setting_smtp_username" value="<?php echo $setting_smtp_username; ?>" class="form-control" id="input-smtp-username" placeholder="<?php echo lang('Entry.entry_smtp_username', array(), $lang->getBackEndLocale()); ?>">
+									  <label for="input-smtp-username"><?php echo lang('Entry.entry_smtp_username', array(), $lang->getBackEndLocale()); ?></label>
+									</div>
+							  	<div class="form-floating mb-3">
+									  <input type="text" name="setting_smtp_password" value="<?php echo $setting_smtp_password; ?>" class="form-control" id="input-smtp-password" placeholder="<?php echo lang('Entry.entry_smtp_password', array(), $lang->getBackEndLocale()); ?>">
+									  <label for="input-smtp-password"><?php echo lang('Entry.entry_smtp_password', array(), $lang->getBackEndLocale()); ?></label>
+									</div>
+							  	<div class="form-floating mb-3">
+									  <input type="number" name="setting_smtp_port" value="<?php echo $setting_smtp_port; ?>" class="form-control" id="input-smtp-port" placeholder="<?php echo lang('Entry.entry_smtp_port', array(), $lang->getBackEndLocale()); ?>">
+									  <label for="input-smtp-port"><?php echo lang('Entry.entry_smtp_port', array(), $lang->getBackEndLocale()); ?></label>
+									</div>
+							  	<div class="form-floating mb-3">
+									  <input type="number" name="setting_smtp_timeout" value="<?php echo $setting_smtp_timeout; ?>" class="form-control" id="input-smtp-timeout" placeholder="<?php echo lang('Entry.entry_smtp_timeout', array(), $lang->getBackEndLocale()); ?>">
+									  <label for="input-smtp-timeout"><?php echo lang('Entry.entry_smtp_timeout', array(), $lang->getBackEndLocale()); ?></label>
+									</div>
+									<div class="form-floating mb-3">
+									  <select name="setting_smtp_verify_peer" class="form-select" id="input-verify-peer" aria-label="verify-peer">
+		                  <?php if ($setting_smtp_verify_peer) { ?>
+		                    <option value="1" selected><?php echo lang('Text.text_yes', array(), $lang->getBackEndLocale()); ?></option>
+		                    <option value="0"><?php echo lang('Text.text_no', array(), $lang->getBackEndLocale()); ?></option>
+		                  <?php } else { ?>
+		                    <option value="1"><?php echo lang('Text.text_yes', array(), $lang->getBackEndLocale()); ?></option>
+		                    <option value="0" selected><?php echo lang('Text.text_no', array(), $lang->getBackEndLocale()); ?></option>
+		                  <?php } ?>
+									  </select>
+									  <label for="input-verify-peer"><?php echo lang('Entry.entry_smtp_verify_peer', array(), $lang->getBackEndLocale()); ?></label>
+									</div>
+									<div class="form-floating mb-3">
+									  <select name="setting_smtp_verify_peer_name" class="form-select" id="input-verify-peer-name" aria-label="verify-peer-name">
+		                  <?php if ($setting_smtp_verify_peer_name) { ?>
+		                    <option value="1" selected><?php echo lang('Text.text_yes', array(), $lang->getBackEndLocale()); ?></option>
+		                    <option value="0"><?php echo lang('Text.text_no', array(), $lang->getBackEndLocale()); ?></option>
+		                  <?php } else { ?>
+		                    <option value="1"><?php echo lang('Text.text_yes', array(), $lang->getBackEndLocale()); ?></option>
+		                    <option value="0" selected><?php echo lang('Text.text_no', array(), $lang->getBackEndLocale()); ?></option>
+		                  <?php } ?>
+									  </select>
+									  <label for="input-verify-peer-name"><?php echo lang('Entry.entry_smtp_verify_peer_name', array(), $lang->getBackEndLocale()); ?></label>
+									</div>
+									<div class="form-floating mb-3">
+									  <select name="setting_smtp_allow_self_signed" class="form-select" id="input-allow-self-signed" aria-label="allow-self-signed">
+		                  <?php if ($setting_smtp_allow_self_signed) { ?>
+		                    <option value="1" selected><?php echo lang('Text.text_yes', array(), $lang->getBackEndLocale()); ?></option>
+		                    <option value="0"><?php echo lang('Text.text_no', array(), $lang->getBackEndLocale()); ?></option>
+		                  <?php } else { ?>
+		                    <option value="1"><?php echo lang('Text.text_yes', array(), $lang->getBackEndLocale()); ?></option>
+		                    <option value="0" selected><?php echo lang('Text.text_no', array(), $lang->getBackEndLocale()); ?></option>
+		                  <?php } ?>
+									  </select>
+									  <label for="input-allow-self-signed"><?php echo lang('Entry.entry_smtp_allow_self_signed', array(), $lang->getBackEndLocale()); ?></label>
+									</div>
+							  	<div class="form-floating mb-3">
+									  <textarea style="height: 200px" name="setting_additional_alert_mail" class="form-control" id="input-additional-alert-mail" placeholder="<?php echo lang('Entry.entry_additional_alert_mail', array(), $lang->getBackEndLocale()); ?>"><?php echo $setting_additional_alert_mail; ?></textarea>
+									  <label for="input-additional-alert-mail"><?php echo lang('Entry.entry_additional_alert_mail', array(), $lang->getBackEndLocale()); ?></label>
+									</div>
+		            </fieldset>
 						  </div>
 						</div>
 		      </div>

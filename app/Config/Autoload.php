@@ -47,6 +47,7 @@ class Autoload extends AutoloadConfig
 		'Modules\OpenMVM\Common' => ROOTPATH . 'modules/OpenMVM/Common',
 		'Modules\OpenMVM\Filemanager' => ROOTPATH . 'modules/OpenMVM/Filemanager',
 		'Modules\OpenMVM\FrontendTheme' => ROOTPATH . 'modules/OpenMVM/FrontendTheme',
+		'Modules\OpenMVM\HelpDesk' => ROOTPATH . 'modules/OpenMVM/HelpDesk',
 		'Modules\OpenMVM\Localisation' => ROOTPATH . 'modules/OpenMVM/Localisation',
 		'Modules\OpenMVM\Order' => ROOTPATH . 'modules/OpenMVM/Order',
 		'Modules\OpenMVM\PaymentMethod' => ROOTPATH . 'modules/OpenMVM/PaymentMethod',

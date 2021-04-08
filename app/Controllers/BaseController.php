@@ -51,12 +51,14 @@ class BaseController extends Controller
 		$this->session = \Config\Services::session();
 		$this->validation = \Config\Services::validation();
 		$this->pager = \Config\Services::pager();
+		$this->email = \Config\Services::email();
 		$this->language = new \App\Libraries\Language;
 		$this->module = new \App\Libraries\Module;
 		$this->template = new \App\Libraries\Template;
 		$this->backend_theme = new \App\Libraries\BackendTheme;
 		$this->frontend_theme = new \App\Libraries\FrontendTheme;
 		$this->setting = new \App\Libraries\Setting;
+		$this->config = new \App\Libraries\Config;
 		$this->image = new \App\Libraries\Image;
 		$this->auth = new \App\Libraries\Auth;
 		$this->administrator = new \App\Libraries\Administrator;
@@ -65,6 +67,8 @@ class BaseController extends Controller
 		$this->text = new \App\Libraries\Text;
 		$this->currency = new \App\Libraries\Currency;
 		$this->widget = new \App\Libraries\Widget;
+		$this->phpmailer_lib = new \App\Libraries\PHPMailer_lib;
+		$this->mail = new \App\Libraries\Mail;
 
 		// Load Modules Libraries
 		$this->cart = new \Modules\OpenMVM\Order\Libraries\Cart;

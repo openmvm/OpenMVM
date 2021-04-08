@@ -96,11 +96,11 @@ class Register extends \App\Controllers\BaseController
 	{
     // Data Notification
     if ($this->session->get('success') !== null) {
-			$data['success'] = $this->session->get('success');
+			$data['message'] = $this->session->get('success');
 
 			$this->session->remove('success');
     } else {
-			$data['success'] = '';
+			$data['message'] = '';
     }
 
 		// Load Header
@@ -121,11 +121,11 @@ class Register extends \App\Controllers\BaseController
 	{
     // Data Notification
     if ($this->session->get('error') !== null) {
-			$data['error'] = $this->session->get('error');
+			$data['message'] = $this->session->get('error');
 
 			$this->session->remove('error');
     } else {
-			$data['error'] = '';
+			$data['message'] = '';
     }
 
 		// Load Header

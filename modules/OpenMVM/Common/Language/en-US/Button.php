@@ -7,4 +7,5 @@ return [
 	'button_delete' => 'Delete',
 	'button_save' => 'Save',
 	'button_search' => 'Search',
+	'button_send' => 'Send',
 ];

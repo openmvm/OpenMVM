@@ -16,10 +16,12 @@ class UserModel extends \CodeIgniter\Model
 	{
 		// Load Libraries
 		$this->session = \Config\Services::session();
+		$this->email = \Config\Services::email();
 		$this->setting = new \App\Libraries\Setting;
 		$this->language = new \App\Libraries\Language;
 		$this->phpmailer_lib = new PHPMailer_lib;
 		$this->auth = new \App\Libraries\Auth;
+		$this->config = new \App\Libraries\Config;
 		// Load Database
 		$this->db = db_connect();
 		// Load Models
@@ -153,223 +155,9 @@ class UserModel extends \CodeIgniter\Model
 			}
 		}
 
-    // Send Email Verification Mail if Required
-		if ($user_group_info && $user_group_info['email_verification']) {
-			$user_info = $this->getUser($user_id);
-
-			if ($user_info) {
-				// Get Current Language
-				$segments = explode('/', uri_string());
-
-				$language_info = $this->language->getLanguageByCode($segments[0]);
-
-				if ($language_info['language_id']) {
-					$language_id = $language_info['language_id'];
-				} elseif ($this->session->has('front_lang_id')) {
-					$language_id = $this->session->get('front_lang_id');
-				} else {
-					$language_id = $this->setting->get('setting','setting_front_lang_id');
-				}
-
-				if ($language_info['code']) {
-					$language_code = $language_info['code'];
-				} elseif ($this->session->has('front_lang_code')) {
-					$language_code = $this->session->get('front_lang_code');
-				} else {
-					$language_code = $segments[0];
-				}
-
-				$builder = $this->db->table('user_email_verification');
-				$builder->where('username', $data['username']);
-				$builder->where('email', $data['email']);
-				$builder->delete();
-
-				$builder = $this->db->table('user_email_verification');
-
-		    $query_data = array(
-		      'username'      => $data['username'],
-		      'email'         => $data['email'],
-		      'code'          => bin2hex(random_bytes(40)),
-		      'date_added'    => date("Y-m-d H:i:s",now()),
-		      'date_expired'  => date("Y-m-d H:i:s",strtotime("+7 day",now())),
-		    );
-
-				$query = $builder->insert($query_data);
-
-				// Send Mail
-				$mail = $this->phpmailer_lib->load();
-
-		    // SMTP configuration
-		    $mail->SMTPDebug   = 0; // Enable verbose debug output
-		    $mail->isSMTP();     
-		    $mail->Timeout     = $this->setting->get('setting','setting_smtp_timeout'); // Set mailer to use SMTP
-		    $mail->Host        = $this->setting->get('setting','setting_smtp_hostname'); // Specify main and backup SMTP servers
-		    $mail->SMTPAuth    = true; // Enable SMTP authentication
-		    $mail->Username    = $this->setting->get('setting','setting_smtp_username'); // SMTP username
-		    $mail->Password    = $this->setting->get('setting','setting_smtp_password'); // SMTP password
-		    $mail->SMTPSecure  = 'ssl'; // Enable TLS encryption, `ssl` also accepted
-				$mail->SMTPOptions = array(
-			    'ssl' => array(
-		        'verify_peer' => false,
-		        'verify_peer_name' => false,
-		        'allow_self_signed' => true
-			    )
-				);
-		    $mail->Port        = $this->setting->get('setting','setting_smtp_port'); // TCP port to connect to
-
-		    //Recipients
-		    $mail->setFrom($this->setting->get('setting','setting_smtp_username'), html_entity_decode($this->setting->get('setting','setting_website_name'), ENT_QUOTES, 'UTF-8'));
-		    $mail->addAddress($user_info['email'], html_entity_decode($user_info['firstname'] . ' ' . $user_info['lastname'], ENT_QUOTES, 'UTF-8')); // Add a recipient
-
-		    // Content
-		    $mail->isHTML(true); // Set email format to HTML
-		    $mail->Subject = sprintf(lang('Mail.mail_subject_email_verification', array(), $language_code), html_entity_decode($this->setting->get('setting','setting_website_name'), ENT_QUOTES, 'UTF-8'));
-
-		    $mail_data = array(
-		    	'front_locale' => $language_code,
-		    	'website_name' => $this->setting->get('setting','setting_website_name'),
-		    	'firstname'    => $user_info['firstname'],
-		    	'lastname'     => $user_info['lastname'],
-		    	'username'     => $user_info['username'],
-		    	'email'        => $user_info['email'],
-		    	'code'         => $user_info['code'],
-		    );
-
-		    // $mail->Body    = view('welcome_message', $mail_data);
-		    // $mail->AltBody = view('welcome_message', $mail_data);
-
-		    // Send email
-		    $mail->send();
-			}
-		}
+    // Send Email
 
 		return $user_id;
-	}
-
-	public function getUsers($data = array())
-	{
-		$results = array();
-
-		$builder = $this->db->table('user');
-
-		if (!empty($data['filter_username'])) {
-      $builder->like('username', $data['filter_username']);
-		}
-
-		if (!empty($data['filter_name'])) {
-      $builder->like('CONCAT(firstname, " ", lastname)', $data['filter_name']);
-		}
-
-		if (!empty($data['filter_email'])) {
-      $builder->like('email', $data['filter_email']);
-		}
-
-		if (!empty($data['sort']) && !empty($data['order'])) {
-			$builder->orderBy($data['sort'], $data['order']);
-		}
-    if (!empty($data['start']) || !empty($data['limit'])) {
-      if ($data['start'] < 0) {
-        $data['start'] = 0;
-      }
-
-      if ($data['limit'] < 1) {
-        $data['limit'] = 20;
-      }
-
-      $builder->limit($data['limit'], $data['start']);
-    }
-
-		$query   = $builder->get();
-
-		foreach ($query->getResult() as $row)
-		{
-		  $results[] = array(
-	      'user_id'       => $row->user_id,
-	      'user_group_id' => $row->user_group_id,
-	      'username'      => $row->username,
-	      'name'          => $row->firstname . ' ' . $row->lastname,
-	      'firstname'     => $row->firstname,
-	      'lastname'      => $row->lastname,
-	      'email'         => $row->email,
-	      'avatar'        => $row->avatar,
-	      'ip'            => $row->ip,
-	      'status'        => $row->status,
-      	'approved'      => $row->approved,
-	      'date_added'    => $row->date_added,
-		  );
-		}
-
-		return $results;
-	}
-
-	public function getUser($user_id)
-	{
-		return $this->asArray()->where(['user_id' => $user_id])->first();
-	}
-
-	public function getUserByUsername($username)
-	{
-		if ($username) {
-			$result = $this->asArray()->where(['username' => $username])->first();
-
-			if (!empty($result)) {
-				return $result;
-			} else {
-				return null;
-			}
-		} else {
-			return null;
-		}
-	}
-
-	public function getUserByEmail($email)
-	{
-		if ($email) {
-			$result = $this->asArray()->where(['email' => $email])->first();
-
-			if (!empty($result)) {
-				return $result;
-			} else {
-				return null;
-			}
-		} else {
-			return null;
-		}
-	}
-
-	public function getUserByUsernameAndEmail($username, $email)
-	{
-		if ($username && $email) {
-			$result = $this->asArray()->where(['username' => $username, 'email' => $email])->first();
-
-			if (!empty($result)) {
-				return $result;
-			} else {
-				return null;
-			}
-		} else {
-			return null;
-		}
-	}
-
-	public function getUserLogin($data = array())
-	{
-    $user_info = $this->asArray()->where(['username' => $data['username'], 'approved' => 1])->first();
-
-    if ($user_info)
-    {
-      $hashed_password = $user_info['password'];
-      $salt = $user_info['salt'];
-
-      if (hash('sha1', $data['password'] . $salt) == $hashed_password)
-      {
-        return $user_info;
-      } else {
-        return null;
-      }
-    } else {
-      return null;
-    }
 	}
 
 	public function editUser($data = array(), $user_id)
@@ -519,27 +307,6 @@ class UserModel extends \CodeIgniter\Model
 		}
 	}
 
-	public function editFrontUser($data = array(), $user_id)
-	{
-		// User Data
-		$builder = $this->db->table('user');
-
-    $query_data = array(
-      'firstname'     => $data['firstname'],
-      'lastname'      => $data['lastname'],
-      'date_modified' => date("Y-m-d H:i:s",now()),
-    );
-
-		$builder->where('user_id', $user_id);
-		$query = $builder->update($query_data);
-
-		if ($query) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	public function deleteUser($user_id)
 	{
 		$builder = $this->db->table('user');
@@ -572,6 +339,132 @@ class UserModel extends \CodeIgniter\Model
 		} else {
 			return false;
 		}
+	}
+
+	public function getUsers($data = array())
+	{
+		$results = array();
+
+		$builder = $this->db->table('user');
+
+		if (!empty($data['filter_username'])) {
+      $builder->like('username', $data['filter_username']);
+		}
+
+		if (!empty($data['filter_name'])) {
+      $builder->like('CONCAT(firstname, " ", lastname)', $data['filter_name']);
+		}
+
+		if (!empty($data['filter_email'])) {
+      $builder->like('email', $data['filter_email']);
+		}
+
+		if (!empty($data['sort']) && !empty($data['order'])) {
+			$builder->orderBy($data['sort'], $data['order']);
+		}
+    if (!empty($data['start']) || !empty($data['limit'])) {
+      if ($data['start'] < 0) {
+        $data['start'] = 0;
+      }
+
+      if ($data['limit'] < 1) {
+        $data['limit'] = 20;
+      }
+
+      $builder->limit($data['limit'], $data['start']);
+    }
+
+		$query   = $builder->get();
+
+		foreach ($query->getResult() as $row)
+		{
+		  $results[] = array(
+	      'user_id'       => $row->user_id,
+	      'user_group_id' => $row->user_group_id,
+	      'username'      => $row->username,
+	      'name'          => $row->firstname . ' ' . $row->lastname,
+	      'firstname'     => $row->firstname,
+	      'lastname'      => $row->lastname,
+	      'email'         => $row->email,
+	      'avatar'        => $row->avatar,
+	      'ip'            => $row->ip,
+	      'status'        => $row->status,
+      	'approved'      => $row->approved,
+	      'date_added'    => $row->date_added,
+		  );
+		}
+
+		return $results;
+	}
+
+	public function getUser($user_id)
+	{
+		return $this->asArray()->where(['user_id' => $user_id])->first();
+	}
+
+	public function getUserByUsername($username)
+	{
+		if ($username) {
+			$result = $this->asArray()->where(['username' => $username])->first();
+
+			if (!empty($result)) {
+				return $result;
+			} else {
+				return null;
+			}
+		} else {
+			return null;
+		}
+	}
+
+	public function getUserByEmail($email)
+	{
+		if ($email) {
+			$result = $this->asArray()->where(['email' => $email])->first();
+
+			if (!empty($result)) {
+				return $result;
+			} else {
+				return null;
+			}
+		} else {
+			return null;
+		}
+	}
+
+	public function getUserByUsernameAndEmail($username, $email)
+	{
+		if ($username && $email) {
+			$result = $this->asArray()->where(['username' => $username, 'email' => $email])->first();
+
+			if (!empty($result)) {
+				return $result;
+			} else {
+				return null;
+			}
+		} else {
+			return null;
+		}
+	}
+
+	public function getUserLogin($data = array())
+	{
+    $user_info = $this->asArray()->where(['username' => $data['username'], 'approved' => 1])->first();
+
+    if ($user_info)
+    {
+      $hashed_password = $user_info['password'];
+      $salt = $user_info['salt'];
+
+      if (hash('sha1', $data['password'] . $salt) == $hashed_password)
+      {
+        return $user_info;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
 	}
 
 	public function getUserAddresses($user_id)
@@ -753,53 +646,8 @@ class UserModel extends \CodeIgniter\Model
 			$query = $builder->insert($query_data);
 
 			// Send Mail
-			$mail = $this->phpmailer_lib->load();
-
-	    // SMTP configuration
-	    $mail->SMTPDebug   = 0; // Enable verbose debug output
-	    $mail->isSMTP();     
-	    $mail->Timeout     = $this->setting->get('setting','setting_smtp_timeout'); // Set mailer to use SMTP
-	    $mail->Host        = $this->setting->get('setting','setting_smtp_hostname'); // Specify main and backup SMTP servers
-	    $mail->SMTPAuth    = true; // Enable SMTP authentication
-	    $mail->Username    = $this->setting->get('setting','setting_smtp_username'); // SMTP username
-	    $mail->Password    = $this->setting->get('setting','setting_smtp_password'); // SMTP password
-	    $mail->SMTPSecure  = 'ssl'; // Enable TLS encryption, `ssl` also accepted
-			$mail->SMTPOptions = array(
-		    'ssl' => array(
-	        'verify_peer' => false,
-	        'verify_peer_name' => false,
-	        'allow_self_signed' => true
-		    )
-			);
-	    $mail->Port        = $this->setting->get('setting','setting_smtp_port'); // TCP port to connect to
-
-	    //Recipients
-	    $mail->setFrom($this->setting->get('setting','setting_smtp_username'), html_entity_decode($this->setting->get('setting','setting_website_name'), ENT_QUOTES, 'UTF-8'));
-	    $mail->addAddress($user_info['email'], html_entity_decode($user_info['firstname'] . ' ' . $user_info['lastname'], ENT_QUOTES, 'UTF-8')); // Add a recipient
-
-	    // Content
-	    $mail->isHTML(true); // Set email format to HTML
-	    $mail->Subject = sprintf(lang('Mail.mail_subject_forgot_password', array(), $language_code), html_entity_decode($this->setting->get('setting','setting_website_name'), ENT_QUOTES, 'UTF-8'));
-
-	    $mail_data = array(
-	    	'front_locale' => $language_code,
-	    	'website_name' => $this->setting->get('setting','setting_website_name'),
-	    	'firstname'    => $user_info['firstname'],
-	    	'lastname'     => $user_info['lastname'],
-	    	'username'     => $user_info['username'],
-	    	'email'        => $user_info['email'],
-	    	'code'         => $user_info['code'],
-	    );
-
-	    $mail->Body    = view('welcome_message', $mail_data);
-	    $mail->AltBody = view('welcome_message', $mail_data);
-
-	    // Send email
-	    if($mail->send()){
-				return true;
-		  } else {
-				return false;
-		  }
+			
+			return true;
 		} else {
 			return false;
 		}
@@ -874,53 +722,8 @@ class UserModel extends \CodeIgniter\Model
 			$query = $builder->insert($query_data);
 
 			// Send Mail
-			$mail = $this->phpmailer_lib->load();
-
-	    // SMTP configuration
-	    $mail->SMTPDebug   = 0; // Enable verbose debug output
-	    $mail->isSMTP();     
-	    $mail->Timeout     = $this->setting->get('setting','setting_smtp_timeout'); // Set mailer to use SMTP
-	    $mail->Host        = $this->setting->get('setting','setting_smtp_hostname'); // Specify main and backup SMTP servers
-	    $mail->SMTPAuth    = true; // Enable SMTP authentication
-	    $mail->Username    = $this->setting->get('setting','setting_smtp_username'); // SMTP username
-	    $mail->Password    = $this->setting->get('setting','setting_smtp_password'); // SMTP password
-	    $mail->SMTPSecure  = 'ssl'; // Enable TLS encryption, `ssl` also accepted
-			$mail->SMTPOptions = array(
-		    'ssl' => array(
-	        'verify_peer' => false,
-	        'verify_peer_name' => false,
-	        'allow_self_signed' => true
-		    )
-			);
-	    $mail->Port        = $this->setting->get('setting','setting_smtp_port'); // TCP port to connect to
-
-	    //Recipients
-	    $mail->setFrom($this->setting->get('setting','setting_smtp_username'), html_entity_decode($this->setting->get('setting','setting_website_name'), ENT_QUOTES, 'UTF-8'));
-	    $mail->addAddress($user_info['email'], html_entity_decode($user_info['firstname'] . ' ' . $user_info['lastname'], ENT_QUOTES, 'UTF-8')); // Add a recipient
-
-	    // Content
-	    $mail->isHTML(true); // Set email format to HTML
-	    $mail->Subject = sprintf(lang('Mail.mail_subject_email_verification', array(), $language_code), html_entity_decode($this->setting->get('setting','setting_website_name'), ENT_QUOTES, 'UTF-8'));
-
-	    $mail_data = array(
-	    	'front_locale' => $language_code,
-	    	'website_name' => $this->setting->get('setting','setting_website_name'),
-	    	'firstname'    => $user_info['firstname'],
-	    	'lastname'     => $user_info['lastname'],
-	    	'username'     => $user_info['username'],
-	    	'email'        => $user_info['email'],
-	    	'code'         => $user_info['code'],
-	    );
-
-	    $mail->Body    = view('welcome_message', $mail_data);
-	    $mail->AltBody = view('welcome_message', $mail_data);
-
-	    // Send email
-	    if($mail->send()){
-				return true;
-		  } else {
-				return false;
-		  }
+			
+			return true;
 		} else {
 			return false;
 		}
