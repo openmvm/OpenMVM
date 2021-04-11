@@ -42,6 +42,10 @@ class Localisation extends \App\Controllers\BaseController
 	    	$json['iso_code_3'] = $country_info['iso_code_3'];
 	    	$json['iso_code_numeric'] = $country_info['iso_code_numeric'];
 	    	$json['code_dial_in'] = $country_info['code_dial_in'];
+	    	$json['state_input_type'] = $country_info['state_input_type'];
+	    	$json['city_input_type'] = $country_info['city_input_type'];
+	    	$json['district_input_type'] = $country_info['district_input_type'];
+	    	$json['district_required'] = $country_info['district_required'];
 
 	    	// Get States by Country ID
 	    	$filter_data = array(

@@ -43,12 +43,15 @@ class OrderModel extends \CodeIgniter\Model
 		$builder_order->set('payment_company', $data['payment_company']);
 		$builder_order->set('payment_address_1', $data['payment_address_1']);
 		$builder_order->set('payment_address_2', $data['payment_address_2']);
-		$builder_order->set('payment_city', $data['payment_city']);
 		$builder_order->set('payment_postal_code', $data['payment_postal_code']);
-		$builder_order->set('payment_country', $data['payment_country']);
 		$builder_order->set('payment_country_id', $data['payment_country_id']);
-		$builder_order->set('payment_state', $data['payment_state']);
+		$builder_order->set('payment_country', $data['payment_country']);
 		$builder_order->set('payment_state_id', $data['payment_state_id']);
+		$builder_order->set('payment_state', $data['payment_state']);
+		$builder_order->set('payment_city_id', $data['payment_city_id']);
+		$builder_order->set('payment_city', $data['payment_city']);
+		$builder_order->set('payment_district_id', $data['payment_district_id']);
+		$builder_order->set('payment_district', $data['payment_district']);
 		$builder_order->set('payment_address_format', $data['payment_address_format']);
 		$builder_order->set('payment_custom_field', $data['payment_custom_field']);
 		$builder_order->set('payment_method', $data['payment_method']);
@@ -98,12 +101,15 @@ class OrderModel extends \CodeIgniter\Model
 		$builder_order->set('payment_company', $data['payment_company']);
 		$builder_order->set('payment_address_1', $data['payment_address_1']);
 		$builder_order->set('payment_address_2', $data['payment_address_2']);
-		$builder_order->set('payment_city', $data['payment_city']);
 		$builder_order->set('payment_postal_code', $data['payment_postal_code']);
-		$builder_order->set('payment_country', $data['payment_country']);
 		$builder_order->set('payment_country_id', $data['payment_country_id']);
-		$builder_order->set('payment_state', $data['payment_state']);
+		$builder_order->set('payment_country', $data['payment_country']);
 		$builder_order->set('payment_state_id', $data['payment_state_id']);
+		$builder_order->set('payment_state', $data['payment_state']);
+		$builder_order->set('payment_city_id', $data['payment_city_id']);
+		$builder_order->set('payment_city', $data['payment_city']);
+		$builder_order->set('payment_district_id', $data['payment_district_id']);
+		$builder_order->set('payment_district', $data['payment_district']);
 		$builder_order->set('payment_address_format', $data['payment_address_format']);
 		$builder_order->set('payment_custom_field', $data['payment_custom_field']);
 		$builder_order->set('payment_method', $data['payment_method']);
@@ -152,12 +158,15 @@ class OrderModel extends \CodeIgniter\Model
 		$builder_order_shipping->set('shipping_company', $data['shipping_company']);
 		$builder_order_shipping->set('shipping_address_1', $data['shipping_address_1']);
 		$builder_order_shipping->set('shipping_address_2', $data['shipping_address_2']);
-		$builder_order_shipping->set('shipping_city', $data['shipping_city']);
 		$builder_order_shipping->set('shipping_postal_code', $data['shipping_postal_code']);
-		$builder_order_shipping->set('shipping_country', $data['shipping_country']);
 		$builder_order_shipping->set('shipping_country_id', $data['shipping_country_id']);
-		$builder_order_shipping->set('shipping_state', $data['shipping_state']);
+		$builder_order_shipping->set('shipping_country', $data['shipping_country']);
 		$builder_order_shipping->set('shipping_state_id', $data['shipping_state_id']);
+		$builder_order_shipping->set('shipping_state', $data['shipping_state']);
+		$builder_order_shipping->set('shipping_city_id', $data['shipping_city_id']);
+		$builder_order_shipping->set('shipping_city', $data['shipping_city']);
+		$builder_order_shipping->set('shipping_district_id', $data['shipping_district_id']);
+		$builder_order_shipping->set('shipping_district', $data['shipping_district']);
 		$builder_order_shipping->set('shipping_address_format', $data['shipping_address_format']);
 		$builder_order_shipping->set('shipping_custom_field', $data['shipping_custom_field']);
 		$builder_order_shipping->set('shipping_method', $data['shipping_method']);
@@ -302,11 +311,14 @@ class OrderModel extends \CodeIgniter\Model
 				'payment_address_1'       => $row_order->payment_address_1,
 				'payment_address_2'       => $row_order->payment_address_2,
 				'payment_postal_code'     => $row_order->payment_postal_code,
-				'payment_city'            => $row_order->payment_city,
-				'payment_state_id'        => $row_order->payment_zone_id,
-				'payment_state'           => $row_order->payment_zone,
 				'payment_country_id'      => $row_order->payment_country_id,
 				'payment_country'         => $row_order->payment_country,
+				'payment_state_id'        => $row_order->payment_state_id,
+				'payment_state'           => $row_order->payment_state,
+				'payment_city_id'         => $row_order->payment_city_id,
+				'payment_city'            => $row_order->payment_city,
+				'payment_district_id'     => $row_order->payment_district_id,
+				'payment_district'        => $row_order->payment_district,
 				'payment_address_format'  => $row_order->payment_address_format,
 				'payment_method'          => $row_order->payment_method,
 				'shipping_firstname'      => $row_order->shipping_firstname,
@@ -315,11 +327,14 @@ class OrderModel extends \CodeIgniter\Model
 				'shipping_address_1'      => $row_order->shipping_address_1,
 				'shipping_address_2'      => $row_order->shipping_address_2,
 				'shipping_postal_code'    => $row_order->shipping_postal_code,
-				'shipping_city'           => $row_order->shipping_city,
-				'shipping_state_id'       => $row_order->shipping_zone_id,
-				'shipping_state'          => $row_order->shipping_zone,
 				'shipping_country_id'     => $row_order->shipping_country_id,
 				'shipping_country'        => $row_order->shipping_country,
+				'shipping_state_id'       => $row_order->shipping_state_id,
+				'shipping_state'          => $row_order->shipping_state,
+				'shipping_city_id'        => $row_order->shipping_city_id,
+				'shipping_city'           => $row_order->shipping_city,
+				'shipping_district_id'    => $row_order->shipping_district_id,
+				'shipping_district'       => $row_order->shipping_district,
 				'shipping_address_format' => $row_order->shipping_address_format,
 				'shipping_method'         => $row_order->shipping_method,
 				'comment'                 => $row_order->comment,

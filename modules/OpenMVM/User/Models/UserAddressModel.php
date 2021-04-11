@@ -62,12 +62,24 @@ class UserAddressModel extends \CodeIgniter\Model
 			$builder->set('state_id', $data['state_id']);
 		}
 
+		if ($data['state'] !== null) {
+			$builder->set('state', $data['state']);
+		}
+
 		if ($data['city_id'] !== null) {
 			$builder->set('city_id', $data['city_id']);
 		}
 
+		if ($data['city'] !== null) {
+			$builder->set('city', $data['city']);
+		}
+
 		if ($data['district_id'] !== null) {
 			$builder->set('district_id', $data['district_id']);
+		}
+
+		if ($data['district'] !== null) {
+			$builder->set('district', $data['district']);
 		}
 
 		if ($data['postal_code'] !== null) {
@@ -85,7 +97,7 @@ class UserAddressModel extends \CodeIgniter\Model
 		return $user_address_id;
 	}
 
-	public function editUserAddress($data = array(), $user_id)
+	public function editUserAddress($data = array(), $user_address_id, $user_id)
 	{
 		// User Data
 		$builder = $this->db->table('user_address');
@@ -118,12 +130,24 @@ class UserAddressModel extends \CodeIgniter\Model
 			$builder->set('state_id', $data['state_id']);
 		}
 
+		if ($data['state'] !== null) {
+			$builder->set('state', $data['state']);
+		}
+
 		if ($data['city_id'] !== null) {
 			$builder->set('city_id', $data['city_id']);
 		}
 
+		if ($data['city'] !== null) {
+			$builder->set('city', $data['city']);
+		}
+
 		if ($data['district_id'] !== null) {
 			$builder->set('district_id', $data['district_id']);
+		}
+
+		if ($data['district'] !== null) {
+			$builder->set('district', $data['district']);
 		}
 
 		if ($data['postal_code'] !== null) {
@@ -134,6 +158,7 @@ class UserAddressModel extends \CodeIgniter\Model
 			$builder->set('telephone', $data['telephone']);
 		}
 
+		$builder->where('user_address_id', $user_address_id);
 		$builder->where('user_id', $user_id);
 
 		$query = $builder->update();
@@ -203,7 +228,7 @@ class UserAddressModel extends \CodeIgniter\Model
 				$state = $row_state->name;
 				$state_code = $row_state->code;
 			} else {
-				$state = '';
+				$state = $row->state;
 				$state_code = '';
 			}
 
@@ -215,7 +240,7 @@ class UserAddressModel extends \CodeIgniter\Model
 				$city = $row_city->name;
 				$city_code = $row_city->code;
 			} else {
-				$city = '';
+				$city = $row->city;
 				$city_code = '';
 			}
 
@@ -227,7 +252,7 @@ class UserAddressModel extends \CodeIgniter\Model
 				$district = $row_district->name;
 				$district_code = $row_district->code;
 			} else {
-				$district = '';
+				$district = $row->district;
 				$district_code = '';
 			}
 
@@ -278,7 +303,9 @@ class UserAddressModel extends \CodeIgniter\Model
 			$builder_country->where('country_id', $row->country_id);
 			$query_country   = $builder_country->get();
 
-			if ($row_country = $query_country->getRow()) {
+			$row_country = $query_country->getRow();
+
+			if ($row_country) {
 				$country = $row_country->name;
 				$iso_code_2 = $row_country->iso_code_2;
 				$iso_code_3 = $row_country->iso_code_3;
@@ -294,11 +321,13 @@ class UserAddressModel extends \CodeIgniter\Model
 			$builder_state->where('state_id', $row->state_id);
 			$query_state   = $builder_state->get();
 
-			if ($row_state = $query_state->getRow()) {
+			$row_state = $query_state->getRow();
+
+			if ($row_state) {
 				$state = $row_state->name;
 				$state_code = $row_state->code;
 			} else {
-				$state = '';
+				$state = $row->state;
 				$state_code = '';
 			}
 
@@ -306,11 +335,13 @@ class UserAddressModel extends \CodeIgniter\Model
 			$builder_city->where('city_id', $row->city_id);
 			$query_city   = $builder_city->get();
 
-			if ($row_city = $query_city->getRow()) {
+			$row_city = $query_city->getRow();
+
+			if ($row_city) {
 				$city = $row_city->name;
 				$city_code = $row_city->code;
 			} else {
-				$city = '';
+				$city = $row->city;
 				$city_code = '';
 			}
 
@@ -318,11 +349,13 @@ class UserAddressModel extends \CodeIgniter\Model
 			$builder_district->where('district_id', $row->district_id);
 			$query_district   = $builder_district->get();
 
-			if ($row_district = $query_district->getRow()) {
+			$row_district = $query_district->getRow();
+
+			if ($row_district) {
 				$district = $row_district->name;
 				$district_code = $row_district->code;
 			} else {
-				$district = '';
+				$district = $row->district;
 				$district_code = '';
 			}
 

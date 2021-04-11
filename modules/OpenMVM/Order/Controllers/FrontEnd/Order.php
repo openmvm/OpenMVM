@@ -181,7 +181,7 @@ class Order extends \App\Controllers\BaseController
 			if ($order_info['payment_address_format']) {
 				$format = $order_info['payment_address_format'];
 			} else {
-				$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postal_code}' . "\n" . '{zone}' . "\n" . '{country}';
+				$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{district} {city} {postal_code}' . "\n" . '{state}' . "\n" . '{country}';
 			}
 
 			$find = array(
@@ -190,10 +190,11 @@ class Order extends \App\Controllers\BaseController
 				'{company}',
 				'{address_1}',
 				'{address_2}',
+				'{district}',
 				'{city}',
 				'{postal_code}',
-				'{zone}',
-				'{zone_code}',
+				'{state}',
+				'{state_code}',
 				'{country}'
 			);
 
@@ -203,11 +204,12 @@ class Order extends \App\Controllers\BaseController
 				'company'     => $order_info['payment_company'],
 				'address_1'   => $order_info['payment_address_1'],
 				'address_2'   => $order_info['payment_address_2'],
+				'district'    => $order_info['payment_district'],
 				'city'        => $order_info['payment_city'],
 				'postal_code' => $order_info['payment_postal_code'],
-				'zone'        => $order_info['payment_zone'],
-				'zone_code'   => $order_info['payment_zone_code'],
-				'country'     => $order_info['payment_country']
+				'state'       => $order_info['payment_state'],
+				'state_code'  => $order_info['payment_state_code'],
+				'country'     => $order_info['payment_country'],
 			);
 
 			$data['payment_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
@@ -220,7 +222,7 @@ class Order extends \App\Controllers\BaseController
 			if ($order_shipping['shipping_address_format']) {
 				$format = $order_shipping['shipping_address_format'];
 			} else {
-				$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postal_code}' . "\n" . '{zone}' . "\n" . '{country}';
+				$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{district} {city} {postal_code}' . "\n" . '{state}' . "\n" . '{country}';
 			}
 
 			$find = array(
@@ -229,10 +231,11 @@ class Order extends \App\Controllers\BaseController
 				'{company}',
 				'{address_1}',
 				'{address_2}',
+				'{district}',
 				'{city}',
 				'{postal_code}',
-				'{zone}',
-				'{zone_code}',
+				'{state}',
+				'{state_code}',
 				'{country}'
 			);
 
@@ -242,10 +245,11 @@ class Order extends \App\Controllers\BaseController
 				'company'     => $order_shipping['shipping_company'],
 				'address_1'   => $order_shipping['shipping_address_1'],
 				'address_2'   => $order_shipping['shipping_address_2'],
+				'district'    => $order_shipping['shipping_district'],
 				'city'        => $order_shipping['shipping_city'],
 				'postal_code' => $order_shipping['shipping_postal_code'],
-				'zone'        => $order_shipping['shipping_zone'],
-				'zone_code'   => $order_shipping['shipping_zone_code'],
+				'state'       => $order_shipping['shipping_state'],
+				'state_code'  => $order_shipping['shipping_state_code'],
 				'country'     => $order_shipping['shipping_country']
 			);
 

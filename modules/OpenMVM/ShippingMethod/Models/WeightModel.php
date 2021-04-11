@@ -31,7 +31,7 @@ class WeightModel extends \CodeIgniter\Model
 
 		// Get state to geo zone
 		$builder_state_to_geo_zone = $this->db->table('state_to_geo_zone');
-		$builder_state_to_geo_zone->where('geo_zone_id', $this->setting->get('payment_bank_transfer', 'payment_bank_transfer_geo_zone_id'));
+		$builder_state_to_geo_zone->where('geo_zone_id', $this->setting->get('shipping_weight', 'shipping_weight_geo_zone_id'));
 		$builder_state_to_geo_zone->where('country_id', $address->country_id);
 		$builder_state_to_geo_zone->groupStart();
 		$builder_state_to_geo_zone->where('state_id', $address->state_id);

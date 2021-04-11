@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 01, 2021 at 10:39 AM
+-- Generation Time: Apr 11, 2021 at 08:38 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.3.21
 
@@ -27,6 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `omvm_administrator`
 --
 
+DROP TABLE IF EXISTS `omvm_administrator`;
 CREATE TABLE `omvm_administrator` (
   `administrator_id` int(11) NOT NULL,
   `administrator_group_id` int(11) NOT NULL,
@@ -50,6 +51,7 @@ CREATE TABLE `omvm_administrator` (
 -- Table structure for table `omvm_administrator_group`
 --
 
+DROP TABLE IF EXISTS `omvm_administrator_group`;
 CREATE TABLE `omvm_administrator_group` (
   `administrator_group_id` int(11) NOT NULL,
   `name` varchar(64) NOT NULL,
@@ -71,6 +73,7 @@ INSERT INTO `omvm_administrator_group` (`administrator_group_id`, `name`, `permi
 -- Table structure for table `omvm_cart`
 --
 
+DROP TABLE IF EXISTS `omvm_cart`;
 CREATE TABLE `omvm_cart` (
   `cart_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL DEFAULT 0,
@@ -87,9 +90,7 @@ CREATE TABLE `omvm_cart` (
 --
 
 INSERT INTO `omvm_cart` (`cart_id`, `user_id`, `store_id`, `cart_session_id`, `product_id`, `option`, `quantity`, `date_added`) VALUES
-(1, 0, 1, '605ae09909eb1', 1, '[]', 3, '2021-03-24 04:05:06'),
-(3, 1, 1, '6062ba8369c69', 1, '\"[]\"', 3, '2021-03-24 10:41:54'),
-(4, 1, 2, '6062ba8369c69', 3, '[]', 1, '2021-03-24 10:42:40');
+(1, 0, 1, '605ae09909eb1', 1, '[]', 3, '2021-03-24 04:05:06');
 
 -- --------------------------------------------------------
 
@@ -97,6 +98,7 @@ INSERT INTO `omvm_cart` (`cart_id`, `user_id`, `store_id`, `cart_session_id`, `p
 -- Table structure for table `omvm_cart_product`
 --
 
+DROP TABLE IF EXISTS `omvm_cart_product`;
 CREATE TABLE `omvm_cart_product` (
   `cart_product_id` int(11) NOT NULL,
   `cart_id` int(11) NOT NULL,
@@ -112,6 +114,7 @@ CREATE TABLE `omvm_cart_product` (
 -- Table structure for table `omvm_category`
 --
 
+DROP TABLE IF EXISTS `omvm_category`;
 CREATE TABLE `omvm_category` (
   `category_id` int(11) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
@@ -158,6 +161,7 @@ INSERT INTO `omvm_category` (`category_id`, `image`, `parent_id`, `top`, `column
 -- Table structure for table `omvm_category_description`
 --
 
+DROP TABLE IF EXISTS `omvm_category_description`;
 CREATE TABLE `omvm_category_description` (
   `category_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
@@ -203,6 +207,7 @@ INSERT INTO `omvm_category_description` (`category_id`, `language_id`, `name`, `
 -- Table structure for table `omvm_category_path`
 --
 
+DROP TABLE IF EXISTS `omvm_category_path`;
 CREATE TABLE `omvm_category_path` (
   `category_id` int(11) NOT NULL,
   `path_id` int(11) NOT NULL,
@@ -245,6 +250,7 @@ INSERT INTO `omvm_category_path` (`category_id`, `path_id`, `level`) VALUES
 -- Table structure for table `omvm_city`
 --
 
+DROP TABLE IF EXISTS `omvm_city`;
 CREATE TABLE `omvm_city` (
   `city_id` int(11) NOT NULL,
   `country_id` int(11) NOT NULL DEFAULT 100,
@@ -770,6 +776,7 @@ INSERT INTO `omvm_city` (`city_id`, `country_id`, `state_id`, `type`, `name`, `c
 -- Table structure for table `omvm_country`
 --
 
+DROP TABLE IF EXISTS `omvm_country`;
 CREATE TABLE `omvm_country` (
   `country_id` int(11) NOT NULL,
   `name` varchar(128) NOT NULL,
@@ -780,269 +787,271 @@ CREATE TABLE `omvm_country` (
   `state_input_type` varchar(12) NOT NULL DEFAULT 'select_box',
   `city_input_type` varchar(12) NOT NULL DEFAULT 'text_input',
   `district_input_type` varchar(12) NOT NULL DEFAULT 'text_input',
+  `district_required` tinyint(1) NOT NULL,
   `address_format` text NOT NULL,
   `postcode_required` tinyint(1) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `sort_order` int(3) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `omvm_country`
 --
 
-INSERT INTO `omvm_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `iso_code_numeric`, `code_dial_in`, `state_input_type`, `city_input_type`, `district_input_type`, `address_format`, `postcode_required`, `status`) VALUES
-(1, 'Afghanistan', 'AF', 'AFG', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(2, 'Albania', 'AL', 'ALB', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(3, 'Algeria', 'DZ', 'DZA', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(4, 'American Samoa', 'AS', 'ASM', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(5, 'Andorra', 'AD', 'AND', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(6, 'Angola', 'AO', 'AGO', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(7, 'Anguilla', 'AI', 'AIA', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(8, 'Antarctica', 'AQ', 'ATA', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(9, 'Antigua and Barbuda', 'AG', 'ATG', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(10, 'Argentina', 'AR', 'ARG', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(11, 'Armenia', 'AM', 'ARM', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(12, 'Aruba', 'AW', 'ABW', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(13, 'Australia', 'AU', 'AUS', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(14, 'Austria', 'AT', 'AUT', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(15, 'Azerbaijan', 'AZ', 'AZE', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(16, 'Bahamas', 'BS', 'BHS', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(17, 'Bahrain', 'BH', 'BHR', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(18, 'Bangladesh', 'BD', 'BGD', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(19, 'Barbados', 'BB', 'BRB', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(20, 'Belarus', 'BY', 'BLR', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(21, 'Belgium', 'BE', 'BEL', 0, 0, 'select_box', 'text_input', 'text_input', '{firstname} {lastname}\r\n{company}\r\n{address_1}\r\n{address_2}\r\n{postcode} {city}\r\n{country}', 0, 1),
-(22, 'Belize', 'BZ', 'BLZ', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(23, 'Benin', 'BJ', 'BEN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(24, 'Bermuda', 'BM', 'BMU', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(25, 'Bhutan', 'BT', 'BTN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(26, 'Bolivia', 'BO', 'BOL', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(27, 'Bosnia and Herzegovina', 'BA', 'BIH', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(28, 'Botswana', 'BW', 'BWA', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(29, 'Bouvet Island', 'BV', 'BVT', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(30, 'Brazil', 'BR', 'BRA', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(31, 'British Indian Ocean Territory', 'IO', 'IOT', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(32, 'Brunei Darussalam', 'BN', 'BRN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(33, 'Bulgaria', 'BG', 'BGR', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(34, 'Burkina Faso', 'BF', 'BFA', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(35, 'Burundi', 'BI', 'BDI', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(36, 'Cambodia', 'KH', 'KHM', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(37, 'Cameroon', 'CM', 'CMR', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(38, 'Canada', 'CA', 'CAN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(39, 'Cape Verde', 'CV', 'CPV', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(40, 'Cayman Islands', 'KY', 'CYM', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(41, 'Central African Republic', 'CF', 'CAF', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(42, 'Chad', 'TD', 'TCD', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(43, 'Chile', 'CL', 'CHL', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(44, 'China', 'CN', 'CHN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(45, 'Christmas Island', 'CX', 'CXR', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(46, 'Cocos (Keeling) Islands', 'CC', 'CCK', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(47, 'Colombia', 'CO', 'COL', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(48, 'Comoros', 'KM', 'COM', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(49, 'Congo', 'CG', 'COG', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(50, 'Cook Islands', 'CK', 'COK', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(51, 'Costa Rica', 'CR', 'CRI', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(52, 'Cote D\'Ivoire', 'CI', 'CIV', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(53, 'Croatia', 'HR', 'HRV', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(54, 'Cuba', 'CU', 'CUB', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(55, 'Cyprus', 'CY', 'CYP', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(56, 'Czech Republic', 'CZ', 'CZE', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(57, 'Denmark', 'DK', 'DNK', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(58, 'Djibouti', 'DJ', 'DJI', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(59, 'Dominica', 'DM', 'DMA', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(60, 'Dominican Republic', 'DO', 'DOM', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(61, 'East Timor', 'TL', 'TLS', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(62, 'Ecuador', 'EC', 'ECU', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(63, 'Egypt', 'EG', 'EGY', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(64, 'El Salvador', 'SV', 'SLV', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(65, 'Equatorial Guinea', 'GQ', 'GNQ', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(66, 'Eritrea', 'ER', 'ERI', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(67, 'Estonia', 'EE', 'EST', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(68, 'Ethiopia', 'ET', 'ETH', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(69, 'Falkland Islands (Malvinas)', 'FK', 'FLK', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(70, 'Faroe Islands', 'FO', 'FRO', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(71, 'Fiji', 'FJ', 'FJI', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(72, 'Finland', 'FI', 'FIN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(74, 'France, Metropolitan', 'FR', 'FRA', 0, 0, 'select_box', 'text_input', 'text_input', '{firstname} {lastname}\r\n{company}\r\n{address_1}\r\n{address_2}\r\n{postcode} {city}\r\n{country}', 1, 1),
-(75, 'French Guiana', 'GF', 'GUF', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(76, 'French Polynesia', 'PF', 'PYF', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(77, 'French Southern Territories', 'TF', 'ATF', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(78, 'Gabon', 'GA', 'GAB', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(79, 'Gambia', 'GM', 'GMB', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(80, 'Georgia', 'GE', 'GEO', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(81, 'Germany', 'DE', 'DEU', 0, 0, 'select_box', 'text_input', 'text_input', '{company}\r\n{firstname} {lastname}\r\n{address_1}\r\n{address_2}\r\n{postcode} {city}\r\n{country}', 1, 1),
-(82, 'Ghana', 'GH', 'GHA', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(83, 'Gibraltar', 'GI', 'GIB', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(84, 'Greece', 'GR', 'GRC', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(85, 'Greenland', 'GL', 'GRL', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(86, 'Grenada', 'GD', 'GRD', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(87, 'Guadeloupe', 'GP', 'GLP', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(88, 'Guam', 'GU', 'GUM', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(89, 'Guatemala', 'GT', 'GTM', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(90, 'Guinea', 'GN', 'GIN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(91, 'Guinea-Bissau', 'GW', 'GNB', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(92, 'Guyana', 'GY', 'GUY', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(93, 'Haiti', 'HT', 'HTI', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(94, 'Heard and Mc Donald Islands', 'HM', 'HMD', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(95, 'Honduras', 'HN', 'HND', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(96, 'Hong Kong', 'HK', 'HKG', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(97, 'Hungary', 'HU', 'HUN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(98, 'Iceland', 'IS', 'ISL', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(99, 'India', 'IN', 'IND', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(100, 'Indonesia', 'ID', 'IDN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(101, 'Iran (Islamic Republic of)', 'IR', 'IRN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(102, 'Iraq', 'IQ', 'IRQ', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(103, 'Ireland', 'IE', 'IRL', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(104, 'Israel', 'IL', 'ISR', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(105, 'Italy', 'IT', 'ITA', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(106, 'Jamaica', 'JM', 'JAM', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(107, 'Japan', 'JP', 'JPN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(108, 'Jordan', 'JO', 'JOR', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(109, 'Kazakhstan', 'KZ', 'KAZ', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(110, 'Kenya', 'KE', 'KEN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(111, 'Kiribati', 'KI', 'KIR', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(112, 'North Korea', 'KP', 'PRK', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(113, 'South Korea', 'KR', 'KOR', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(114, 'Kuwait', 'KW', 'KWT', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(115, 'Kyrgyzstan', 'KG', 'KGZ', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(116, 'Lao People\'s Democratic Republic', 'LA', 'LAO', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(117, 'Latvia', 'LV', 'LVA', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(118, 'Lebanon', 'LB', 'LBN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(119, 'Lesotho', 'LS', 'LSO', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(120, 'Liberia', 'LR', 'LBR', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(121, 'Libyan Arab Jamahiriya', 'LY', 'LBY', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(122, 'Liechtenstein', 'LI', 'LIE', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(123, 'Lithuania', 'LT', 'LTU', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(124, 'Luxembourg', 'LU', 'LUX', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(125, 'Macau', 'MO', 'MAC', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(126, 'FYROM', 'MK', 'MKD', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(127, 'Madagascar', 'MG', 'MDG', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(128, 'Malawi', 'MW', 'MWI', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(129, 'Malaysia', 'MY', 'MYS', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(130, 'Maldives', 'MV', 'MDV', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(131, 'Mali', 'ML', 'MLI', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(132, 'Malta', 'MT', 'MLT', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(133, 'Marshall Islands', 'MH', 'MHL', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(134, 'Martinique', 'MQ', 'MTQ', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(135, 'Mauritania', 'MR', 'MRT', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(136, 'Mauritius', 'MU', 'MUS', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(137, 'Mayotte', 'YT', 'MYT', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(138, 'Mexico', 'MX', 'MEX', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(139, 'Micronesia, Federated States of', 'FM', 'FSM', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(140, 'Moldova, Republic of', 'MD', 'MDA', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(141, 'Monaco', 'MC', 'MCO', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(142, 'Mongolia', 'MN', 'MNG', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(143, 'Montserrat', 'MS', 'MSR', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(144, 'Morocco', 'MA', 'MAR', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(145, 'Mozambique', 'MZ', 'MOZ', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(146, 'Myanmar', 'MM', 'MMR', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(147, 'Namibia', 'NA', 'NAM', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(148, 'Nauru', 'NR', 'NRU', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(149, 'Nepal', 'NP', 'NPL', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(150, 'Netherlands', 'NL', 'NLD', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(151, 'Netherlands Antilles', 'AN', 'ANT', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(152, 'New Caledonia', 'NC', 'NCL', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(153, 'New Zealand', 'NZ', 'NZL', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(154, 'Nicaragua', 'NI', 'NIC', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(155, 'Niger', 'NE', 'NER', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(156, 'Nigeria', 'NG', 'NGA', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(157, 'Niue', 'NU', 'NIU', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(158, 'Norfolk Island', 'NF', 'NFK', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(159, 'Northern Mariana Islands', 'MP', 'MNP', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(160, 'Norway', 'NO', 'NOR', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(161, 'Oman', 'OM', 'OMN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(162, 'Pakistan', 'PK', 'PAK', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(163, 'Palau', 'PW', 'PLW', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(164, 'Panama', 'PA', 'PAN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(165, 'Papua New Guinea', 'PG', 'PNG', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(166, 'Paraguay', 'PY', 'PRY', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(167, 'Peru', 'PE', 'PER', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(168, 'Philippines', 'PH', 'PHL', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(169, 'Pitcairn', 'PN', 'PCN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(170, 'Poland', 'PL', 'POL', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(171, 'Portugal', 'PT', 'PRT', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(172, 'Puerto Rico', 'PR', 'PRI', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(173, 'Qatar', 'QA', 'QAT', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(174, 'Reunion', 'RE', 'REU', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(175, 'Romania', 'RO', 'ROM', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(176, 'Russian Federation', 'RU', 'RUS', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(177, 'Rwanda', 'RW', 'RWA', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(178, 'Saint Kitts and Nevis', 'KN', 'KNA', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(179, 'Saint Lucia', 'LC', 'LCA', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(180, 'Saint Vincent and the Grenadines', 'VC', 'VCT', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(181, 'Samoa', 'WS', 'WSM', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(182, 'San Marino', 'SM', 'SMR', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(183, 'Sao Tome and Principe', 'ST', 'STP', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(184, 'Saudi Arabia', 'SA', 'SAU', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(185, 'Senegal', 'SN', 'SEN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(186, 'Seychelles', 'SC', 'SYC', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(187, 'Sierra Leone', 'SL', 'SLE', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(188, 'Singapore', 'SG', 'SGP', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(189, 'Slovak Republic', 'SK', 'SVK', 0, 0, 'select_box', 'text_input', 'text_input', '{firstname} {lastname}\r\n{company}\r\n{address_1}\r\n{address_2}\r\n{city} {postcode}\r\n{state}\r\n{country}', 0, 1),
-(190, 'Slovenia', 'SI', 'SVN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(191, 'Solomon Islands', 'SB', 'SLB', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(192, 'Somalia', 'SO', 'SOM', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(193, 'South Africa', 'ZA', 'ZAF', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(194, 'South Georgia &amp; South Sandwich Islands', 'GS', 'SGS', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(195, 'Spain', 'ES', 'ESP', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(196, 'Sri Lanka', 'LK', 'LKA', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(197, 'St. Helena', 'SH', 'SHN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(198, 'St. Pierre and Miquelon', 'PM', 'SPM', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(199, 'Sudan', 'SD', 'SDN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(200, 'Suriname', 'SR', 'SUR', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(201, 'Svalbard and Jan Mayen Islands', 'SJ', 'SJM', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(202, 'Swaziland', 'SZ', 'SWZ', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(203, 'Sweden', 'SE', 'SWE', 0, 0, 'select_box', 'text_input', 'text_input', '{company}\r\n{firstname} {lastname}\r\n{address_1}\r\n{address_2}\r\n{postcode} {city}\r\n{country}', 1, 1),
-(204, 'Switzerland', 'CH', 'CHE', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(205, 'Syrian Arab Republic', 'SY', 'SYR', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(206, 'Taiwan', 'TW', 'TWN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(207, 'Tajikistan', 'TJ', 'TJK', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(208, 'Tanzania, United Republic of', 'TZ', 'TZA', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(209, 'Thailand', 'TH', 'THA', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(210, 'Togo', 'TG', 'TGO', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(211, 'Tokelau', 'TK', 'TKL', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(212, 'Tonga', 'TO', 'TON', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(213, 'Trinidad and Tobago', 'TT', 'TTO', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(214, 'Tunisia', 'TN', 'TUN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(215, 'Turkey', 'TR', 'TUR', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(216, 'Turkmenistan', 'TM', 'TKM', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(217, 'Turks and Caicos Islands', 'TC', 'TCA', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(218, 'Tuvalu', 'TV', 'TUV', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(219, 'Uganda', 'UG', 'UGA', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(220, 'Ukraine', 'UA', 'UKR', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(221, 'United Arab Emirates', 'AE', 'ARE', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(222, 'United Kingdom', 'GB', 'GBR', 0, 0, 'select_box', 'text_input', 'text_input', '', 1, 1),
-(223, 'United States', 'US', 'USA', 0, 0, 'select_box', 'text_input', 'text_input', '{firstname} {lastname}\r\n{company}\r\n{address_1}\r\n{address_2}\r\n{city}, {state} {postcode}\r\n{country}', 0, 1),
-(224, 'United States Minor Outlying Islands', 'UM', 'UMI', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(225, 'Uruguay', 'UY', 'URY', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(226, 'Uzbekistan', 'UZ', 'UZB', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(227, 'Vanuatu', 'VU', 'VUT', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(228, 'Vatican City State (Holy See)', 'VA', 'VAT', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(229, 'Venezuela', 'VE', 'VEN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(230, 'Viet Nam', 'VN', 'VNM', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(231, 'Virgin Islands (British)', 'VG', 'VGB', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(232, 'Virgin Islands (U.S.)', 'VI', 'VIR', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(233, 'Wallis and Futuna Islands', 'WF', 'WLF', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(234, 'Western Sahara', 'EH', 'ESH', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(235, 'Yemen', 'YE', 'YEM', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(237, 'Democratic Republic of Congo', 'CD', 'COD', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(238, 'Zambia', 'ZM', 'ZMB', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(239, 'Zimbabwe', 'ZW', 'ZWE', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(242, 'Montenegro', 'ME', 'MNE', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(243, 'Serbia', 'RS', 'SRB', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(244, 'Aaland Islands', 'AX', 'ALA', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(245, 'Bonaire, Sint Eustatius and Saba', 'BQ', 'BES', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(246, 'Curacao', 'CW', 'CUW', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(247, 'Palestinian Territory, Occupied', 'PS', 'PSE', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(248, 'South Sudan', 'SS', 'SSD', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(249, 'St. Barthelemy', 'BL', 'BLM', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(250, 'St. Martin (French part)', 'MF', 'MAF', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(251, 'Canary Islands', 'IC', 'ICA', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(252, 'Ascension Island (British)', 'AC', 'ASC', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(253, 'Kosovo, Republic of', 'XK', 'UNK', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(254, 'Isle of Man', 'IM', 'IMN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(255, 'Tristan da Cunha', 'TA', 'SHN', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(256, 'Guernsey', 'GG', 'GGY', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1),
-(257, 'Jersey', 'JE', 'JEY', 0, 0, 'select_box', 'text_input', 'text_input', '', 0, 1);
+INSERT INTO `omvm_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `iso_code_numeric`, `code_dial_in`, `state_input_type`, `city_input_type`, `district_input_type`, `district_required`, `address_format`, `postcode_required`, `status`, `sort_order`) VALUES
+(1, 'Afghanistan', 'AF', 'AFG', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(2, 'Albania', 'AL', 'ALB', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(3, 'Algeria', 'DZ', 'DZA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(4, 'American Samoa', 'AS', 'ASM', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(5, 'Andorra', 'AD', 'AND', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(6, 'Angola', 'AO', 'AGO', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(7, 'Anguilla', 'AI', 'AIA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(8, 'Antarctica', 'AQ', 'ATA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(9, 'Antigua and Barbuda', 'AG', 'ATG', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(10, 'Argentina', 'AR', 'ARG', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(11, 'Armenia', 'AM', 'ARM', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(12, 'Aruba', 'AW', 'ABW', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(13, 'Australia', 'AU', 'AUS', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(14, 'Austria', 'AT', 'AUT', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(15, 'Azerbaijan', 'AZ', 'AZE', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(16, 'Bahamas', 'BS', 'BHS', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(17, 'Bahrain', 'BH', 'BHR', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(18, 'Bangladesh', 'BD', 'BGD', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(19, 'Barbados', 'BB', 'BRB', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(20, 'Belarus', 'BY', 'BLR', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(21, 'Belgium', 'BE', 'BEL', 0, 0, 'select_box', 'text_input', 'text_input', 0, '{firstname} {lastname}\r\n{company}\r\n{address_1}\r\n{address_2}\r\n{postcode} {city}\r\n{country}', 0, 1, 0),
+(22, 'Belize', 'BZ', 'BLZ', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(23, 'Benin', 'BJ', 'BEN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(24, 'Bermuda', 'BM', 'BMU', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(25, 'Bhutan', 'BT', 'BTN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(26, 'Bolivia', 'BO', 'BOL', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(27, 'Bosnia and Herzegovina', 'BA', 'BIH', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(28, 'Botswana', 'BW', 'BWA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(29, 'Bouvet Island', 'BV', 'BVT', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(30, 'Brazil', 'BR', 'BRA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(31, 'British Indian Ocean Territory', 'IO', 'IOT', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(32, 'Brunei Darussalam', 'BN', 'BRN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(33, 'Bulgaria', 'BG', 'BGR', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(34, 'Burkina Faso', 'BF', 'BFA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(35, 'Burundi', 'BI', 'BDI', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(36, 'Cambodia', 'KH', 'KHM', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(37, 'Cameroon', 'CM', 'CMR', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(38, 'Canada', 'CA', 'CAN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(39, 'Cape Verde', 'CV', 'CPV', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(40, 'Cayman Islands', 'KY', 'CYM', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(41, 'Central African Republic', 'CF', 'CAF', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(42, 'Chad', 'TD', 'TCD', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(43, 'Chile', 'CL', 'CHL', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(44, 'China', 'CN', 'CHN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(45, 'Christmas Island', 'CX', 'CXR', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(46, 'Cocos (Keeling) Islands', 'CC', 'CCK', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(47, 'Colombia', 'CO', 'COL', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(48, 'Comoros', 'KM', 'COM', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(49, 'Congo', 'CG', 'COG', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(50, 'Cook Islands', 'CK', 'COK', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(51, 'Costa Rica', 'CR', 'CRI', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(52, 'Cote D\'Ivoire', 'CI', 'CIV', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(53, 'Croatia', 'HR', 'HRV', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(54, 'Cuba', 'CU', 'CUB', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(55, 'Cyprus', 'CY', 'CYP', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(56, 'Czech Republic', 'CZ', 'CZE', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(57, 'Denmark', 'DK', 'DNK', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(58, 'Djibouti', 'DJ', 'DJI', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(59, 'Dominica', 'DM', 'DMA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(60, 'Dominican Republic', 'DO', 'DOM', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(61, 'East Timor', 'TL', 'TLS', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(62, 'Ecuador', 'EC', 'ECU', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(63, 'Egypt', 'EG', 'EGY', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(64, 'El Salvador', 'SV', 'SLV', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(65, 'Equatorial Guinea', 'GQ', 'GNQ', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(66, 'Eritrea', 'ER', 'ERI', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(67, 'Estonia', 'EE', 'EST', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(68, 'Ethiopia', 'ET', 'ETH', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(69, 'Falkland Islands (Malvinas)', 'FK', 'FLK', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(70, 'Faroe Islands', 'FO', 'FRO', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(71, 'Fiji', 'FJ', 'FJI', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(72, 'Finland', 'FI', 'FIN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(74, 'France, Metropolitan', 'FR', 'FRA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '{firstname} {lastname}\r\n{company}\r\n{address_1}\r\n{address_2}\r\n{postcode} {city}\r\n{country}', 1, 1, 0),
+(75, 'French Guiana', 'GF', 'GUF', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(76, 'French Polynesia', 'PF', 'PYF', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(77, 'French Southern Territories', 'TF', 'ATF', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(78, 'Gabon', 'GA', 'GAB', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(79, 'Gambia', 'GM', 'GMB', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(80, 'Georgia', 'GE', 'GEO', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(81, 'Germany', 'DE', 'DEU', 0, 0, 'select_box', 'text_input', 'text_input', 0, '{company}\r\n{firstname} {lastname}\r\n{address_1}\r\n{address_2}\r\n{postcode} {city}\r\n{country}', 1, 1, 0),
+(82, 'Ghana', 'GH', 'GHA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(83, 'Gibraltar', 'GI', 'GIB', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(84, 'Greece', 'GR', 'GRC', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(85, 'Greenland', 'GL', 'GRL', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(86, 'Grenada', 'GD', 'GRD', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(87, 'Guadeloupe', 'GP', 'GLP', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(88, 'Guam', 'GU', 'GUM', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(89, 'Guatemala', 'GT', 'GTM', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(90, 'Guinea', 'GN', 'GIN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(91, 'Guinea-Bissau', 'GW', 'GNB', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(92, 'Guyana', 'GY', 'GUY', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(93, 'Haiti', 'HT', 'HTI', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(94, 'Heard and Mc Donald Islands', 'HM', 'HMD', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(95, 'Honduras', 'HN', 'HND', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(96, 'Hong Kong', 'HK', 'HKG', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(97, 'Hungary', 'HU', 'HUN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(98, 'Iceland', 'IS', 'ISL', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(99, 'India', 'IN', 'IND', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(100, 'Indonesia', 'ID', 'IDN', 0, 0, 'select_box', 'select_box', 'select_box', 1, '', 0, 1, 0),
+(101, 'Iran (Islamic Republic of)', 'IR', 'IRN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(102, 'Iraq', 'IQ', 'IRQ', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(103, 'Ireland', 'IE', 'IRL', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(104, 'Israel', 'IL', 'ISR', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(105, 'Italy', 'IT', 'ITA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(106, 'Jamaica', 'JM', 'JAM', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(107, 'Japan', 'JP', 'JPN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(108, 'Jordan', 'JO', 'JOR', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(109, 'Kazakhstan', 'KZ', 'KAZ', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(110, 'Kenya', 'KE', 'KEN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(111, 'Kiribati', 'KI', 'KIR', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(112, 'North Korea', 'KP', 'PRK', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(113, 'South Korea', 'KR', 'KOR', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(114, 'Kuwait', 'KW', 'KWT', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(115, 'Kyrgyzstan', 'KG', 'KGZ', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(116, 'Lao People\'s Democratic Republic', 'LA', 'LAO', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(117, 'Latvia', 'LV', 'LVA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(118, 'Lebanon', 'LB', 'LBN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(119, 'Lesotho', 'LS', 'LSO', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(120, 'Liberia', 'LR', 'LBR', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(121, 'Libyan Arab Jamahiriya', 'LY', 'LBY', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(122, 'Liechtenstein', 'LI', 'LIE', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(123, 'Lithuania', 'LT', 'LTU', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(124, 'Luxembourg', 'LU', 'LUX', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(125, 'Macau', 'MO', 'MAC', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(126, 'FYROM', 'MK', 'MKD', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(127, 'Madagascar', 'MG', 'MDG', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(128, 'Malawi', 'MW', 'MWI', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(129, 'Malaysia', 'MY', 'MYS', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(130, 'Maldives', 'MV', 'MDV', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(131, 'Mali', 'ML', 'MLI', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(132, 'Malta', 'MT', 'MLT', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(133, 'Marshall Islands', 'MH', 'MHL', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(134, 'Martinique', 'MQ', 'MTQ', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(135, 'Mauritania', 'MR', 'MRT', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(136, 'Mauritius', 'MU', 'MUS', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(137, 'Mayotte', 'YT', 'MYT', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(138, 'Mexico', 'MX', 'MEX', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(139, 'Micronesia, Federated States of', 'FM', 'FSM', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(140, 'Moldova, Republic of', 'MD', 'MDA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(141, 'Monaco', 'MC', 'MCO', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(142, 'Mongolia', 'MN', 'MNG', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(143, 'Montserrat', 'MS', 'MSR', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(144, 'Morocco', 'MA', 'MAR', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(145, 'Mozambique', 'MZ', 'MOZ', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(146, 'Myanmar', 'MM', 'MMR', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(147, 'Namibia', 'NA', 'NAM', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(148, 'Nauru', 'NR', 'NRU', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(149, 'Nepal', 'NP', 'NPL', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(150, 'Netherlands', 'NL', 'NLD', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(151, 'Netherlands Antilles', 'AN', 'ANT', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(152, 'New Caledonia', 'NC', 'NCL', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(153, 'New Zealand', 'NZ', 'NZL', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(154, 'Nicaragua', 'NI', 'NIC', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(155, 'Niger', 'NE', 'NER', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(156, 'Nigeria', 'NG', 'NGA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(157, 'Niue', 'NU', 'NIU', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(158, 'Norfolk Island', 'NF', 'NFK', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(159, 'Northern Mariana Islands', 'MP', 'MNP', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(160, 'Norway', 'NO', 'NOR', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(161, 'Oman', 'OM', 'OMN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(162, 'Pakistan', 'PK', 'PAK', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(163, 'Palau', 'PW', 'PLW', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(164, 'Panama', 'PA', 'PAN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(165, 'Papua New Guinea', 'PG', 'PNG', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(166, 'Paraguay', 'PY', 'PRY', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(167, 'Peru', 'PE', 'PER', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(168, 'Philippines', 'PH', 'PHL', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(169, 'Pitcairn', 'PN', 'PCN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(170, 'Poland', 'PL', 'POL', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(171, 'Portugal', 'PT', 'PRT', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(172, 'Puerto Rico', 'PR', 'PRI', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(173, 'Qatar', 'QA', 'QAT', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(174, 'Reunion', 'RE', 'REU', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(175, 'Romania', 'RO', 'ROM', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(176, 'Russian Federation', 'RU', 'RUS', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(177, 'Rwanda', 'RW', 'RWA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(178, 'Saint Kitts and Nevis', 'KN', 'KNA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(179, 'Saint Lucia', 'LC', 'LCA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(180, 'Saint Vincent and the Grenadines', 'VC', 'VCT', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(181, 'Samoa', 'WS', 'WSM', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(182, 'San Marino', 'SM', 'SMR', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(183, 'Sao Tome and Principe', 'ST', 'STP', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(184, 'Saudi Arabia', 'SA', 'SAU', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(185, 'Senegal', 'SN', 'SEN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(186, 'Seychelles', 'SC', 'SYC', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(187, 'Sierra Leone', 'SL', 'SLE', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(188, 'Singapore', 'SG', 'SGP', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(189, 'Slovak Republic', 'SK', 'SVK', 0, 0, 'select_box', 'text_input', 'text_input', 0, '{firstname} {lastname}\r\n{company}\r\n{address_1}\r\n{address_2}\r\n{city} {postcode}\r\n{state}\r\n{country}', 0, 1, 0),
+(190, 'Slovenia', 'SI', 'SVN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(191, 'Solomon Islands', 'SB', 'SLB', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(192, 'Somalia', 'SO', 'SOM', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(193, 'South Africa', 'ZA', 'ZAF', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(194, 'South Georgia &amp; South Sandwich Islands', 'GS', 'SGS', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(195, 'Spain', 'ES', 'ESP', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(196, 'Sri Lanka', 'LK', 'LKA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(197, 'St. Helena', 'SH', 'SHN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(198, 'St. Pierre and Miquelon', 'PM', 'SPM', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(199, 'Sudan', 'SD', 'SDN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(200, 'Suriname', 'SR', 'SUR', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(201, 'Svalbard and Jan Mayen Islands', 'SJ', 'SJM', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(202, 'Swaziland', 'SZ', 'SWZ', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(203, 'Sweden', 'SE', 'SWE', 0, 0, 'select_box', 'text_input', 'text_input', 0, '{company}\r\n{firstname} {lastname}\r\n{address_1}\r\n{address_2}\r\n{postcode} {city}\r\n{country}', 1, 1, 0),
+(204, 'Switzerland', 'CH', 'CHE', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(205, 'Syrian Arab Republic', 'SY', 'SYR', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(206, 'Taiwan', 'TW', 'TWN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(207, 'Tajikistan', 'TJ', 'TJK', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(208, 'Tanzania, United Republic of', 'TZ', 'TZA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(209, 'Thailand', 'TH', 'THA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(210, 'Togo', 'TG', 'TGO', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(211, 'Tokelau', 'TK', 'TKL', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(212, 'Tonga', 'TO', 'TON', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(213, 'Trinidad and Tobago', 'TT', 'TTO', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(214, 'Tunisia', 'TN', 'TUN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(215, 'Turkey', 'TR', 'TUR', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(216, 'Turkmenistan', 'TM', 'TKM', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(217, 'Turks and Caicos Islands', 'TC', 'TCA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(218, 'Tuvalu', 'TV', 'TUV', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(219, 'Uganda', 'UG', 'UGA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(220, 'Ukraine', 'UA', 'UKR', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(221, 'United Arab Emirates', 'AE', 'ARE', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(222, 'United Kingdom', 'GB', 'GBR', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 1, 1, 0),
+(223, 'United States', 'US', 'USA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '{firstname} {lastname}\r\n{company}\r\n{address_1}\r\n{address_2}\r\n{district} {city} {postal_code}\r\n{state}\r\n{country}', 0, 1, 0),
+(224, 'United States Minor Outlying Islands', 'UM', 'UMI', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(225, 'Uruguay', 'UY', 'URY', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(226, 'Uzbekistan', 'UZ', 'UZB', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(227, 'Vanuatu', 'VU', 'VUT', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(228, 'Vatican City State (Holy See)', 'VA', 'VAT', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(229, 'Venezuela', 'VE', 'VEN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(230, 'Viet Nam', 'VN', 'VNM', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(231, 'Virgin Islands (British)', 'VG', 'VGB', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(232, 'Virgin Islands (U.S.)', 'VI', 'VIR', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(233, 'Wallis and Futuna Islands', 'WF', 'WLF', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(234, 'Western Sahara', 'EH', 'ESH', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(235, 'Yemen', 'YE', 'YEM', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(237, 'Democratic Republic of Congo', 'CD', 'COD', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(238, 'Zambia', 'ZM', 'ZMB', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(239, 'Zimbabwe', 'ZW', 'ZWE', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(242, 'Montenegro', 'ME', 'MNE', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(243, 'Serbia', 'RS', 'SRB', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(244, 'Aaland Islands', 'AX', 'ALA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(245, 'Bonaire, Sint Eustatius and Saba', 'BQ', 'BES', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(246, 'Curacao', 'CW', 'CUW', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(247, 'Palestinian Territory, Occupied', 'PS', 'PSE', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(248, 'South Sudan', 'SS', 'SSD', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(249, 'St. Barthelemy', 'BL', 'BLM', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(250, 'St. Martin (French part)', 'MF', 'MAF', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(251, 'Canary Islands', 'IC', 'ICA', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(252, 'Ascension Island (British)', 'AC', 'ASC', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(253, 'Kosovo, Republic of', 'XK', 'UNK', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(254, 'Isle of Man', 'IM', 'IMN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(255, 'Tristan da Cunha', 'TA', 'SHN', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(256, 'Guernsey', 'GG', 'GGY', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0),
+(257, 'Jersey', 'JE', 'JEY', 0, 0, 'select_box', 'text_input', 'text_input', 0, '', 0, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -1050,6 +1059,7 @@ INSERT INTO `omvm_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `i
 -- Table structure for table `omvm_currency`
 --
 
+DROP TABLE IF EXISTS `omvm_currency`;
 CREATE TABLE `omvm_currency` (
   `currency_id` int(11) NOT NULL,
   `title` varchar(32) NOT NULL,
@@ -1077,6 +1087,7 @@ INSERT INTO `omvm_currency` (`currency_id`, `title`, `code`, `symbol_left`, `sym
 -- Table structure for table `omvm_district`
 --
 
+DROP TABLE IF EXISTS `omvm_district`;
 CREATE TABLE `omvm_district` (
   `district_id` int(11) NOT NULL,
   `country_id` int(11) NOT NULL DEFAULT 100,
@@ -8104,6 +8115,7 @@ INSERT INTO `omvm_district` (`district_id`, `country_id`, `state_id`, `city_id`,
 -- Table structure for table `omvm_extension`
 --
 
+DROP TABLE IF EXISTS `omvm_extension`;
 CREATE TABLE `omvm_extension` (
   `extension_id` int(11) NOT NULL,
   `type` varchar(32) NOT NULL,
@@ -8116,6 +8128,7 @@ CREATE TABLE `omvm_extension` (
 -- Table structure for table `omvm_geo_zone`
 --
 
+DROP TABLE IF EXISTS `omvm_geo_zone`;
 CREATE TABLE `omvm_geo_zone` (
   `geo_zone_id` int(11) NOT NULL,
   `date_added` datetime NOT NULL,
@@ -8127,8 +8140,8 @@ CREATE TABLE `omvm_geo_zone` (
 --
 
 INSERT INTO `omvm_geo_zone` (`geo_zone_id`, `date_added`, `date_modified`) VALUES
-(1, '2021-03-27 13:21:29', '2021-03-30 03:00:45'),
-(2, '2021-03-27 13:42:27', '2021-03-28 12:10:14');
+(1, '2021-03-27 13:21:29', '2021-04-11 11:36:10'),
+(2, '2021-03-27 13:42:27', '2021-04-11 11:35:50');
 
 -- --------------------------------------------------------
 
@@ -8136,6 +8149,7 @@ INSERT INTO `omvm_geo_zone` (`geo_zone_id`, `date_added`, `date_modified`) VALUE
 -- Table structure for table `omvm_geo_zone_description`
 --
 
+DROP TABLE IF EXISTS `omvm_geo_zone_description`;
 CREATE TABLE `omvm_geo_zone_description` (
   `geo_zone_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
@@ -8157,6 +8171,7 @@ INSERT INTO `omvm_geo_zone_description` (`geo_zone_id`, `language_id`, `name`, `
 -- Table structure for table `omvm_language`
 --
 
+DROP TABLE IF EXISTS `omvm_language`;
 CREATE TABLE `omvm_language` (
   `language_id` int(11) NOT NULL,
   `name` varchar(32) NOT NULL,
@@ -8181,6 +8196,7 @@ INSERT INTO `omvm_language` (`language_id`, `name`, `code`, `locale`, `image`, `
 -- Table structure for table `omvm_layout`
 --
 
+DROP TABLE IF EXISTS `omvm_layout`;
 CREATE TABLE `omvm_layout` (
   `layout_id` int(11) NOT NULL,
   `location` varchar(12) NOT NULL,
@@ -8202,6 +8218,7 @@ INSERT INTO `omvm_layout` (`layout_id`, `location`, `name`) VALUES
 -- Table structure for table `omvm_layout_route`
 --
 
+DROP TABLE IF EXISTS `omvm_layout_route`;
 CREATE TABLE `omvm_layout_route` (
   `layout_route_id` int(11) NOT NULL,
   `layout_id` int(11) NOT NULL,
@@ -8213,11 +8230,11 @@ CREATE TABLE `omvm_layout_route` (
 --
 
 INSERT INTO `omvm_layout_route` (`layout_route_id`, `layout_id`, `route`) VALUES
-(1, 1, '/'),
-(2, 1, '/login'),
-(3, 1, '/register'),
-(4, 3, '/category'),
-(5, 3, '/category');
+(13, 1, '/register'),
+(12, 1, '/login'),
+(11, 1, '/'),
+(10, 2, '/account'),
+(9, 3, '/category');
 
 -- --------------------------------------------------------
 
@@ -8225,6 +8242,7 @@ INSERT INTO `omvm_layout_route` (`layout_route_id`, `layout_id`, `route`) VALUES
 -- Table structure for table `omvm_length_class`
 --
 
+DROP TABLE IF EXISTS `omvm_length_class`;
 CREATE TABLE `omvm_length_class` (
   `length_class_id` int(11) NOT NULL,
   `value` decimal(15,8) NOT NULL,
@@ -8247,6 +8265,7 @@ INSERT INTO `omvm_length_class` (`length_class_id`, `value`, `sort_order`, `stat
 -- Table structure for table `omvm_length_class_description`
 --
 
+DROP TABLE IF EXISTS `omvm_length_class_description`;
 CREATE TABLE `omvm_length_class_description` (
   `length_class_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
@@ -8269,6 +8288,7 @@ INSERT INTO `omvm_length_class_description` (`length_class_id`, `language_id`, `
 -- Table structure for table `omvm_order`
 --
 
+DROP TABLE IF EXISTS `omvm_order`;
 CREATE TABLE `omvm_order` (
   `order_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
@@ -8287,12 +8307,15 @@ CREATE TABLE `omvm_order` (
   `payment_company` varchar(60) NOT NULL,
   `payment_address_1` varchar(128) NOT NULL,
   `payment_address_2` varchar(128) NOT NULL,
-  `payment_city` varchar(128) NOT NULL,
   `payment_postal_code` varchar(10) NOT NULL,
-  `payment_country` varchar(128) NOT NULL,
   `payment_country_id` int(11) NOT NULL,
-  `payment_state` varchar(128) NOT NULL,
+  `payment_country` varchar(128) NOT NULL,
   `payment_state_id` int(11) NOT NULL,
+  `payment_state` varchar(128) NOT NULL,
+  `payment_city_id` int(11) NOT NULL,
+  `payment_city` varchar(128) NOT NULL,
+  `payment_district_id` int(11) NOT NULL,
+  `payment_district` varchar(255) NOT NULL,
   `payment_address_format` text NOT NULL,
   `payment_custom_field` text NOT NULL,
   `payment_method` varchar(128) NOT NULL,
@@ -8320,9 +8343,13 @@ CREATE TABLE `omvm_order` (
 -- Dumping data for table `omvm_order`
 --
 
-INSERT INTO `omvm_order` (`order_id`, `store_id`, `invoice_no`, `invoice_prefix`, `user_id`, `user_group_id`, `firstname`, `lastname`, `email`, `telephone`, `fax`, `custom_field`, `payment_firstname`, `payment_lastname`, `payment_company`, `payment_address_1`, `payment_address_2`, `payment_city`, `payment_postal_code`, `payment_country`, `payment_country_id`, `payment_state`, `payment_state_id`, `payment_address_format`, `payment_custom_field`, `payment_method`, `payment_code`, `comment`, `total`, `order_status_id`, `affiliate_id`, `commission`, `marketing_id`, `tracking`, `language_id`, `currency_id`, `currency_code`, `currency_value`, `ip`, `forwarded_ip`, `user_agent`, `accept_language`, `date_added`, `date_modified`) VALUES
-(1, 1, 0, '', 1, 1, '', '', 'user1@openmvm.example.com', '', '', '', 'John', 'Doe', '', 'Test Address', '', 'Bantul', '12345', 'Indonesia', 2, 'Daerah Istimewa Yogyakarta', 3, '', '', 'Bank Transfer', 'bank_transfer', '', '1128.9700', 0, 0, '0.0000', 0, '', 1, 2, 'USD', '1.00000000', '', '', '', '', '2021-03-30 01:27:14', '2021-03-30 05:11:55'),
-(2, 2, 0, '', 1, 1, '', '', 'user1@openmvm.example.com', '', '', '', 'John', 'Doe', '', 'Test Address', '', 'Bantul', '12345', 'Indonesia', 2, 'Daerah Istimewa Yogyakarta', 3, '', '', 'Bank Transfer', 'bank_transfer', '', '354.0000', 0, 0, '0.0000', 0, '', 1, 2, 'USD', '1.00000000', '', '', '', '', '2021-03-30 01:27:14', '2021-03-30 05:11:55');
+INSERT INTO `omvm_order` (`order_id`, `store_id`, `invoice_no`, `invoice_prefix`, `user_id`, `user_group_id`, `firstname`, `lastname`, `email`, `telephone`, `fax`, `custom_field`, `payment_firstname`, `payment_lastname`, `payment_company`, `payment_address_1`, `payment_address_2`, `payment_postal_code`, `payment_country_id`, `payment_country`, `payment_state_id`, `payment_state`, `payment_city_id`, `payment_city`, `payment_district_id`, `payment_district`, `payment_address_format`, `payment_custom_field`, `payment_method`, `payment_code`, `comment`, `total`, `order_status_id`, `affiliate_id`, `commission`, `marketing_id`, `tracking`, `language_id`, `currency_id`, `currency_code`, `currency_value`, `ip`, `forwarded_ip`, `user_agent`, `accept_language`, `date_added`, `date_modified`) VALUES
+(1, 1, 0, '', 1, 1, '', '', 'user1@openmvm.example.com', '', '', '', 'John', 'Doe', '', 'Test Address', '', '12345', 2, 'Indonesia', 3, 'Daerah Istimewa Yogyakarta', 0, 'Bantul', 0, '', '', '', 'Bank Transfer', 'bank_transfer', '', '1128.9700', 0, 0, '0.0000', 0, '', 1, 2, 'USD', '1.00000000', '', '', '', '', '2021-03-30 01:27:14', '2021-03-30 05:11:55'),
+(2, 2, 0, '', 1, 1, '', '', 'user1@openmvm.example.com', '', '', '', 'John', 'Doe', '', 'Test Address', '', '12345', 2, 'Indonesia', 3, 'Daerah Istimewa Yogyakarta', 0, 'Bantul', 0, '', '', '', 'Bank Transfer', 'bank_transfer', '', '354.0000', 0, 0, '0.0000', 0, '', 1, 2, 'USD', '1.00000000', '', '', '', '', '2021-03-30 01:27:14', '2021-03-30 05:11:55'),
+(3, 1, 0, '', 1, 1, '', '', 'user1@openmvm.example.com', '', '', '', 'John', 'Doe', '', 'Test Address', '', '12345', 100, 'Indonesia', 1528, 'Papua', 0, 'Biak Numfor', 0, '', '', '', 'Bank Transfer', 'bank_transfer', '', '1128.9700', 1, 0, '0.0000', 0, '', 1, 2, 'USD', '1.00000000', '', '', '', '', '2021-04-11 11:54:31', '2021-04-11 11:55:26'),
+(4, 2, 0, '', 1, 1, '', '', 'user1@openmvm.example.com', '', '', '', 'John', 'Doe', '', 'Test Address', '', '12345', 100, 'Indonesia', 1528, 'Papua', 0, 'Biak Numfor', 0, '', '', '', 'Bank Transfer', 'bank_transfer', '', '364.0000', 1, 0, '0.0000', 0, '', 1, 2, 'USD', '1.00000000', '', '', '', '', '2021-04-11 11:54:31', '2021-04-11 11:55:26'),
+(5, 1, 0, '', 1, 1, '', '', 'user1@openmvm.example.com', '', '', '', 'Jane', 'Doe', '', 'Test Address', '', '12345', 223, 'United States', 3633, 'Hawaii', 0, 'Some City', 0, 'Some District', '{firstname} {lastname}\r\n{company}\r\n{address_1}\r\n{address_2}\r\n{district} {city}, {state} {postal_code}\r\n{country}', '', 'Cash On Delivery', 'cod', '', '2992.5100', 1, 0, '0.0000', 0, '', 1, 2, 'USD', '1.00000000', '', '', '', '', '2021-04-11 12:17:58', '2021-04-11 12:18:58'),
+(6, 2, 0, '', 1, 1, '', '', 'user1@openmvm.example.com', '', '', '', 'Jane', 'Doe', '', 'Test Address', '', '12345', 223, 'United States', 3633, 'Hawaii', 0, 'Some City', 0, 'Some District', '{firstname} {lastname}\r\n{company}\r\n{address_1}\r\n{address_2}\r\n{district} {city}, {state} {postal_code}\r\n{country}', '', 'Cash On Delivery', 'cod', '', '699.0000', 1, 0, '0.0000', 0, '', 1, 2, 'USD', '1.00000000', '', '', '', '', '2021-04-11 12:17:58', '2021-04-11 12:18:58');
 
 -- --------------------------------------------------------
 
@@ -8330,6 +8357,7 @@ INSERT INTO `omvm_order` (`order_id`, `store_id`, `invoice_no`, `invoice_prefix`
 -- Table structure for table `omvm_order_history`
 --
 
+DROP TABLE IF EXISTS `omvm_order_history`;
 CREATE TABLE `omvm_order_history` (
   `order_history_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
@@ -8339,12 +8367,25 @@ CREATE TABLE `omvm_order_history` (
   `date_added` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `omvm_order_history`
+--
+
+INSERT INTO `omvm_order_history` (`order_history_id`, `order_id`, `order_status_id`, `notify`, `comment`, `date_added`) VALUES
+(1, 3, 1, 0, '', '2021-04-11 11:55:26'),
+(2, 4, 1, 0, '', '2021-04-11 11:55:26'),
+(3, 0, 1, 0, '', '2021-04-11 12:14:44'),
+(4, 0, 1, 0, '', '2021-04-11 12:14:44'),
+(5, 5, 1, 0, '', '2021-04-11 12:18:58'),
+(6, 6, 1, 0, '', '2021-04-11 12:18:58');
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `omvm_order_option`
 --
 
+DROP TABLE IF EXISTS `omvm_order_option`;
 CREATE TABLE `omvm_order_option` (
   `order_option_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
@@ -8359,36 +8400,10 @@ CREATE TABLE `omvm_order_option` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `omvm_order_payment`
---
-
-CREATE TABLE `omvm_order_payment` (
-  `order_payment_id` int(11) NOT NULL,
-  `order_id` int(11) NOT NULL,
-  `store_id` int(11) NOT NULL,
-  `payment_firstname` varchar(32) NOT NULL,
-  `payment_lastname` varchar(32) NOT NULL,
-  `payment_company` varchar(60) NOT NULL,
-  `payment_address_1` varchar(128) NOT NULL,
-  `payment_address_2` varchar(128) NOT NULL,
-  `payment_city` varchar(128) NOT NULL,
-  `payment_postal_code` varchar(10) NOT NULL,
-  `payment_country` varchar(128) NOT NULL,
-  `payment_country_id` int(11) NOT NULL,
-  `payment_state` varchar(128) NOT NULL,
-  `payment_state_id` int(11) NOT NULL,
-  `payment_address_format` text NOT NULL,
-  `payment_custom_field` text NOT NULL,
-  `payment_method` varchar(128) NOT NULL,
-  `payment_code` varchar(128) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `omvm_order_product`
 --
 
+DROP TABLE IF EXISTS `omvm_order_product`;
 CREATE TABLE `omvm_order_product` (
   `order_product_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
@@ -8409,7 +8424,12 @@ CREATE TABLE `omvm_order_product` (
 
 INSERT INTO `omvm_order_product` (`order_product_id`, `order_id`, `store_id`, `product_id`, `name`, `model`, `quantity`, `price`, `total`, `tax`, `reward`) VALUES
 (207, 1, 1, 1, 'Acer Aspire 5 Slim Laptop, 15.6 inches Full HD IPS Display, AMD Ryzen 3 3200U, Vega 3 Graphics, 4GB DDR4, 128GB SSD, Backlit Keyboard, Windows 10 in S Mode, A515-43-R19L, Silver', '', 3, '369.9900', '1109.9700', '369.9900', 0),
-(208, 2, 2, 3, 'Nintendo Switch - Animal Crossing™: New Horizons', '', 1, '345.0000', '345.0000', '345.0000', 0);
+(208, 2, 2, 3, 'Nintendo Switch - Animal Crossing™: New Horizons', '', 1, '345.0000', '345.0000', '345.0000', 0),
+(213, 3, 1, 1, 'Acer Aspire 5 Slim Laptop, 15.6 inches Full HD IPS Display, AMD Ryzen 3 3200U, Vega 3 Graphics, 4GB DDR4, 128GB SSD, Backlit Keyboard, Windows 10 in S Mode, A515-43-R19L, Silver', '', 3, '369.9900', '1109.9700', '369.9900', 0),
+(214, 4, 2, 3, 'Nintendo Switch - Animal Crossing™: New Horizons', '', 1, '345.0000', '345.0000', '345.0000', 0),
+(238, 0, 2, 3, 'Nintendo Switch - Animal Crossing™: New Horizons', '', 4, '345.0000', '1380.0000', '345.0000', 0),
+(257, 5, 1, 2, 'Lenovo Legion 5 Gaming Laptop, 15.6\" FHD (1920x1080) IPS Screen, AMD Ryzen 7 4800H Processor, 16GB DDR4, 512GB SSD, NVIDIA GTX 1660Ti, Windows 10, 82B1000AUS, Phantom Black ', '', 3, '991.1700', '2973.5100', '991.1700', 0),
+(258, 6, 2, 3, 'Nintendo Switch - Animal Crossing™: New Horizons', '', 2, '345.0000', '690.0000', '345.0000', 0);
 
 -- --------------------------------------------------------
 
@@ -8417,6 +8437,7 @@ INSERT INTO `omvm_order_product` (`order_product_id`, `order_id`, `store_id`, `p
 -- Table structure for table `omvm_order_shipping`
 --
 
+DROP TABLE IF EXISTS `omvm_order_shipping`;
 CREATE TABLE `omvm_order_shipping` (
   `order_shipping_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
@@ -8426,12 +8447,15 @@ CREATE TABLE `omvm_order_shipping` (
   `shipping_company` varchar(40) NOT NULL,
   `shipping_address_1` varchar(128) NOT NULL,
   `shipping_address_2` varchar(128) NOT NULL,
-  `shipping_city` varchar(128) NOT NULL,
   `shipping_postal_code` varchar(10) NOT NULL,
-  `shipping_country` varchar(128) NOT NULL,
   `shipping_country_id` int(11) NOT NULL,
-  `shipping_state` varchar(128) NOT NULL,
+  `shipping_country` varchar(128) NOT NULL,
   `shipping_state_id` int(11) NOT NULL,
+  `shipping_state` varchar(128) NOT NULL,
+  `shipping_city_id` int(11) NOT NULL,
+  `shipping_city` varchar(128) NOT NULL,
+  `shipping_district_id` int(11) NOT NULL,
+  `shipping_district` varchar(255) NOT NULL,
   `shipping_address_format` text NOT NULL,
   `shipping_custom_field` text NOT NULL,
   `shipping_method` varchar(128) NOT NULL,
@@ -8442,9 +8466,15 @@ CREATE TABLE `omvm_order_shipping` (
 -- Dumping data for table `omvm_order_shipping`
 --
 
-INSERT INTO `omvm_order_shipping` (`order_shipping_id`, `order_id`, `store_id`, `shipping_firstname`, `shipping_lastname`, `shipping_company`, `shipping_address_1`, `shipping_address_2`, `shipping_city`, `shipping_postal_code`, `shipping_country`, `shipping_country_id`, `shipping_state`, `shipping_state_id`, `shipping_address_format`, `shipping_custom_field`, `shipping_method`, `shipping_code`) VALUES
-(207, 1, 1, 'John', 'Doe', '', 'Test Address', '', 'Bantul', '12345', 'Indonesia', 2, 'Daerah Istimewa Yogyakarta', 3, '', '', 'Flat Shipping Rate', 'flat.flat_plus'),
-(208, 2, 2, 'John', 'Doe', '', 'Test Address', '', 'Bantul', '12345', 'Indonesia', 2, 'Daerah Istimewa Yogyakarta', 3, '', '', 'Weight Based Shipping Rate', 'weight.weight');
+INSERT INTO `omvm_order_shipping` (`order_shipping_id`, `order_id`, `store_id`, `shipping_firstname`, `shipping_lastname`, `shipping_company`, `shipping_address_1`, `shipping_address_2`, `shipping_postal_code`, `shipping_country_id`, `shipping_country`, `shipping_state_id`, `shipping_state`, `shipping_city_id`, `shipping_city`, `shipping_district_id`, `shipping_district`, `shipping_address_format`, `shipping_custom_field`, `shipping_method`, `shipping_code`) VALUES
+(207, 1, 1, 'John', 'Doe', '', 'Test Address', '', '12345', 2, 'Indonesia', 3, 'Daerah Istimewa Yogyakarta', 0, 'Bantul', 0, '', '', '', 'Flat Shipping Rate', 'flat.flat_plus'),
+(208, 2, 2, 'John', 'Doe', '', 'Test Address', '', '12345', 2, 'Indonesia', 3, 'Daerah Istimewa Yogyakarta', 0, 'Bantul', 0, '', '', '', 'Weight Based Shipping Rate', 'weight.weight'),
+(213, 3, 1, 'John', 'Doe', '', 'Test Address', '', '12345', 100, 'Indonesia', 1528, 'Papua', 0, 'Biak Numfor', 0, '', '', '', 'Flat Shipping Rate', 'flat.flat_plus'),
+(214, 4, 2, 'John', 'Doe', '', 'Test Address', '', '12345', 100, 'Indonesia', 1528, 'Papua', 0, 'Biak Numfor', 0, '', '', '', 'Flat Shipping Rate', 'flat.flat_plus'),
+(257, 5, 1, 'John', 'Doe', '', 'Test Address', '', '12345', 100, 'Indonesia', 1528, 'Papua', 67, 'Biak Numfor', 905, 'Poiru', '', '', 'Flat Shipping Rate', 'flat.flat_plus'),
+(237, 0, 1, 'John', 'Doe', '', 'Test Address', '', '12345', 100, 'Indonesia', 1528, 'Papua', 67, 'Biak Numfor', 905, 'Poiru', '', '', 'Flat Shipping Rate', 'flat.flat'),
+(238, 0, 2, 'John', 'Doe', '', 'Test Address', '', '12345', 100, 'Indonesia', 1528, 'Papua', 67, 'Biak Numfor', 905, 'Poiru', '', '', 'Flat Shipping Rate', 'flat.flat'),
+(258, 6, 2, 'John', 'Doe', '', 'Test Address', '', '12345', 100, 'Indonesia', 1528, 'Papua', 67, 'Biak Numfor', 905, 'Poiru', '', '', 'Flat Shipping Rate', 'flat.flat');
 
 -- --------------------------------------------------------
 
@@ -8452,6 +8482,7 @@ INSERT INTO `omvm_order_shipping` (`order_shipping_id`, `order_id`, `store_id`, 
 -- Table structure for table `omvm_order_status`
 --
 
+DROP TABLE IF EXISTS `omvm_order_status`;
 CREATE TABLE `omvm_order_status` (
   `order_status_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
@@ -8484,6 +8515,7 @@ INSERT INTO `omvm_order_status` (`order_status_id`, `language_id`, `name`) VALUE
 -- Table structure for table `omvm_order_total`
 --
 
+DROP TABLE IF EXISTS `omvm_order_total`;
 CREATE TABLE `omvm_order_total` (
   `order_total_id` int(10) NOT NULL,
   `order_id` int(11) NOT NULL,
@@ -8504,7 +8536,22 @@ INSERT INTO `omvm_order_total` (`order_total_id`, `order_id`, `store_id`, `code`
 (620, 1, 1, 'shipping', 'Flat Shipping Rate', '19.0000', 2),
 (623, 2, 2, 'shipping', 'Weight Based Shipping Rate', '9.0000', 2),
 (619, 1, 1, 'sub_total', 'Sub Total', '1109.9700', 1),
-(622, 2, 2, 'sub_total', 'Sub Total', '345.0000', 1);
+(622, 2, 2, 'sub_total', 'Sub Total', '345.0000', 1),
+(638, 3, 1, 'shipping', 'Flat Shipping Rate', '19.0000', 2),
+(641, 4, 2, 'shipping', 'Flat Shipping Rate', '19.0000', 2),
+(639, 3, 1, 'total', 'Total', '1128.9700', 99),
+(637, 3, 1, 'sub_total', 'Sub Total', '1109.9700', 1),
+(642, 4, 2, 'total', 'Total', '364.0000', 99),
+(640, 4, 2, 'sub_total', 'Sub Total', '345.0000', 1),
+(714, 0, 2, 'total', 'Total', '1389.0000', 99),
+(713, 0, 2, 'shipping', 'Flat Shipping Rate', '9.0000', 2),
+(712, 0, 2, 'sub_total', 'Sub Total', '1380.0000', 1),
+(771, 5, 1, 'total', 'Total', '2992.5100', 99),
+(770, 5, 1, 'shipping', 'Flat Shipping Rate', '19.0000', 2),
+(774, 6, 2, 'total', 'Total', '699.0000', 99),
+(772, 6, 2, 'sub_total', 'Sub Total', '690.0000', 1),
+(773, 6, 2, 'shipping', 'Flat Shipping Rate', '9.0000', 2),
+(769, 5, 1, 'sub_total', 'Sub Total', '2973.5100', 1);
 
 -- --------------------------------------------------------
 
@@ -8512,6 +8559,7 @@ INSERT INTO `omvm_order_total` (`order_total_id`, `order_id`, `store_id`, `code`
 -- Table structure for table `omvm_payment_method_install`
 --
 
+DROP TABLE IF EXISTS `omvm_payment_method_install`;
 CREATE TABLE `omvm_payment_method_install` (
   `payment_method_install_id` int(11) NOT NULL,
   `provider` varchar(255) NOT NULL,
@@ -8532,6 +8580,7 @@ INSERT INTO `omvm_payment_method_install` (`payment_method_install_id`, `provide
 -- Table structure for table `omvm_product`
 --
 
+DROP TABLE IF EXISTS `omvm_product`;
 CREATE TABLE `omvm_product` (
   `product_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL DEFAULT 0,
@@ -8572,6 +8621,7 @@ INSERT INTO `omvm_product` (`product_id`, `user_id`, `store_id`, `model`, `price
 -- Table structure for table `omvm_product_description`
 --
 
+DROP TABLE IF EXISTS `omvm_product_description`;
 CREATE TABLE `omvm_product_description` (
   `product_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -8601,6 +8651,7 @@ INSERT INTO `omvm_product_description` (`product_id`, `user_id`, `language_id`, 
 -- Table structure for table `omvm_product_to_category`
 --
 
+DROP TABLE IF EXISTS `omvm_product_to_category`;
 CREATE TABLE `omvm_product_to_category` (
   `product_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL
@@ -8621,6 +8672,7 @@ INSERT INTO `omvm_product_to_category` (`product_id`, `category_id`) VALUES
 -- Table structure for table `omvm_setting`
 --
 
+DROP TABLE IF EXISTS `omvm_setting`;
 CREATE TABLE `omvm_setting` (
   `setting_id` int(11) NOT NULL,
   `code` varchar(128) NOT NULL,
@@ -8634,9 +8686,8 @@ CREATE TABLE `omvm_setting` (
 --
 
 INSERT INTO `omvm_setting` (`setting_id`, `code`, `key`, `value`, `serialized`) VALUES
-(1038, 'shipping_weight', 'shipping_weight_status', '1', 0),
-(1035, 'shipping_weight', 'shipping_weight_rate', '500:3,1000:6,1500:9,2000:12,2500:15,3000:18', 0),
-(1037, 'shipping_weight', 'shipping_weight_sort_order', '2', 0),
+(1127, 'shipping_weight', 'shipping_weight_sort_order', '2', 0),
+(1126, 'shipping_weight', 'shipping_weight_geo_zone_id', '1', 0),
 (1106, 'shipping_flat', 'shipping_flat_status', '1', 0),
 (919, 'frontend_theme_openmvm_default', 'frontend_theme_openmvm_default_layout_widget_1', '{\"page_top\":[\"2\"]}', 1),
 (937, 'frontend_theme_example_example', 'frontend_theme_example_example_name', 'Example Third Party Theme for OpenMVM', 0),
@@ -8645,37 +8696,48 @@ INSERT INTO `omvm_setting` (`setting_id`, `code`, `key`, `value`, `serialized`) 
 (1105, 'shipping_flat', 'shipping_flat_sort_order', '1', 0),
 (1104, 'shipping_flat', 'shipping_flat_geo_zone_id', '2', 0),
 (1103, 'shipping_flat', 'shipping_flat_cost', '9', 0),
-(1036, 'shipping_weight', 'shipping_weight_geo_zone_id', '1', 0),
-(1021, 'payment_cod', 'payment_cod_sort_order', '2', 0),
-(1020, 'payment_cod', 'payment_cod_geo_zone_id', '1', 0),
-(1019, 'payment_cod', 'payment_cod_order_status_id', '1', 0),
-(1018, 'payment_cod', 'payment_cod_total', '10', 0),
-(1098, 'payment_bank_transfer', 'payment_bank_transfer_status', '1', 0),
-(1097, 'payment_bank_transfer', 'payment_bank_transfer_sort_order', '1', 0),
-(1096, 'payment_bank_transfer', 'payment_bank_transfer_geo_zone_id', '2', 0),
-(1095, 'payment_bank_transfer', 'payment_bank_transfer_order_status_id', '1', 0),
-(1094, 'payment_bank_transfer', 'payment_bank_transfer_total', '20', 0),
-(1022, 'payment_cod', 'payment_cod_status', '1', 0),
+(1125, 'shipping_weight', 'shipping_weight_rate', '500:3,1000:6,1500:9,2000:12,2500:15,3000:18', 0),
+(1138, 'payment_cod', 'payment_cod_sort_order', '2', 0),
+(1137, 'payment_cod', 'payment_cod_geo_zone_id', '1', 0),
+(1136, 'payment_cod', 'payment_cod_order_status_id', '1', 0),
+(1134, 'payment_bank_transfer', 'payment_bank_transfer_status', '1', 0),
+(1133, 'payment_bank_transfer', 'payment_bank_transfer_sort_order', '1', 0),
+(1132, 'payment_bank_transfer', 'payment_bank_transfer_geo_zone_id', '2', 0),
+(1131, 'payment_bank_transfer', 'payment_bank_transfer_order_status_id', '1', 0),
+(1130, 'payment_bank_transfer', 'payment_bank_transfer_total', '20', 0),
+(1135, 'payment_cod', 'payment_cod_total', '10', 0),
 (770, 'openmvm_frontend_theme_default', 'openmvm_frontend_theme_default_name', 'Theme Default for OpenMVM', 0),
-(1120, 'setting', 'setting_frontend_currency', 'USD', 0),
-(1119, 'setting', 'setting_backend_language', 'en-US', 0),
-(1118, 'setting', 'setting_frontend_language', 'en-US', 0),
-(1117, 'setting', 'setting_frontend_items_per_page', '6', 0),
-(1116, 'setting', 'setting_backend_items_per_page', '50', 0),
-(1115, 'setting', 'setting_default_user_group_id', '1', 0),
-(1114, 'setting', 'setting_default_administrator_group_id', '1', 0),
-(1113, 'setting', 'setting_frontend_theme', 'frontend-theme-openmvm-default', 0),
-(1112, 'setting', 'setting_backend_theme', 'backend-theme-openmvm-default', 0),
-(1111, 'setting', 'setting_meta_keywords', 'openmvm,multi-vendor,multi vendor,marketplace', 0),
-(1110, 'setting', 'setting_meta_description', 'OpenMVM is an open-source multi-vendor e-commerce marketplace platform.', 0),
-(1109, 'setting', 'setting_meta_title', 'OpenMVM', 0),
-(1093, 'payment_bank_transfer', 'payment_bank_transfer_bank1', 'Bank Name: BCA', 0),
-(1108, 'setting', 'setting_description', '{\"1\":\"\\u003Cp\\u003EDescription in English\\u003C\\/p\\u003E\"}', 1),
-(1107, 'setting', 'setting_website_name', 'OpenMVM', 0),
-(1121, 'setting', 'setting_backend_currency', 'EUR', 0),
-(1122, 'setting', 'setting_frontend_weight_class_id', '2', 0),
-(1123, 'setting', 'setting_backend_weight_class_id', '1', 0),
-(1124, 'setting', 'setting_logo', 'openmvm.png', 0);
+(1153, 'setting', 'setting_frontend_currency', 'USD', 0),
+(1152, 'setting', 'setting_backend_language', 'en-US', 0),
+(1151, 'setting', 'setting_frontend_language', 'en-US', 0),
+(1150, 'setting', 'setting_frontend_items_per_page', '6', 0),
+(1149, 'setting', 'setting_backend_items_per_page', '50', 0),
+(1148, 'setting', 'setting_default_user_group_id', '1', 0),
+(1147, 'setting', 'setting_default_administrator_group_id', '1', 0),
+(1146, 'setting', 'setting_frontend_theme', 'frontend-theme-openmvm-default', 0),
+(1145, 'setting', 'setting_backend_theme', 'backend-theme-openmvm-default', 0),
+(1144, 'setting', 'setting_meta_keywords', 'openmvm,multi-vendor,multi vendor,marketplace', 0),
+(1143, 'setting', 'setting_meta_description', 'OpenMVM is an open-source multi-vendor e-commerce marketplace platform.', 0),
+(1129, 'payment_bank_transfer', 'payment_bank_transfer_bank1', 'Bank Name: BCA', 0),
+(1142, 'setting', 'setting_meta_title', 'OpenMVM', 0),
+(1141, 'setting', 'setting_description', '{\"1\":\"\\u003Cp\\u003EOpenMVM is an open-source multi-vendor e-commerce marketplace platform.\\u003C\\/p\\u003E\"}', 1),
+(1140, 'setting', 'setting_website_name', 'OpenMVM', 0),
+(1128, 'shipping_weight', 'shipping_weight_status', '1', 0),
+(1139, 'payment_cod', 'payment_cod_status', '1', 0),
+(1154, 'setting', 'setting_backend_currency', 'EUR', 0),
+(1155, 'setting', 'setting_frontend_weight_class_id', '2', 0),
+(1156, 'setting', 'setting_backend_weight_class_id', '1', 0),
+(1157, 'setting', 'setting_logo', 'openmvm.png', 0),
+(1158, 'setting', 'setting_mail_protocol', 'smtp', 0),
+(1159, 'setting', 'setting_smtp_hostname', '', 0),
+(1160, 'setting', 'setting_smtp_username', '', 0),
+(1161, 'setting', 'setting_smtp_password', '', 0),
+(1162, 'setting', 'setting_smtp_port', '', 0),
+(1163, 'setting', 'setting_smtp_timeout', '', 0),
+(1164, 'setting', 'setting_smtp_verify_peer', '0', 0),
+(1165, 'setting', 'setting_smtp_verify_peer_name', '0', 0),
+(1166, 'setting', 'setting_smtp_allow_self_signed', '0', 0),
+(1167, 'setting', 'setting_additional_alert_mail', '', 0);
 
 -- --------------------------------------------------------
 
@@ -8683,6 +8745,7 @@ INSERT INTO `omvm_setting` (`setting_id`, `code`, `key`, `value`, `serialized`) 
 -- Table structure for table `omvm_shipping_method_install`
 --
 
+DROP TABLE IF EXISTS `omvm_shipping_method_install`;
 CREATE TABLE `omvm_shipping_method_install` (
   `shipping_method_install_id` int(11) NOT NULL,
   `provider` varchar(255) NOT NULL,
@@ -8703,6 +8766,7 @@ INSERT INTO `omvm_shipping_method_install` (`shipping_method_install_id`, `provi
 -- Table structure for table `omvm_state`
 --
 
+DROP TABLE IF EXISTS `omvm_state`;
 CREATE TABLE `omvm_state` (
   `state_id` int(11) NOT NULL,
   `country_id` int(11) NOT NULL,
@@ -12835,6 +12899,7 @@ INSERT INTO `omvm_state` (`state_id`, `country_id`, `name`, `code`, `sort_order`
 -- Table structure for table `omvm_state_to_geo_zone`
 --
 
+DROP TABLE IF EXISTS `omvm_state_to_geo_zone`;
 CREATE TABLE `omvm_state_to_geo_zone` (
   `state_to_geo_zone_id` int(11) NOT NULL,
   `country_id` int(11) NOT NULL,
@@ -12849,8 +12914,8 @@ CREATE TABLE `omvm_state_to_geo_zone` (
 --
 
 INSERT INTO `omvm_state_to_geo_zone` (`state_to_geo_zone_id`, `country_id`, `state_id`, `geo_zone_id`, `date_added`, `date_modified`) VALUES
-(17, 3, 0, 1, '2021-03-30 03:00:45', '0000-00-00 00:00:00'),
-(16, 2, 0, 2, '2021-03-28 12:10:14', '0000-00-00 00:00:00');
+(19, 223, 0, 1, '2021-04-11 11:36:10', '0000-00-00 00:00:00'),
+(18, 100, 0, 2, '2021-04-11 11:35:50', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -12858,6 +12923,7 @@ INSERT INTO `omvm_state_to_geo_zone` (`state_to_geo_zone_id`, `country_id`, `sta
 -- Table structure for table `omvm_store`
 --
 
+DROP TABLE IF EXISTS `omvm_store`;
 CREATE TABLE `omvm_store` (
   `store_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -12890,6 +12956,7 @@ INSERT INTO `omvm_store` (`store_id`, `user_id`, `name`, `logo`, `wallpaper`, `v
 -- Table structure for table `omvm_store_description`
 --
 
+DROP TABLE IF EXISTS `omvm_store_description`;
 CREATE TABLE `omvm_store_description` (
   `store_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -12916,6 +12983,7 @@ INSERT INTO `omvm_store_description` (`store_id`, `user_id`, `language_id`, `des
 -- Table structure for table `omvm_user`
 --
 
+DROP TABLE IF EXISTS `omvm_user`;
 CREATE TABLE `omvm_user` (
   `user_id` int(11) NOT NULL,
   `user_group_id` int(11) NOT NULL,
@@ -12957,6 +13025,7 @@ INSERT INTO `omvm_user` (`user_id`, `user_group_id`, `language_id`, `username`, 
 -- Table structure for table `omvm_user_address`
 --
 
+DROP TABLE IF EXISTS `omvm_user_address`;
 CREATE TABLE `omvm_user_address` (
   `user_address_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -12968,8 +13037,11 @@ CREATE TABLE `omvm_user_address` (
   `address_format` varchar(255) NOT NULL,
   `country_id` int(11) NOT NULL,
   `state_id` int(11) NOT NULL,
+  `state` varchar(255) NOT NULL,
   `city_id` int(11) NOT NULL,
+  `city` varchar(255) NOT NULL,
   `district_id` int(11) NOT NULL,
+  `district` varchar(255) NOT NULL,
   `postal_code` varchar(12) NOT NULL,
   `telephone` varchar(32) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -12978,8 +13050,9 @@ CREATE TABLE `omvm_user_address` (
 -- Dumping data for table `omvm_user_address`
 --
 
-INSERT INTO `omvm_user_address` (`user_address_id`, `user_id`, `firstname`, `lastname`, `address`, `address_1`, `address_2`, `address_format`, `country_id`, `state_id`, `city_id`, `district_id`, `postal_code`, `telephone`) VALUES
-(1, 1, 'John', 'Doe', '', 'Test Address', '', '', 2, 3, 4, 5, '12345', '081234567890');
+INSERT INTO `omvm_user_address` (`user_address_id`, `user_id`, `firstname`, `lastname`, `address`, `address_1`, `address_2`, `address_format`, `country_id`, `state_id`, `state`, `city_id`, `city`, `district_id`, `district`, `postal_code`, `telephone`) VALUES
+(1, 1, 'John', 'Doe', '', 'Test Address', '', '', 100, 1528, 'Papua', 67, 'Biak Numfor', 905, 'Poiru', '12345', '081234567890'),
+(2, 1, 'Jane', 'Doe', '', 'Test Address', '', '', 223, 3633, 'Hawaii', 0, 'Some City', 0, 'Some District', '12345', '081234567890');
 
 -- --------------------------------------------------------
 
@@ -12987,6 +13060,7 @@ INSERT INTO `omvm_user_address` (`user_address_id`, `user_id`, `firstname`, `las
 -- Table structure for table `omvm_user_email_verification`
 --
 
+DROP TABLE IF EXISTS `omvm_user_email_verification`;
 CREATE TABLE `omvm_user_email_verification` (
   `username` varchar(32) NOT NULL,
   `email` varchar(96) NOT NULL,
@@ -13001,6 +13075,7 @@ CREATE TABLE `omvm_user_email_verification` (
 -- Table structure for table `omvm_user_group`
 --
 
+DROP TABLE IF EXISTS `omvm_user_group`;
 CREATE TABLE `omvm_user_group` (
   `user_group_id` int(11) NOT NULL,
   `name` varchar(128) NOT NULL,
@@ -13020,6 +13095,7 @@ INSERT INTO `omvm_user_group` (`user_group_id`, `name`, `email_verification`) VA
 -- Table structure for table `omvm_user_online`
 --
 
+DROP TABLE IF EXISTS `omvm_user_online`;
 CREATE TABLE `omvm_user_online` (
   `ip` varchar(64) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -13032,6 +13108,7 @@ CREATE TABLE `omvm_user_online` (
 -- Table structure for table `omvm_user_password_recovery_request`
 --
 
+DROP TABLE IF EXISTS `omvm_user_password_recovery_request`;
 CREATE TABLE `omvm_user_password_recovery_request` (
   `username` varchar(32) NOT NULL,
   `email` varchar(96) NOT NULL,
@@ -13046,6 +13123,7 @@ CREATE TABLE `omvm_user_password_recovery_request` (
 -- Table structure for table `omvm_weight_class`
 --
 
+DROP TABLE IF EXISTS `omvm_weight_class`;
 CREATE TABLE `omvm_weight_class` (
   `weight_class_id` int(11) NOT NULL,
   `value` decimal(15,8) NOT NULL DEFAULT 0.00000000,
@@ -13069,6 +13147,7 @@ INSERT INTO `omvm_weight_class` (`weight_class_id`, `value`, `sort_order`, `stat
 -- Table structure for table `omvm_weight_class_description`
 --
 
+DROP TABLE IF EXISTS `omvm_weight_class_description`;
 CREATE TABLE `omvm_weight_class_description` (
   `weight_class_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
@@ -13093,6 +13172,7 @@ INSERT INTO `omvm_weight_class_description` (`weight_class_id`, `language_id`, `
 -- Table structure for table `omvm_widget`
 --
 
+DROP TABLE IF EXISTS `omvm_widget`;
 CREATE TABLE `omvm_widget` (
   `widget_id` int(11) NOT NULL,
   `location` varchar(12) NOT NULL,
@@ -13119,6 +13199,7 @@ INSERT INTO `omvm_widget` (`widget_id`, `location`, `provider`, `dir`, `name`, `
 -- Table structure for table `omvm_widget_install`
 --
 
+DROP TABLE IF EXISTS `omvm_widget_install`;
 CREATE TABLE `omvm_widget_install` (
   `widget_install_id` int(11) NOT NULL,
   `location` varchar(12) NOT NULL,
@@ -13273,12 +13354,6 @@ ALTER TABLE `omvm_order_history`
 --
 ALTER TABLE `omvm_order_option`
   ADD PRIMARY KEY (`order_option_id`);
-
---
--- Indexes for table `omvm_order_payment`
---
-ALTER TABLE `omvm_order_payment`
-  ADD PRIMARY KEY (`order_payment_id`);
 
 --
 -- Indexes for table `omvm_order_product`
@@ -13449,7 +13524,7 @@ ALTER TABLE `omvm_administrator_group`
 -- AUTO_INCREMENT for table `omvm_cart`
 --
 ALTER TABLE `omvm_cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `omvm_cart_product`
@@ -13515,7 +13590,7 @@ ALTER TABLE `omvm_layout`
 -- AUTO_INCREMENT for table `omvm_layout_route`
 --
 ALTER TABLE `omvm_layout_route`
-  MODIFY `layout_route_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `layout_route_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `omvm_length_class`
@@ -13527,13 +13602,13 @@ ALTER TABLE `omvm_length_class`
 -- AUTO_INCREMENT for table `omvm_order`
 --
 ALTER TABLE `omvm_order`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `omvm_order_history`
 --
 ALTER TABLE `omvm_order_history`
-  MODIFY `order_history_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_history_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `omvm_order_option`
@@ -13542,22 +13617,16 @@ ALTER TABLE `omvm_order_option`
   MODIFY `order_option_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `omvm_order_payment`
---
-ALTER TABLE `omvm_order_payment`
-  MODIFY `order_payment_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `omvm_order_product`
 --
 ALTER TABLE `omvm_order_product`
-  MODIFY `order_product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=209;
+  MODIFY `order_product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=259;
 
 --
 -- AUTO_INCREMENT for table `omvm_order_shipping`
 --
 ALTER TABLE `omvm_order_shipping`
-  MODIFY `order_shipping_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=209;
+  MODIFY `order_shipping_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=259;
 
 --
 -- AUTO_INCREMENT for table `omvm_order_status`
@@ -13569,7 +13638,7 @@ ALTER TABLE `omvm_order_status`
 -- AUTO_INCREMENT for table `omvm_order_total`
 --
 ALTER TABLE `omvm_order_total`
-  MODIFY `order_total_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=625;
+  MODIFY `order_total_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=775;
 
 --
 -- AUTO_INCREMENT for table `omvm_payment_method_install`
@@ -13587,7 +13656,7 @@ ALTER TABLE `omvm_product`
 -- AUTO_INCREMENT for table `omvm_setting`
 --
 ALTER TABLE `omvm_setting`
-  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1125;
+  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1168;
 
 --
 -- AUTO_INCREMENT for table `omvm_shipping_method_install`
@@ -13605,7 +13674,7 @@ ALTER TABLE `omvm_state`
 -- AUTO_INCREMENT for table `omvm_state_to_geo_zone`
 --
 ALTER TABLE `omvm_state_to_geo_zone`
-  MODIFY `state_to_geo_zone_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `state_to_geo_zone_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `omvm_store`
@@ -13623,7 +13692,7 @@ ALTER TABLE `omvm_user`
 -- AUTO_INCREMENT for table `omvm_user_address`
 --
 ALTER TABLE `omvm_user_address`
-  MODIFY `user_address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_address_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `omvm_user_group`

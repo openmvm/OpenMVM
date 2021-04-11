@@ -53,20 +53,32 @@
 						  </select>
 						  <label for="input-shipping-address-country-id"><?php echo lang('Entry.entry_country', array(), $lang->getFrontEndLocale()); ?></label>
 						</div>
-						<div class="form-floating mb-3">
+						<div id="shipping-address-state-id-container" class="form-floating mb-3">
 						  <select name="state_id" class="form-select" id="input-shipping-address-state-id" aria-label="input-shipping-address-state-id">
 						  </select>
 						  <label for="input-shipping-address-state-id"><?php echo lang('Entry.entry_state', array(), $lang->getFrontEndLocale()); ?></label>
 						</div>
-						<div class="form-floating mb-3">
+				  	<div id="shipping-address-state-container" class="form-floating mb-3">
+						  <input type="text" name="state" value="" class="form-control" id="input-shipping-address-state" placeholder="<?php echo lang('Entry.entry_state', array(), $lang->getFrontEndLocale()); ?>">
+						  <label for="input-shipping-address-state"><?php echo lang('Entry.entry_state', array(), $lang->getFrontEndLocale()); ?></label>
+						</div>
+						<div id="shipping-address-city-id-container" class="form-floating mb-3">
 						  <select name="city_id" class="form-select" id="input-shipping-address-city-id" aria-label="input-shipping-address-city-id">
 						  </select>
 						  <label for="input-shipping-address-city-id"><?php echo lang('Entry.entry_city', array(), $lang->getFrontEndLocale()); ?></label>
 						</div>
-						<div class="form-floating mb-3">
+				  	<div id="shipping-address-city-container" class="form-floating mb-3">
+						  <input type="text" name="city" value="" class="form-control" id="input-shipping-address-city" placeholder="<?php echo lang('Entry.entry_city', array(), $lang->getFrontEndLocale()); ?>">
+						  <label for="input-shipping-address-city"><?php echo lang('Entry.entry_city', array(), $lang->getFrontEndLocale()); ?></label>
+						</div>
+						<div id="shipping-address-district-id-container" class="form-floating mb-3">
 						  <select name="district_id" class="form-select" id="input-shipping-address-district-id" aria-label="input-shipping-address-district-id">
 						  </select>
 						  <label for="input-shipping-address-district-id"><?php echo lang('Entry.entry_district', array(), $lang->getFrontEndLocale()); ?></label>
+						</div>
+				  	<div id="shipping-address-district-container" class="form-floating mb-3">
+						  <input type="text" name="district" value="" class="form-control" id="input-shipping-address-district" placeholder="<?php echo lang('Entry.entry_district', array(), $lang->getFrontEndLocale()); ?>">
+						  <label for="input-shipping-address-district"><?php echo lang('Entry.entry_district', array(), $lang->getFrontEndLocale()); ?></label>
 						</div>
 				  	<div class="form-floating mb-3">
 						  <input type="text" name="postal_code" value="" class="form-control" id="input-shipping-address-postal-code" placeholder="<?php echo lang('Entry.entry_postal_code', array(), $lang->getFrontEndLocale()); ?>">
@@ -148,20 +160,44 @@ $('#shipping-address-form-container select[name=\'country_id\']').on('change', f
       $('#shipping-address-form-container select[name=\'country_id\']').prop('disabled', false);
     },
     success: function(json) {
-      html = '<option value=""><?php echo lang('Text.text_select', array(), $lang->getBackEndLocale()); ?></option>';
-      
-      if (json['states'] && json['states'] != '') {
-        for (i = 0; i < json['states'].length; i++) {
-          state = json['states'][i];
+    	if (json['state_input_type'] == 'select_box') {
+    		$('#shipping-address-form-container #shipping-address-state-container').addClass('d-none');
 
-          html += '<option value="' + state['state_id'] + '">' + state['name'] + '</option>';
-        }
-      } else {
-        html += '<option value="0" selected="selected"><?php echo lang('Text.text_none', array(), $lang->getBackEndLocale()); ?></option>';
-      }
-      
-      $('#shipping-address-form-container select[name=\'state_id\']').html(html);
-      $('#shipping-address-form-container select[name=\'state_id\']').trigger('change');
+	      html = '<option value=""><?php echo lang('Text.text_select', array(), $lang->getBackEndLocale()); ?></option>';
+	      
+	      if (json['states'] && json['states'] != '') {
+	        for (i = 0; i < json['states'].length; i++) {
+	          state = json['states'][i];
+
+	          html += '<option value="' + state['state_id'] + '">' + state['name'] + '</option>';
+	        }
+	      } else {
+	        html += '<option value="0" selected="selected"><?php echo lang('Text.text_none', array(), $lang->getBackEndLocale()); ?></option>';
+	      }
+	      
+    		$('#shipping-address-form-container #shipping-address-state-id-container').removeClass('d-none');
+	      $('#shipping-address-form-container select[name=\'state_id\']').html(html);
+	      $('#shipping-address-form-container select[name=\'state_id\']').trigger('change');
+    	} else {
+    		$('#shipping-address-form-container #shipping-address-state-id-container').addClass('d-none');
+    		$('#shipping-address-form-container #shipping-address-state-container').removeClass('d-none');
+    	}
+	      
+    	if (json['city_input_type'] == 'select_box') {
+    		$('#shipping-address-form-container #shipping-address-city-container').addClass('d-none');
+    		$('#shipping-address-form-container #shipping-address-city-id-container').removeClass('d-none');
+    	} else {
+    		$('#shipping-address-form-container #shipping-address-city-id-container').addClass('d-none');
+    		$('#shipping-address-form-container #shipping-address-city-container').removeClass('d-none');
+    	}
+	      
+    	if (json['district_input_type'] == 'select_box') {
+    		$('#shipping-address-form-container #shipping-address-district-container').addClass('d-none');
+    		$('#shipping-address-form-container #shipping-address-district-id-container').removeClass('d-none');
+    	} else {
+    		$('#shipping-address-form-container #shipping-address-district-id-container').addClass('d-none');
+    		$('#shipping-address-form-container #shipping-address-district-container').removeClass('d-none');
+    	}
     },
     error: function(xhr, ajaxOptions, thrownError) {
       alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -203,6 +239,9 @@ $('#shipping-address-form-container select[name=\'state_id\']').on('change', fun
           html += '<option value="0" selected="selected"><?php echo lang('Text.text_none', array(), $lang->getBackEndLocale()); ?></option>';
         }
         
+        if (json['state_input_type'] == 'select_box') {
+          $('#shipping-address-form-container input[name=\'state\']').val(json['name']);
+        }
         $('#shipping-address-form-container select[name=\'city_id\']').html(html);
         $('#shipping-address-form-container select[name=\'city_id\']').trigger('change');
       },
@@ -247,6 +286,9 @@ $('#shipping-address-form-container select[name=\'city_id\']').on('change', func
           html += '<option value="0" selected="selected"><?php echo lang('Text.text_none', array(), $lang->getBackEndLocale()); ?></option>';
         }
         
+        if (json['city_input_type'] == 'select_box') {
+        	$('#shipping-address-form-container input[name=\'city\']').val(json['name']);
+        }
         $('#shipping-address-form-container select[name=\'district_id\']').html(html);
       },
       error: function(xhr, ajaxOptions, thrownError) {
@@ -257,6 +299,37 @@ $('#shipping-address-form-container select[name=\'city_id\']').on('change', func
 });
 
 $('#shipping-address-form-container select[name=\'city_id\']').trigger('change');
+//--></script> 
+<script type="text/javascript"><!--
+$('#shipping-address-form-container select[name=\'district_id\']').on('change', function() {
+  setTimeout(function(){
+    var district_id = $('#shipping-address-form-container select[name=\'district_id\']').val();
+    $.ajax({
+      url: '<?php echo base_url('/localisation/get_district'); ?>',
+      type: 'post',
+      dataType: 'json',
+      data : {
+        district_id : district_id
+      },
+      beforeSend: function() {
+        $('#shipping-address-form-container select[name=\'district_id\']').prop('disabled', true);
+      },
+      complete: function() {
+        $('#shipping-address-form-container select[name=\'district_id\']').prop('disabled', false);
+      },
+      success: function(json) {
+        if (json['district_input_type'] == 'select_box') {
+          $('#shipping-address-form-container input[name=\'district\']').val(json['name']);
+        }
+      },
+      error: function(xhr, ajaxOptions, thrownError) {
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  }, 400);
+});
+
+$('#shipping-address-form-container select[name=\'district_id\']').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
 $('#button-add-shipping-address').on('click', function() {

@@ -60,7 +60,6 @@ class LayoutModel extends \CodeIgniter\Model
 
 		$builder_layout_route = $this->db->table('layout_route');
 		$builder_layout_route->where('layout_id', $layout_id);
-		$builder_layout_route->where('location', $location);
 		$builder_layout_route->delete();
 
 		if (!empty($data['layout_route'])) {
@@ -137,6 +136,7 @@ class LayoutModel extends \CodeIgniter\Model
 	public function getLayoutRoutes($layout_id) {
 		$builder = $this->db->table('layout_route');
 		$builder->where('layout_id', $layout_id);
+		$builder->orderBy('route', 'ASC');
 
 		$query   = $builder->get();
 

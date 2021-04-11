@@ -142,6 +142,18 @@
 									  </select>
 									  <label for="input-district-input-type"><?php echo lang('Entry.entry_district_input_type', array(), $lang->getBackEndLocale()); ?></label>
 									</div>
+									<div class="form-floating mb-3">
+									  <select name="district_required" class="form-select" id="input-district-required" aria-label="district-required">
+		                  <?php if ($district_required) { ?>
+		                    <option value="1" selected><?php echo lang('Text.text_yes', array(), $lang->getBackEndLocale()); ?></option>
+		                    <option value="0"><?php echo lang('Text.text_no', array(), $lang->getBackEndLocale()); ?></option>
+		                  <?php } else { ?>
+		                    <option value="1"><?php echo lang('Text.text_yes', array(), $lang->getBackEndLocale()); ?></option>
+		                    <option value="0" selected><?php echo lang('Text.text_no', array(), $lang->getBackEndLocale()); ?></option>
+		                  <?php } ?>
+									  </select>
+									  <label for="input-district-required"><?php echo lang('Entry.entry_district_required', array(), $lang->getBackEndLocale()); ?></label>
+									</div>
 							  	<div class="form-floating mb-3">
 									  <textarea style="height: 100px" name="address_format" class="form-control" id="input-address-format" placeholder="<?php echo lang('Entry.entry_address_format', array(), $lang->getBackEndLocale()); ?>"><?php echo $address_format; ?></textarea>
 									  <label for="input-address-format"><?php echo lang('Entry.entry_address_format', array(), $lang->getBackEndLocale()); ?></label>

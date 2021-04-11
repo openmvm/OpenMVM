@@ -94,15 +94,28 @@ class Register extends \App\Controllers\BaseController
 
 	public function success($data = array())
 	{
-    // Data Notification
-    if ($this->session->get('success') !== null) {
-			$data['message'] = $this->session->get('success');
+    // Data Text
+		$data['message'] = lang('Success.success_user_registration', array(), $this->language->getFrontEndLocale());;
+    
+		// Load Header
+		$header_parameter = array(
+			'title' => lang('Heading.heading_success', array(), $this->language->getFrontEndLocale()),
+		);
+		$data['header'] = $this->frontend_header->index($header_parameter);
 
-			$this->session->remove('success');
-    } else {
-			$data['message'] = '';
-    }
+		// Load Footer
+		$footer_parameter = array();
+		$data['footer'] = $this->frontend_footer->index($footer_parameter);
 
+		// Echo view
+		echo $this->template->render('FrontendThemes', 'Common\success', $data);
+	}
+
+	public function successVerify($data = array())
+	{
+    // Data Text
+		$data['message'] = lang('Success.success_user_registration_verify', array(), $this->language->getFrontEndLocale());;
+    
 		// Load Header
 		$header_parameter = array(
 			'title' => lang('Heading.heading_success', array(), $this->language->getFrontEndLocale()),
@@ -119,14 +132,8 @@ class Register extends \App\Controllers\BaseController
 
 	public function error($data = array())
 	{
-    // Data Notification
-    if ($this->session->get('error') !== null) {
-			$data['message'] = $this->session->get('error');
-
-			$this->session->remove('error');
-    } else {
-			$data['message'] = '';
-    }
+    // Data Text
+		$data['message'] = lang('Error.error_user_registration', array(), $this->language->getFrontEndLocale());;
 
 		// Load Header
 		$header_parameter = array(

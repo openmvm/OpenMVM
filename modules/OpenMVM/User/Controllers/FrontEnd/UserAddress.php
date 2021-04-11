@@ -219,7 +219,7 @@ class UserAddress extends \App\Controllers\BaseController
 		if ($this->validation->withRequest($this->request)->run() == TRUE) {
     	if ($this->user->hasPermission()) {
 	      // Query
-	    	$query = $this->userAddressModel->editUserAddress($this->request->getPost(), $this->user->getId());
+	    	$query = $this->userAddressModel->editUserAddress($this->request->getPost(), $this->request->uri->getSegment(4), $this->user->getId());
 	      
 	      if ($query) {
 	      	$this->session->set('success', lang('Success.success_user_address_edit', array(), $this->language->getFrontEndLocale()));
@@ -399,6 +399,14 @@ class UserAddress extends \App\Controllers\BaseController
 			$data['state_id'] = '';
 		}
 
+		if($this->request->getPost('state')) {
+			$data['state'] = $this->request->getPost('state');
+		} elseif ($user_address_info) {
+			$data['state'] = $user_address_info['state'];
+		} else {
+			$data['state'] = '';
+		}
+
 		if($this->request->getPost('city_id')) {
 			$data['city_id'] = $this->request->getPost('city_id');
 		} elseif ($user_address_info) {
@@ -407,12 +415,28 @@ class UserAddress extends \App\Controllers\BaseController
 			$data['city_id'] = '';
 		}
 
+		if($this->request->getPost('city')) {
+			$data['city'] = $this->request->getPost('city');
+		} elseif ($user_address_info) {
+			$data['city'] = $user_address_info['city'];
+		} else {
+			$data['city'] = '';
+		}
+
 		if($this->request->getPost('district_id')) {
 			$data['district_id'] = $this->request->getPost('district_id');
 		} elseif ($user_address_info) {
 			$data['district_id'] = $user_address_info['district_id'];
 		} else {
 			$data['district_id'] = '';
+		}
+
+		if($this->request->getPost('district')) {
+			$data['district'] = $this->request->getPost('district');
+		} elseif ($user_address_info) {
+			$data['district'] = $user_address_info['district'];
+		} else {
+			$data['district'] = '';
 		}
 
 		if($this->request->getPost('postal_code')) {

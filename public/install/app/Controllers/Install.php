@@ -378,7 +378,7 @@ class Install extends BaseController
 						if ($add_administrator) {
 							// $this->session->set('success', lang('Success.success_install', array(), 'en-US'));
 
-							// Check the .env file and set the app.baseURL
+							// Check the .env file and set the app.adminDir
 							$install_env_file = '../.env';
 							$main_env_file = '../../../.env';
 

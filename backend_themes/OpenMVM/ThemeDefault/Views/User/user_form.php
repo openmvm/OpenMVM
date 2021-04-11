@@ -293,7 +293,7 @@ function addUserAddress() {
 	html += '    <div class="form-floating mb-3">';
 	html += '      <select name="user_address[' + user_address_row + '][country_id]" class="form-select" id="input-user-address-country-id-' + user_address_row + '" aria-label="input-user-address-country-id-' + user_address_row + '">';
   <?php foreach ($countries as $country) { ?>
-    html += '        <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>';
+    html += '        <option value="<?php echo $country['country_id']; ?>"><?php echo addslashes($country['name']); ?></option>';
   <?php } ?>
 	html += '      </select>';
 	html += '      <label for="input-user-address-country-id-' + user_address_row + '"><?php echo lang('Entry.entry_country', array(), $lang->getBackEndLocale()); ?></label>';

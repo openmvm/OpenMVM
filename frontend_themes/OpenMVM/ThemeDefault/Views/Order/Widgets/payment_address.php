@@ -53,20 +53,32 @@
 						  </select>
 						  <label for="input-payment-address-country-id"><?php echo lang('Entry.entry_country', array(), $lang->getFrontEndLocale()); ?></label>
 						</div>
-						<div class="form-floating mb-3">
+						<div id="payment-address-state-id-container" class="form-floating mb-3">
 						  <select name="state_id" class="form-select" id="input-payment-address-state-id" aria-label="input-payment-address-state-id">
 						  </select>
 						  <label for="input-payment-address-state-id"><?php echo lang('Entry.entry_state', array(), $lang->getFrontEndLocale()); ?></label>
 						</div>
-						<div class="form-floating mb-3">
+				  	<div id="payment-address-state-container" class="form-floating mb-3">
+						  <input type="text" name="state" value="" class="form-control" id="input-payment-address-state" placeholder="<?php echo lang('Entry.entry_state', array(), $lang->getFrontEndLocale()); ?>">
+						  <label for="input-payment-address-state"><?php echo lang('Entry.entry_state', array(), $lang->getFrontEndLocale()); ?></label>
+						</div>
+						<div id="payment-address-city-id-container" class="form-floating mb-3">
 						  <select name="city_id" class="form-select" id="input-payment-address-city-id" aria-label="input-payment-address-city-id">
 						  </select>
 						  <label for="input-payment-address-city-id"><?php echo lang('Entry.entry_city', array(), $lang->getFrontEndLocale()); ?></label>
 						</div>
-						<div class="form-floating mb-3">
+				  	<div id="payment-address-city-container" class="form-floating mb-3">
+						  <input type="text" name="city" value="" class="form-control" id="input-payment-address-city" placeholder="<?php echo lang('Entry.entry_city', array(), $lang->getFrontEndLocale()); ?>">
+						  <label for="input-payment-address-city"><?php echo lang('Entry.entry_city', array(), $lang->getFrontEndLocale()); ?></label>
+						</div>
+						<div id="payment-address-district-id-container" class="form-floating mb-3">
 						  <select name="district_id" class="form-select" id="input-payment-address-district-id" aria-label="input-payment-address-district-id">
 						  </select>
 						  <label for="input-payment-address-district-id"><?php echo lang('Entry.entry_district', array(), $lang->getFrontEndLocale()); ?></label>
+						</div>
+				  	<div id="payment-address-district-container" class="form-floating mb-3">
+						  <input type="text" name="district" value="" class="form-control" id="input-payment-address-district" placeholder="<?php echo lang('Entry.entry_district', array(), $lang->getFrontEndLocale()); ?>">
+						  <label for="input-payment-address-district"><?php echo lang('Entry.entry_district', array(), $lang->getFrontEndLocale()); ?></label>
 						</div>
 				  	<div class="form-floating mb-3">
 						  <input type="text" name="postal_code" value="" class="form-control" id="input-payment-address-postal-code" placeholder="<?php echo lang('Entry.entry_postal_code', array(), $lang->getFrontEndLocale()); ?>">
@@ -148,20 +160,44 @@ $('#payment-address-form-container select[name=\'country_id\']').on('change', fu
       $('#payment-address-form-container select[name=\'country_id\']').prop('disabled', false);
     },
     success: function(json) {
-      html = '<option value=""><?php echo lang('Text.text_select', array(), $lang->getBackEndLocale()); ?></option>';
-      
-      if (json['states'] && json['states'] != '') {
-        for (i = 0; i < json['states'].length; i++) {
-          state = json['states'][i];
+    	if (json['state_input_type'] == 'select_box') {
+    		$('#payment-address-form-container #payment-address-state-container').addClass('d-none');
 
-          html += '<option value="' + state['state_id'] + '">' + state['name'] + '</option>';
-        }
-      } else {
-        html += '<option value="0" selected="selected"><?php echo lang('Text.text_none', array(), $lang->getBackEndLocale()); ?></option>';
-      }
-      
-      $('#payment-address-form-container select[name=\'state_id\']').html(html);
-      $('#payment-address-form-container select[name=\'state_id\']').trigger('change');
+	      html = '<option value=""><?php echo lang('Text.text_select', array(), $lang->getBackEndLocale()); ?></option>';
+	      
+	      if (json['states'] && json['states'] != '') {
+	        for (i = 0; i < json['states'].length; i++) {
+	          state = json['states'][i];
+
+	          html += '<option value="' + state['state_id'] + '">' + state['name'] + '</option>';
+	        }
+	      } else {
+	        html += '<option value="0" selected="selected"><?php echo lang('Text.text_none', array(), $lang->getBackEndLocale()); ?></option>';
+	      }
+	      
+    		$('#payment-address-form-container #payment-address-state-id-container').removeClass('d-none');
+	      $('#payment-address-form-container select[name=\'state_id\']').html(html);
+	      $('#payment-address-form-container select[name=\'state_id\']').trigger('change');
+    	} else {
+    		$('#payment-address-form-container #payment-address-state-id-container').addClass('d-none');
+    		$('#payment-address-form-container #payment-address-state-container').removeClass('d-none');
+    	}
+	      
+    	if (json['city_input_type'] == 'select_box') {
+    		$('#payment-address-form-container #payment-address-city-container').addClass('d-none');
+    		$('#payment-address-form-container #payment-address-city-id-container').removeClass('d-none');
+    	} else {
+    		$('#payment-address-form-container #payment-address-city-id-container').addClass('d-none');
+    		$('#payment-address-form-container #payment-address-city-container').removeClass('d-none');
+    	}
+	      
+    	if (json['district_input_type'] == 'select_box') {
+    		$('#payment-address-form-container #payment-address-district-container').addClass('d-none');
+    		$('#payment-address-form-container #payment-address-district-id-container').removeClass('d-none');
+    	} else {
+    		$('#payment-address-form-container #payment-address-district-id-container').addClass('d-none');
+    		$('#payment-address-form-container #payment-address-district-container').removeClass('d-none');
+    	}
     },
     error: function(xhr, ajaxOptions, thrownError) {
       alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -203,6 +239,9 @@ $('#payment-address-form-container select[name=\'state_id\']').on('change', func
           html += '<option value="0" selected="selected"><?php echo lang('Text.text_none', array(), $lang->getBackEndLocale()); ?></option>';
         }
         
+        if (json['state_input_type'] == 'select_box') {
+          $('#payment-address-form-container input[name=\'state\']').val(json['name']);
+        }
         $('#payment-address-form-container select[name=\'city_id\']').html(html);
         $('#payment-address-form-container select[name=\'city_id\']').trigger('change');
       },
@@ -247,6 +286,9 @@ $('#payment-address-form-container select[name=\'city_id\']').on('change', funct
           html += '<option value="0" selected="selected"><?php echo lang('Text.text_none', array(), $lang->getBackEndLocale()); ?></option>';
         }
         
+        if (json['city_input_type'] == 'select_box') {
+        	$('#payment-address-form-container input[name=\'city\']').val(json['name']);
+        }
         $('#payment-address-form-container select[name=\'district_id\']').html(html);
       },
       error: function(xhr, ajaxOptions, thrownError) {
@@ -257,6 +299,37 @@ $('#payment-address-form-container select[name=\'city_id\']').on('change', funct
 });
 
 $('#payment-address-form-container select[name=\'city_id\']').trigger('change');
+//--></script> 
+<script type="text/javascript"><!--
+$('#payment-address-form-container select[name=\'district_id\']').on('change', function() {
+  setTimeout(function(){
+    var district_id = $('#payment-address-form-container select[name=\'district_id\']').val();
+    $.ajax({
+      url: '<?php echo base_url('/localisation/get_district'); ?>',
+      type: 'post',
+      dataType: 'json',
+      data : {
+        district_id : district_id
+      },
+      beforeSend: function() {
+        $('#payment-address-form-container select[name=\'district_id\']').prop('disabled', true);
+      },
+      complete: function() {
+        $('#payment-address-form-container select[name=\'district_id\']').prop('disabled', false);
+      },
+      success: function(json) {
+        if (json['district_input_type'] == 'select_box') {
+          $('#payment-address-form-container input[name=\'district\']').val(json['name']);
+        }
+      },
+      error: function(xhr, ajaxOptions, thrownError) {
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  }, 400);
+});
+
+$('#payment-address-form-container select[name=\'district_id\']').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
 $('#button-add-payment-address').on('click', function() {

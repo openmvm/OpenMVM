@@ -411,6 +411,14 @@ class Country extends \App\Controllers\BaseController
 			$data['district_input_type'] = 'text_input';
 		}
 
+		if($this->request->getPost('district_required')) {
+			$data['district_required'] = $this->request->getPost('district_required');
+		} elseif ($country_info) {
+			$data['district_required'] = $country_info['district_required'];
+		} else {
+			$data['district_required'] = 0;
+		}
+
 		if($this->request->getPost('address_format')) {
 			$data['address_format'] = $this->request->getPost('address_format');
 		} elseif ($country_info) {

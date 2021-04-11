@@ -27,5 +27,6 @@ return [
 	'entry_state_input_type' => 'State Input Type',
 	'entry_city_input_type' => 'City Input Type',
 	'entry_district_input_type' => 'District Input Type',
+	'entry_district_required' => 'District Required',
 	'entry_address_format' => 'Address Format',
 ];

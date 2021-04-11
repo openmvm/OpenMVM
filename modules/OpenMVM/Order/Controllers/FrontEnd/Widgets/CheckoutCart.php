@@ -440,12 +440,15 @@ class CheckoutCart extends \App\Controllers\BaseController
 				$order_data['payment_company'] = '';
 				$order_data['payment_address_1'] = $payment_address_info['address_1'];
 				$order_data['payment_address_2'] = $payment_address_info['address_2'];
-				$order_data['payment_city'] = $payment_address_info['city'];
 				$order_data['payment_postal_code'] = $payment_address_info['postal_code'];
-				$order_data['payment_country'] = $payment_address_info['country'];
 				$order_data['payment_country_id'] = $payment_address_info['country_id'];
-				$order_data['payment_state'] = $payment_address_info['state'];
+				$order_data['payment_country'] = $payment_address_info['country'];
 				$order_data['payment_state_id'] = $payment_address_info['state_id'];
+				$order_data['payment_state'] = $payment_address_info['state'];
+				$order_data['payment_city_id'] = $payment_address_info['city_id'];
+				$order_data['payment_city'] = $payment_address_info['city'];
+				$order_data['payment_district_id'] = $payment_address_info['district_id'];
+				$order_data['payment_district'] = $payment_address_info['district'];
 				$order_data['payment_address_format'] = $payment_address_info['address_format'];
 				$order_data['payment_custom_field'] = '';
 
@@ -465,12 +468,15 @@ class CheckoutCart extends \App\Controllers\BaseController
 				$order_data['shipping_company'] = '';
 				$order_data['shipping_address_1'] = $shipping_address_info['address_1'];
 				$order_data['shipping_address_2'] = $shipping_address_info['address_2'];
-				$order_data['shipping_city'] = $shipping_address_info['city'];
 				$order_data['shipping_postal_code'] = $shipping_address_info['postal_code'];
-				$order_data['shipping_country'] = $shipping_address_info['country'];
 				$order_data['shipping_country_id'] = $shipping_address_info['country_id'];
-				$order_data['shipping_state'] = $shipping_address_info['state'];
+				$order_data['shipping_country'] = $shipping_address_info['country'];
 				$order_data['shipping_state_id'] = $shipping_address_info['state_id'];
+				$order_data['shipping_state'] = $shipping_address_info['state'];
+				$order_data['shipping_city_id'] = $shipping_address_info['city_id'];
+				$order_data['shipping_city'] = $shipping_address_info['city'];
+				$order_data['shipping_district_id'] = $shipping_address_info['district_id'];
+				$order_data['shipping_district'] = $shipping_address_info['district'];
 				$order_data['shipping_address_format'] = $shipping_address_info['address_format'];
 				$order_data['shipping_custom_field'] = '';
 
