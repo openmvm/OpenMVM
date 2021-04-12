@@ -201,20 +201,32 @@
 														  </select>
 														  <label for="input-user-address-country-id-<?php echo $user_address_row; ?>"><?php echo lang('Entry.entry_country', array(), $lang->getBackEndLocale()); ?></label>
 														</div>
-														<div class="form-floating mb-3">
+														<div id="state-id-container-<?php echo $user_address_row; ?>" class="form-floating mb-3">
 														  <select name="user_address[<?php echo $user_address_row; ?>][state_id]" class="form-select" id="input-user-address-state-id-<?php echo $user_address_row; ?>" aria-label="input-user-address-state-id-<?php echo $user_address_row; ?>">
 														  </select>
 														  <label for="input-user-address-state-id-<?php echo $user_address_row; ?>"><?php echo lang('Entry.entry_state', array(), $lang->getBackEndLocale()); ?></label>
 														</div>
-														<div class="form-floating mb-3">
+												  	<div id="state-container-<?php echo $user_address_row; ?>" class="form-floating mb-3">
+														  <input type="text" name="user_address[<?php echo $user_address_row; ?>][state]" value="<?php echo $user_address['state']; ?>" class="form-control" id="input-user-address-state-<?php echo $user_address_row; ?>" placeholder="<?php echo lang('Entry.entry_state', array(), $lang->getFrontEndLocale()); ?>">
+														  <label for="input-user-address-state-<?php echo $user_address_row; ?>"><?php echo lang('Entry.entry_state', array(), $lang->getFrontEndLocale()); ?></label>
+														</div>
+														<div id="city-id-container-<?php echo $user_address_row; ?>" class="form-floating mb-3">
 														  <select name="user_address[<?php echo $user_address_row; ?>][city_id]" class="form-select" id="input-user-address-city-id-<?php echo $user_address_row; ?>" aria-label="input-user-address-city-id-<?php echo $user_address_row; ?>">
 														  </select>
 														  <label for="input-user-address-city-id-<?php echo $user_address_row; ?>"><?php echo lang('Entry.entry_city', array(), $lang->getBackEndLocale()); ?></label>
 														</div>
-														<div class="form-floating mb-3">
+												  	<div id="city-container-<?php echo $user_address_row; ?>" class="form-floating mb-3">
+														  <input type="text" name="user_address[<?php echo $user_address_row; ?>][city]" value="<?php echo $user_address['city']; ?>" class="form-control" id="input-user-address-city-<?php echo $user_address_row; ?>" placeholder="<?php echo lang('Entry.entry_city', array(), $lang->getFrontEndLocale()); ?>">
+														  <label for="input-user-address-city-<?php echo $user_address_row; ?>"><?php echo lang('Entry.entry_city', array(), $lang->getFrontEndLocale()); ?></label>
+														</div>
+														<div id="district-id-container-<?php echo $user_address_row; ?>" class="form-floating mb-3">
 														  <select name="user_address[<?php echo $user_address_row; ?>][district_id]" class="form-select" id="input-user-address-district-id-<?php echo $user_address_row; ?>" aria-label="input-user-address-district-id-<?php echo $user_address_row; ?>">
 														  </select>
 														  <label for="input-user-address-district-id-<?php echo $user_address_row; ?>"><?php echo lang('Entry.entry_district', array(), $lang->getBackEndLocale()); ?></label>
+														</div>
+												  	<div id="district-container-<?php echo $user_address_row; ?>" class="form-floating mb-3">
+														  <input type="text" name="user_address[<?php echo $user_address_row; ?>][district]" value="<?php echo $user_address['district']; ?>" class="form-control" id="input-user-address-district-<?php echo $user_address_row; ?>" placeholder="<?php echo lang('Entry.entry_district', array(), $lang->getFrontEndLocale()); ?>">
+														  <label for="input-user-address-district-<?php echo $user_address_row; ?>"><?php echo lang('Entry.entry_district', array(), $lang->getFrontEndLocale()); ?></label>
 														</div>
 												  	<div class="form-floating mb-3">
 														  <input type="text" name="user_address[<?php echo $user_address_row; ?>][postal_code]" value="<?php echo $user_address['postal_code']; ?>" class="form-control" id="input-user-address-postal-code-<?php echo $user_address_row; ?>" placeholder="<?php echo lang('Entry.entry_postal_code', array(), $lang->getBackEndLocale()); ?>">
@@ -298,21 +310,33 @@ function addUserAddress() {
 	html += '      </select>';
 	html += '      <label for="input-user-address-country-id-' + user_address_row + '"><?php echo lang('Entry.entry_country', array(), $lang->getBackEndLocale()); ?></label>';
 	html += '    </div>';
-	html += '    <div class="form-floating mb-3">';
+	html += '    <div id="state-id-container-' + user_address_row + '" class="form-floating mb-3">';
 	html += '      <select name="user_address[' + user_address_row + '][state_id]" class="form-select" id="input-user-address-state-id-' + user_address_row + '" aria-label="input-user-address-state-id-' + user_address_row + '">';
 	html += '      </select>';
 	html += '      <label for="input-user-address-state-id-' + user_address_row + '"><?php echo lang('Entry.entry_state', array(), $lang->getBackEndLocale()); ?></label>';
 	html += '    </div>';
-	html += '    <div class="form-floating mb-3">';
+	html += '		 <div id="state-container-' + user_address_row + '" class="form-floating mb-3">';
+	html += '		   <input type="text" name="user_address[' + user_address_row + '][state]" value="" class="form-control" id="input-user-address-state-' + user_address_row + '" placeholder="<?php echo lang('Entry.entry_state', array(), $lang->getBackEndLocale()); ?>">';
+	html += '		   <label for="input-user-address-state-' + user_address_row + '"><?php echo lang('Entry.entry_state', array(), $lang->getBackEndLocale()); ?></label>';
+	html += '		 </div>';
+	html += '    <div id="city-id-container-' + user_address_row + '" class="form-floating mb-3">';
 	html += '      <select name="user_address[' + user_address_row + '][city_id]" class="form-select" id="input-user-address-city-id-' + user_address_row + '" aria-label="input-user-address-city-id-' + user_address_row + '">';
 	html += '      </select>';
 	html += '      <label for="input-user-address-city-id-' + user_address_row + '"><?php echo lang('Entry.entry_city', array(), $lang->getBackEndLocale()); ?></label>';
 	html += '    </div>';
-	html += '    <div class="form-floating mb-3">';
+	html += '		 <div id="city-container-' + user_address_row + '" class="form-floating mb-3">';
+	html += '		   <input type="text" name="user_address[' + user_address_row + '][city]" value="" class="form-control" id="input-user-address-city-' + user_address_row + '" placeholder="<?php echo lang('Entry.entry_city', array(), $lang->getBackEndLocale()); ?>">';
+	html += '		   <label for="input-user-address-city-' + user_address_row + '"><?php echo lang('Entry.entry_city', array(), $lang->getBackEndLocale()); ?></label>';
+	html += '		 </div>';
+	html += '    <div id="district-id-container-' + user_address_row + '" class="form-floating mb-3">';
 	html += '      <select name="user_address[' + user_address_row + '][district_id]" class="form-select" id="input-user-address-district-id-' + user_address_row + '" aria-label="input-user-address-district-id-' + user_address_row + '">';
 	html += '      </select>';
 	html += '      <label for="input-user-address-district-id-' + user_address_row + '"><?php echo lang('Entry.entry_district', array(), $lang->getBackEndLocale()); ?></label>';
 	html += '    </div>';
+	html += '		 <div id="district-container-' + user_address_row + '" class="form-floating mb-3">';
+	html += '		   <input type="text" name="user_address[' + user_address_row + '][district]" value="" class="form-control" id="input-user-address-district-' + user_address_row + '" placeholder="<?php echo lang('Entry.entry_district', array(), $lang->getBackEndLocale()); ?>">';
+	html += '		   <label for="input-user-address-district-' + user_address_row + '"><?php echo lang('Entry.entry_district', array(), $lang->getBackEndLocale()); ?></label>';
+	html += '		 </div>';
 	html += '		 <div class="form-floating mb-3">';
 	html += '		   <input type="text" name="user_address[' + user_address_row + '][postal_code]" value="" class="form-control" id="input-user-address-postal-code-' + user_address_row + '" placeholder="<?php echo lang('Entry.entry_postal_code', array(), $lang->getBackEndLocale()); ?>">';
 	html += '		   <label for="input-user-address-postal-code-' + user_address_row + '"><?php echo lang('Entry.entry_postal_code', array(), $lang->getBackEndLocale()); ?></label>';
@@ -344,6 +368,7 @@ function addUserAddress() {
   selectCountry(user_address_row, 0);
   selectState(user_address_row, 0);
   selectCity(user_address_row, 0);
+  selectDistrict(user_address_row);
 
   user_address_row++;
 }
@@ -376,26 +401,50 @@ function selectCountry(user_address_row, state_id) {
         $('select[name=\'user_address[' + user_address_row + '][country_id]\']').prop('disabled', false);
       },
       success: function(json) {
-        html = '<option value=""><?php echo lang('Text.text_select', array(), $lang->getBackEndLocale()); ?></option>';
-        
-        if (json['states'] && json['states'] != '') {
-          for (i = 0; i < json['states'].length; i++) {
-            state = json['states'][i];
+	    	if (json['state_input_type'] == 'select_box') {
+	    		$('#state-container-' + user_address_row).addClass('d-none');
 
-            html += '<option value="' + state['state_id'] + '"';
-            
-            if (state['state_id'] == state_id) {
-              html += ' selected="selected"';
-            }
-            
-            html += '>' + state['name'] + '</option>';
-          }
-        } else {
-          html += '<option value="0" selected="selected"><?php echo lang('Text.text_none', array(), $lang->getBackEndLocale()); ?></option>';
-        }
-        
-        $('select[name=\'user_address[' + user_address_row + '][state_id]\']').html(html);
-        $('select[name=\'user_address[' + user_address_row + '][state_id]\']').trigger('change');
+	        html = '<option value=""><?php echo lang('Text.text_select', array(), $lang->getBackEndLocale()); ?></option>';
+	        
+	        if (json['states'] && json['states'] != '') {
+	          for (i = 0; i < json['states'].length; i++) {
+	            state = json['states'][i];
+
+	            html += '<option value="' + state['state_id'] + '"';
+	            
+	            if (state['state_id'] == state_id) {
+	              html += ' selected="selected"';
+	            }
+	            
+	            html += '>' + state['name'] + '</option>';
+	          }
+	        } else {
+	          html += '<option value="0" selected="selected"><?php echo lang('Text.text_none', array(), $lang->getBackEndLocale()); ?></option>';
+	        }
+	        
+    		  $('#state-id-container-' + user_address_row).removeClass('d-none');
+	        $('select[name=\'user_address[' + user_address_row + '][state_id]\']').html(html);
+	        $('select[name=\'user_address[' + user_address_row + '][state_id]\']').trigger('change');
+	    	} else {
+	    		$('#state-id-container-' + user_address_row).addClass('d-none');
+	    		$('#state-container-' + user_address_row).removeClass('d-none');
+	    	}
+		      
+	    	if (json['city_input_type'] == 'select_box') {
+	    		$('#city-container-' + user_address_row).addClass('d-none');
+	    		$('#city-id-container-' + user_address_row).removeClass('d-none');
+	    	} else {
+	    		$('#city-id-container-' + user_address_row).addClass('d-none');
+	    		$('#city-container-' + user_address_row).removeClass('d-none');
+	    	}
+		      
+	    	if (json['district_input_type'] == 'select_box') {
+	    		$('#district-container-' + user_address_row).addClass('d-none');
+	    		$('#district-id-container-' + user_address_row).removeClass('d-none');
+	    	} else {
+	    		$('#district-id-container-' + user_address_row).addClass('d-none');
+	    		$('#district-container-' + user_address_row).removeClass('d-none');
+	    	}
       },
       error: function(xhr, ajaxOptions, thrownError) {
         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -445,6 +494,9 @@ function selectState(user_address_row, city_id) {
             html += '<option value="0" selected="selected"><?php echo lang('Text.text_none', array(), $lang->getBackEndLocale()); ?></option>';
           }
           
+	        if (json['state_input_type'] == 'select_box') {
+	          $('input[name=\'user_address[' + user_address_row + '][state]\']').val(json['name']);
+	        }
           $('select[name=\'user_address[' + user_address_row + '][city_id]\']').html(html);
           $('select[name=\'user_address[' + user_address_row + '][city_id]\']').trigger('change');
         },
@@ -497,6 +549,9 @@ function selectCity(user_address_row, district_id) {
             html += '<option value="0" selected="selected"><?php echo lang('Text.text_none', array(), $lang->getBackEndLocale()); ?></option>';
           }
           
+	        if (json['city_input_type'] == 'select_box') {
+	        	$('input[name=\'user_address[' + user_address_row + '][city]\']').val(json['name']);
+	        }
           $('select[name=\'user_address[' + user_address_row + '][district_id]\']').html(html);
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -507,6 +562,39 @@ function selectCity(user_address_row, district_id) {
   });
 
   $('select[name=\'user_address[' + user_address_row + '][city_id]\']').trigger('change');
+}
+//--></script> 
+<script type="text/javascript"><!--
+function selectDistrict(user_address_row) {
+  $('select[name=\'user_address[' + user_address_row + '][district_id]\']').on('change', function() {
+    setTimeout(function(){
+      var district_id = $('select[name=\'user_address[' + user_address_row + '][district_id]\']').val();
+      $.ajax({
+        url: '<?php echo base_url($_SERVER['app.adminDir'] . '/localisation/districts/get_district/' . $administrator_token); ?>',
+        type: 'post',
+        dataType: 'json',
+        data : {
+          district_id : district_id
+        },
+        beforeSend: function() {
+          $('select[name=\'user_address[' + user_address_row + '][district_id]\']').prop('disabled', true);
+        },
+        complete: function() {
+          $('select[name=\'user_address[' + user_address_row + '][district_id]\']').prop('disabled', false);
+        },
+        success: function(json) {
+	        if (json['district_input_type'] == 'select_box') {
+	        	$('input[name=\'user_address[' + user_address_row + '][district]\']').val(json['name']);
+	        }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+      });
+    }, 400);
+  });
+
+  $('select[name=\'user_address[' + user_address_row + '][district_id]\']').trigger('change');
 }
 //--></script> 
 <?php echo $footer; ?>

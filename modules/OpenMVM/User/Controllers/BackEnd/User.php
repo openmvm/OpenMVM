@@ -9,6 +9,7 @@ class User extends \App\Controllers\BaseController
 		// Load Model
 		$this->userGroupModel = new \Modules\OpenMVM\User\Models\UserGroupModel();
 		$this->userModel = new \Modules\OpenMVM\User\Models\UserModel();
+		$this->userAddressModel = new \Modules\OpenMVM\User\Models\UserAddressModel();
 		$this->countryModel = new \Modules\OpenMVM\Localisation\Models\CountryModel();
 	}
 
@@ -482,7 +483,7 @@ class User extends \App\Controllers\BaseController
 		if($this->request->getPost('user_address')) {
 			$data['user_addresses'] = $this->request->getPost('user_address');
 		} elseif ($user_info) {
-			$data['user_addresses'] = $this->userModel->getUserAddresses($user_info['user_id']);
+			$data['user_addresses'] = $this->userAddressModel->getUserAddresses(array(), $user_info['user_id']);
 		} else {
 			$data['user_addresses'] = array();
 		}
