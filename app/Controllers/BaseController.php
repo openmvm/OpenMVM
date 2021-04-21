@@ -69,6 +69,8 @@ class BaseController extends Controller
 		$this->widget = new \App\Libraries\Widget;
 		$this->phpmailer_lib = new \App\Libraries\PHPMailer_lib;
 		$this->mail = new \App\Libraries\Mail;
+		$this->weight = new \App\Libraries\Weight;
+		$this->length = new \App\Libraries\Length;
 
 		// Load Modules Libraries
 		$this->cart = new \Modules\OpenMVM\Order\Libraries\Cart;
