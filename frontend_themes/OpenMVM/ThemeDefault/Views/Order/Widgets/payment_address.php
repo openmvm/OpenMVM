@@ -1,101 +1,88 @@
-<div class="accordion" id="accordionPaymentAddress">
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingPaymentAddress">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePaymentAddress" aria-expanded="true" aria-controls="collapsePaymentAddress">
-        <?php echo lang('Text.text_payment_address', array(), $lang->getFrontEndLocale()); ?>
-      </button>
-    </h2>
-    <div id="collapsePaymentAddress" class="accordion-collapse collapse show" aria-labelledby="headingPaymentAddress" data-bs-parent="#accordionPaymentAddress">
-      <div class="accordion-body">
-				<?php if ($user_addresses) { ?>
-				<div id="payment-address-container" class="form-floating mb-3">
-				  <select name="payment_address_id" class="form-select" id="input-payment-address-id" aria-label="status">
-				  	<?php foreach ($user_addresses as $user_address) { ?>
-              <?php if ($user_address['user_address_id'] == $payment_address_id) { ?>
-                <option value="<?php echo $user_address['user_address_id']; ?>" selected><?php echo $user_address['address']; ?></option>
-              <?php } else { ?>
-                <option value="<?php echo $user_address['user_address_id']; ?>"><?php echo $user_address['address']; ?></option>
-              <?php } ?>
-				  	<?php } ?>
-				  </select>
-				  <label for="input-payment-address-id"><?php echo lang('Entry.entry_payment_address', array(), $lang->getFrontEndLocale()); ?></label>
-				</div>
-				<?php } ?>
-				<div id="form-check-add-payment-address" class="form-check">
-				  <input class="form-check-input" type="checkbox" name="add_payment_address" value="" id="flexCheckPaymentAddress">
-				  <label class="form-check-label" for="flexCheckPaymentAddress">
-				    <?php echo lang('Entry.entry_new_address', array(), $lang->getFrontEndLocale()); ?>
-				  </label>
-				</div>
-				<div id="payment-address-form-container" class="d-none">
-					<fieldset>
-				  	<div class="form-floating mb-3">
-						  <input type="text" name="firstname" value="" class="form-control" id="input-payment-address-firstname" placeholder="<?php echo lang('Entry.entry_firstname', array(), $lang->getFrontEndLocale()); ?>">
-						  <label for="input-payment-address-firstname"><?php echo lang('Entry.entry_firstname', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-				  	<div class="form-floating mb-3">
-						  <input type="text" name="lastname" value="" class="form-control" id="input-payment-address-lastname" placeholder="<?php echo lang('Entry.entry_lastname', array(), $lang->getFrontEndLocale()); ?>">
-						  <label for="input-payment-address-lastname"><?php echo lang('Entry.entry_lastname', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-				  	<div class="form-floating mb-3">
-						  <textarea style="height: 100px" name="address_1" class="form-control" id="input-payment_address-address-1" placeholder="<?php echo lang('Entry.entry_address_1', array(), $lang->getFrontEndLocale()); ?>"><?php echo $address_1; ?></textarea>
-						  <label for="input-payment-address-address-1"><?php echo lang('Entry.entry_address_1', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-				  	<div class="form-floating mb-3">
-						  <textarea style="height: 100px" name="address_2" class="form-control" id="input-payment-address-address-2" placeholder="<?php echo lang('Entry.entry_address_2', array(), $lang->getFrontEndLocale()); ?>"><?php echo $address_2; ?></textarea>
-						  <label for="input-payment-address-address-2"><?php echo lang('Entry.entry_address_2', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-						<div class="form-floating mb-3">
-						  <select name="country_id" class="form-select" id="input-payment-address-country-id" aria-label="input-payment-address-country-id">
-                <?php foreach ($countries as $country) { ?>
-                  <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
-                <?php } ?>
-						  </select>
-						  <label for="input-payment-address-country-id"><?php echo lang('Entry.entry_country', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-						<div id="payment-address-state-id-container" class="form-floating mb-3">
-						  <select name="state_id" class="form-select" id="input-payment-address-state-id" aria-label="input-payment-address-state-id">
-						  </select>
-						  <label for="input-payment-address-state-id"><?php echo lang('Entry.entry_state', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-				  	<div id="payment-address-state-container" class="form-floating mb-3">
-						  <input type="text" name="state" value="" class="form-control" id="input-payment-address-state" placeholder="<?php echo lang('Entry.entry_state', array(), $lang->getFrontEndLocale()); ?>">
-						  <label for="input-payment-address-state"><?php echo lang('Entry.entry_state', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-						<div id="payment-address-city-id-container" class="form-floating mb-3">
-						  <select name="city_id" class="form-select" id="input-payment-address-city-id" aria-label="input-payment-address-city-id">
-						  </select>
-						  <label for="input-payment-address-city-id"><?php echo lang('Entry.entry_city', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-				  	<div id="payment-address-city-container" class="form-floating mb-3">
-						  <input type="text" name="city" value="" class="form-control" id="input-payment-address-city" placeholder="<?php echo lang('Entry.entry_city', array(), $lang->getFrontEndLocale()); ?>">
-						  <label for="input-payment-address-city"><?php echo lang('Entry.entry_city', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-						<div id="payment-address-district-id-container" class="form-floating mb-3">
-						  <select name="district_id" class="form-select" id="input-payment-address-district-id" aria-label="input-payment-address-district-id">
-						  </select>
-						  <label for="input-payment-address-district-id"><?php echo lang('Entry.entry_district', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-				  	<div id="payment-address-district-container" class="form-floating mb-3">
-						  <input type="text" name="district" value="" class="form-control" id="input-payment-address-district" placeholder="<?php echo lang('Entry.entry_district', array(), $lang->getFrontEndLocale()); ?>">
-						  <label for="input-payment-address-district"><?php echo lang('Entry.entry_district', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-				  	<div class="form-floating mb-3">
-						  <input type="text" name="postal_code" value="" class="form-control" id="input-payment-address-postal-code" placeholder="<?php echo lang('Entry.entry_postal_code', array(), $lang->getFrontEndLocale()); ?>">
-						  <label for="input-payment-address-postal-code"><?php echo lang('Entry.entry_postal_code', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-				  	<div class="form-floating mb-3">
-						  <input type="text" name="telephone" value="" class="form-control" id="input-payment-address-telephone" placeholder="<?php echo lang('Entry.entry_telephone', array(), $lang->getFrontEndLocale()); ?>">
-						  <label for="input-payment-address-telephone"><?php echo lang('Entry.entry_telephone', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-					</fieldset>
-					<div class="text-end">
-						<button type="submit" id="button-add-payment-address" class="btn btn-primary"><?php echo lang('Button.button_address_add', array(), $lang->getFrontEndLocale()); ?></button>
-					</div>
-				</div>
-      </div>
-    </div>
-  </div>
+<?php if ($user_addresses) { ?>
+<div id="payment-address-container" class="form-floating mb-3">
+  <select name="payment_address_id" class="form-select" id="input-payment-address-id" aria-label="status">
+  	<?php foreach ($user_addresses as $user_address) { ?>
+      <?php if ($user_address['user_address_id'] == $payment_address_id) { ?>
+        <option value="<?php echo $user_address['user_address_id']; ?>" selected><?php echo $user_address['address']; ?></option>
+      <?php } else { ?>
+        <option value="<?php echo $user_address['user_address_id']; ?>"><?php echo $user_address['address']; ?></option>
+      <?php } ?>
+  	<?php } ?>
+  </select>
+  <label for="input-payment-address-id"><?php echo lang('Entry.entry_payment_address', array(), $lang->getFrontEndLocale()); ?></label>
+</div>
+<?php } ?>
+<div id="form-check-add-payment-address" class="form-check">
+  <input class="form-check-input" type="checkbox" name="add_payment_address" value="" id="flexCheckPaymentAddress">
+  <label class="form-check-label" for="flexCheckPaymentAddress">
+    <?php echo lang('Entry.entry_new_address', array(), $lang->getFrontEndLocale()); ?>
+  </label>
+</div>
+<div id="payment-address-form-container" class="d-none">
+	<fieldset>
+  	<div class="form-floating mb-3">
+		  <input type="text" name="firstname" value="" class="form-control" id="input-payment-address-firstname" placeholder="<?php echo lang('Entry.entry_firstname', array(), $lang->getFrontEndLocale()); ?>">
+		  <label for="input-payment-address-firstname"><?php echo lang('Entry.entry_firstname', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+  	<div class="form-floating mb-3">
+		  <input type="text" name="lastname" value="" class="form-control" id="input-payment-address-lastname" placeholder="<?php echo lang('Entry.entry_lastname', array(), $lang->getFrontEndLocale()); ?>">
+		  <label for="input-payment-address-lastname"><?php echo lang('Entry.entry_lastname', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+  	<div class="form-floating mb-3">
+		  <textarea style="height: 100px" name="address_1" class="form-control" id="input-payment_address-address-1" placeholder="<?php echo lang('Entry.entry_address_1', array(), $lang->getFrontEndLocale()); ?>"><?php echo $address_1; ?></textarea>
+		  <label for="input-payment-address-address-1"><?php echo lang('Entry.entry_address_1', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+  	<div class="form-floating mb-3">
+		  <textarea style="height: 100px" name="address_2" class="form-control" id="input-payment-address-address-2" placeholder="<?php echo lang('Entry.entry_address_2', array(), $lang->getFrontEndLocale()); ?>"><?php echo $address_2; ?></textarea>
+		  <label for="input-payment-address-address-2"><?php echo lang('Entry.entry_address_2', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+		<div class="form-floating mb-3">
+		  <select name="country_id" class="form-select" id="input-payment-address-country-id" aria-label="input-payment-address-country-id">
+        <?php foreach ($countries as $country) { ?>
+          <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+        <?php } ?>
+		  </select>
+		  <label for="input-payment-address-country-id"><?php echo lang('Entry.entry_country', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+		<div id="payment-address-state-id-container" class="form-floating mb-3">
+		  <select name="state_id" class="form-select" id="input-payment-address-state-id" aria-label="input-payment-address-state-id">
+		  </select>
+		  <label for="input-payment-address-state-id"><?php echo lang('Entry.entry_state', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+  	<div id="payment-address-state-container" class="form-floating mb-3">
+		  <input type="text" name="state" value="" class="form-control" id="input-payment-address-state" placeholder="<?php echo lang('Entry.entry_state', array(), $lang->getFrontEndLocale()); ?>">
+		  <label for="input-payment-address-state"><?php echo lang('Entry.entry_state', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+		<div id="payment-address-city-id-container" class="form-floating mb-3">
+		  <select name="city_id" class="form-select" id="input-payment-address-city-id" aria-label="input-payment-address-city-id">
+		  </select>
+		  <label for="input-payment-address-city-id"><?php echo lang('Entry.entry_city', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+  	<div id="payment-address-city-container" class="form-floating mb-3">
+		  <input type="text" name="city" value="" class="form-control" id="input-payment-address-city" placeholder="<?php echo lang('Entry.entry_city', array(), $lang->getFrontEndLocale()); ?>">
+		  <label for="input-payment-address-city"><?php echo lang('Entry.entry_city', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+		<div id="payment-address-district-id-container" class="form-floating mb-3">
+		  <select name="district_id" class="form-select" id="input-payment-address-district-id" aria-label="input-payment-address-district-id">
+		  </select>
+		  <label for="input-payment-address-district-id"><?php echo lang('Entry.entry_district', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+  	<div id="payment-address-district-container" class="form-floating mb-3">
+		  <input type="text" name="district" value="" class="form-control" id="input-payment-address-district" placeholder="<?php echo lang('Entry.entry_district', array(), $lang->getFrontEndLocale()); ?>">
+		  <label for="input-payment-address-district"><?php echo lang('Entry.entry_district', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+  	<div class="form-floating mb-3">
+		  <input type="text" name="postal_code" value="" class="form-control" id="input-payment-address-postal-code" placeholder="<?php echo lang('Entry.entry_postal_code', array(), $lang->getFrontEndLocale()); ?>">
+		  <label for="input-payment-address-postal-code"><?php echo lang('Entry.entry_postal_code', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+  	<div class="form-floating mb-3">
+		  <input type="text" name="telephone" value="" class="form-control" id="input-payment-address-telephone" placeholder="<?php echo lang('Entry.entry_telephone', array(), $lang->getFrontEndLocale()); ?>">
+		  <label for="input-payment-address-telephone"><?php echo lang('Entry.entry_telephone', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+	</fieldset>
+	<div class="text-end">
+		<button type="submit" id="button-add-payment-address" class="btn btn-primary"><?php echo lang('Button.button_address_add', array(), $lang->getFrontEndLocale()); ?></button>
+	</div>
 </div>
 <script type="text/javascript"><!--
 <?php if (empty($user_addresses)) { ?>
@@ -121,6 +108,12 @@ $('#payment-address-container select[name=\'payment_address_id\']').on('change',
     },
     beforeSend: function() {
       $('#payment-address-container select[name=\'payment_address_id\']').prop('disabled', true);
+			if (!$('#widget-payment-method').hasClass('d-none')) {
+				$('#widget-payment-method').addClass('d-none');
+			}
+			if ($('#widget-payment-method-spinner-container').hasClass('d-none')) {
+				$('#widget-payment-method-spinner-container').removeClass('d-none');
+			}
     },
     complete: function() {
       $('#payment-address-container select[name=\'payment_address_id\']').prop('disabled', false);
@@ -132,8 +125,16 @@ $('#payment-address-container select[name=\'payment_address_id\']').on('change',
       // Refresh checkout widgets
 			// $('#widget-payment-address').load('<?php echo base_url('/order/checkout/widget/payment_address'); ?>');
 			// $('#widget-shipping-address').load('<?php echo base_url('/order/checkout/widget/shipping_address'); ?>');
-			$('#widget-payment-method').load('<?php echo base_url('/order/checkout/widget/payment_method'); ?>');
-			$('#widget-shipping-method').load('<?php echo base_url('/order/checkout/widget/shipping_method'); ?>');
+			// $('#widget-shipping-method').load('<?php echo base_url('/order/checkout/widget/shipping_method'); ?>');
+			$('#widget-payment-method').load('<?php echo base_url('/order/checkout/widget/payment_method'); ?>', function() {
+				if ($('#widget-payment-method').hasClass('d-none')) {
+					$('#widget-payment-method').removeClass('d-none');
+				}
+				if (!$('#widget-payment-method-spinner-container').hasClass('d-none')) {
+					$('#widget-payment-method-spinner-container').addClass('d-none');
+				}
+			});
+
 			$('#widget-checkout-cart').load('<?php echo base_url('/order/checkout/widget/checkout_cart'); ?>');
     },
     error: function(xhr, ajaxOptions, thrownError) {

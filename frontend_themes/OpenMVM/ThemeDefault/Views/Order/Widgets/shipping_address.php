@@ -1,101 +1,88 @@
-<div class="accordion" id="accordionShippingAddress">
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingShippingAddress">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseShippingAddress" aria-expanded="true" aria-controls="collapseShippingAddress">
-        <?php echo lang('Text.text_shipping_address', array(), $lang->getFrontEndLocale()); ?>
-      </button>
-    </h2>
-    <div id="collapseShippingAddress" class="accordion-collapse collapse show" aria-labelledby="headingShippingAddress" data-bs-parent="#accordionShippingAddress">
-      <div class="accordion-body">
-				<?php if ($user_addresses) { ?>
-				<div id="shipping-address-container" class="form-floating mb-3">
-				  <select name="shipping_address_id" class="form-select" id="input-shipping-address-id" aria-label="status">
-				  	<?php foreach ($user_addresses as $user_address) { ?>
-              <?php if ($user_address['user_address_id'] == $shipping_address_id) { ?>
-                <option value="<?php echo $user_address['user_address_id']; ?>" selected><?php echo $user_address['address']; ?></option>
-              <?php } else { ?>
-                <option value="<?php echo $user_address['user_address_id']; ?>"><?php echo $user_address['address']; ?></option>
-              <?php } ?>
-				  	<?php } ?>
-				  </select>
-				  <label for="input-shipping-address-id"><?php echo lang('Entry.entry_shipping_address', array(), $lang->getFrontEndLocale()); ?></label>
-				</div>
-				<?php } ?>
-				<div id="form-check-add-shipping-address" class="form-check">
-				  <input class="form-check-input" type="checkbox" name="add_shipping_address" value="" id="flexCheckShippingAddress">
-				  <label class="form-check-label" for="flexCheckShippingAddress">
-				    <?php echo lang('Entry.entry_new_address', array(), $lang->getFrontEndLocale()); ?>
-				  </label>
-				</div>
-				<div id="shipping-address-form-container" class="d-none">
-					<fieldset>
-				  	<div class="form-floating mb-3">
-						  <input type="text" name="firstname" value="" class="form-control" id="input-shipping-address-firstname" placeholder="<?php echo lang('Entry.entry_firstname', array(), $lang->getFrontEndLocale()); ?>">
-						  <label for="input-shipping-address-firstname"><?php echo lang('Entry.entry_firstname', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-				  	<div class="form-floating mb-3">
-						  <input type="text" name="lastname" value="" class="form-control" id="input-shipping-address-lastname" placeholder="<?php echo lang('Entry.entry_lastname', array(), $lang->getFrontEndLocale()); ?>">
-						  <label for="input-shipping-address-lastname"><?php echo lang('Entry.entry_lastname', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-				  	<div class="form-floating mb-3">
-						  <textarea style="height: 100px" name="address_1" class="form-control" id="input-shipping_address-address-1" placeholder="<?php echo lang('Entry.entry_address_1', array(), $lang->getFrontEndLocale()); ?>"><?php echo $address_1; ?></textarea>
-						  <label for="input-shipping-address-address-1"><?php echo lang('Entry.entry_address_1', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-				  	<div class="form-floating mb-3">
-						  <textarea style="height: 100px" name="address_2" class="form-control" id="input-shipping-address-address-2" placeholder="<?php echo lang('Entry.entry_address_2', array(), $lang->getFrontEndLocale()); ?>"><?php echo $address_2; ?></textarea>
-						  <label for="input-shipping-address-address-2"><?php echo lang('Entry.entry_address_2', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-						<div class="form-floating mb-3">
-						  <select name="country_id" class="form-select" id="input-shipping-address-country-id" aria-label="input-shipping-address-country-id">
-                <?php foreach ($countries as $country) { ?>
-                  <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
-                <?php } ?>
-						  </select>
-						  <label for="input-shipping-address-country-id"><?php echo lang('Entry.entry_country', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-						<div id="shipping-address-state-id-container" class="form-floating mb-3">
-						  <select name="state_id" class="form-select" id="input-shipping-address-state-id" aria-label="input-shipping-address-state-id">
-						  </select>
-						  <label for="input-shipping-address-state-id"><?php echo lang('Entry.entry_state', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-				  	<div id="shipping-address-state-container" class="form-floating mb-3">
-						  <input type="text" name="state" value="" class="form-control" id="input-shipping-address-state" placeholder="<?php echo lang('Entry.entry_state', array(), $lang->getFrontEndLocale()); ?>">
-						  <label for="input-shipping-address-state"><?php echo lang('Entry.entry_state', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-						<div id="shipping-address-city-id-container" class="form-floating mb-3">
-						  <select name="city_id" class="form-select" id="input-shipping-address-city-id" aria-label="input-shipping-address-city-id">
-						  </select>
-						  <label for="input-shipping-address-city-id"><?php echo lang('Entry.entry_city', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-				  	<div id="shipping-address-city-container" class="form-floating mb-3">
-						  <input type="text" name="city" value="" class="form-control" id="input-shipping-address-city" placeholder="<?php echo lang('Entry.entry_city', array(), $lang->getFrontEndLocale()); ?>">
-						  <label for="input-shipping-address-city"><?php echo lang('Entry.entry_city', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-						<div id="shipping-address-district-id-container" class="form-floating mb-3">
-						  <select name="district_id" class="form-select" id="input-shipping-address-district-id" aria-label="input-shipping-address-district-id">
-						  </select>
-						  <label for="input-shipping-address-district-id"><?php echo lang('Entry.entry_district', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-				  	<div id="shipping-address-district-container" class="form-floating mb-3">
-						  <input type="text" name="district" value="" class="form-control" id="input-shipping-address-district" placeholder="<?php echo lang('Entry.entry_district', array(), $lang->getFrontEndLocale()); ?>">
-						  <label for="input-shipping-address-district"><?php echo lang('Entry.entry_district', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-				  	<div class="form-floating mb-3">
-						  <input type="text" name="postal_code" value="" class="form-control" id="input-shipping-address-postal-code" placeholder="<?php echo lang('Entry.entry_postal_code', array(), $lang->getFrontEndLocale()); ?>">
-						  <label for="input-shipping-address-postal-code"><?php echo lang('Entry.entry_postal_code', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-				  	<div class="form-floating mb-3">
-						  <input type="text" name="telephone" value="" class="form-control" id="input-shipping-address-telephone" placeholder="<?php echo lang('Entry.entry_telephone', array(), $lang->getFrontEndLocale()); ?>">
-						  <label for="input-shipping-address-telephone"><?php echo lang('Entry.entry_telephone', array(), $lang->getFrontEndLocale()); ?></label>
-						</div>
-					</fieldset>
-					<div class="text-end">
-						<button type="submit" id="button-add-shipping-address" class="btn btn-primary"><?php echo lang('Button.button_address_add', array(), $lang->getFrontEndLocale()); ?></button>
-					</div>
-				</div>
-      </div>
-    </div>
-  </div>
+<?php if ($user_addresses) { ?>
+<div id="shipping-address-container" class="form-floating mb-3">
+  <select name="shipping_address_id" class="form-select" id="input-shipping-address-id" aria-label="status">
+  	<?php foreach ($user_addresses as $user_address) { ?>
+      <?php if ($user_address['user_address_id'] == $shipping_address_id) { ?>
+        <option value="<?php echo $user_address['user_address_id']; ?>" selected><?php echo $user_address['address']; ?></option>
+      <?php } else { ?>
+        <option value="<?php echo $user_address['user_address_id']; ?>"><?php echo $user_address['address']; ?></option>
+      <?php } ?>
+  	<?php } ?>
+  </select>
+  <label for="input-shipping-address-id"><?php echo lang('Entry.entry_shipping_address', array(), $lang->getFrontEndLocale()); ?></label>
+</div>
+<?php } ?>
+<div id="form-check-add-shipping-address" class="form-check">
+  <input class="form-check-input" type="checkbox" name="add_shipping_address" value="" id="flexCheckShippingAddress">
+  <label class="form-check-label" for="flexCheckShippingAddress">
+    <?php echo lang('Entry.entry_new_address', array(), $lang->getFrontEndLocale()); ?>
+  </label>
+</div>
+<div id="shipping-address-form-container" class="d-none">
+	<fieldset>
+  	<div class="form-floating mb-3">
+		  <input type="text" name="firstname" value="" class="form-control" id="input-shipping-address-firstname" placeholder="<?php echo lang('Entry.entry_firstname', array(), $lang->getFrontEndLocale()); ?>">
+		  <label for="input-shipping-address-firstname"><?php echo lang('Entry.entry_firstname', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+  	<div class="form-floating mb-3">
+		  <input type="text" name="lastname" value="" class="form-control" id="input-shipping-address-lastname" placeholder="<?php echo lang('Entry.entry_lastname', array(), $lang->getFrontEndLocale()); ?>">
+		  <label for="input-shipping-address-lastname"><?php echo lang('Entry.entry_lastname', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+  	<div class="form-floating mb-3">
+		  <textarea style="height: 100px" name="address_1" class="form-control" id="input-shipping_address-address-1" placeholder="<?php echo lang('Entry.entry_address_1', array(), $lang->getFrontEndLocale()); ?>"><?php echo $address_1; ?></textarea>
+		  <label for="input-shipping-address-address-1"><?php echo lang('Entry.entry_address_1', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+  	<div class="form-floating mb-3">
+		  <textarea style="height: 100px" name="address_2" class="form-control" id="input-shipping-address-address-2" placeholder="<?php echo lang('Entry.entry_address_2', array(), $lang->getFrontEndLocale()); ?>"><?php echo $address_2; ?></textarea>
+		  <label for="input-shipping-address-address-2"><?php echo lang('Entry.entry_address_2', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+		<div class="form-floating mb-3">
+		  <select name="country_id" class="form-select" id="input-shipping-address-country-id" aria-label="input-shipping-address-country-id">
+        <?php foreach ($countries as $country) { ?>
+          <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+        <?php } ?>
+		  </select>
+		  <label for="input-shipping-address-country-id"><?php echo lang('Entry.entry_country', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+		<div id="shipping-address-state-id-container" class="form-floating mb-3">
+		  <select name="state_id" class="form-select" id="input-shipping-address-state-id" aria-label="input-shipping-address-state-id">
+		  </select>
+		  <label for="input-shipping-address-state-id"><?php echo lang('Entry.entry_state', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+  	<div id="shipping-address-state-container" class="form-floating mb-3">
+		  <input type="text" name="state" value="" class="form-control" id="input-shipping-address-state" placeholder="<?php echo lang('Entry.entry_state', array(), $lang->getFrontEndLocale()); ?>">
+		  <label for="input-shipping-address-state"><?php echo lang('Entry.entry_state', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+		<div id="shipping-address-city-id-container" class="form-floating mb-3">
+		  <select name="city_id" class="form-select" id="input-shipping-address-city-id" aria-label="input-shipping-address-city-id">
+		  </select>
+		  <label for="input-shipping-address-city-id"><?php echo lang('Entry.entry_city', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+  	<div id="shipping-address-city-container" class="form-floating mb-3">
+		  <input type="text" name="city" value="" class="form-control" id="input-shipping-address-city" placeholder="<?php echo lang('Entry.entry_city', array(), $lang->getFrontEndLocale()); ?>">
+		  <label for="input-shipping-address-city"><?php echo lang('Entry.entry_city', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+		<div id="shipping-address-district-id-container" class="form-floating mb-3">
+		  <select name="district_id" class="form-select" id="input-shipping-address-district-id" aria-label="input-shipping-address-district-id">
+		  </select>
+		  <label for="input-shipping-address-district-id"><?php echo lang('Entry.entry_district', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+  	<div id="shipping-address-district-container" class="form-floating mb-3">
+		  <input type="text" name="district" value="" class="form-control" id="input-shipping-address-district" placeholder="<?php echo lang('Entry.entry_district', array(), $lang->getFrontEndLocale()); ?>">
+		  <label for="input-shipping-address-district"><?php echo lang('Entry.entry_district', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+  	<div class="form-floating mb-3">
+		  <input type="text" name="postal_code" value="" class="form-control" id="input-shipping-address-postal-code" placeholder="<?php echo lang('Entry.entry_postal_code', array(), $lang->getFrontEndLocale()); ?>">
+		  <label for="input-shipping-address-postal-code"><?php echo lang('Entry.entry_postal_code', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+  	<div class="form-floating mb-3">
+		  <input type="text" name="telephone" value="" class="form-control" id="input-shipping-address-telephone" placeholder="<?php echo lang('Entry.entry_telephone', array(), $lang->getFrontEndLocale()); ?>">
+		  <label for="input-shipping-address-telephone"><?php echo lang('Entry.entry_telephone', array(), $lang->getFrontEndLocale()); ?></label>
+		</div>
+	</fieldset>
+	<div class="text-end">
+		<button type="submit" id="button-add-shipping-address" class="btn btn-primary"><?php echo lang('Button.button_address_add', array(), $lang->getFrontEndLocale()); ?></button>
+	</div>
 </div>
 <script type="text/javascript"><!--
 <?php if (empty($user_addresses)) { ?>
@@ -121,6 +108,18 @@ $('#shipping-address-container select[name=\'shipping_address_id\']').on('change
     },
     beforeSend: function() {
       $('#shipping-address-container select[name=\'shipping_address_id\']').prop('disabled', true);
+			if (!$('#widget-shipping-method').hasClass('d-none')) {
+				$('#widget-shipping-method').addClass('d-none');
+			}
+			if ($('#widget-shipping-method-spinner-container').hasClass('d-none')) {
+				$('#widget-shipping-method-spinner-container').removeClass('d-none');
+			}
+			if (!$('#widget-payment-method').hasClass('d-none')) {
+				$('#widget-payment-method').addClass('d-none');
+			}
+			if ($('#widget-payment-method-spinner-container').hasClass('d-none')) {
+				$('#widget-payment-method-spinner-container').removeClass('d-none');
+			}
     },
     complete: function() {
       $('#shipping-address-container select[name=\'shipping_address_id\']').prop('disabled', false);
@@ -132,8 +131,24 @@ $('#shipping-address-container select[name=\'shipping_address_id\']').on('change
       // Refresh checkout widgets
 			// $('#widget-payment-address').load('<?php echo base_url('/order/checkout/widget/payment_address'); ?>');
 			// $('#widget-shipping-address').load('<?php echo base_url('/order/checkout/widget/shipping_address'); ?>');
-			$('#widget-payment-method').load('<?php echo base_url('/order/checkout/widget/payment_method'); ?>');
-			$('#widget-shipping-method').load('<?php echo base_url('/order/checkout/widget/shipping_method'); ?>');
+			$('#widget-shipping-method').load('<?php echo base_url('/order/checkout/widget/shipping_method'); ?>', function() {
+				if ($('#widget-shipping-method').hasClass('d-none')) {
+					$('#widget-shipping-method').removeClass('d-none');
+				}
+				if (!$('#widget-shipping-method-spinner-container').hasClass('d-none')) {
+					$('#widget-shipping-method-spinner-container').addClass('d-none');
+				}
+			});
+
+			$('#widget-payment-method').load('<?php echo base_url('/order/checkout/widget/payment_method'); ?>', function() {
+				if ($('#widget-payment-method').hasClass('d-none')) {
+					$('#widget-payment-method').removeClass('d-none');
+				}
+				if (!$('#widget-payment-method-spinner-container').hasClass('d-none')) {
+					$('#widget-payment-method-spinner-container').addClass('d-none');
+				}
+			});
+
 			$('#widget-checkout-cart').load('<?php echo base_url('/order/checkout/widget/checkout_cart'); ?>');
     },
     error: function(xhr, ajaxOptions, thrownError) {
