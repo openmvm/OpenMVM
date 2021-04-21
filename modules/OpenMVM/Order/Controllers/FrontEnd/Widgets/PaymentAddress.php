@@ -150,9 +150,13 @@ class PaymentAddress extends \App\Controllers\BaseController
 	{
     $json = array();
 
+    // Set payment address ID
     $payment_address_id = $this->request->getPost('payment_address_id');
 
     $this->session->set('payment_address_id', $payment_address_id);
+
+		// Remove selected payment method
+		$this->session->remove('payment_method');
 
     return $this->response->setJSON($json);
 	}
