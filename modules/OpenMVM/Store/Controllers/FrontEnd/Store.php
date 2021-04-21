@@ -297,6 +297,14 @@ class Store extends \App\Controllers\BaseController
 			$data['shipping_origin_state_id'] = 0;
 		}
 
+		if($this->request->getPost('shipping_origin_state')) {
+			$data['shipping_origin_state'] = $this->request->getPost('shipping_origin_state');
+		} elseif ($store_info) {
+			$data['shipping_origin_state'] = $store_info['shipping_origin_state'];
+		} else {
+			$data['shipping_origin_state'] = '';
+		}
+
 		if($this->request->getPost('shipping_origin_city_id')) {
 			$data['shipping_origin_city_id'] = $this->request->getPost('shipping_origin_city_id');
 		} elseif ($store_info) {
@@ -305,12 +313,36 @@ class Store extends \App\Controllers\BaseController
 			$data['shipping_origin_city_id'] = 0;
 		}
 
+		if($this->request->getPost('shipping_origin_city')) {
+			$data['shipping_origin_city'] = $this->request->getPost('shipping_origin_city');
+		} elseif ($store_info) {
+			$data['shipping_origin_city'] = $store_info['shipping_origin_city'];
+		} else {
+			$data['shipping_origin_city'] = '';
+		}
+
 		if($this->request->getPost('shipping_origin_district_id')) {
 			$data['shipping_origin_district_id'] = $this->request->getPost('shipping_origin_district_id');
 		} elseif ($store_info) {
 			$data['shipping_origin_district_id'] = $store_info['shipping_origin_district_id'];
 		} else {
 			$data['shipping_origin_district_id'] = 0;
+		}
+
+		if($this->request->getPost('shipping_origin_district')) {
+			$data['shipping_origin_district'] = $this->request->getPost('shipping_origin_district');
+		} elseif ($store_info) {
+			$data['shipping_origin_district'] = $store_info['shipping_origin_district'];
+		} else {
+			$data['shipping_origin_district'] = '';
+		}
+
+		if($this->request->getPost('shipping_origin_postal_code')) {
+			$data['shipping_origin_postal_code'] = $this->request->getPost('shipping_origin_postal_code');
+		} elseif ($store_info) {
+			$data['shipping_origin_postal_code'] = $store_info['shipping_origin_postal_code'];
+		} else {
+			$data['shipping_origin_postal_code'] = '';
 		}
 
 		$data['countries'] = $this->countryModel->getCountries();

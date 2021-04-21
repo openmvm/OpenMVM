@@ -57,6 +57,7 @@
 								    <?php if ($is_merchant) { ?>
 								    <li><a class="dropdown-item small text-decoration-none" href="<?php echo base_url('/account/store/edit/' . $store_id . '/' . $user_token); ?>"><?php echo lang('Text.text_my_store', array(), $lang->getFrontEndLocale()); ?></a></li>
 								    <li><a class="dropdown-item small text-decoration-none" href="<?php echo base_url('/account/store/products/' . $user_token); ?>"><?php echo lang('Text.text_my_products', array(), $lang->getFrontEndLocale()); ?></a></li>
+								    <li><a class="dropdown-item small text-decoration-none" href="<?php echo base_url('/account/store/shipping_methods/' . $user_token); ?>"><?php echo lang('Text.text_my_shipping_methods', array(), $lang->getFrontEndLocale()); ?></a></li>
 								    <?php } else { ?>
 								    <li><a class="dropdown-item small text-decoration-none" href="<?php echo base_url('/account/store/add/' . $user_token); ?>"><?php echo lang('Text.text_open_store', array(), $lang->getFrontEndLocale()); ?></a></li>
 								    <?php } ?>

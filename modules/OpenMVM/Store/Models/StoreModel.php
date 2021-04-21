@@ -72,12 +72,28 @@ class StoreModel extends \CodeIgniter\Model
 			$builder->set('shipping_origin_state_id', $data['shipping_origin_state_id']);
 		}
 
+		if ($data['shipping_origin_state'] !== null) {
+			$builder->set('shipping_origin_state', $data['shipping_origin_state']);
+		}
+
 		if ($data['shipping_origin_city_id'] !== null) {
 			$builder->set('shipping_origin_city_id', $data['shipping_origin_city_id']);
 		}
 
+		if ($data['shipping_origin_city'] !== null) {
+			$builder->set('shipping_origin_city', $data['shipping_origin_city']);
+		}
+
 		if ($data['shipping_origin_district_id'] !== null) {
 			$builder->set('shipping_origin_district_id', $data['shipping_origin_district_id']);
+		}
+
+		if ($data['shipping_origin_district'] !== null) {
+			$builder->set('shipping_origin_district', $data['shipping_origin_district']);
+		}
+
+		if ($data['shipping_origin_postal_code'] !== null) {
+			$builder->set('shipping_origin_postal_code', $data['shipping_origin_postal_code']);
 		}
 
 		$builder->insert($query_data);
@@ -151,12 +167,28 @@ class StoreModel extends \CodeIgniter\Model
 			$builder->set('shipping_origin_state_id', $data['shipping_origin_state_id']);
 		}
 
+		if ($data['shipping_origin_state'] !== null) {
+			$builder->set('shipping_origin_state', $data['shipping_origin_state']);
+		}
+
 		if ($data['shipping_origin_city_id'] !== null) {
 			$builder->set('shipping_origin_city_id', $data['shipping_origin_city_id']);
 		}
 
+		if ($data['shipping_origin_city'] !== null) {
+			$builder->set('shipping_origin_city', $data['shipping_origin_city']);
+		}
+
 		if ($data['shipping_origin_district_id'] !== null) {
 			$builder->set('shipping_origin_district_id', $data['shipping_origin_district_id']);
+		}
+
+		if ($data['shipping_origin_district'] !== null) {
+			$builder->set('shipping_origin_district', $data['shipping_origin_district']);
+		}
+
+		if ($data['shipping_origin_postal_code'] !== null) {
+			$builder->set('shipping_origin_postal_code', $data['shipping_origin_postal_code']);
 		}
 
     $builder->where('store_id', $store_id);

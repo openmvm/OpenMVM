@@ -28,6 +28,10 @@ $routes->match(['get', 'post', 'patch', 'delete'], '/product/search', 'Modules\O
 $routes->match(['get', 'post', 'patch', 'delete'], '/category/autocomplete', 'Modules\OpenMVM\Store\Controllers\BackEnd\Category::autocomplete');
 $routes->match(['get', 'post', 'patch', 'delete'], '/category/(:any)/(:any)', 'Modules\OpenMVM\Store\Controllers\FrontEnd\Category::index');
 
+// Shipping Methods
+$routes->match(['get', 'post', 'patch', 'delete'], '/account/store/shipping_methods/(:any)', 'Modules\OpenMVM\Store\Controllers\FrontEnd\ShippingMethod::index');
+$routes->match(['get', 'post', 'patch', 'delete'], '/account/store/shipping_methods', 'Modules\OpenMVM\Store\Controllers\FrontEnd\ShippingMethod::index');
+
 // Products
 $routes->match(['get', 'post', 'patch', 'delete'], '/product/view/(:num)/(:any)', 'Modules\OpenMVM\Store\Controllers\FrontEnd\Product::getInfo');
 $routes->match(['get', 'post', 'patch', 'delete'], '/account/store/products/edit/(:any)', 'Modules\OpenMVM\Store\Controllers\FrontEnd\Product::edit');

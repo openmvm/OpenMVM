@@ -4,6 +4,7 @@
 return [
 	'heading_my_store' => 'My Store',
 	'heading_my_products' => 'My Products',
+	'heading_my_shipping_methods' => 'My Shipping Methods',
 	'heading_products' => 'Products',
 	'heading_product_add' => 'Add a Product',
 	'heading_product_edit' => 'Edit a Product',

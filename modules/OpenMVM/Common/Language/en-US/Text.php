@@ -21,6 +21,7 @@ return [
 	'text_edit_store' => 'Edit Store',
 	'text_my_store' => 'My Store',
 	'text_my_products' => 'My Products',
+	'text_my_shipping_methods' => 'My Shipping Methods',
 	'text_register' => 'Register',
 	'text_login' => 'Login',
 	'text_logout' => 'Logout',

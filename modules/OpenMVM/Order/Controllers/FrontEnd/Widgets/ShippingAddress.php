@@ -150,9 +150,36 @@ class ShippingAddress extends \App\Controllers\BaseController
 	{
     $json = array();
 
+    // Set shipping address ID
     $shipping_address_id = $this->request->getPost('shipping_address_id');
 
     $this->session->set('shipping_address_id', $shipping_address_id);
+
+    // Remove selected shipping methods
+		// Get checkout store Ids
+		if ($this->session->has('checkout_store_id' . $this->cart->sessionId())) {
+			$store_id = $this->session->get('checkout_store_id' . $this->cart->sessionId());
+
+			$store_info = $this->storeModel->getStore($store_id);
+
+			$store_data = array(
+				'store_id' => $store_info['store_id'],
+				'name' => $store_info['name'],
+				'logo' => $store_info['logo'],
+			);
+
+			$stores = array($store_data);
+		} else {
+			$stores = $this->cart->getStores();
+		}
+
+		foreach ($stores as $store) {
+			$this->session->remove('shipping_methods_' . $store['store_id']);
+			$this->session->remove('shipping_method_' . $store['store_id']);
+		}
+
+		// Remove selected payment method
+		$this->session->remove('payment_method');
 
     return $this->response->setJSON($json);
 	}
