@@ -67,6 +67,22 @@ class Currency
 		return $string;
 	}
 
+	public function convert($value, $from, $to) {
+		if (isset($this->currencies[$from])) {
+			$from = $this->currencies[$from]['value'];
+		} else {
+			$from = 1;
+		}
+
+		if (isset($this->currencies[$to])) {
+			$to = $this->currencies[$to]['value'];
+		} else {
+			$to = 1;
+		}
+
+		return $value * ($to / $from);
+	}
+
   public function getBackEndValue()
   {
   	$currency = $this->getCurrencyByCode($this->getBackEndCode());

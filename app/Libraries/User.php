@@ -191,6 +191,7 @@ class User
   }
 
 	public function removeSessions() {
+		// Remove user sessions
 		$user_sessions = [
 		  'user_id_' . $this->sessionId,
 		  'user_token_' . $this->sessionId,

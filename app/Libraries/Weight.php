@@ -18,7 +18,7 @@ class Weight
 		$query = $builder->get();
 
 		foreach ($query->getResult() as $result) {
-			$this->weights[$result['weight_class_id']] = array(
+			$this->weights[$result->weight_class_id] = array(
 				'weight_class_id' => $result->weight_class_id,
 				'title' => $result->title,
 				'unit' => $result->unit,
