@@ -34,6 +34,10 @@ class UserAddressModel extends \CodeIgniter\Model
 
 		$builder->set('user_id', $user_id);
 
+		if ($data['company'] !== null) {
+			$builder->set('company', $data['company']);
+		}
+
 		if ($data['firstname'] !== null) {
 			$builder->set('firstname', $data['firstname']);
 		}
@@ -101,6 +105,10 @@ class UserAddressModel extends \CodeIgniter\Model
 	{
 		// User Data
 		$builder = $this->db->table('user_address');
+
+		if ($data['company'] !== null) {
+			$builder->set('company', $data['company']);
+		}
 
 		if ($data['firstname'] !== null) {
 			$builder->set('firstname', $data['firstname']);
@@ -259,6 +267,7 @@ class UserAddressModel extends \CodeIgniter\Model
 		  $results[] = array(
 	      'user_address_id' => $row->user_address_id,
 	      'user_id'         => $row->user_id,
+	      'company'         => $row->company,
 	      'firstname'       => $row->firstname,
 	      'lastname'        => $row->lastname,
 	      'address_1'       => $row->address_1,
@@ -362,6 +371,7 @@ class UserAddressModel extends \CodeIgniter\Model
 		  $result = array(
 	      'user_address_id' => $row->user_address_id,
 	      'user_id'         => $row->user_id,
+	      'company'         => $row->company,
 	      'firstname'       => $row->firstname,
 	      'lastname'        => $row->lastname,
 	      'address_1'       => $row->address_1,
