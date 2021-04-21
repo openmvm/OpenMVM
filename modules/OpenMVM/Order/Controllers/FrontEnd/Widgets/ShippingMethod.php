@@ -107,7 +107,7 @@ class ShippingMethod extends \App\Controllers\BaseController
 			// Shipping Methods
 			$method_data = array();
 
-			$results = array('flat', 'weight');
+			$results = array('fedex', 'flat', 'weight');
 
 			foreach ($results as $result) {
 				if (!empty($this->setting->get('shipping_' . $result, 'shipping_' . $result . '_status'))) {
