@@ -309,9 +309,9 @@ class WeightClass extends \App\Controllers\BaseController
 			'limit' => $this->setting->get('setting', 'setting_backend_items_per_page'),
 		);
 
-		$total_results = $this->weightClassModel->getTotalWeightClasses($filter_data);
+		$total_results = $this->weightClassModel->getTotalWeightClasses($filter_data, $this->language->getBackEndId());
 
-		$results = $this->weightClassModel->getWeightClasses($filter_data);
+		$results = $this->weightClassModel->getWeightClasses($filter_data, $this->language->getBackEndId());
 
 		foreach ($results as $result) {
 			$data['weight_classes'][] = array(

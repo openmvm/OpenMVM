@@ -110,7 +110,7 @@ class WeightClassModel extends \CodeIgniter\Model
 		$builder->delete();
 	}
 
-	public function getWeightClasses($data = array())
+	public function getWeightClasses($data = array(), $language_id)
 	{
 		$builder = $this->db->table('weight_class');
 		$builder->select('*');
@@ -120,7 +120,7 @@ class WeightClassModel extends \CodeIgniter\Model
       $builder->like('weight_class_description.title', $data['filter_name']);
 		}
 
-		$builder->where('weight_class_description.language_id', $this->language->getFrontEndId());
+		$builder->where('weight_class_description.language_id', $language_id);
 
 		if (!empty($data['sort']) && !empty($data['order'])) {
 			$builder->orderBy($data['sort'], $data['order']);
@@ -181,11 +181,11 @@ class WeightClassModel extends \CodeIgniter\Model
 		return $results;
 	}
 
-	public function getWeightClassDescription($weight_class_id)
+	public function getWeightClassDescription($weight_class_id, $language_id)
 	{
 		$builder = $this->db->table('weight_class_description');
 		$builder->where('weight_class_id', $weight_class_id);
-		$builder->where('language_id', $this->language->getFrontEndId());
+		$builder->where('language_id', $language_id);
 		$query = $builder->get();
 
 		$row = $query->getRow();
@@ -199,7 +199,7 @@ class WeightClassModel extends \CodeIgniter\Model
 		return $result;
 	}
 
-	public function getTotalWeightClasses($data = array())
+	public function getTotalWeightClasses($data = array(), $language_id)
 	{
 		$builder = $this->db->table('weight_class');
 		$builder->select('*');
@@ -209,7 +209,7 @@ class WeightClassModel extends \CodeIgniter\Model
       $builder->like('weight_class_description.title', $data['filter_name']);
 		}
 
-		$builder->where('weight_class_description.language_id', $this->language->getBackEndId());
+		$builder->where('weight_class_description.language_id', $language_id);
     
 		$query = $builder->countAllResults();
 
