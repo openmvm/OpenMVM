@@ -236,7 +236,7 @@ class Setting extends \App\Controllers\BaseController
 			$data['setting_backend_weight_class_id'] = $this->settingModel->getSettingValue('setting', 'setting_backend_weight_class_id');
 		}
 
-		$data['weight_classes'] = $this->weightClassModel->getWeightClasses();
+		$data['weight_classes'] = $this->weightClassModel->getWeightClasses(array(), $this->language->getBackEndId());
 
 		// Images
 		if ($this->request->getPost('logo')) {
