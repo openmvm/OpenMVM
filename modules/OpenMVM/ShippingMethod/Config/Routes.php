@@ -2,6 +2,9 @@
 
 // BackEnd
 
+// Shipping Method USPS
+$routes->match(['get', 'post', 'patch', 'delete'], $_SERVER['app.adminDir'] . '/shipping_methods/OpenMVM/usps/edit/(:any)', 'Modules\OpenMVM\ShippingMethod\Controllers\BackEnd\ShippingMethod\Usps::index');
+
 // Shipping Method FedEx
 $routes->match(['get', 'post', 'patch', 'delete'], $_SERVER['app.adminDir'] . '/shipping_methods/OpenMVM/fedex/edit/(:any)', 'Modules\OpenMVM\ShippingMethod\Controllers\BackEnd\ShippingMethod\Fedex::index');
 
@@ -19,5 +22,14 @@ $routes->match(['get', 'post', 'patch', 'delete'], $_SERVER['app.adminDir'] . '/
 
 // FrontEnd
 
+// Shipping Method USPS
+$routes->match(['get', 'post', 'patch', 'delete'], 'account/store/shipping_methods/OpenMVM/usps/edit/(:any)', 'Modules\OpenMVM\ShippingMethod\Controllers\FrontEnd\ShippingMethod\Usps::index');
+
 // Shipping Method FedEx
 $routes->match(['get', 'post', 'patch', 'delete'], 'account/store/shipping_methods/OpenMVM/fedex/edit/(:any)', 'Modules\OpenMVM\ShippingMethod\Controllers\FrontEnd\ShippingMethod\Fedex::index');
+
+// Shipping Method Flat
+$routes->match(['get', 'post', 'patch', 'delete'], 'account/store/shipping_methods/OpenMVM/flat/edit/(:any)', 'Modules\OpenMVM\ShippingMethod\Controllers\FrontEnd\ShippingMethod\Flat::index');
+
+// Shipping Method Weight
+$routes->match(['get', 'post', 'patch', 'delete'], 'account/store/shipping_methods/OpenMVM/weight/edit/(:any)', 'Modules\OpenMVM\ShippingMethod\Controllers\FrontEnd\ShippingMethod\Weight::index');

@@ -31,50 +31,37 @@ class FedexModel extends \CodeIgniter\Model
 
 		$address = $query_user_address->getRow();
 
-		// Get state to geo zone
-		$builder_state_to_geo_zone = $this->db->table('state_to_geo_zone');
-		$builder_state_to_geo_zone->where('geo_zone_id', $this->setting->get('shipping_fedex', 'shipping_fedex_geo_zone_id'));
-		$builder_state_to_geo_zone->where('country_id', $address->country_id);
-		$builder_state_to_geo_zone->groupStart();
-		$builder_state_to_geo_zone->where('state_id', $address->state_id);
-		$builder_state_to_geo_zone->orWhere('state_id', 0);
-		$builder_state_to_geo_zone->groupEnd();
+		// Get state to origin geo zone
+		$builder_state_to_origin_geo_zone = $this->db->table('state_to_geo_zone');
+		$builder_state_to_origin_geo_zone->where('geo_zone_id', $this->setting->get('shipping_fedex', 'shipping_fedex_origin_geo_zone_id'));
+		$builder_state_to_origin_geo_zone->where('country_id', $address->country_id);
+		$builder_state_to_origin_geo_zone->groupStart();
+		$builder_state_to_origin_geo_zone->where('state_id', $address->state_id);
+		$builder_state_to_origin_geo_zone->orWhere('state_id', 0);
+		$builder_state_to_origin_geo_zone->groupEnd();
 
-		$total_results = $builder_state_to_geo_zone->countAllResults();
+		$total_origin_geo_zone_results = $builder_state_to_origin_geo_zone->countAllResults();
 
-		if (empty($this->setting->get('shipping_fedex', 'shipping_fedex_geo_zone_id'))) {
+		// Get state to destination geo zone
+		$builder_state_to_destination_geo_zone = $this->db->table('state_to_geo_zone');
+		$builder_state_to_destination_geo_zone->where('geo_zone_id', $this->setting->get('shipping_fedex', 'shipping_fedex_destination_geo_zone_id'));
+		$builder_state_to_destination_geo_zone->where('country_id', $address->country_id);
+		$builder_state_to_destination_geo_zone->groupStart();
+		$builder_state_to_destination_geo_zone->where('state_id', $address->state_id);
+		$builder_state_to_destination_geo_zone->orWhere('state_id', 0);
+		$builder_state_to_destination_geo_zone->groupEnd();
+
+		$total_destination_geo_zone_results = $builder_state_to_destination_geo_zone->countAllResults();
+
+		if (empty($this->setting->get('shipping_fedex', 'shipping_fedex_origin_geo_zone_id')) && empty($this->setting->get('shipping_fedex', 'shipping_fedex_destination_geo_zone_id'))) {
 			$status = true;
-		} elseif ($total_results > 0) {
+		} elseif ($total_origin_geo_zone_results > 0 && $total_destination_geo_zone_results > 0) {
 			$status = true;
 		} else {
 			$status = false;
 		}
 
 		if ($status) {
-			// Weight
-    	$weight = $this->weight->convert($this->cart->getWeight($store_id), $this->setting->get('setting', 'setting_frontend_weight_class_id'), $this->setting->get('shipping_fedex', 'shipping_fedex_weight_class_id'));
-
-			$weight_code = strtoupper($this->weight->getUnit($this->setting->get('shipping_fedex', 'shipping_fedex_weight_class_id')));
-
-			if ($weight_code == 'KGS') {
-				$weight_code = 'KG';
-			}
-
-			if ($weight_code == 'LBS') {
-				$weight_code = 'LB';
-			}
-
-			// Date
-			$date = time();
-
-			$day = date('l', $date);
-
-			if ($day == 'Saturday') {
-				$date += 172800;
-			} elseif ($day == 'Sunday') {
-				$date += 86400;
-			}
-
 			// Get store info
 			$builder_store = $this->db->table('store');
 			$builder_store->where('store_id', $store_id);
@@ -122,6 +109,43 @@ class FedexModel extends \CodeIgniter\Model
 			$query_state_destination = $builder_state_destination->get();
 
 			$row_state_destination = $query_state_destination->getRow();
+
+			// Weight
+    	$weight = $this->weight->convert($this->cart->getWeight($store_id), $this->setting->get('setting', 'setting_frontend_weight_class_id'), $this->setting->get('shipping_fedex', 'shipping_fedex_weight_class_id'));
+
+			$weight_code = strtoupper($this->weight->getUnit($this->setting->get('shipping_fedex', 'shipping_fedex_weight_class_id')));
+
+			if ($weight_code == 'KGS') {
+				$weight_code = 'KG';
+			}
+
+			if ($weight_code == 'LBS') {
+				$weight_code = 'LB';
+			}
+
+			// Length
+			$default_length_unit = $this->length->getUnit($this->setting->get('shipping_fedex', 'shipping_fedex_length_class_id'));
+
+			$vendor_length_unit = $this->length->getUnit($this->setting->get('vendor_' . $store_id . '_shipping_fedex', 'vendor_' . $store_id . '_shipping_fedex_length_class_id'));
+
+			$vendor_package_dimension_length = $this->length->getUnit($this->setting->get('vendor_' . $store_id . '_shipping_fedex', 'vendor_' . $store_id . '_shipping_fedex_package_dimension_length'));
+			$vendor_package_dimension_width = $this->length->getUnit($this->setting->get('vendor_' . $store_id . '_shipping_fedex', 'vendor_' . $store_id . '_shipping_fedex_package_dimension_width'));
+			$vendor_package_dimension_height = $this->length->getUnit($this->setting->get('vendor_' . $store_id . '_shipping_fedex', 'vendor_' . $store_id . '_shipping_fedex_package_dimension_height'));
+
+			$length = $this->length->convert($package_dimension_length, $vendor_length_unit, $default_length_unit);
+			$width = $this->length->convert($package_dimension_width, $vendor_length_unit, $default_length_unit);
+			$height = $this->length->convert($package_dimension_height, $vendor_length_unit, $default_length_unit);
+
+			// Date
+			$date = time();
+
+			$day = date('l', $date);
+
+			if ($day == 'Saturday') {
+				$date += 172800;
+			} elseif ($day == 'Sunday') {
+				$date += 86400;
+			}
 
 			// FedEx Configurations
 			if ($this->setting->get('shipping_fedex', 'shipping_fedex_mode') == 'production') {
@@ -214,10 +238,10 @@ class FedexModel extends \CodeIgniter\Model
 			$xml .= '						<ns1:Value>' . $weight . '</ns1:Value>';
 			$xml .= '					</ns1:Weight>';
 			$xml .= '					<ns1:Dimensions>';
-			$xml .= '						<ns1:Length>20</ns1:Length>';
-			$xml .= '						<ns1:Width>20</ns1:Width>';
-			$xml .= '						<ns1:Height>20</ns1:Height>';
-			$xml .= '						<ns1:Units>CM</ns1:Units>';
+			$xml .= '						<ns1:Length>' . $length . '</ns1:Length>';
+			$xml .= '						<ns1:Width>' . $width . '</ns1:Width>';
+			$xml .= '						<ns1:Height>' . $height . '</ns1:Height>';
+			$xml .= '						<ns1:Units>' . strtoupper($default_length_unit) . '</ns1:Units>';
 			$xml .= '					</ns1:Dimensions>';
 			$xml .= '				</ns1:RequestedPackageLineItems>';
 			$xml .= '			</ns1:RequestedShipment>';
@@ -244,11 +268,11 @@ class FedexModel extends \CodeIgniter\Model
 			if ($dom->getElementsByTagName('faultcode')->length > 0) {
   			$error = $dom->getElementsByTagName('cause')->item(0)->nodeValue;
 
-  			//$this->log->write('FEDEX :: ' . $response);
+				log_message('error', $error);
 			} elseif ($dom->getElementsByTagName('HighestSeverity')->item(0)->nodeValue == 'FAILURE' || $dom->getElementsByTagName('HighestSeverity')->item(0)->nodeValue == 'ERROR') {
-				$error = $dom->getElementsByTagName('HighestSeverity')->item(0)->nodeValue;
+				$error = $dom->getElementsByTagName('HighestSeverity')->item(0)->nodeValue . ': ' . $dom->getElementsByTagName('Message')->item(0)->nodeValue;
 
-				//$this->log->write('FEDEX :: ' . $response);
+				log_message('error', $error);
 			} else {
 				$rate_reply_details = $dom->getElementsByTagName('RateReplyDetails');
 

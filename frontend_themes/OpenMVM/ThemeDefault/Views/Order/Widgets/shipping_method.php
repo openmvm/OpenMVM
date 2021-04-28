@@ -6,14 +6,18 @@
 				<?php if ($store['shipping_methods']) { ?>
         	<?php foreach ($store['shipping_methods'] as $shipping_method) { ?>
 	      		<div><strong><?php echo $shipping_method['title']; ?></strong></div>
-	      		<?php foreach ($shipping_method['quote'] as $quote) { ?>
-						<div class="form-check">
-						  <input class="form-check-input" type="radio" name="shipping_method[<?php echo $store['store_id']; ?>]" value="<?php echo $quote['code']; ?>" data-store-id="<?php echo $store['store_id']; ?>" id="input-shipping-method-<?php echo $store['store_id']; ?>-<?php echo $quote['code']; ?>"<?php if (${'shipping_method_' . $store['store_id']} == $quote['code']) { ?> checked<?php } ?>>
-						  <label class="form-check-label" for="input-shipping-method-<?php echo $store['store_id']; ?>-<?php echo $quote['code']; ?>">
-						    <?php echo $quote['title']; ?> - <?php echo $quote['text']; ?>
-						  </label>
-						</div>
-	      		<?php } ?>
+	      		<?php if (!$shipping_method['error']) { ?>
+		      		<?php foreach ($shipping_method['quote'] as $quote) { ?>
+							<div class="form-check">
+							  <input class="form-check-input" type="radio" name="shipping_method[<?php echo $store['store_id']; ?>]" value="<?php echo $quote['code']; ?>" data-store-id="<?php echo $store['store_id']; ?>" data-code="<?php echo $quote['code']; ?>" data-title="<?php echo $quote['title']; ?>" data-cost="<?php echo $quote['cost']; ?>" id="input-shipping-method-<?php echo $store['store_id']; ?>-<?php echo $quote['code']; ?>"<?php if (${'shipping_method_' . $store['store_id']} == $quote['code']) { ?> checked<?php } ?>>
+							  <label class="form-check-label" for="input-shipping-method-<?php echo $store['store_id']; ?>-<?php echo $quote['code']; ?>">
+							    <?php echo $quote['title']; ?> - <?php echo $quote['text']; ?>
+							  </label>
+							</div>
+		      		<?php } ?>
+      			<?php } else { ?>
+      				<div class="text-secondary"><?php echo $shipping_method['error']; ?></div>
+      			<?php } ?>
         	<?php } ?>
 				<?php } ?>
 			</div>
@@ -32,7 +36,9 @@ $('#accordionShippingMethod input:radio').click(function() {
     dataType: 'json',
     data : {
       store_id : $(this).attr('data-store-id'),
-      name : $(this).attr('name'),
+      code : $(this).attr('data-code'),
+      title : $(this).attr('data-title'),
+      cost : $(this).attr('data-cost'),
       value: $(this).val(),
     },
     beforeSend: function() {

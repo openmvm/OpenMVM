@@ -25,21 +25,9 @@ $('#accordionPaymentMethod input:radio').click(function() {
     },
     beforeSend: function() {
       $('#accordionPaymentMethod input[name=\'' + $(this).attr('name') + '\']').prop('disabled', true);
-			if (!$('#widget-payment-method').hasClass('d-none')) {
-				$('#widget-payment-method').addClass('d-none');
-			}
-			if (!$('#widget-payment-method-spinner-container').hasClass('d-none')) {
-				$('#widget-payment-method-spinner-container').addClass('d-none');
-			}
     },
     complete: function() {
       $('#accordionPaymentMethod input[name=\'' + $(this).attr('name') + '\']').prop('disabled', false);
-			if ($('#widget-payment-method').hasClass('d-none')) {
-				$('#widget-payment-method').removeClass('d-none');
-			}
-			if ($('#widget-payment-method-spinner-container').hasClass('d-none')) {
-				$('#widget-payment-method-spinner-container').removeClass('d-none');
-			}
     },
     success: function(json) {
 			// Checkout Cart Set Order

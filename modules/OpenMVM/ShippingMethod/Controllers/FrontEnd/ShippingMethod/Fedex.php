@@ -8,6 +8,7 @@ class Fedex extends \App\Controllers\BaseController
 	{
 		// Load Models
 		$this->settingModel = new \Modules\OpenMVM\Setting\Models\SettingModel;
+		$this->lengthClassModel = new \Modules\OpenMVM\Localisation\Models\LengthClassModel;
 	}
 
 	public function index()
@@ -86,6 +87,32 @@ class Fedex extends \App\Controllers\BaseController
 		} else {
 			$data['vendor_' . $this->user->getStoreId() . '_shipping_fedex_account_number'] = $this->setting->get('vendor_' . $this->user->getStoreId() . '_shipping_fedex', 'vendor_' . $this->user->getStoreId() . '_shipping_fedex_account_number');
 		}
+
+		if ($this->request->getPost('vendor_' . $this->user->getStoreId() . '_shipping_fedex_package_dimension_length')) {
+			$data['vendor_' . $this->user->getStoreId() . '_shipping_fedex_package_dimension_length'] = $this->request->getPost('vendor_' . $this->user->getStoreId() . '_shipping_fedex_package_dimension_length');
+		} else {
+			$data['vendor_' . $this->user->getStoreId() . '_shipping_fedex_package_dimension_length'] = $this->setting->get('vendor_' . $this->user->getStoreId() . '_shipping_fedex', 'vendor_' . $this->user->getStoreId() . '_shipping_fedex_package_dimension_length');
+		}
+
+		if ($this->request->getPost('vendor_' . $this->user->getStoreId() . '_shipping_fedex_package_dimension_width')) {
+			$data['vendor_' . $this->user->getStoreId() . '_shipping_fedex_package_dimension_width'] = $this->request->getPost('vendor_' . $this->user->getStoreId() . '_shipping_fedex_package_dimension_width');
+		} else {
+			$data['vendor_' . $this->user->getStoreId() . '_shipping_fedex_package_dimension_width'] = $this->setting->get('vendor_' . $this->user->getStoreId() . '_shipping_fedex', 'vendor_' . $this->user->getStoreId() . '_shipping_fedex_package_dimension_width');
+		}
+
+		if ($this->request->getPost('vendor_' . $this->user->getStoreId() . '_shipping_fedex_package_dimension_height')) {
+			$data['vendor_' . $this->user->getStoreId() . '_shipping_fedex_package_dimension_height'] = $this->request->getPost('vendor_' . $this->user->getStoreId() . '_shipping_fedex_package_dimension_height');
+		} else {
+			$data['vendor_' . $this->user->getStoreId() . '_shipping_fedex_package_dimension_height'] = $this->setting->get('vendor_' . $this->user->getStoreId() . '_shipping_fedex', 'vendor_' . $this->user->getStoreId() . '_shipping_fedex_package_dimension_height');
+		}
+
+		if ($this->request->getPost('vendor_' . $this->user->getStoreId() . '_shipping_fedex_length_class_id')) {
+			$data['vendor_' . $this->user->getStoreId() . '_shipping_fedex_length_class_id'] = $this->request->getPost('vendor_' . $this->user->getStoreId() . '_shipping_fedex_length_class_id');
+		} else {
+			$data['vendor_' . $this->user->getStoreId() . '_shipping_fedex_length_class_id'] = $this->setting->get('vendor_' . $this->user->getStoreId() . '_shipping_fedex', 'vendor_' . $this->user->getStoreId() . '_shipping_fedex_length_class_id');
+		}
+
+		$data['length_classes'] = $this->lengthClassModel->getLengthClasses();
 
 		if ($this->request->getPost('vendor_' . $this->user->getStoreId() . '_shipping_fedex_status')) {
 			$data['vendor_' . $this->user->getStoreId() . '_shipping_fedex_status'] = $this->request->getPost('vendor_' . $this->user->getStoreId() . '_shipping_fedex_status');

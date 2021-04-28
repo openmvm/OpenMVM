@@ -117,10 +117,16 @@ class Weight extends \App\Controllers\BaseController
 			$data['shipping_weight_rate'] = $this->setting->get('shipping_weight', 'shipping_weight_rate');
 		}
 
-		if ($this->request->getPost('shipping_weight_geo_zone_id')) {
-			$data['shipping_weight_geo_zone_id'] = $this->request->getPost('shipping_weight_geo_zone_id');
+		if ($this->request->getPost('shipping_weight_origin_geo_zone_id')) {
+			$data['shipping_weight_origin_geo_zone_id'] = $this->request->getPost('shipping_weight_origin_geo_zone_id');
 		} else {
-			$data['shipping_weight_geo_zone_id'] = $this->setting->get('shipping_weight', 'shipping_weight_geo_zone_id');
+			$data['shipping_weight_origin_geo_zone_id'] = $this->setting->get('shipping_weight', 'shipping_weight_origin_geo_zone_id');
+		}
+
+		if ($this->request->getPost('shipping_weight_destination_geo_zone_id')) {
+			$data['shipping_weight_destination_geo_zone_id'] = $this->request->getPost('shipping_weight_destination_geo_zone_id');
+		} else {
+			$data['shipping_weight_destination_geo_zone_id'] = $this->setting->get('shipping_weight', 'shipping_weight_destination_geo_zone_id');
 		}
 
 		$data['geo_zones'] = $this->geoZoneModel->getGeoZones(array(), $this->language->getBackEndId());

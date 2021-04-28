@@ -21,6 +21,7 @@ class ShippingMethod extends \App\Controllers\BaseController
 		// Load Models
 		$this->storeModel = new \Modules\OpenMVM\Store\Models\StoreModel();
 		$this->userAddressModel = new \Modules\OpenMVM\User\Models\UserAddressModel();
+		$this->shippingMethodModel = new \Modules\OpenMVM\ShippingMethod\Models\ShippingMethodModel();
 	}
 
 	public function index($widget_parameter = array())
@@ -107,11 +108,12 @@ class ShippingMethod extends \App\Controllers\BaseController
 			// Shipping Methods
 			$method_data = array();
 
-			$results = array('fedex', 'flat', 'weight');
+			// $results = array('fedex', 'flat', 'weight');
+			$results = $this->shippingMethodModel->getInstalled();
 
 			foreach ($results as $result) {
-				if (!empty($this->setting->get('shipping_' . $result, 'shipping_' . $result . '_status'))) {
-					$codes = explode('_', $result);
+				if (!empty($this->setting->get('shipping_' . $result['code'], 'shipping_' . $result['code'] . '_status'))) {
+					$codes = explode('_', $result['code']);
 					
 					$code = array();
 
@@ -126,13 +128,13 @@ class ShippingMethod extends \App\Controllers\BaseController
 					$code = implode('', $code);
 
 					$model = lcfirst($code . 'Model');
-					$namespace = '\Modules\OpenMVM\ShippingMethod\Models\\' . $code . 'Model';
+					$namespace = '\Modules\\' . $result['provider'] . '\ShippingMethod\Models\\' . $code . 'Model';
 					$this->$model = new $namespace;
 
 					$quote = $this->{$code . 'Model'}->getQuote($store['store_id'], $this->session->get('shipping_address_id'), $this->user->getId());
 
 					if ($quote) {
-						$method_data[$result] = array(
+						$method_data[$result['code']] = array(
 							'code'       => $quote['code'],
 							'title'      => $quote['title'],
 							'quote'      => $quote['quote'],
@@ -183,33 +185,11 @@ class ShippingMethod extends \App\Controllers\BaseController
 	{
     $json = array();
 
-    $shipping = explode('.', $this->request->getPost('value'));
-		
-		$codes = explode('_', $shipping[0]);
-		
-		$code = array();
-
-		foreach ($codes as $key => $value) {
-			if ($key == 0) {
-				$code[] = $value;
-			} else {
-				$code[] = ucwords($value);
-			}
-		}
-
-		$code = implode('', $code);
-
-		$model = lcfirst($code . 'Model');
-		$namespace = '\Modules\OpenMVM\ShippingMethod\Models\\' . $code . 'Model';
-		$this->$model = new $namespace;
-
-		$quote = $this->{$code . 'Model'}->getQuote($this->request->getPost('store_id'), $this->session->get('shipping_address_id'), $this->user->getId());
-
 		$shipping_method_data = array(
 			'store_id' => $this->request->getPost('store_id'),
-			'code' => $quote['quote'][$shipping[1]]['code'],
-			'title' => $quote['quote'][$shipping[1]]['title'],
-			'cost' => $quote['quote'][$shipping[1]]['cost'],
+			'code' => $this->request->getPost('code'),
+			'title' => $this->request->getPost('title'),
+			'cost' => $this->request->getPost('cost'),
 		);
 
     $this->session->set('shipping_method_' . $this->request->getPost('store_id'), $shipping_method_data);

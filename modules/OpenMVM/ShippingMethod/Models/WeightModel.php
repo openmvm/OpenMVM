@@ -29,22 +29,33 @@ class WeightModel extends \CodeIgniter\Model
 
 		$address = $query_user_address->getRow();
 
-		// Get state to geo zone
-		$builder_state_to_geo_zone = $this->db->table('state_to_geo_zone');
-		$builder_state_to_geo_zone->where('geo_zone_id', $this->setting->get('shipping_weight', 'shipping_weight_geo_zone_id'));
-		$builder_state_to_geo_zone->where('country_id', $address->country_id);
-		$builder_state_to_geo_zone->groupStart();
-		$builder_state_to_geo_zone->where('state_id', $address->state_id);
-		$builder_state_to_geo_zone->orWhere('state_id', 0);
-		$builder_state_to_geo_zone->groupEnd();
+		// Get state to origin geo zone
+		$builder_state_to_origin_geo_zone = $this->db->table('state_to_geo_zone');
+		$builder_state_to_origin_geo_zone->where('geo_zone_id', $this->setting->get('shipping_weight', 'shipping_weight_origin_geo_zone_id'));
+		$builder_state_to_origin_geo_zone->where('country_id', $address->country_id);
+		$builder_state_to_origin_geo_zone->groupStart();
+		$builder_state_to_origin_geo_zone->where('state_id', $address->state_id);
+		$builder_state_to_origin_geo_zone->orWhere('state_id', 0);
+		$builder_state_to_origin_geo_zone->groupEnd();
 
-		$total_results = $builder_state_to_geo_zone->countAllResults();
+		$total_origin_geo_zone_results = $builder_state_to_origin_geo_zone->countAllResults();
+
+		// Get state to destination geo zone
+		$builder_state_to_destination_geo_zone = $this->db->table('state_to_geo_zone');
+		$builder_state_to_destination_geo_zone->where('geo_zone_id', $this->setting->get('shipping_weight', 'shipping_weight_destination_geo_zone_id'));
+		$builder_state_to_destination_geo_zone->where('country_id', $address->country_id);
+		$builder_state_to_destination_geo_zone->groupStart();
+		$builder_state_to_destination_geo_zone->where('state_id', $address->state_id);
+		$builder_state_to_destination_geo_zone->orWhere('state_id', 0);
+		$builder_state_to_destination_geo_zone->groupEnd();
+
+		$total_destination_geo_zone_results = $builder_state_to_destination_geo_zone->countAllResults();
 
     $weight = $this->cart->getWeight($store_id);
 
-		if (empty($this->setting->get('shipping_weight', 'shipping_weight_geo_zone_id'))) {
+		if (empty($this->setting->get('shipping_weight', 'shipping_weight_origin_geo_zone_id')) && empty($this->setting->get('shipping_weight', 'shipping_weight_destination_geo_zone_id'))) {
 			$status = true;
-		} elseif ($total_results > 0) {
+		} elseif ($total_origin_geo_zone_results > 0 && $total_destination_geo_zone_results > 0) {
 			$status = true;
 		} else {
 			$status = false;

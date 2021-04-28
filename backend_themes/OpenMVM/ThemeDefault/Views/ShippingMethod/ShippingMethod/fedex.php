@@ -194,7 +194,7 @@
 									<div class="form-floating mb-3">
 									  <select name="shipping_fedex_weight_class_id" class="form-select" id="input-weight-class-id" aria-label="weight-class-id">
 			                <?php foreach ($weight_classes as $weight_class) { ?>
-			                  <?php if ($weight_class['weight_class_id'] == $setting_frontend_weight_class_id) { ?>
+			                  <?php if ($weight_class['weight_class_id'] == $shipping_fedex_weight_class_id) { ?>
 			                    <option value="<?php echo $weight_class['weight_class_id']; ?>" selected="selected"><?php echo $weight_class['title']; ?></option>
 			                  <?php } else { ?>
 			                    <option value="<?php echo $weight_class['weight_class_id']; ?>"><?php echo $weight_class['title']; ?></option>
@@ -206,7 +206,7 @@
 									<div class="form-floating mb-3">
 									  <select name="shipping_fedex_length_class_id" class="form-select" id="input-length-class-id" aria-label="length-class-id">
 			                <?php foreach ($length_classes as $length_class) { ?>
-			                  <?php if ($length_class['length_class_id'] == $setting_frontend_length_class_id) { ?>
+			                  <?php if ($length_class['length_class_id'] == $shipping_fedex_length_class_id) { ?>
 			                    <option value="<?php echo $length_class['length_class_id']; ?>" selected="selected"><?php echo $length_class['title']; ?></option>
 			                  <?php } else { ?>
 			                    <option value="<?php echo $length_class['length_class_id']; ?>"><?php echo $length_class['title']; ?></option>
@@ -216,16 +216,28 @@
 									  <label for="input-length-class-id"><?php echo lang('Entry.entry_length_class', array(), $lang->getBackEndLocale()); ?></label>
 									</div>
 									<div class="form-floating mb-3">
-									  <select name="shipping_fedex_geo_zone_id" class="form-select" id="input-geo-zone-id" aria-label="geo-zone-id">
+									  <select name="shipping_fedex_origin_geo_zone_id" class="form-select" id="input-origin-geo-zone-id" aria-label="origin-geo-zone-id">
 									  	<?php foreach ($geo_zones as $geo_zone) { ?>
-			                  <?php if ($geo_zone['geo_zone_id'] == $shipping_fedex_geo_zone_id) { ?>
+			                  <?php if ($geo_zone['geo_zone_id'] == $shipping_fedex_origin_geo_zone_id) { ?>
 			                    <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected><?php echo $geo_zone['name']; ?></option>
 			                  <?php } else { ?>
 			                    <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
 			                  <?php } ?>
 									  	<?php } ?>
 									  </select>
-									  <label for="input-geo-zone"><?php echo lang('Entry.entry_geo_zone', array(), $lang->getBackEndLocale()); ?></label>
+									  <label for="input-origin-geo-zone"><?php echo lang('Entry.entry_origin_geo_zone', array(), $lang->getBackEndLocale()); ?></label>
+									</div>
+									<div class="form-floating mb-3">
+									  <select name="shipping_fedex_destination_geo_zone_id" class="form-select" id="input-destination-geo-zone-id" aria-label="destination-geo-zone-id">
+									  	<?php foreach ($geo_zones as $geo_zone) { ?>
+			                  <?php if ($geo_zone['geo_zone_id'] == $shipping_fedex_destination_geo_zone_id) { ?>
+			                    <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected><?php echo $geo_zone['name']; ?></option>
+			                  <?php } else { ?>
+			                    <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+			                  <?php } ?>
+									  	<?php } ?>
+									  </select>
+									  <label for="input-destination-geo-zone"><?php echo lang('Entry.entry_destination_geo_zone', array(), $lang->getBackEndLocale()); ?></label>
 									</div>
 							  	<div class="form-floating mb-3">
 									  <input type="number" name="shipping_fedex_sort_order" value="<?php echo $shipping_fedex_sort_order; ?>" class="form-control" id="input-sort-order" placeholder="<?php echo lang('Entry.entry_sort_order', array(), $lang->getBackEndLocale()); ?>">

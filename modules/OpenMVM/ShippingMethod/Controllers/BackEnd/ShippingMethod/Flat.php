@@ -104,10 +104,16 @@ class Flat extends \App\Controllers\BaseController
 			$data['shipping_flat_cost'] = $this->setting->get('shipping_flat', 'shipping_flat_cost');
 		}
 
-		if ($this->request->getPost('shipping_flat_geo_zone_id')) {
-			$data['shipping_flat_geo_zone_id'] = $this->request->getPost('shipping_flat_geo_zone_id');
+		if ($this->request->getPost('shipping_flat_origin_geo_zone_id')) {
+			$data['shipping_flat_origin_geo_zone_id'] = $this->request->getPost('shipping_flat_origin_geo_zone_id');
 		} else {
-			$data['shipping_flat_geo_zone_id'] = $this->setting->get('shipping_flat', 'shipping_flat_geo_zone_id');
+			$data['shipping_flat_origin_geo_zone_id'] = $this->setting->get('shipping_flat', 'shipping_flat_origin_geo_zone_id');
+		}
+
+		if ($this->request->getPost('shipping_flat_destination_geo_zone_id')) {
+			$data['shipping_flat_destination_geo_zone_id'] = $this->request->getPost('shipping_flat_destination_geo_zone_id');
+		} else {
+			$data['shipping_flat_destination_geo_zone_id'] = $this->setting->get('shipping_flat', 'shipping_flat_destination_geo_zone_id');
 		}
 
 		$data['geo_zones'] = $this->geoZoneModel->getGeoZones(array(), $this->language->getBackEndId());

@@ -379,10 +379,16 @@ class Fedex extends \App\Controllers\BaseController
 
 		$data['length_classes'] = $this->lengthClassModel->getLengthClasses(array(), $this->language->getBackEndId());
 
-		if ($this->request->getPost('shipping_fedex_geo_zone_id')) {
-			$data['shipping_fedex_geo_zone_id'] = $this->request->getPost('shipping_fedex_geo_zone_id');
+		if ($this->request->getPost('shipping_fedex_origin_geo_zone_id')) {
+			$data['shipping_fedex_origin_geo_zone_id'] = $this->request->getPost('shipping_fedex_origin_geo_zone_id');
 		} else {
-			$data['shipping_fedex_geo_zone_id'] = $this->setting->get('shipping_fedex', 'shipping_fedex_geo_zone_id');
+			$data['shipping_fedex_origin_geo_zone_id'] = $this->setting->get('shipping_fedex', 'shipping_fedex_origin_geo_zone_id');
+		}
+
+		if ($this->request->getPost('shipping_fedex_destination_geo_zone_id')) {
+			$data['shipping_fedex_destination_geo_zone_id'] = $this->request->getPost('shipping_fedex_destination_geo_zone_id');
+		} else {
+			$data['shipping_fedex_destination_geo_zone_id'] = $this->setting->get('shipping_fedex', 'shipping_fedex_destination_geo_zone_id');
 		}
 
 		$data['geo_zones'] = $this->geoZoneModel->getGeoZones(array(), $this->language->getBackEndId());
