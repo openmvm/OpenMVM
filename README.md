@@ -1,10 +1,14 @@
-<h2 align="center">OpenMVM</h2>
+<h1 align="center">OpenMVM</h1>
 
 <h3>Introduction</h3>
 
 <p>OpenMVM is an open-source multi-vendor e-commerce marketplace platform.</p>
 <p>Latest Version: OpenMVM ZERO</p>
 <p>It still lacks a lot of basic features. It is not ready for production yet.</p>
+
+<h3>Donation</h3>
+
+<p>PayPal: <a href="https://paypal.me/openmvm" target="_blank">https://paypal.me/openmvm</a></p>
 
 <h3>How to Install:</h3>
 
