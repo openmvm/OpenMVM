@@ -20,7 +20,7 @@
 
 <h3>Current Features</h3>
 
-<h5>Marketplace (front-end) features:</h5>
+<h4>Marketplace (front-end) features:</h4>
 <ul>
 	<li>Customer registration, login, edit profile, address book, view orders</li>
 	<li>Seller registration, edit profile, add / edit product, view orders, shipping method configurations</li>
@@ -34,7 +34,7 @@
 	<li>Order Totals (Sub Total, Shipping, Total)</li>
 </ul>
 
-<h5>Administrator (back-end) features:</h5>
+<h4>Administrator (back-end) features:</h4>
 <ul>
 	<li>Add / edit / delete Categories</li>
 	<li>Add / edit / delete Administrator groups</li>
