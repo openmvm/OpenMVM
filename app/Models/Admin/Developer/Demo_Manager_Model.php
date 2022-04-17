@@ -16,10 +16,10 @@ class Demo_Manager_Model extends Model
 
     public function import()
     {
-        if (file_exists(ROOTPATH . 'openmvm_demo_data.sql')) {
+        if (file_exists(ROOTPATH . 'writable/temp/openmvm_demo_data.sql')) {
             $templine = '';
 
-            $database = file(ROOTPATH . 'openmvm_demo_data.sql');
+            $database = file(ROOTPATH . 'writable/temp/openmvm_demo_data.sql');
 
             foreach ($database as $line) {
                 if (substr($line, 0, 2) == '--' || substr($line,0,2) == "/*" || $line == '') {
@@ -39,7 +39,7 @@ class Demo_Manager_Model extends Model
                 }
             }
             
-            unlink(ROOTPATH . 'openmvm_demo_data.sql');
+            unlink(ROOTPATH . 'writable/temp/openmvm_demo_data.sql');
         }
     }
 }

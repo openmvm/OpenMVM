@@ -100,7 +100,7 @@ class Demo_Manager extends \App\Controllers\BaseController
         $json = [];
 
         // Check Module database.sql
-        if (file_exists(ROOTPATH . 'openmvm_demo_data.sql')) {
+        if (file_exists(ROOTPATH . 'writable/temp/openmvm_demo_data.sql')) {
             // Import SQL file into the database
             $this->model_developer_demo_manager->import();
         } else {
