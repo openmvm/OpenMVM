@@ -7,12 +7,11 @@ $routes = Services::routes();
 
 // Load the system's routing file first, so that the app and ENVIRONMENT
 // can override as needed.
-if (file_exists(SYSTEMPATH . 'Config/Routes.php'))
-{
-	require SYSTEMPATH . 'Config/Routes.php';
+if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
+    require SYSTEMPATH . 'Config/Routes.php';
 }
 
-/**
+/*
  * --------------------------------------------------------------------
  * Router Setup
  * --------------------------------------------------------------------
@@ -36,7 +35,7 @@ $routes->match(['get', 'post'], '/finish', 'Install::finish');
 $routes->match(['get', 'post'], '/configuration', 'Install::configuration');
 $routes->match(['get', 'post'], '/pre_installation', 'Install::preInstallation');
 $routes->match(['get', 'post'], '/license_agreement', 'Install::licenseAgreement');
-$routes->match(['get', 'post'], '/home', 'Home::index');
+$routes->match(['get', 'post'], '/env', 'Env::index');
 $routes->match(['get', 'post'], '/', 'Install::index');
 
 /*
@@ -52,7 +51,6 @@ $routes->match(['get', 'post'], '/', 'Install::index');
  * You will have access to the $routes object within that file without
  * needing to reload it.
  */
-if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php'))
-{
-	require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
+if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
+    require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }

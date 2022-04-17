@@ -8,8 +8,6 @@ var ciDebugBar = {
 	toolbar : null,
 	icon : null,
 
-	//--------------------------------------------------------------------
-
 	init : function () {
 		this.toolbarContainer = document.getElementById('toolbarContainer');
 		this.toolbar          = document.getElementById('debug-bar');
@@ -26,10 +24,10 @@ var ciDebugBar = {
 		document.getElementById('debug-icon-link').addEventListener('click', ciDebugBar.toggleToolbar, true);
 
 		// Allows to highlight the row of the current history request
-		var btn = document.querySelector('button[data-time="' + localStorage.getItem('debugbar-time') + '"]');
+		var btn = this.toolbar.querySelector('button[data-time="' + localStorage.getItem('debugbar-time') + '"]');
 		ciDebugBar.addClass(btn.parentNode.parentNode, 'current');
 
-		historyLoad = document.getElementsByClassName('ci-history-load');
+		historyLoad = this.toolbar.getElementsByClassName('ci-history-load');
 
 		for (var i = 0; i < historyLoad.length; i++)
 		{
@@ -53,18 +51,21 @@ var ciDebugBar = {
 		}
 	},
 
-	//--------------------------------------------------------------------
-
 	createListeners : function () {
-		var buttons = [].slice.call(document.querySelectorAll('#debug-bar .ci-label a'));
+		var buttons = [].slice.call(this.toolbar.querySelectorAll('.ci-label a'));
 
 		for (var i = 0; i < buttons.length; i++)
 		{
 			buttons[i].addEventListener('click', ciDebugBar.showTab, true);
 		}
-	},
 
-	//--------------------------------------------------------------------
+		// Hook up generic toggle via data attributes `data-toggle="foo"`
+		var links = this.toolbar.querySelectorAll('[data-toggle]');
+		for (var i = 0; i < links.length; i++)
+		{
+			links[i].addEventListener('click', ciDebugBar.toggleRows, true);
+		}
+	},
 
 	showTab: function () {
 		// Get the target tab, if any
@@ -108,8 +109,6 @@ var ciDebugBar = {
 		}
 	},
 
-	//--------------------------------------------------------------------
-
 	addClass : function (el, className) {
 		if (el.classList)
 		{
@@ -120,8 +119,6 @@ var ciDebugBar = {
 			el.className += ' ' + className;
 		}
 	},
-
-	//--------------------------------------------------------------------
 
 	removeClass : function (el, className) {
 		if (el.classList)
@@ -134,7 +131,20 @@ var ciDebugBar = {
 		}
 	},
 
-	//--------------------------------------------------------------------
+	/**
+	 * Toggle display of another object based on
+	 * the data-toggle value of this object
+	 *
+	 * @param event
+	 */
+	toggleRows : function(event) {
+		if(event.target)
+		{
+			let row = event.target.closest('tr');
+			let target = document.getElementById(row.getAttribute('data-toggle'));
+			target.style.display = target.style.display === 'none' ? 'table-row' : 'none';
+		}
+	},
 
 	/**
 	 * Toggle display of a data table
@@ -149,9 +159,29 @@ var ciDebugBar = {
 
 		if (obj)
 		{
-			obj.style.display = obj.style.display == 'none' ? 'block' : 'none';
+			obj.style.display = obj.style.display === 'none' ? 'block' : 'none';
 		}
 	},
+
+	/**
+	 * Toggle display of timeline child elements
+	 *
+	 * @param obj
+	 */
+	toggleChildRows : function (obj) {
+		if (typeof obj == 'string')
+		{
+			par = document.getElementById(obj + '_parent')
+			obj = document.getElementById(obj + '_children');
+		}
+
+		if (par && obj)
+		{
+			obj.style.display = obj.style.display === 'none' ? '' : 'none';
+			par.classList.toggle('timeline-parent-open');
+		}
+	},
+
 
 	//--------------------------------------------------------------------
 
@@ -169,8 +199,6 @@ var ciDebugBar = {
 		ciDebugBar.createCookie('debug-bar-state', open == true ? 'minimized' : 'open' , 365);
 	},
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Sets the initial state of the toolbar (open or minimized) when
 	 * the page is first loaded to allow it to remember the state between refreshes.
@@ -181,8 +209,6 @@ var ciDebugBar = {
 		ciDebugBar.icon.style.display    = open != 'open' ? 'inline-block' : 'none';
 		ciDebugBar.toolbar.style.display = open == 'open' ? 'inline-block' : 'none';
 	},
-
-	//--------------------------------------------------------------------
 
 	toggleViewsHints: function () {
 		// Avoid toggle hints on history requests that are not the initial
@@ -475,10 +501,8 @@ var ciDebugBar = {
 		}
 	},
 
-	//--------------------------------------------------------------------
-
 	setToolbarPosition: function () {
-		var btnPosition = document.getElementById('toolbar-position');
+		var btnPosition = this.toolbar.querySelector('#toolbar-position');
 
 		if (ciDebugBar.readCookie('debug-bar-position') === 'top')
 		{
@@ -506,10 +530,8 @@ var ciDebugBar = {
 		}, true);
 	},
 
-	//--------------------------------------------------------------------
-
 	setToolbarTheme: function () {
-		var btnTheme    = document.getElementById('toolbar-theme');
+		var btnTheme    = this.toolbar.querySelector('#toolbar-theme');
 		var isDarkMode  = window.matchMedia("(prefers-color-scheme: dark)").matches;
 		var isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches;
 
@@ -556,8 +578,6 @@ var ciDebugBar = {
 		}, true);
 	},
 
-	//--------------------------------------------------------------------
-
 	/**
 	 * Helper to create a cookie.
 	 *
@@ -582,8 +602,6 @@ var ciDebugBar = {
 		document.cookie = name + "=" + value + expires + "; path=/; samesite=Lax";
 	},
 
-	//--------------------------------------------------------------------
-
 	readCookie : function (name) {
 		var nameEQ = name + "=";
 		var ca     = document.cookie.split(';');
@@ -603,15 +621,13 @@ var ciDebugBar = {
 		return null;
 	},
 
-	//--------------------------------------------------------------------
-
 	trimSlash: function (text) {
 		return text.replace(/^\/|\/$/g, '');
 	},
 
 	routerLink: function () {
 		var row, _location;
-		var rowGet = document.querySelectorAll('#debug-bar td[data-debugbar-route="GET"]');
+		var rowGet = this.toolbar.querySelectorAll('td[data-debugbar-route="GET"]');
 		var patt   = /\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)/;
 
 		for (var i = 0; i < rowGet.length; i++)
@@ -637,7 +653,7 @@ var ciDebugBar = {
 			}
 		}
 
-		rowGet = document.querySelectorAll('#debug-bar td[data-debugbar-route="GET"] form');
+		rowGet = this.toolbar.querySelectorAll('td[data-debugbar-route="GET"] form');
 		for (var i = 0; i < rowGet.length; i++)
 		{
 			row = rowGet[i];
@@ -668,5 +684,4 @@ var ciDebugBar = {
 			})
 		}
 	}
-
 };

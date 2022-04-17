@@ -1,214 +1,250 @@
 <?php
 
+/**
+ * This file is part of OpenMVM.
+ *
+ * (c) OpenMVM <admin@openmvm.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Libraries;
 
-class Administrator
-{
+class Administrator {
 	private $administrator_id;
 	private $administrator_group_id;
 	private $username;
 	private $firstname;
 	private $lastname;
 	private $email;
-	private $avatar;
-	private $token;
-	private $permission = array();
-	private $sessionId;
+	private $permission = [];
 
-	public function __construct()
-	{
-		// Load Libraries
-		$this->session = session();
-		$this->auth = new \App\Libraries\Auth;
-		// Load Database
-		$this->db = db_connect();
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->db = \Config\Database::connect();
+        $this->session = \Config\Services::session();
 
-		// Get Administrator Info
-		if (!empty($this->session->get('administrator_id_' . $this->session->administrator_session_id))) {
-			$builder = $this->db->table('administrator');
+        if ($this->session->has('administrator_session_token')) {
+            if ($this->session->has('administrator_id_' . $this->session->get('administrator_session_token'))) {
+                $builder_administrator = $this->db->table('administrator');
+                $builder_administrator->where('administrator_id', $this->session->get('administrator_id_' . $this->session->get('administrator_session_token')));
+                $builder_administrator->where('status', 1);
+                $administrator_query = $builder_administrator->get();
+        
+                if ($row_administrator = $administrator_query->getRow()) {
+                    $this->administrator_id = $row_administrator->administrator_id;
+                    $this->administrator_group_id = $row_administrator->administrator_group_id;
+                    $this->username = $row_administrator->username;
+                    $this->firstname = $row_administrator->firstname;
+                    $this->lastname = $row_administrator->lastname;
+                    $this->email = $row_administrator->email;
 
-			$builder->where('administrator_id', $this->session->get('administrator_id_' . $this->session->administrator_session_id));
+                    $builder_administrator_group = $this->db->table('administrator_group');
+        
+                    $builder_administrator_group->where('administrator_group_id', $row_administrator->administrator_group_id);
+            
+                    $administrator_group_query = $builder_administrator_group->get();
+                    
+                    if ($row_administrator_group = $administrator_group_query->getRow()) {
+                        $permissions = json_decode($row_administrator_group->permission, true);
 
-			$query = $builder->get();
+                        if (is_array($permissions)) {
+                            foreach ($permissions as $key => $value) {
+                                $this->permission[$key] = $value;
+                            }
+                        }
+                    }
+                } else {
+                    $this->logout();
+                }
+            } else {
+                $this->logout();
+            }
+        } else {
+            $this->logout();
+        }
+    }
 
-			$row = $query->getRowArray();
+    /**
+     * Administrator login.
+     *
+     */
+    public function login($username, $password)
+    {
+        $builder_administrator = $this->db->table('administrator');
+        $builder_administrator->where('username', $username);
+        $administrator_query = $builder_administrator->get();
 
-			if ($row) {
-				$this->administrator_id = $row['administrator_id'];
-				$this->administrator_group_id = $row['administrator_group_id'];
-				$this->username = $row['username'];
-				$this->firstname = $row['firstname'];
-				$this->lastname = $row['lastname'];
-				$this->email = $row['email'];
-				$this->avatar = $row['avatar'];
-				$this->token = $this->session->get('administrator_token_' . $this->session->administrator_session_id);
+        $row_administrator = $administrator_query->getRow();
 
-				// Get Administrator Group Permissions
-				$builder = $this->db->table('administrator_group');
+        if ($row_administrator && password_verify($password, $row_administrator->password)) {
+            $session_token = bin2hex(random_bytes(20));
 
-				$builder->where('administrator_group_id', $row['administrator_group_id']);
+            $this->session->set('administrator_session_token', $session_token);
+            $this->session->set('administrator_id_' . $session_token, $row_administrator->administrator_id);
 
-				$query = $builder->get();
+            $this->administrator_id = $row_administrator->administrator_id;
+            $this->administrator_group_id = $row_administrator->administrator_group_id;
+            $this->username = $row_administrator->username;
+            $this->firstname = $row_administrator->firstname;
+            $this->lastname = $row_administrator->lastname;
+            $this->email = $row_administrator->email;
 
-				$row = $query->getRowArray();
+            $builder_administrator_group = $this->db->table('administrator_group');
 
-				$permissions = json_decode($row['permission'], true);
+            $builder_administrator_group->where('administrator_group_id', $row_administrator->administrator_group_id);
+    
+            $administrator_group_query = $builder_administrator_group->get();
+            
+            if ($row_administrator_group = $administrator_group_query->getRow()) {
+                $permissions = json_decode($row_administrator_group->permission, true);
 
-				if (is_array($permissions)) {
-					foreach ($permissions as $key => $value) {
-						$this->permission[$key] = $value;
-					}
-				}
+                if (is_array($permissions)) {
+                    foreach ($permissions as $key => $value) {
+                        $this->permission[$key] = $value;
+                    }
+                }
+            }
 
-				// Get Sesion ID
-				$this->sessionId = $this->session->administrator_session_id;
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-			} else {
-				$this->logout();
-			}
-		}
+    /**
+     * Administrator logout.
+     *
+     */
+    public function logout()
+    {
+        $this->session->remove('administrator_id_' . $this->session->get('administrator_session_token'));
+        $this->session->remove('administrator_session_token');
 
-	}
+        $this->administrator_id = '';
+        $this->administrator_group_id = '';
+        $this->username = '';
+        $this->firstname = '';
+        $this->lastname = '';
+        $this->email = '';
+        $this->permission = [];
+    }
 
-  public function login($username, $password, $override = false)
-  {
-		$builder = $this->db->table('administrator');
+    /**
+     * Administrator logged in.
+     *
+     */
+    public function isLoggedIn()
+    {
+        return $this->administrator_id;
+    }
 
-		$builder->where('username', $username);
+    /**
+     * Administrator id.
+     *
+     */
+    public function getId()
+    {
+        return $this->administrator_id;
+    }
 
-		$query = $builder->get();
+    /**
+     * Administrator group id.
+     *
+     */
+    public function getGroupId()
+    {
+        return $this->administrator_group_id;
+    }
 
-		$row = $query->getRowArray();
+    /**
+     * Administrator username.
+     *
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
 
-		if ($row) {
-      $salt = $row['salt'];
-      $hashed_password = $row['password'];
+    /**
+     * Administrator firstname.
+     *
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
 
-      if (hash('sha1', $password . $salt) == $hashed_password)
-      {
-		    // Session Data
-		    $session_id = $this->auth->sessionId();
+    /**
+     * Administrator lastname.
+     *
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
 
-		    $newdata = [
-		      'administrator_session_id' => $session_id,
-		      'administrator_id_' . $session_id => $row['administrator_id'],
-		      'administrator_token_' . $session_id => $this->auth->token(),
-		      'administrator_logged_in_' . $session_id => TRUE,
-		    ];
+    /**
+     * Administrator email.
+     *
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
 
-		    $this->session->set($newdata);
+    /**
+     * Administrator permission.
+     *
+     */
+    public function getPermission()
+    {
+        return $this->permission;
+    }
 
-        // Session Expiration
-				$this->session->markAsTempdata([
-          'administrator_session_id' => 3600,
-	        'administrator_id_' . $session_id  => 3600,
-	        'administrator_token_' . $session_id => 3600,
-          'administrator_logged_in_' . $session_id  => 3600,
-				]);
-
-				$this->administrator_id = $row['administrator_id'];
-				$this->administrator_group_id = $row['administrator_group_id'];
-				$this->username = $row['username'];
-				$this->firstname = $row['firstname'];
-				$this->lastname = $row['lastname'];
-				$this->email = $row['email'];
-				$this->avatar = $row['avatar'];
-				$this->token = $this->session->get('administrator_token_' . $this->session->administrator_session_id);
-
-				// Get Administrator Group Permissions
-				$builder = $this->db->table('administrator_group');
-
-				$builder->where('administrator_group_id', $row['administrator_group_id']);
-
-				$query = $builder->get();
-
-				$row = $query->getRowArray();
-
-				$permissions = json_decode($row['permission'], true);
-
-				if (is_array($permissions)) {
-					foreach ($permissions as $key => $value) {
-						$this->permission[$key] = $value;
-					}
-				}
-
-				// Get Sesion ID
-				$this->sessionId = $this->session->administrator_session_id;
-				
-				return true;
-      } else {
-        return false;
-      }
-		} else {
-			return false;
-		}
-  }
-
-  public function logout() {
-		$this->removeSessions();
-
-		$this->administrator_id = '';
-		$this->administrator_group_id = '';
-		$this->username = '';
-		$this->firstname = '';
-		$this->lastname = '';
-		$this->email = '';
-		$this->avatar = '';
-		$this->token = '';
-  }
-
-	public function removeSessions() {
-		$administrator_sessions = [
-		  'administrator_id_' . $this->sessionId,
-		  'administrator_token_' . $this->sessionId,
-		  'administrator_logged_in_' . $this->sessionId,
-		  'administrator_session_id',
-		];
-
-		$this->session->remove($administrator_sessions);
-	}
-
+    /**
+     * Administrator has permission.
+     *
+     */
 	public function hasPermission($key, $value) {
-		if (!empty($this->permission[$key])) {
+		if (isset($this->permission[$key])) {
 			return in_array($value, $this->permission[$key]);
 		} else {
 			return false;
 		}
 	}
 
-	public function isLogged() {
-		return $this->administrator_id;
-	}
+    /**
+     * Get token.
+     *
+     */
+    public function getToken()
+    {
+        if ($this->session->has('administrator_session_token')) {
+            return $this->session->get('administrator_session_token');
+        } else {
+            return false;
+        }
+    }
 
-	public function getId() {
-		return $this->administrator_id;
-	}
+    /**
+     * Verify token.
+     *
+     */
+    public function verifyToken($token)
+    {
+        $verify = false;
 
-	public function getUsername() {
-		return $this->username;
-	}
+        if ($this->session->has('administrator_session_token') && !empty($token)) {
+            if ($this->session->get('administrator_session_token') == $token) {
+                $verify = true;
+            }
+        }
 
-	public function getFirstName() {
-		return $this->firstname;
-	}
-
-	public function getLastName() {
-		return $this->lastname;
-	}
-
-	public function getGroupId() {
-		return $this->administrator_group_id;
-	}
-
-	public function getEmail() {
-		return $this->email;
-	}
-
-	public function getAvatar() {
-		return $this->avatar;
-	}
-
-	public function getToken() {
-		return $this->token;
-	}
+        return $verify;
+    }
 }

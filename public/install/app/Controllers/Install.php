@@ -3,7 +3,7 @@
 use App\Controllers\Header;
 use App\Controllers\Menu;
 use App\Controllers\Footer;
-use App\Models\InstallModel;
+use App\Models\Install_Model;
 
 class Install extends BaseController
 {
@@ -12,13 +12,12 @@ class Install extends BaseController
 		// Load Libraries
 		$this->session = \Config\Services::session();
 		$this->validation = \Config\Services::validation();
-		$this->pclzip = new \App\Libraries\PclZip;
 		// Load Controllers
 		$this->header = new Header();
 		$this->menu = new Menu();
 		$this->footer = new Footer();
 		// Load Models
-		$this->install_model = new InstallModel();
+		$this->install_model = new Install_Model();
 	}
 
 	public function index()
@@ -33,7 +32,7 @@ class Install extends BaseController
 			if (base_url() == 'http://localhost:8080' || base_url() == 'http://localhost:8080/') {
 				$old_string = "# app.baseURL = ''";
 
-				$new_string = "app.baseURL = '" . str_replace('install/public/', '', $install_base_url) . "'";
+				$new_string = "app.VERSION = '1.0.0'\napp.baseURL = '" . str_replace('install/public/', '', $install_base_url) . "'";
 
 				// main_env_file
 				// read the entire string
@@ -58,10 +57,10 @@ class Install extends BaseController
 				return redirect()->to($install_base_url);
 			}
 		} else {
-			return redirect()->to($install_base_url . 'home');
+			return redirect()->to($install_base_url . 'env');
 		}
 
-  	// Variables
+  		// Variables
 		$data['heading_title'] = lang('Text.text_openmvm', array(), 'en-US') . ' - ' . lang('Heading.heading_installation', array(), 'en-US');
 
 		// Get Models
@@ -73,7 +72,6 @@ class Install extends BaseController
 		$header_parameter = array(
 			'title' => lang('Text.text_openmvm', array(), 'en-US') . ' - ' . lang('Heading.heading_installation', array(), 'en-US'),
 			'front_locale' => 'en-US',
-			'breadcrumbs' => $breadcrumbs
 		);
 		$data['header'] = $this->header->index($header_parameter);
 
@@ -105,7 +103,7 @@ class Install extends BaseController
 			return redirect()->to(base_url('install/public/pre_installation'));
 		}
 
-  	// Variables
+  		// Variables
 		$data['heading_title'] = lang('Text.text_openmvm', array(), 'en-US') . ' - ' . lang('Heading.heading_installation', array(), 'en-US');
 
 		// Get license
@@ -120,7 +118,6 @@ class Install extends BaseController
 		$header_parameter = array(
 			'title' => lang('Text.text_openmvm', array(), 'en-US') . ' - ' . lang('Heading.heading_installation', array(), 'en-US'),
 			'front_locale' => 'en-US',
-			'breadcrumbs' => $breadcrumbs
 		);
 		$data['header'] = $this->header->index($header_parameter);
 
@@ -152,17 +149,17 @@ class Install extends BaseController
 				!extension_loaded('xml') || 
 				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . '.env') || 
 				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../') . '/') . '.env') || 
-				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'modules/') || 
-				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'backend_themes/') || 
-				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'frontend_themes/') || 
+				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'theme_admin/') || 
+				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'theme_marketplace/') || 
 				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'writable/cache/') || 
 				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'writable/downloads/') || 
 				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'writable/logs/') || 
 				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'writable/uploads/') || 
-				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'public/assets/backend_themes/') || 
-				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . '/public/assets/cache/') || 
-				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . '/public/assets/files/') || 
-				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'public/assets/frontend_themes/')) {
+				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'public/assets/admin/theme/') || 
+				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . '/public/assets/images/marketplace/') || 
+				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . '/public/assets/images/cache/') || 
+				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . '/public/assets/images/') || 
+				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'public/assets/marketplace/theme/')) {
 
 				$this->session->set('error', lang('Error.error_pre_installation', array(), 'en-US'));
 
@@ -172,7 +169,7 @@ class Install extends BaseController
 			}
 		}
 
-  	// Variables
+  		// Variables
 		$data['heading_title'] = lang('Text.text_openmvm', array(), 'en-US') . ' - ' . lang('Heading.heading_installation', array(), 'en-US');
 
 		// PHP Version
@@ -197,16 +194,12 @@ class Install extends BaseController
 				'writable' => is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../') . '/') . '.env'),
 			),
 			array(
-				'path' => str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'modules/',
-				'writable' => is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/'). 'modules/'),
+				'path' => str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'theme_admin/',
+				'writable' => is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'theme_admin/'),
 			),
 			array(
-				'path' => str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'backend_themes/',
-				'writable' => is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'backend_themes/'),
-			),
-			array(
-				'path' => str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'frontend_themes/',
-				'writable' => is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'frontend_themes/'),
+				'path' => str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'theme_marketplace/',
+				'writable' => is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'theme_marketplace/'),
 			),
 			array(
 				'path' => str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'writable/cache/',
@@ -225,22 +218,30 @@ class Install extends BaseController
 				'writable' => is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'writable/uploads/'),
 			),
 			array(
-				'path' => str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'public/assets/backend_themes/',
-				'writable' => is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'public/assets/backend_themes/'),
+				'path' => str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'public/assets/admin/theme/',
+				'writable' => is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'public/assets/admin/theme/'),
 			),
 			array(
-				'path' => str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'public/assets/cache/',
-				'writable' => is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'public/assets/cache/'),
+				'path' => str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'public/assets/images/marketplace/',
+				'writable' => is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'public/assets/images/marketplace/'),
 			),
 			array(
-				'path' => str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'public/assets/files/',
-				'writable' => is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'public/assets/files/'),
+				'path' => str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'public/assets/images/cache/',
+				'writable' => is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'public/assets/images/cache/'),
 			),
 			array(
-				'path' => str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'public/assets/frontend_themes/',
-				'writable' => is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'public/assets/frontend_themes/'),
+				'path' => str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'public/assets/images/',
+				'writable' => is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'public/assets/images/'),
+			),
+			array(
+				'path' => str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'public/assets/marketplace/theme/',
+				'writable' => is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'public/assets/marketplace/theme/'),
 			),
 		);
+
+		usort($data['directories'], function ($item1, $item2) {
+		    return $item1['path'] <=> $item2['path'];
+		});
 
 		// Get Locale
 		$data['front_locale'] = 'en-US';
@@ -249,7 +250,6 @@ class Install extends BaseController
 		$header_parameter = array(
 			'title' => lang('Text.text_openmvm', array(), 'en-US') . ' - ' . lang('Heading.heading_installation', array(), 'en-US'),
 			'front_locale' => 'en-US',
-			'breadcrumbs' => $breadcrumbs
 		);
 		$data['header'] = $this->header->index($header_parameter);
 
@@ -283,13 +283,13 @@ class Install extends BaseController
 		if($this->request->getPost('hostname')) {
 			$data['hostname'] = $this->request->getPost('hostname');
 		} else {
-			$data['hostname'] = '';
+			$data['hostname'] = 'localhost';
 		}
 
 		if($this->request->getPost('db_username')) {
 			$data['db_username'] = $this->request->getPost('db_username');
 		} else {
-			$data['db_username'] = '';
+			$data['db_username'] = 'root';
 		}
 
 		if($this->request->getPost('db_password')) {
@@ -307,7 +307,7 @@ class Install extends BaseController
 		if($this->request->getPost('db_prefix')) {
 			$data['db_prefix'] = $this->request->getPost('db_prefix');
 		} else {
-			$data['db_prefix'] = 'omvm_';
+			$data['db_prefix'] = '';
 		}
 
 		// Administrator
@@ -335,16 +335,12 @@ class Install extends BaseController
 			$data['username'] = '';
 		}
 
-		if($this->request->getPost('uri_segment')) {
-			$data['uri_segment'] = $this->request->getPost('uri_segment');
-		} else {
-			$data['uri_segment'] = 'admin';
-		}
-
 		$data['validation'] = $this->validation;
 
 		// DB Drivers
 		$data['mysqli'] = extension_loaded('mysqli');
+		$data['pdo'] = extension_loaded('pdo');
+		$data['pgsql'] = extension_loaded('pgsql');
 	
 		if ($this->request->getPost()) {
 			$validate = $this->validate([
@@ -358,12 +354,15 @@ class Install extends BaseController
 				'username' => ['label' => lang('Entry.entry_username', array(), 'en-US'), 'rules' => 'required', 'errors' => ['required' => lang('Error.error_required', array(), 'en-US')]],
 				'password' => ['label' => lang('Entry.entry_password', array(), 'en-US'), 'rules' => 'required', 'errors' => ['required' => lang('Error.error_required', array(), 'en-US')]],
 				'passconf' => ['label' => lang('Entry.entry_passconf', array(), 'en-US'), 'rules' => 'required|matches[password]', 'errors' => ['required' => lang('Error.error_required', array(), 'en-US'), 'matches' => lang('Error.error_matches', array(), 'en-US')]],
-				'uri_segment' => ['label' => lang('Entry.entry_uri_segment', array(), 'en-US'), 'rules' => 'required|alpha_numeric', 'errors' => ['required' => lang('Error.error_required', array(), 'en-US'),'alpha_numeric' => lang('Error.error_alpha_numeric', array(), 'en-US')]],
+				//'uri_segment' => ['label' => lang('Entry.entry_uri_segment', array(), 'en-US'), 'rules' => 'required|alpha_numeric', 'errors' => ['required' => lang('Error.error_required', array(), 'en-US'),'alpha_numeric' => lang('Error.error_alpha_numeric', array(), 'en-US')]],
 			]);
 		}
 
-		if ($validate) {
-			try {
+		if (!empty($validate)) {
+			// Connect DB
+			$connect_db = $this->install_model->connectDb($this->request->getPost());
+
+			if ($connect_db) {
 				// Database Configuration
 				$configure_database = $this->install_model->configureDatabase($this->request->getPost());
 
@@ -422,14 +421,14 @@ class Install extends BaseController
 
 					return redirect()->to(base_url('install/public/configuration'));
 				}
-			}
-			catch (\Exception $e)
-			{
-				$this->session->set('error', lang('Text.text_error', array(), 'en-US') . ': ' . $e->getMessage());
+			} else {
+				$this->session->set('error', lang('Error.error_connect_database'));
+
+				return redirect()->to(base_url('install/public/configuration'));
 			}
 		}
 
-  	// Variables
+  		// Variables
 		$data['heading_title'] = lang('Text.text_openmvm', array(), 'en-US') . ' - ' . lang('Heading.heading_installation', array(), 'en-US');
 
 		// Get Models
@@ -441,7 +440,6 @@ class Install extends BaseController
 		$header_parameter = array(
 			'title' => lang('Text.text_openmvm', array(), 'en-US') . ' - ' . lang('Heading.heading_installation', array(), 'en-US'),
 			'front_locale' => 'en-US',
-			'breadcrumbs' => $breadcrumbs
 		);
 		$data['header'] = $this->header->index($header_parameter);
 
@@ -463,7 +461,7 @@ class Install extends BaseController
 
 	public function finish()
 	{
-  	// Variables
+  		// Variables
 		$data['heading_title'] = lang('Text.text_openmvm', array(), 'en-US') . ' - ' . lang('Heading.heading_installation', array(), 'en-US');
 
 		// Get Models
@@ -472,13 +470,12 @@ class Install extends BaseController
 		$data['front_locale'] = 'en-US';
 
 		// Data Text
-		$data['admin_dir'] = $_SERVER['app.adminDir'];
+		$data['admin_dir'] = 'admin'; //$_SERVER['app.adminDir'];
 
 		// Load Header
 		$header_parameter = array(
 			'title' => lang('Text.text_openmvm', array(), 'en-US') . ' - ' . lang('Heading.heading_installation', array(), 'en-US'),
 			'front_locale' => 'en-US',
-			'breadcrumbs' => $breadcrumbs
 		);
 		$data['header'] = $this->header->index($header_parameter);
 

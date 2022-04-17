@@ -4,11 +4,10 @@ class Footer extends BaseController
 {
 	public function __construct()
 	{
-		// Load Libraries
+		// Libraries
 		$this->session = \Config\Services::session();
-		// Load Helper
+		// Helper
 		helper(['form', 'date', 'filesystem']);
-		// Load Models
 	}
 
 	public function index($footer_parameter)

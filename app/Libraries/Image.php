@@ -1,55 +1,81 @@
 <?php
 
+/**
+ * This file is part of OpenMVM.
+ *
+ * (c) OpenMVM <admin@openmvm.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Libraries;
 
-class Image
-{
-  public function resize($filename, $width, $height, $maintain_ratio, $master_dim)
-  {
-		if (!is_file(ROOTPATH . 'public/assets/files/' . $filename)) {
-			return ;
-		}
+class Image {
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        // Libraries
+        $this->session = \Config\Services::session();
+        $this->image = \Config\Services::image();
+    }
 
-		$extension = pathinfo($filename, PATHINFO_EXTENSION);
+    /**
+     * Resize.
+     *
+     */
+    public function resize($file, int $width, int $height, bool $maintainRatio = false, string $masterDim = 'auto')
+    {
+        $dir_image = ROOTPATH . 'public/assets/images/';
+        $dir_cache = ROOTPATH . 'public/assets/images/cache/';
 
-		$image_old = $filename;
-		$image_new = 'cache/' . substr($filename, 0, strrpos($filename, '.')) . '-' . $width . 'x' . $height . '.' . $extension;
+        $path_parts = pathinfo($file);
+        $dirname = $path_parts['dirname'];
+        $basename = $path_parts['basename'];
+        $filename = $path_parts['filename'];
+        $ext = pathinfo(ROOTPATH . $file, PATHINFO_EXTENSION);
 
-		if (!is_file(ROOTPATH . 'public/assets/' . $image_new) || (filectime(ROOTPATH . 'public/assets/files/' . $image_old) > filectime(ROOTPATH . 'public/assets/' . $image_new))) {
-			list($width_orig, $height_orig, $image_type) = getimagesize(ROOTPATH . 'public/assets/files/' . $image_old);
-				 
-			if (!in_array($image_type, array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF))) { 
-				return ROOTPATH . 'public/assets/files/' . $image_old;
-			}
- 
-			$path = '';
+        $new_name = $dirname . '/' . $filename . '-' . $width . 'x' . $height . '.' . $ext;
 
-			$directories = explode('/', dirname($image_new));
+        // Create cache dir
+        if (!is_dir($dir_cache . $dirname)) {
+            mkdir($dir_cache . $dirname, 0755, true);
+            file_put_contents($dir_cache . $dirname . '/index.html', '');
+        }
 
-			foreach ($directories as $directory) {
-				$path = $path . '/' . $directory;
+        if (!is_file($dir_cache . $new_name)) {
+            $this->image->withFile($dir_image . $file);
+            $this->image->resize($width, $height, $maintainRatio, $masterDim);
 
-				if (!is_dir(ROOTPATH . 'public/assets/' . $path)) {
-					mkdir(ROOTPATH . 'public/assets/' . $path, 0777);
-				}
-			}
+            if ($ext == 'jpg' || $ext == 'jpeg') {
+                $exif = exif_read_data($dir_image . $file);
 
-			if ($width_orig != $width || $height_orig != $height) {
-				$image = \Config\Services::image()
-				        ->withFile(ROOTPATH . 'public/assets/files/' . $image_old)
-				        ->resize($width, $height, $maintain_ratio, $master_dim)
-				        ->save(ROOTPATH . 'public/assets/' . $image_new);
+                if (!empty($exif['Orientation'])) {
+                    //$imageResource = imagecreatefromjpeg($dir_image . $file);
 
-			} else {
-				copy(ROOTPATH . 'public/assets/files/' . $image_old, ROOTPATH . 'public/assets/' . $image_new);
-			}
-		}
+                    switch ($exif['Orientation']) {
+                        case 3:
+                        //$img = imagerotate($imageResource, 180, 0);
+                        $this->image->rotate(180);
+                        break;
+                        case 6:
+                        //$img = imagerotate($imageResource, -90, 0);
+                        $this->image->rotate(270);
+                        break;
+                        case 8:
+                        //$img = imagerotate($imageResource, 90, 0);
+                        $this->image->rotate(90);
+                        break;
+                    }
+                }
+            }
 
-		return base_url('assets/' . $image_new);
-  }
+            $this->image->save($dir_cache . $new_name);
+        }
 
-  public function render($filename)
-  {
-		return base_url('assets/files/' . $filename);
-  }
+        return base_url('assets/images/cache/' . $new_name);
+        //return $orientation;
+    }
 }

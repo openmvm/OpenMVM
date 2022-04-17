@@ -1,86 +1,100 @@
 <?php
 
+/**
+ * This file is part of OpenMVM.
+ *
+ * (c) OpenMVM <admin@openmvm.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Libraries;
 
-class Template
-{
-	public function __construct()
-	{
-		// Load Libraries
-		$this->language = new \App\Libraries\Language;
-		$this->setting = new \App\Libraries\Setting;
-		$this->backend_theme = new \App\Libraries\BackendTheme;
-		$this->frontend_theme = new \App\Libraries\FrontendTheme;
-		// Load Database
-		$this->db = db_connect();
-	}
+class Template {
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->db = \Config\Database::connect();
+    }
 
-  public function render($type, $dir, $data)
-  {
-  	// Back-end
-  	$backend_default_provider = 'OpenMVM';
-  	$backend_default_theme = 'ThemeDefault';
+    /**
+     * Render the view.
+     *
+     */
+    public function render($type, $author, $theme, $view, $data = array(), $override = false)
+    {
+        if ($override) {
+            return view($type . '\\' . $author . '\\' . $theme . '\\Views\\' . $view, $data);
+        } else {
+            $default_author = 'com_openmvm';
+            $default_theme = 'Basic';
 
-  	// Front-end
-  	$frontend_default_provider = 'OpenMVM';
-  	$frontend_default_theme = 'ThemeDefault';
+            if ($type == 'ThemeAdmin') {
+                $builder = $this->db->table('setting');
+        
+                $builder->where('key', 'setting_admin_theme');
+        
+                $setting_query = $builder->get();
+        
+                if ($row = $setting_query->getRow()) {
+                    $theme = explode(':', $row->value);
 
-  	if ($type == 'BackendThemes') { // Back-end
-  		// Type DIR
-  		$type_dir = 'backend_themes/';
-  		// Backend Theme ID
-  		$backend_theme_id = $this->setting->get('setting', 'setting_backend_theme');
-  		// Get Backend Theme Manifest By ID
-  		$backend_theme_manifest = json_decode($this->backend_theme->getManifestById($backend_theme_id), true);
+                    $selected_author = $theme[0];
+                    $selected_theme = $theme[1];
+                } else {
+                    $selected_author = $default_author;
+                    $selected_theme = $default_theme;
+                }
 
-  		if (!empty($backend_theme_manifest['dir']['provider'])) {
-  			$dir_provider = $backend_theme_manifest['dir']['provider'];
-  		} else {
-  			$dir_provider = $backend_default_provider;
-  		}
+                $directory = 'theme_admin';
+            } elseif ($type == 'ThemeAdminAdminSetting') {
+                $selected_author = $author;
+                $selected_theme = $theme;
 
-  		if (!empty($backend_theme_manifest['dir']['theme'])) {
-  			$dir_theme = $backend_theme_manifest['dir']['theme'];
-  		} else {
-  			$dir_theme = $backend_default_theme;
-  		}
+                $type = 'ThemeAdmin';
+                $directory = 'theme_admin';
+            } elseif ($type == 'ThemeMarketplaceAdminSetting') {
+                $selected_author = $author;
+                $selected_theme = $theme;
 
-	  	$default_provider = $backend_default_provider;
-	  	$default_theme = $backend_default_theme;
-  	} else { // Front-end
-  		$type_dir = 'frontend_themes/';
-  		// Frontend Theme ID
-  		$frontend_theme_id = $this->setting->get('setting', 'setting_frontend_theme');
-  		// Get Frontend Theme Manifest By ID
-  		$frontend_theme_manifest = json_decode($this->frontend_theme->getManifestById($frontend_theme_id), true);
+                $type = 'ThemeMarketplace';
+                $directory = 'theme_marketplace';
+            } elseif ($type == 'Plugins') {
+                $selected_author = $author;
+                $selected_theme = $theme;
 
-  		if (!empty($frontend_theme_manifest['dir']['provider'])) {
-  			$dir_provider = $frontend_theme_manifest['dir']['provider'];
-  		} else {
-  			$dir_provider = $frontend_default_provider;
-  		}
+                $type = 'Plugins';
+                $directory = 'plugins';
+            } else {
+                $builder = $this->db->table('setting');
+        
+                $builder->where('key', 'setting_marketplace_theme');
+        
+                $setting_query = $builder->get();
+        
+                if ($row = $setting_query->getRow()) {
+                    $theme = explode(':', $row->value);
 
-  		if (!empty($frontend_theme_manifest['dir']['theme'])) {
-  			$dir_theme = $frontend_theme_manifest['dir']['theme'];
-  		} else {
-  			$dir_theme = $frontend_default_theme;
-  		}
+                    $selected_author = $theme[0];
+                    $selected_theme = $theme[1];
+                } else {
+                    $selected_author = $default_author;
+                    $selected_theme = $default_theme;
+                }
 
-	  	$default_provider = $frontend_default_provider;
-	  	$default_theme = $frontend_default_theme;
-  	}
+                $directory = 'theme_marketplace';
+            }
 
-  	$selected_provider = $dir_provider;
-  	$selected_theme = $dir_theme;
+            if (is_file(ROOTPATH . $directory . '\\' . $selected_author . '\\' . $selected_theme . '\\Views\\' . $view . '.php')) {
+                return view($type . '\\' . $selected_author . '\\' . $selected_theme . '\\Views\\' . $view, $data);
+            } else {
+                return view($type . '\\' . $default_author . '\\' . $default_theme . '\\Views\\' . $view, $data);
+            }
+        }
 
-  	if (file_exists(ROOTPATH . $type_dir . $selected_provider . '/' . $selected_theme . '/Views/' . $dir . '.php')) {
-  		$route = $type . '\\' . $selected_provider . '\\' . $selected_theme . '\\' . $dir;
-  	} else {
-  		$route = $type . '\\' . $default_provider . '\\' . $default_theme . '\\' . $dir;
-  	}
+    }
 
-  	$cache = array();
-
-    return view($route, $data, $cache);
-  }
 }

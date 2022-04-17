@@ -1,0 +1,170 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery Plugin SwipeNav</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="css/jquery-swipe-nav.css" media="all" />
+	<script src="http://code.jquery.com/jquery-git2.js"></script>
+	<script type="text/javascript" src="js/jquery-swipe-nav-plugin.js"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function($){
+
+			//Google Font
+			WebFontConfig = {
+				google: { families: [ 'Raleway::latin' ] }
+			};
+			(function() {
+				var wf = document.createElement('script');
+				wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+				wf.type = 'text/javascript';
+				wf.async = 'true';
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(wf, s);
+			})();
+
+			//Page Action
+			$(document).on('click','#swipeNav li a',function(){
+				var href= $(this).attr("href");
+				switch(href){
+					case '#license':
+						$('#main').load('license.html');
+						return false;
+					break;
+					case '#src':
+						$('#main').load('src.html');
+						return false;
+					break;
+				}
+			});
+
+			//jQueryPlug-in Slide-Nav
+			$('#swipeNav').swipeNav();
+		});
+	</script>
+	<style type="text/css">
+	body{
+		font-family: 'Raleway', sans-serif;
+	}
+	#container{
+		position: relative;
+		padding: 20px;
+	}
+	#container h1{
+		color: rgba(0, 140, 152, 1);
+		font-size: 80px;
+		text-align: center;
+	}
+	#container #main{
+		display: block;
+		width: 70%;
+		margin: 70px auto 0;
+	}
+	table{
+		margin: 20px 0 40px;
+		line-height: 1.6;
+	}
+	th{
+		text-align: left;
+	}
+	td{
+		width: 200px;
+		border-bottom: solid 1px #2a2a2a;
+	}
+	section{
+		display: block;
+		margin: 0 0 30px;
+	}
+	h2{
+		margin: 0 0 30px;
+		font-size: 30px;
+	}
+	h3{
+		margin: 0 0 10px;
+	}
+	section p{
+		margin: 0 0 10px;
+	}
+	pre{
+		margin: 10px auto;
+		padding: 10px 20px;
+		background: #f8f8f8;
+		border: solid 1px #dddddd;
+	}
+	</style>
+</head>
+<body>
+	<nav id="swipeNav">
+	    <ul>
+	        <li><a href="https://github.com/Restoration/jQuery-Plugin-SwipeNav" target="_blank">Download</a></li>
+	        <li><a href="https://www.developer-ryota.com/" target="_blank">Author</a></li>
+	        <li><a href="license.html">License</a></li>
+	        <li><a href="source.html">SourceCode</a></li>
+	    </ul>
+	</nav>
+	<div id="container">
+		<img src="img/list-icon.png" alt="" width="24" height="24" id="menuBtn" />
+		<h1>jQuery Plugin SwipeNav</h1>
+		<div id="main">
+			<h2>How to use</h2>
+
+			<section>
+			<h3>HTML</h3>
+<pre><code class="html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text/javascript"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"js/jquery-swipe-nav-plugin.js"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">/script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text/css" <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"css/jquery-swipe-nav.css"</span>&gt;</span>
+</code></pre>
+			<p>Please read the source.</p>
+			</section>
+
+			<section>
+			<h3>JS</h3>
+			<pre><code>$('#swipeNav').swipeNav();</code></pre>
+			<br />
+			<p>Please add the action of the plug-in to the target element as follows.</p>
+			</section>
+
+			<section>
+			<table>
+				<thead>
+					<tr>
+						<th>Parameter</th>
+						<th>Description</th>
+						<th>Default</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>menu</td>
+						<td>Target to be set</td>
+						<td>#swipeNav</td>
+					</tr>
+					<tr>
+						<td>menuBtn</td>
+						<td>Subject to trigger</td>
+						<td>#menuBtn</td>
+					</tr>
+					<tr>
+						<td>body</td>
+						<td>The overall element</td>
+						<td>body</td>
+					</tr>
+					<tr>
+						<td>menuSpeed</td>
+						<td>Display speed</td>
+						<td>300</td>
+					</tr>
+				</tbody>
+			</table>
+
+<pre><code>$('#slideNav').swipeNav({
+	'menu' : '#differentNav',
+	'menuBtn' : '#differentNavBtn',
+	'body' : '#content',
+	'menuSpeed' : 500
+});</code></pre>
+			</section>
+
+		</div><!-- /#main -->
+	</div><!-- /#container -->
+</body>
+</html>

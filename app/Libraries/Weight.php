@@ -1,65 +1,100 @@
 <?php
 
+/**
+ * This file is part of OpenMVM.
+ *
+ * (c) OpenMVM <admin@openmvm.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Libraries;
 
-class Weight
-{
-	private $weights = array();
+class Weight {
+    private $weight_classes = array();
 
-	public function __construct()
-	{
-		// Load Database
-		$this->db = \Config\Database::connect();
-		// Get weight classes
-		$builder = $this->db->table('weight_class');
-		$builder->select('*');
-		$builder->join('weight_class_description', 'weight_class_description.weight_class_id = weight_class.weight_class_id');
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->db = \Config\Database::connect();
 
-		$query = $builder->get();
+        // Libraries
+        $this->language = new \App\Libraries\Language();
+        $this->setting = new \App\Libraries\Setting();
 
-		foreach ($query->getResult() as $result) {
-			$this->weights[$result->weight_class_id] = array(
-				'weight_class_id' => $result->weight_class_id,
-				'title' => $result->title,
-				'unit' => $result->unit,
-				'value' => $result->value,
-			);
-		}
-	}
+        // Get weight classes
+        $weight_class_builder = $this->db->table('weight_class');
 
-	public function convert($value, $from, $to) {
-		if ($from == $to) {
-			return $value;
-		}
+        $weight_class_builder->join('weight_class_description', 'weight_class_description.weight_class_id = weight_class.weight_class_id', 'left');
 
-		if (isset($this->weights[$from])) {
-			$from = $this->weights[$from]['value'];
-		} else {
-			$from = 1;
-		}
+        $weight_class_builder->where('weight_class_description.language_id', $this->language->getCurrentId());
 
-		if (isset($this->weights[$to])) {
-			$to = $this->weights[$to]['value'];
-		} else {
-			$to = 1;
-		}
+        $weight_class_builder->orderBy('weight_class_description.title', 'ASC');
 
-		return $value * ($to / $from);
-	}
+        $weight_class_query = $weight_class_builder->get();
 
-	public function format($value, $weight_class_id, $decimal_point = '.', $thousand_point = ',') {
-		if (isset($this->weights[$weight_class_id])) {
-			return number_format($value, 2, $decimal_point, $thousand_point) . $this->weights[$weight_class_id]['unit'];
-		} else {
-			return number_format($value, 2, $decimal_point, $thousand_point);
-		}
-	}
+        $weight_classes = [];
 
+        foreach ($weight_class_query->getResult() as $result) {
+            $this->weight_classes[$result->weight_class_id] = [
+                'weight_class_id' => $result->weight_class_id,
+                'title' => $result->title,
+                'unit' => $result->unit,
+                'value' => $result->value,
+            ];
+        }
+    }
+
+    /**
+     * Get unit.
+     *
+     */
 	public function getUnit($weight_class_id) {
-		if (isset($this->weights[$weight_class_id])) {
-			return $this->weights[$weight_class_id]['unit'];
+		if (isset($this->weight_classes[$weight_class_id])) {
+			return $this->weight_classes[$weight_class_id]['unit'];
 		} else {
 			return '';
 		}
 	}
+
+    /**
+     * Format.
+     *
+     */
+    public function format($number, $weight_class_id, $decimal_point = '.', $thousand_point = ',')
+    {
+		if (isset($this->weight_classes[$weight_class_id])) {
+			return number_format($number, 2, $decimal_point, $thousand_point) . $this->weight_classes[$weight_class_id]['unit'];
+		} else {
+			return number_format($number, 2, $decimal_point, $thousand_point);
+		}
+    }
+
+    /**
+     * Convert.
+     *
+     */
+    public function convert($number, $from, $to)
+    {
+		if ($from == $to) {
+			return $number;
+		}
+
+		if (isset($this->weight_classes[$from])) {
+			$from = $this->weight_classes[$from]['value'];
+		} else {
+			$from = 1;
+		}
+
+		if (isset($this->weight_classes[$to])) {
+			$to = $this->weight_classes[$to]['value'];
+		} else {
+			$to = 1;
+		}
+
+		return $number * ($to / $from);
+    }
 }

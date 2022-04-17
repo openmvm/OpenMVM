@@ -1,7 +1,7 @@
 <?php echo $header; ?>
 <section id="main" class="main container">
 	<?php echo form_open(base_url('install/public/configuration')); ?>
-	<div class="row" style="min-height: 590px;">
+	<div class="row" style="min-height: 400px;">
 		<div class="col-sm-3 bg-danger">
 			<?php echo $menu; ?>
 		</div>
@@ -11,8 +11,8 @@
 					<h4 class="float-start p-0 m-0"><?php echo lang('Text.text_openmvm', array(), $front_locale); ?></h4>
 					<h4 class="text-danger float-end p-0 m-0"><?php echo lang('Heading.heading_configuration', array(), $front_locale); ?></h4>
 				</div>
-				<div class="mb-3" style="height: 430px;">
-					<h6 class="border-bottom border-dark text-uppercase pb-2"><?php echo lang('Text.text_server_configuration', array(), $this->front_locale); ?></h6>
+				<div class="mb-3">
+					<h6 class="border-bottom border-dark text-uppercase pb-2"><?php echo lang('Text.text_server_configuration', array(), $front_locale); ?></h6>
 					<fieldset class="small">
 						<div class="row">
 							<div class="col-sm-4">
@@ -79,13 +79,13 @@
 								<div class="form-group row mb-3">
 									<label for="input-db-prefix" class="col-sm-4 control-label small"><?php echo lang('Entry.entry_db_prefix', array(), $front_locale); ?></label>
 									<div class="col-sm-8">
-										<input type="text" name="db_prefix" value="<?php echo $db_prefix; ?>" id="input-db-prefix" class="form-control form-control-sm" />
+										<input type="text" name="db_prefix" value="<?php echo $db_prefix; ?>" id="input-db-prefix" class="form-control form-control-sm" readonly="readonly" />
 									</div>
 								</div>
 							</div>
 						</div>
 					</fieldset>
-					<h6 class="border-bottom border-dark text-uppercase mt-3 pb-2"><?php echo lang('Text.text_administrator', array(), $this->front_locale); ?></h6>
+					<h6 class="border-bottom border-dark text-uppercase mt-3 pb-2"><?php echo lang('Text.text_administrator', array(), $front_locale); ?></h6>
 					<fieldset class="small">
 						<div class="row">
 							<div class="col-sm-4">
@@ -103,6 +103,8 @@
 										<div class="text-danger small"><?php echo $validation->showError('lastname'); ?></div>
 									</div>
 								</div>
+							</div>
+							<div class="col-sm-4">
 								<div class="form-group row required mb-3">
 									<label for="input-email" class="col-sm-4 control-label small"><?php echo lang('Entry.entry_email', array(), $front_locale); ?></label>
 									<div class="col-sm-8">
@@ -110,8 +112,6 @@
 										<div class="text-danger small"><?php echo $validation->showError('email'); ?></div>
 									</div>
 								</div>
-							</div>
-							<div class="col-sm-4">
 								<div class="form-group row required mb-3">
 									<label for="input-username" class="col-sm-4 control-label small"><?php echo lang('Entry.entry_username', array(), $front_locale); ?></label>
 									<div class="col-sm-8">
@@ -119,27 +119,20 @@
 										<div class="text-danger small"><?php echo $validation->showError('username'); ?></div>
 									</div>
 								</div>
+							</div>
+							<div class="col-sm-4">
 								<div class="form-group row required mb-3">
 									<label for="input-password" class="col-sm-4 control-label small"><?php echo lang('Entry.entry_password', array(), $front_locale); ?></label>
 									<div class="col-sm-8">
-										<input type="password" name="password" value="<?php echo $password; ?>" id="input-password" class="form-control form-control-sm" />
+										<input type="password" name="password" value="" id="input-password" class="form-control form-control-sm" />
 										<div class="text-danger small"><?php echo $validation->showError('password'); ?></div>
 									</div>
 								</div>
 								<div class="form-group row required mb-3">
 									<label for="input-passconf" class="col-sm-4 control-label small"><?php echo lang('Entry.entry_passconf', array(), $front_locale); ?></label>
 									<div class="col-sm-8">
-										<input type="password" name="passconf" value="<?php echo $passconf; ?>" id="input-passconf" class="form-control form-control-sm" />
+										<input type="password" name="passconf" value="" id="input-passconf" class="form-control form-control-sm" />
 										<div class="text-danger small"><?php echo $validation->showError('passconf'); ?></div>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-4">
-								<div class="form-group row required mb-3">
-									<label for="input-uri-segment" class="col-sm-4 control-label small"><?php echo lang('Entry.entry_uri_segment', array(), $front_locale); ?></label>
-									<div class="col-sm-8">
-										<input type="text" name="uri_segment" value="<?php echo $uri_segment; ?>" id="input-uri-segment" class="form-control form-control-sm" />
-										<div class="text-danger small"><?php echo $validation->showError('uri_segment'); ?></div>
 									</div>
 								</div>
 							</div>

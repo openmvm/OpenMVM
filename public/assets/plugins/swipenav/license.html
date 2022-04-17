@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title>jQuery Plugin SwipeNav</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="css/jquery-swipe-nav.css" media="all" />
+	<script src="http://code.jquery.com/jquery-git2.js"></script>
+	<script type="text/javascript" src="js/jquery-swipe-nav-plugin.js"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function($){
+
+			//Google Font
+			WebFontConfig = {
+				google: { families: [ 'Raleway::latin' ] }
+			};
+			(function() {
+				var wf = document.createElement('script');
+				wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+				wf.type = 'text/javascript';
+				wf.async = 'true';
+				var s = document.getElementsByTagName('script')[0];
+				s.parentNode.insertBefore(wf, s);
+			})();
+
+			//Page Action
+			$(document).on('click','#swipeNav li a',function(){
+				var href= $(this).attr("href");
+				switch(href){
+					case '#license':
+						$('#main').load('license.html');
+						return false;
+					break;
+					case '#src':
+						$('#main').load('src.html');
+						return false;
+					break;
+				}
+			});
+
+			//jQueryPlug-in Slide-Nav
+			$('#swipeNav').swipeNav();
+		});
+	</script>
+	<style type="text/css">
+	body{
+		font-family: 'Raleway', sans-serif;
+	}
+	#container{
+		position: relative;
+		padding: 20px;
+	}
+	#container h1{
+		color: rgba(0, 140, 152, 1);
+		font-size: 80px;
+		text-align: center;
+	}
+	#container #main{
+		display: block;
+		width: 70%;
+		margin: 70px auto 0;
+	}
+	.license-container{
+		line-height: 1.6;
+	}
+	.license-container p{
+		margin: 0 0 10px;
+	}
+	</style>
+</head>
+<body>
+	<nav id="swipeNav">
+	    <ul>
+	        <li><a href="https://github.com/Restoration/jQuery-Plugin-SwipeNav" target="_blank">Download</a></li>
+	        <li><a href="https://www.developer-ryota.com/" target="_blank">Author</a></li>
+	        <li><a href="license.html">License</a></li>
+	        <li><a href="source.html">SourceCode</a></li>
+	    </ul>
+	</nav>
+	<div id="container">
+		<img src="img/list-icon.png" alt="" width="24" height="24" id="menuBtn" />
+		<h1>jQuery Plugin SwipeNav</h1>
+		<div id="main">
+			<section class="license-container">
+			<h2>The MIT License (MIT)</h2>
+			<p>Copyright (c) 2018 Ryota Yamamoto</p>
+
+			<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:<br />
+			<br />
+			The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.<br />
+			<br />
+			THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+			</section>
+
+		</div><!-- /#main -->
+	</div><!-- /#container -->
+</body>
+</html>
+
+

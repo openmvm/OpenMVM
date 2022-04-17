@@ -1,0 +1,92 @@
+/* General */
+body {
+    background-color: #f6e9e8;
+}
+a {
+    color: #f7462e;
+    text-decoration: underline;
+}
+a:hover {
+    color: #bc3d2c;
+}
+/* Header */
+.header .top-menu {
+    color: #6c757d;
+    height: 48px;
+    padding: 5px 0px;
+}
+.header .top-menu a.toggle {
+    margin-right: 10px;
+    font-size: 24px;
+    color: #6c757d;
+}
+.header .top-menu h3 {
+    color: #f7462e;
+}
+/* Column Left */
+.column-left {
+    background-color: #f7462e;
+    color: #6c757d;
+    padding: 4px 15px;
+    overflow-y: scroll;
+}
+.column-left .administrator-profile {
+    background-color: #f6e9e8;
+    color: #f7462e;
+    padding: 4px 4px;
+}
+.column-left ul li {
+    padding: 6px 0px;
+}
+.column-left ul li a {
+    color: #f6e9e8;
+    text-decoration: none;
+}
+.column-left ul li a:hover {
+    color: #ffffff;
+}
+.column-left ul li a i.float-end {
+    margin-top: 4px;
+}
+.column-left ul li li {
+    padding-left: 15px;
+}
+/* Page Heading */
+.heading .card-title {
+    color: #212121;
+}
+/* Page List */
+.list .card-header h5 {
+    padding: 0 0;
+    margin: 0 0;
+}
+/* Breadcrumb */
+.breadcrumb a {
+    text-decoration: none;
+}
+/* Label */
+.required > label:after {
+    content:" *";
+    color: red;
+}
+/* Footer */
+.footer {
+    min-height: 100px;
+}
+/* Autocomplete */
+.ui-autocomplete {
+    background-color: #ffffff;
+}
+.ui-autocomplete a {
+    display: block;
+    text-decoration: none;
+}
+.ui-menu-item .ui-menu-item-wrapper.ui-state-active {
+    border: 1px solid #000000;
+    background: #212529 !important;
+    color: #f8f9fa !important;
+} 
+/* Image Manager */
+.image-manager-thumbnail {
+    height: 100px;
+}

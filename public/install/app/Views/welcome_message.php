@@ -163,7 +163,7 @@
 			color: rgba(200, 200, 200, 1);
 			padding: .25rem 1.75rem;
 		}
-		@media (max-width: 559px) {
+		@media (max-width: 629px) {
 			header ul {
 				padding: 0;
 			}
@@ -212,7 +212,7 @@
 			</li>
 			<li class="menu-item hidden"><a href="https://forum.codeigniter.com/" target="_blank">Community</a></li>
 			<li class="menu-item hidden"><a
-					href="https://github.com/codeigniter4/CodeIgniter4/blob/master/CONTRIBUTING.md" target="_blank">Contribute</a>
+					href="https://github.com/codeigniter4/CodeIgniter4/blob/develop/CONTRIBUTING.md" target="_blank">Contribute</a>
 			</li>
 		</ul>
 	</div>

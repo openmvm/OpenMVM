@@ -6,7 +6,7 @@ use CodeIgniter\Config\AutoloadConfig;
 
 /**
  * -------------------------------------------------------------------
- * AUTO-LOADER
+ * AUTOLOADER CONFIGURATION
  * -------------------------------------------------------------------
  *
  * This file defines the namespaces and class maps so the Autoloader
@@ -17,74 +17,79 @@ use CodeIgniter\Config\AutoloadConfig;
  */
 class Autoload extends AutoloadConfig
 {
-	/**
-	 * -------------------------------------------------------------------
-	 * Namespaces
-	 * -------------------------------------------------------------------
-	 * This maps the locations of any namespaces in your application to
-	 * their location on the file system. These are used by the autoloader
-	 * to locate files the first time they have been instantiated.
-	 *
-	 * The '/app' and '/system' directories are already mapped for you.
-	 * you may change the name of the 'App' namespace if you wish,
-	 * but this should be done prior to creating any namespaced classes,
-	 * else you will need to modify all of those classes for this to work.
-	 *
-	 * Prototype:
-	 *
-	 *   $psr4 = [
-	 *       'CodeIgniter' => SYSTEMPATH,
-	 *       'App'	       => APPPATH
-	 *   ];
-	 *
-	 * @var array<string, string>
-	 */
-	public $psr4 = [
-		APP_NAMESPACE => APPPATH, // For custom app namespace
-		'Config'      => APPPATH . 'Config',
-		// Modules
-		'Modules\OpenMVM\Administrator' => ROOTPATH . 'modules/OpenMVM/Administrator',
-		'Modules\OpenMVM\Common' => ROOTPATH . 'modules/OpenMVM/Common',
-		'Modules\OpenMVM\Filemanager' => ROOTPATH . 'modules/OpenMVM/Filemanager',
-		'Modules\OpenMVM\FrontendTheme' => ROOTPATH . 'modules/OpenMVM/FrontendTheme',
-		'Modules\OpenMVM\HelpDesk' => ROOTPATH . 'modules/OpenMVM/HelpDesk',
-		'Modules\OpenMVM\Localisation' => ROOTPATH . 'modules/OpenMVM/Localisation',
-		'Modules\OpenMVM\Order' => ROOTPATH . 'modules/OpenMVM/Order',
-		'Modules\OpenMVM\PaymentMethod' => ROOTPATH . 'modules/OpenMVM/PaymentMethod',
-		'Modules\OpenMVM\ShippingMethod' => ROOTPATH . 'modules/OpenMVM/ShippingMethod',
-		'Modules\OpenMVM\Setting' => ROOTPATH . 'modules/OpenMVM/Setting',
-		'Modules\OpenMVM\Store' => ROOTPATH . 'modules/OpenMVM/Store',
-		'Modules\OpenMVM\Theme' => ROOTPATH . 'modules/OpenMVM/Theme',
-		'Modules\OpenMVM\User' => ROOTPATH . 'modules/OpenMVM/User',
-		// Third Party Modules
-		'Modules\Example\FrontendTheme' => ROOTPATH . 'modules/Example/FrontendTheme',
-		// BackEnd Themes
-		'BackendThemes\OpenMVM\ThemeDefault' => ROOTPATH . 'backend_themes/OpenMVM/ThemeDefault',
-		// Third Party BackEnd Themes
-		'BackendThemes\Example\Example' => ROOTPATH . 'backend_themes/Example/Example',
-		// FrontEnd Themes
-		'FrontendThemes\OpenMVM\ThemeDefault' => ROOTPATH . 'frontend_themes/OpenMVM/ThemeDefault',
-		// Third Party FrontEnd Themes
-		'FrontendThemes\Example\Example' => ROOTPATH . 'frontend_themes/Example/Example',
-	];
+    /**
+     * -------------------------------------------------------------------
+     * Namespaces
+     * -------------------------------------------------------------------
+     * This maps the locations of any namespaces in your application to
+     * their location on the file system. These are used by the autoloader
+     * to locate files the first time they have been instantiated.
+     *
+     * The '/app' and '/system' directories are already mapped for you.
+     * you may change the name of the 'App' namespace if you wish,
+     * but this should be done prior to creating any namespaced classes,
+     * else you will need to modify all of those classes for this to work.
+     *
+     * Prototype:
+     *```
+     *   $psr4 = [
+     *       'CodeIgniter' => SYSTEMPATH,
+     *       'App'	       => APPPATH
+     *   ];
+     *```
+     *
+     * @var array<string, string>
+     */
+    public $psr4 = [
+        APP_NAMESPACE => APPPATH, // For custom app namespace
+        'Config'      => APPPATH . 'Config',
+        // Plugins
+        'Plugins\com_bukausahaonline\Widget_Blank' => ROOTPATH . 'plugins/com_bukausahaonline/Widget_Blank',
+        // Theme Admin
+        'ThemeAdmin\com_openmvm\Basic' => ROOTPATH . 'theme_admin/com_openmvm/Basic',
+        'ThemeAdmin\com_bukausahaonline\Test' => ROOTPATH . 'theme_admin/com_bukausahaonline/Test',
+        // Theme Marketplace
+        'ThemeMarketplace\com_openmvm\Basic' => ROOTPATH . 'theme_marketplace/com_openmvm/Basic',
+        'ThemeMarketplace\com_bukausahaonline\Test' => ROOTPATH . 'theme_marketplace/com_bukausahaonline/Test',
+    ];
 
-	/**
-	 * -------------------------------------------------------------------
-	 * Class Map
-	 * -------------------------------------------------------------------
-	 * The class map provides a map of class names and their exact
-	 * location on the drive. Classes loaded in this manner will have
-	 * slightly faster performance because they will not have to be
-	 * searched for within one or more directories as they would if they
-	 * were being autoloaded through a namespace.
-	 *
-	 * Prototype:
-	 *
-	 *   $classmap = [
-	 *       'MyClass'   => '/path/to/class/file.php'
-	 *   ];
-	 *
-	 * @var array<string, string>
-	 */
-	public $classmap = [];
+    /**
+     * -------------------------------------------------------------------
+     * Class Map
+     * -------------------------------------------------------------------
+     * The class map provides a map of class names and their exact
+     * location on the drive. Classes loaded in this manner will have
+     * slightly faster performance because they will not have to be
+     * searched for within one or more directories as they would if they
+     * were being autoloaded through a namespace.
+     *
+     * Prototype:
+     *```
+     *   $classmap = [
+     *       'MyClass'   => '/path/to/class/file.php'
+     *   ];
+     *```
+     *
+     * @var array<string, string>
+     */
+    public $classmap = [];
+
+    /**
+     * -------------------------------------------------------------------
+     * Files
+     * -------------------------------------------------------------------
+     * The files array provides a list of paths to __non-class__ files
+     * that will be autoloaded. This can be useful for bootstrap operations
+     * or for loading functions.
+     *
+     * Prototype:
+     * ```
+     *	  $files = [
+     *	 	   '/path/to/my/file.php',
+     *    ];
+     * ```
+     *
+     * @var array<int, string>
+     */
+    public $files = [];
 }

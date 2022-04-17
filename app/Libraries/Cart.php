@@ -1,185 +1,332 @@
 <?php
 
+/**
+ * This file is part of OpenMVM.
+ *
+ * (c) OpenMVM <admin@openmvm.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Libraries;
 
-class Cart
-{
-	private $sessionId;
-	private $userId;
+use CodeIgniter\I18n\Time;
 
-	public function __construct()
-	{
-		// Load Libraries
-		$this->session = session();
-		$this->user = new \App\Libraries\User;
-		$this->auth = new \App\Libraries\Auth;
-		$this->language = new \App\Libraries\Language;
-		// Load Helper
-		helper(['date']);
-		// Load Database
-		$this->db = db_connect();
+class Cart {
+	private $key;
 
-		// Set cart session ID if not already set
-		if ($this->session->has('cart_session_id')) {
-			$this->sessionId = $this->session->get('cart_session_id');
-		} else {
-			$this->sessionId = $this->session->set('cart_session_id', $this->auth->sessionId());
-		}
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->db = \Config\Database::connect();
+        $this->session = \Config\Services::session();
 
-		// Define user ID
-  	if ($this->user->isLogged()) {
-  		$this->userId = $this->user->getId();
-  	} else {
-  		$this->userId = 0;
-  	}
+        // Libraries
+        $this->setting = new \App\Libraries\Setting();
+        $this->currency = new \App\Libraries\Currency();
+        $this->weight = new \App\Libraries\Weight();
 
-		// Get all expired carts without user ID and remove it
-		$builder_cart = $this->db->table('cart');
-		$builder_cart->where('user_id', 0);
-		$builder_cart->where('date_added <', 'DATE_SUB(NOW(), INTERVAL 1 HOUR)');
-		$builder_cart->delete();
+        // Remove all expired cart items with no customer_id
+        $now =  new Time('-1 hour');
 
-		// If user is logged
-		if ($this->user->isLogged()) {
-			// Update cart session ID
-			$builder_cart = $this->db->table('cart');
-			$builder_cart->set('cart_session_id', $this->sessionId());
-			$builder_cart->where('user_id', $this->user->getId());
-			$builder_cart->update();
+        $builder = $this->db->table('cart');
 
-			// If user is logged, update the cart that has user ID = 0 and the user cart session ID
-			$builder_cart = $this->db->table('cart');
-			$builder_cart->where('user_id', 0);
-			$builder_cart->where('cart_session_id', $this->sessionId());
-			$query   = $builder_cart->get();
-			foreach ($query->getResult() as $row)
-			{
-				// Add cart
-				$this->add($row->store_id, $row->product_id, $row->quantity, $row->option);
-				// Remove cart
-				$builder_cart = $this->db->table('cart');
-				$builder_cart->where('cart_id', $row->cart_id);
-				$builder_cart->delete();
-			}
-		}
+        $builder->where('customer_id', 0);
+        $builder->where('date_added <', $now);
+        $builder->delete();
 
-	}
+        // Shopping cart key
+        if ($this->session->has('shopping_cart_key')) {
+            $this->key = $this->session->get('shopping_cart_key');
+        } else {
+            $shopping_cart_key = bin2hex(random_bytes(20));
 
-  public function getProducts($store_id)
-  {
-  	$product_data = array();
+            $this->session->set('shopping_cart_key', $shopping_cart_key);
 
-  	// Get user carts
-		$builder_cart = $this->db->table('cart');
-		$builder_cart->where('user_id', $this->userId);
-		$builder_cart->where('store_id', $store_id);
-		$builder_cart->where('cart_session_id', $this->sessionId());
+            $this->key = $this->session->get('shopping_cart_key');
+        }
 
-		$query_cart = $builder_cart->get();
-  
-		foreach ($query_cart->getResult() as $result_cart)
-		{
-			// Get product
-			$builder_product = $this->db->table('product');
-			$builder_product->select('*');
-			$builder_product->join('product_description', 'product_description.product_id = product.product_id');
-			$builder_product->where('product.store_id', $store_id);
-			$builder_product->where('product.product_id', $result_cart->product_id);
+        // If customer is logged in
+        if ($this->session->has('customer_session_token')) {
+            // Get customer id
+            $customer_id = $this->session->get('customer_id_' . $this->session->get('customer_session_token'));
 
-			$query_product = $builder_product->get();
-			
-			$row_product = $query_product->getRow();
+            // Get customer seller id
+            $seller_builder = $this->db->table('seller');
+        
+            $seller_builder->where('customer_id', $customer_id);
 
-			if ($row_product && ($result_cart->quantity > 0)) {
-				$product_data[] = array(
-					'product_id' => $row_product->product_id,
-					'store_id' => $row_product->store_id,
-					'name' => $row_product->name,
-					'image' => $row_product->image,
-					'price' => $row_product->price,
-					'quantity' => $result_cart->quantity,
-				);
-			} else {
-				$this->remove($result_cart->cart_id);
-			}
-		}
+            $seller_query = $seller_builder->get();
 
-		return $product_data;
-	}
+            if ($seller = $seller_query->getRow()) {
+                $seller_id = $seller->seller_id;
+            } else {
+                $seller_id = 0;
+            }
 
-  public function getStores()
-  {
-  	// Get cart stores
-  	$store_data = array();
+            // Update customer cart key
+            $cart_update_builder = $this->db->table('cart');
 
-		$builder_cart = $this->db->table('cart');
-		$builder_cart->select('store_id')->distinct();
-		$builder_cart->where('user_id', $this->userId);
-		$builder_cart->where('cart_session_id', $this->sessionId());
-		$query_cart = $builder_cart->get();
-  
-		foreach ($query_cart->getResult() as $result_cart)
-		{
-			// Get store
-			$builder_store = $this->db->table('store');
-			$builder_store->select('*');
-			$builder_store->join('store_description', 'store_description.store_id = store.store_id');
-			$builder_store->where('store.store_id', $result_cart->store_id);
+            $cart_update_builder->set('key', $this->key);
 
-			$query_store = $builder_store->get();
-			
-			$row_store = $query_store->getRow();
+            $cart_update_builder->where('customer_id', $customer_id);
 
-			if ($row_store) {
-				$store_data[] = array(
-					'store_id' => $row_store->store_id,
-					'name' => $row_store->name,
-					'logo' => $row_store->logo,
-				);
-			}
-		}
+            $cart_update_builder->update();
 
-		return $store_data;
-	}
+            // Get carts that have customer id = 0 by key
+            $cart_builder = $this->db->table('cart');
+        
+            $cart_builder->where('customer_id', 0);
+            $cart_builder->where('key', $this->key);
 
-  public function add($store_id, $product_id, $quantity = 1, $option = array())
-  {
-		$builder_cart = $this->db->table('cart');
-		$builder_cart->where('user_id', $this->userId);
-		$builder_cart->where('cart_session_id', $this->sessionId());
-		$builder_cart->where('product_id', $product_id);
+            $cart_query = $cart_builder->get();
     
-		$total = $builder_cart->countAllResults();
+            foreach ($cart_query->getResult() as $result) {
+                if ($result->seller_id !== $seller_id) {
+                    // Add cart to customer
+                    $this->add($customer_id, $result->seller_id, $result->product_id, $result->quantity);
+                }
 
-		if (!$total) {
-			// Insert cart
-			$builder_cart = $this->db->table('cart');
-			$builder_cart->set('user_id', $this->userId);
-			$builder_cart->set('store_id', $store_id);
-			$builder_cart->set('cart_session_id', $this->sessionId());
-			$builder_cart->set('product_id', $product_id);
-			$builder_cart->set('option', json_encode($option));
-			$builder_cart->set('quantity', $quantity);
-			$builder_cart->set('date_added', date("Y-m-d H:i:s",now()));
-			$builder_cart->insert();
-		} else {
-			// Update cart
-			$builder_cart = $this->db->table('cart');
-			$builder_cart->where('user_id', $this->userId);
-			$builder_cart->where('store_id', $store_id);
-			$builder_cart->where('cart_session_id', $this->sessionId());
-			$builder_cart->where('product_id', $product_id);
-			$builder_cart->where('option', json_encode($option));
-			$builder_cart->set('quantity', '(quantity + ' . $quantity . ')', false);
-			$builder_cart->update();
-		}
-  }
+                // Delete cart
+                $cart_delete_builder = $this->db->table('cart');
 
-	public function remove($cart_id) {
-		return true;
-	}
+                $cart_delete_builder->where('cart_id', $result->cart_id);
+                $cart_delete_builder->delete();
+            }
+        }
+    }
 
-	public function sessionId() {
-		return $this->sessionId;
-	}
+    /**
+     * Cart remove.
+     *
+     */
+    public function remove($customer_id, $seller_id, $key)
+    {
+        $cart_builder = $this->db->table('cart');
+
+        $cart_builder->where('customer_id', $customer_id);
+        $cart_builder->where('seller_id', $seller_id);
+        $cart_builder->where('key', $key);
+        $cart_builder->delete();
+    }
+
+    /**
+     * Cart add.
+     *
+     */
+    public function add($customer_id, $seller_id, $product_id, $quantity, $options = [])
+    {
+        $cart_builder = $this->db->table('cart');
+        
+        $cart_builder->where('customer_id', $customer_id);
+        $cart_builder->where('seller_id', $seller_id);
+        $cart_builder->where('product_id', $product_id);
+        $cart_builder->where('key', $this->getKey());
+
+        $cart_query = $cart_builder->get();
+
+        if ($row = $cart_query->getRow()) {
+            // Update cart
+            $cart_update_builder = $this->db->table('cart');
+
+            $cart_update_builder->set('quantity', 'quantity + ' . $quantity, false);
+
+            $cart_update_builder->where('customer_id', $customer_id);
+            $cart_update_builder->where('seller_id', $seller_id);
+            $cart_update_builder->where('product_id', $product_id);
+            $cart_update_builder->where('key', $this->getKey());
+
+            $cart_update_builder->update();
+        } else {
+            // Insert cart
+            $cart_insert_builder = $this->db->table('cart');
+
+            $cart_insert_data = [
+                'customer_id' => $customer_id,
+                'seller_id' => $seller_id,
+                'key' => $this->getKey(),
+                'product_id' => $product_id,
+                'quantity' => $quantity,
+                'date_added' => new Time('now'),
+            ];
+            
+            $cart_insert_builder->insert($cart_insert_data);
+        }
+    }
+
+    /**
+     * Cart get weight.
+     *
+     */
+    public function getWeight($seller_id)
+    {
+        $weight = 0;
+
+        $products = $this->getProducts($seller_id);
+
+        foreach ($products as $product) {
+            $weight += $this->weight->convert($product['weight'], $product['weight_class_id'], $this->setting->get('setting_marketplace_weight_class_id')) * $product['quantity'];
+        }
+
+        return $weight;
+    }
+
+    /**
+     * Cart get sub total.
+     *
+     */
+    public function getSubTotal($seller_id)
+    {
+        $sub_total = 0;
+
+        $products = $this->getProducts($seller_id);
+
+        foreach ($products as $product) {
+            $sub_total += $product['total'];
+        }
+
+        return $sub_total;
+    }
+
+    /**
+     * Cart get total products.
+     *
+     */
+    public function getTotalProducts($seller_id)
+    {
+        $total_products = 0;
+
+        $products = $this->getProducts($seller_id);
+
+        foreach ($products as $product) {
+            $total_products += $product['quantity'];
+        }
+
+        return $total_products;
+    }
+
+    /**
+     * Cart get products.
+     *
+     */
+    public function getProducts($seller_id)
+    {
+        $products = [];
+
+        if ($this->session->has('customer_session_token')) {
+            // Get customer id
+            $customer_id = $this->session->get('customer_id_' . $this->session->get('customer_session_token'));
+        } else {
+            // Get customer id
+            $customer_id = 0;
+        }
+
+        // Get carts
+        $cart_builder = $this->db->table('cart');
+    
+        $cart_builder->where('customer_id', $customer_id);
+        $cart_builder->where('seller_id', $seller_id);
+        $cart_builder->where('key', $this->getKey());
+
+        $cart_query = $cart_builder->get();
+
+        foreach ($cart_query->getResult() as $result) {
+            // Get product info
+            $product_builder = $this->db->table('product p');
+
+            $product_builder->distinct("*, pd.name AS name");
+            
+            $product_builder->join('product_description pd', 'p.product_id = pd.product_id', 'left');
+    
+            $product_builder->where('p.product_id', $result->product_id);
+            $product_builder->where('pd.language_id', $this->setting->get('setting_marketplace_language_id'));
+            $product_builder->where('p.status', 1);
+    
+            $product_query = $product_builder->get();
+            
+            if ($product = $product_query->getRow()) {
+                $products[] = [
+                    'cart_id' => $result->cart_id,
+                    'customer_id' => $result->customer_id,
+                    'seller_id' => $result->seller_id,
+                    'product_id' => $result->product_id,
+                    'name' => $product->name,
+                    'description' => $product->description,
+                    'slug' => $product->slug,
+                    'price' => $product->price,
+                    'weight' => $product->weight,
+                    'weight_class_id' => $product->weight_class_id,
+                    'main_image' => $product->main_image,
+                    'quantity' => $result->quantity,
+                    'total' => $product->price * $result->quantity,
+                    'date_added' => $result->date_added,
+                ];
+            }
+        }
+
+        return $products;
+    }
+
+    /**
+     * Cart get sellers.
+     *
+     */
+    public function getSellers()
+    {
+        $sellers = [];
+
+        if ($this->session->has('customer_session_token')) {
+            // Get customer id
+            $customer_id = $this->session->get('customer_id_' . $this->session->get('customer_session_token'));
+        } else {
+            // Get customer id
+            $customer_id = 0;
+        }
+
+        // Get cart sellers
+        $cart_builder = $this->db->table('cart');
+
+        $cart_builder->where('customer_id', $customer_id);
+        $cart_builder->where('key', $this->getKey());
+
+        $cart_builder->groupBy('seller_id');
+
+        $cart_query = $cart_builder->get();
+
+        foreach ($cart_query->getResult() as $result) {
+            // Get seller info
+            $seller_builder = $this->db->table('seller');
+
+            $seller_builder->where('seller_id', $result->seller_id);
+            $seller_builder->where('status', 1);
+
+            $seller_query = $seller_builder->get();
+
+            if ($seller = $seller_query->getRow()) {
+                $sellers[] = [
+                    'seller_id' => $seller->seller_id,
+                    'customer_id' => $seller->customer_id,
+                    'store_name' => $seller->store_name,
+                    'store_description' => $seller->store_description,
+                    'date_added' => $seller->date_added,
+                    'date_modified' => $seller->date_modified,
+                    'status' => $seller->status,
+                ];
+            }
+        }
+
+        return $sellers;
+    }
+
+    /**
+     * Cart get key.
+     *
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
 }

@@ -1,47 +1,65 @@
 <?php
 
+/**
+ * This file is part of OpenMVM.
+ *
+ * (c) OpenMVM <admin@openmvm.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Libraries;
 
-class Currency
-{
-	private $currencies = array();
+class Currency {
+    private $currencies = array();
 
-	public function __construct()
-	{
-		// Load Libraries
-		$this->session = session();
-		$this->setting = new \App\Libraries\Setting;
-		// Load Database
-		$this->db = db_connect();
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->db = \Config\Database::connect();
+        $this->session = \Config\Services::session();
 
-		// Get Currencies
-		$builder = $this->db->table('currency');
+        // Libraries
+        $this->language = new \App\Libraries\Language();
+        $this->setting = new \App\Libraries\Setting();
 
-		$query   = $builder->get();
+        // Get currencies
+        $currency_builder = $this->db->table('currency');
 
-		foreach ($query->getResult() as $row)
-		{
-		  $this->currencies[$row->code] = array(
-	      'currency_id'   => $row->currency_id,
-	      'title'         => $row->title,
-	      'code'          => $row->code,
-	      'symbol_left'   => $row->symbol_left,
-	      'symbol_right'  => $row->symbol_right,
-	      'decimal_place' => $row->decimal_place,
-	      'value'         => $row->value,
-	      'status'        => $row->status,
-	      'date_modified' => $row->date_modified,
-		  );
-		}
-	}
+        $currency_query = $currency_builder->get();
 
-	public function format($number, $currency, $value = '', $format = true) {
-		$symbol_left = $this->currencies[$currency]['symbol_left'];
-		$symbol_right = $this->currencies[$currency]['symbol_right'];
-		$decimal_place = $this->currencies[$currency]['decimal_place'];
+        $currencies = [];
+
+        foreach ($currency_query->getResult() as $result) {
+            $this->currencies[$result->code] = [
+                'currency_id' => $result->currency_id,
+                'name' => $result->name,
+                'code' => $result->code,
+                'symbol_left' => $result->symbol_left,
+                'symbol_right' => $result->symbol_right,
+                'decimal_place' => $result->decimal_place,
+                'value' => $result->value,
+                'sort_order' => $result->sort_order,
+                'status' => $result->status,
+            ];
+        }
+    }
+
+    /**
+     * Format.
+     *
+     */
+    public function format($number, $code, $value = '', $format = true)
+    {
+		$symbol_left = $this->currencies[$code]['symbol_left'];
+		$symbol_right = $this->currencies[$code]['symbol_right'];
+		$decimal_place = $this->currencies[$code]['decimal_place'];
 
 		if (!$value) {
-			$value = $this->currencies[$currency]['value'];
+			$value = $this->currencies[$code]['value'];
 		}
 
 		$amount = $value ? (float)$number * $value : (float)$number;
@@ -58,16 +76,21 @@ class Currency
 			$string .= $symbol_left;
 		}
 
-		$string .= number_format($amount, (int)$decimal_place, '.', ',');
+		$string .= number_format($amount, (int)$decimal_place, lang('Common.decimal_point', [], $this->language->getCurrentCode()), lang('Common.thousand_point', [], $this->language->getCurrentCode()));
 
 		if ($symbol_right) {
 			$string .= $symbol_right;
 		}
 
 		return $string;
-	}
+    }
 
-	public function convert($value, $from, $to) {
+    /**
+     * Convert.
+     *
+     */
+    public function convert($number, $from, $to)
+    {
 		if (isset($this->currencies[$from])) {
 			$from = $this->currencies[$from]['value'];
 		} else {
@@ -80,88 +103,222 @@ class Currency
 			$to = 1;
 		}
 
-		return $value * ($to / $from);
-	}
+		return $number * ($to / $from);
+    }
 
-  public function getBackEndValue()
-  {
-  	$currency = $this->getCurrencyByCode($this->getBackEndCode());
+    /**
+     * Get info.
+     *
+     */
+    public function getInfo($code)
+    {
+        $builder = $this->db->table('currency');
+        
+        $builder->where('code', $code);
 
-  	$value = $currency['value'];
+        $currency_query = $builder->get();
 
-    return $value;
-  }
+        $currency = [];
 
-  public function getBackEndId()
-  {
-  	$currency = $this->getCurrencyByCode($this->getBackEndCode());
+        if ($row = $currency_query->getRow()) {
+            $currency = [
+                'currency_id' => $row->currency_id,
+                'name' => $row->name,
+                'code' => $row->code,
+                'symbol_left' => $row->symbol_left,
+                'symbol_right' => $row->symbol_right,
+                'decimal_place' => $row->decimal_place,
+                'value' => $row->value,
+                'sort_order' => $row->sort_order,
+                'status' => $row->status,
+            ];
+        }
 
-  	$currency_id = $currency['currency_id'];
+        return $currency;
+    }
 
-    return $currency_id;
-  }
+    /**
+     * Get current value.
+     *
+     */
+    public function getCurrentValue()
+    {
+        if ($this->session->has('marketplace_currency_id')) {
+            $value = $this->getValue($this->session->get('marketplace_currency_id'));
+        } elseif (!empty($this->setting->get('setting_marketplace_currency_id'))) {
+            $value = $this->getValue($this->setting->get('setting_marketplace_currency_id'));
+        } else {
+            $value = 1;
+        }
 
-  public function getBackEndCode()
-  {
-  	if ($this->session->has('backend_currency')) {
-	  	$code = $this->session->get('backend_currency');
-  	} else {
-	  	$code = $this->setting->get('setting', 'setting_backend_currency');
-  	}
+        return $value;
+    }
 
-    return $code;
-  }
+    /**
+     * Get current code.
+     *
+     */
+    public function getCurrentCode()
+    {
+        if ($this->session->has('marketplace_currency_id')) {
+            $code = $this->getCode($this->session->get('marketplace_currency_id'));
+        } elseif (!empty($this->setting->get('setting_marketplace_currency_id'))) {
+            $code = $this->getCode($this->setting->get('setting_marketplace_currency_id'));
+        } else {
+            $code = 'USD';
+        }
 
-  public function getFrontEndValue()
-  {
-  	$currency = $this->getCurrencyByCode($this->getFrontEndCode());
+        return $code;
+    }
 
-  	$value = $currency['value'];
+    /**
+     * Get current id.
+     *
+     */
+    public function getCurrentId()
+    {
+        if ($this->session->has('marketplace_currency_id')) {
+            $currency_id = $this->session->get('marketplace_currency_id');
+        } elseif (!empty($this->setting->get('setting_marketplace_currency_id'))) {
+            $currency_id = $this->setting->get('setting_marketplace_currency_id');
+        } else {
+            $currency_id = 1;
+        }
 
-    return $value;
-  }
+        return $currency_id;
+    }
 
-  public function getFrontEndId()
-  {
-  	$currency = $this->getCurrencyByCode($this->getFrontEndCode());
+    /**
+     * Get default value.
+     *
+     */
+    public function getDefaultValue()
+    {
+        if (!empty($this->setting->get('setting_marketplace_currency_id'))) {
+            $value = $this->getValue($this->setting->get('setting_marketplace_currency_id'));
+        } else {
+            $value = 1;
+        }
 
-  	$currency_id = $currency['currency_id'];
+        return $value;
+    }
 
-    return $currency_id;
-  }
+    /**
+     * Get default code.
+     *
+     */
+    public function getDefaultCode()
+    {
+        if (!empty($this->setting->get('setting_marketplace_currency_id'))) {
+            $code = $this->getCode($this->setting->get('setting_marketplace_currency_id'));
+        } else {
+            $code = 'USD';
+        }
 
-  public function getFrontEndCode()
-  {
-  	if ($this->session->has('frontend_currency')) {
-	  	$code = $this->session->get('frontend_currency');
-  	} else {
-	  	$code = $this->setting->get('setting', 'setting_frontend_currency');
-  	}
+        return $code;
+    }
 
-    return $code;
-  }
+    /**
+     * Get default id.
+     *
+     */
+    public function getDefaultId()
+    {
+        if (!empty($this->setting->get('setting_marketplace_currency_id'))) {
+            $currency_id = $this->setting->get('setting_marketplace_currency_id');
+        } else {
+            $currency_id = 1;
+        }
 
-  public function getCurrencyByCode($code)
-  {
-		$builder_currency = $this->db->table('currency');
-		$builder_currency->where('code', $code);
+        return $currency_id;
+    }
 
-		$query_currency = $builder_currency->get();
-		
-		$row_currency = $query_currency->getRow();
+    /**
+     * Get value.
+     *
+     */
+    public function getValue($currency_id)
+    {
+        $builder = $this->db->table('currency');
+        
+        $builder->where('currency_id', $currency_id);
 
-  	$currency_data = array(
-  		'currency_id' => $row_currency->currency_id,
-  		'title' => $row_currency->title,
-  		'code' => $row_currency->code,
-  		'symbol_left' => $row_currency->symbol_left,
-  		'symbol_right' => $row_currency->symbol_right,
-  		'decimal_place' => $row_currency->decimal_place,
-  		'value' => $row_currency->value,
-  		'status' => $row_currency->status,
-  		'date_modified' => $row_currency->date_modified,
-  	);
+        $currency_query = $builder->get();
 
-    return $currency_data;
-  }
+        $value = false;
+
+        if ($row = $currency_query->getRow()) {
+            $value = $row->value;
+        }
+
+        return $value;
+    }
+
+    /**
+     * Get code.
+     *
+     */
+    public function getCode($currency_id)
+    {
+        $builder = $this->db->table('currency');
+        
+        $builder->where('currency_id', $currency_id);
+
+        $currency_query = $builder->get();
+
+        $code = false;
+
+        if ($row = $currency_query->getRow()) {
+            $code = $row->code;
+        }
+
+        return $code;
+    }
+
+    /**
+     * Get id.
+     *
+     */
+    public function getId($code)
+    {
+        $builder = $this->db->table('currency');
+        
+        $builder->where('code', $code);
+
+        $currency_query = $builder->get();
+
+        $currency_id = false;
+
+        if ($row = $currency_query->getRow()) {
+            $currency_id = $row->currency_id;
+        }
+
+        return $currency_id;
+    }
+
+    /**
+     * Refresh.
+     *
+     */
+    public function refresh($default)
+    {
+        if (!empty($default)) {
+            $base_currency = $default;
+        } else {
+            $base_currency = 'USD';
+        }
+
+        // latest rates
+        $url = "https://api.currencyapi.com/v2/latest?apikey=69d26dd0-6d1e-11ec-ac55-2914da9bf7b7&base_currency=" . $base_currency;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        $response = curl_exec($ch);
+        curl_close($ch);
+            
+        return json_decode($response, true);
+    }
 }

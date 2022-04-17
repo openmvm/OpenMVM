@@ -1,0 +1,1 @@
+<div style="height: <?php echo $height; ?>px; background-color: <?php echo $background_color; ?>;">&nbsp;</div>

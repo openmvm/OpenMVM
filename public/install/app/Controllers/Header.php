@@ -4,31 +4,32 @@ class Header extends \App\Controllers\BaseController
 {
 	public function __construct()
 	{
-		// Load Libraries
+		// Libraries
 		$this->session = \Config\Services::session();
-		// Load Models
 	}
 
 	public function index($header_parameter)
 	{
 		$header_data = array();
+		
+        $header_data['base'] = base_url();
 
-    // Message
-    if ($this->session->get('error') !== null) {
+	    // Message
+	    if ($this->session->get('error') !== null) {
 			$header_data['error'] = $this->session->get('error');
 
 			$this->session->remove('error');
-    } else {
+	    } else {
 			$header_data['error'] = '';
-    }
+	    }
 
-    if ($this->session->get('success') !== null) {
+	    if ($this->session->get('success') !== null) {
 			$header_data['success'] = $this->session->get('success');
 
 			$this->session->remove('success');
-    } else {
+	    } else {
 			$header_data['success'] = '';
-    }
+	    }
 
 		if (!empty($header_parameter['title'])) {
 			$header_data['title'] = $header_parameter['title'];

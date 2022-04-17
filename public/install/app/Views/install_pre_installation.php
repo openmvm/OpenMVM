@@ -1,7 +1,7 @@
 <?php echo $header; ?>
 <section id="main" class="main container">
 	<?php echo form_open(base_url('install/public/pre_installation')); ?>
-	<div class="row" style="min-height: 550px;">
+	<div class="row" style="min-height: 400px;">
 		<div class="col-sm-3 bg-danger">
 			<?php echo $menu; ?>
 		</div>
@@ -11,7 +11,7 @@
 					<h4 class="float-start p-0 m-0"><?php echo lang('Text.text_openmvm', array(), $front_locale); ?></h4>
 					<h4 class="text-danger float-end p-0 m-0"><?php echo lang('Heading.heading_pre_installation', array(), $front_locale); ?></h4>
 				</div>
-				<div class="mb-3" style="height: 390px; overflow-y: scroll;">
+				<div class="mb-3" style="height: 270px; overflow-y: scroll;">
 					<h6 class="border-bottom border-dark text-uppercase pe-2 pb-2"><?php echo lang('Text.text_required_settings', array(), $front_locale); ?></h6>
 					<div class="mb-3">
 						<div class="table-responsive">

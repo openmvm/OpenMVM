@@ -68,6 +68,23 @@ writable/uploads/*
 
 writable/debugbar/*
 
+public/install/writable/cache/*
+!public/install/writable/cache/index.html
+
+public/install/writable/logs/*
+!public/install/writable/logs/index.html
+
+public/install/writable/session/*
+!public/install/writable/session/index.html
+
+public/install/writable/downloads/*
+!public/install/writable/downloads/index.html
+
+public/install/writable/uploads/*
+!public/install/writable/uploads/index.html
+
+public/install/writable/debugbar/*
+
 php_errors.log
 
 #-------------------------
@@ -130,6 +147,16 @@ nb-configuration.xml
 /results/
 /phpunit*.xml
 /.phpunit.*.cache
+
+#-------------------------
+# OpenMVM specific directories
+#-------------------------
+
+public/assets/images/marketplace/customers/*
+!public/assets/images/marketplace/customers/index.html
+
+public/assets/images/cache/*
+!public/assets/images/cache/index.html
 
 #-------------------------
 # Just My Personal Directory

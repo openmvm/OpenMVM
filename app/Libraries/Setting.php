@@ -1,29 +1,47 @@
 <?php
 
+/**
+ * This file is part of OpenMVM.
+ *
+ * (c) OpenMVM <admin@openmvm.com>
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
+ */
+
 namespace App\Libraries;
 
-class Setting
-{
-	public function __construct()
-	{
-		// Load Database
-		$this->db = \Config\Database::connect();
-	}
+class Setting {
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->db = \Config\Database::connect();
+    }
 
-  public function get($code, $key)
-  {
-		$setting_data = array();
+    /**
+     * Get setting value.
+     *
+     */
+    public function get($key)
+    {
+        $builder = $this->db->table('setting');
+        
+        $builder->where('key', $key);
 
-		$query = $this->db->query("SELECT * FROM " . $this->db->getPrefix() . "setting WHERE `code` = '" . $this->db->escapeString($code) . "' AND `key` = '" . $this->db->escapeString($key) . "'");
+        $setting_query = $builder->get();
 
-		$result = $query->getRowArray();
+        if ($row = $setting_query->getRow()) {
+            if ($row->serialized) {
+                $value = json_decode($row->value, true);
+            } else {
+                $value = $row->value;
+            }
 
-		if (!$result['serialized']) {
-			$setting_data = $result['value'];
-		} else {
-			$setting_data = json_decode($result['value'], true);
-		}
-
-		return $setting_data;
-  }
+            return $value;
+        } else {
+            return null;
+        }
+    }
 }
