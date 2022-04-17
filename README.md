@@ -20,26 +20,49 @@
 
 <h3>Current Features</h3>
 
+<h5>Marketplace (front-end) features:</h5>
 <ul>
-	<li>Application installer</li>
-	<li>User (buyer and seller) can create an account</li>
-	<li>Seller can open a store and add products</li>
-	<li>Buyer can purchase products and view order details</li>
-	<li>Multi-language</li>
-	<li>Multi-currency</li>
-	<li>Payment Methods</li>
-	<li>Shipping Methods</li>
-	<li>Theming system on both front-end and back-end. **Yes, no more boring back-end!!** You can create your own OpenMVM back-end theme</li>
-	<li>Plugins</li>
-	<li>Widgets</li>
-	<li>Widget Layouts</li>
-	<li>Image Manager</li>
-	<li>Geo zones</li>
-	<li>Order Totals</li>
-	<li>Error Logs</li>
-	<li>Language Editor</li>
+	<li>Customer registration, login, edit profile, address book, view orders</li>
+	<li>Seller registration, edit profile, add / edit product, view orders, shipping method configurations</li>
+	<li>Multi language</li>
+	<li>Multi currency</li>
+	<li>Browse / search products</li>
+	<li>One-page checkout</li>
+	<li>Single store / Multi store checkout</li>
+	<li>Payment methods (Bank Transfer, Cash on Delivery)</li>
+	<li>Shipping methods (Flat Rate, Weight Based Shipping, Zone Based Shipping)</li>
+	<li>Order Totals (Sub Total, Shipping, Total)</li>
+</ul>
+
+<h5>Administrator (back-end) features:</h5>
+<ul>
+	<li>Add / edit / delete Categories</li>
+	<li>Add / edit / delete Administrator groups</li>
+	<li>Add / edit / delete Administrators</li>
+	<li>Add / edit / delete Customer groups</li>
+	<li>Add / edit / delete Customers</li>
+	<li>Add / edit / delete Administrator area themes</li>
+	<li>Add / edit / delete Marketplace themes</li>
+	<li>Add / edit / delete Marketplace widgets</li>
+	<li>Add / edit / delete Marketplace layouts</li>
+	<li>Add / edit / delete Languages</li>
+	<li>Add / edit / delete Currencies</li>
+	<li>Add / edit / delete Countries</li>
+	<li>Add / edit / delete Zones</li>
+	<li>Add / edit / delete Geo zones</li>
+	<li>Add / edit / delete Weight classes</li>
+	<li>Add / edit / delete Length classes</li>
+	<li>Add / edit / delete Order statuses</li>
+	<li>Add / edit / delete Payment methods</li>
+	<li>Add / edit / delete Shipping methods</li>
+	<li>Add / edit / delete Order totals</li>
+	<li>Add / edit / delete Plugins</li>
+	<li>Image manager</li>
+	<li>Add / edit / delete Pages</li>
+	<li>Settings</li>
+	<li>Error logs</li>
+	<li>Language editor</li>
 	<li>Demo manager</li>
-	<li>Pages</li>
 </ul>
 
 <h3>Demo Data</h3>
