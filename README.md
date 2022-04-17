@@ -41,3 +41,9 @@
 	<li>Demo manager</li>
 	<li>Pages</li>
 </ul>
+
+<h3>Demo Data</h3>
+
+<p>You can download demo data here: https://github.com/openmvm/OpenMVM-Demo-Data</p>
+
+<p>Install it from the Demo Manager page (login to administrator area -> Developer -> Demo Manager)</p>
