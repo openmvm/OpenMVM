@@ -248,6 +248,22 @@ class Column_Left extends \App\Controllers\BaseController
         $component = [];
 
         $component[] = [
+            'id' => 'menu-component-analytics',
+            'icon' => 'fas fa-dot-circle fa-fw',
+            'text' => lang('Menu.analytics'),
+            'href' => $this->url->administratorLink('admin/component/component/analytics'),
+            'children' => [],
+        ];
+
+        $component[] = [
+            'id' => 'menu-component-order-total',
+            'icon' => 'fas fa-dot-circle fa-fw',
+            'text' => lang('Menu.order_totals'),
+            'href' => $this->url->administratorLink('admin/component/component/order_total'),
+            'children' => [],
+        ];
+
+        $component[] = [
             'id' => 'menu-component-payment-method',
             'icon' => 'fas fa-dot-circle fa-fw',
             'text' => lang('Menu.payment_methods'),
@@ -260,14 +276,6 @@ class Column_Left extends \App\Controllers\BaseController
             'icon' => 'fas fa-dot-circle fa-fw',
             'text' => lang('Menu.shipping_methods'),
             'href' => $this->url->administratorLink('admin/component/component/shipping_method'),
-            'children' => [],
-        ];
-
-        $component[] = [
-            'id' => 'menu-component-order-total',
-            'icon' => 'fas fa-dot-circle fa-fw',
-            'text' => lang('Menu.order_totals'),
-            'href' => $this->url->administratorLink('admin/component/component/order_total'),
             'children' => [],
         ];
 
