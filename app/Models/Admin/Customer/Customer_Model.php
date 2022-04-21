@@ -3,6 +3,7 @@
 namespace App\Models\Admin\Customer;
 
 use CodeIgniter\Model;
+use CodeIgniter\I18n\Time;
 
 class Customer_Model extends Model
 {
@@ -32,6 +33,8 @@ class Customer_Model extends Model
             'email' => $data['email'],
             'password' => password_hash($data['password'], PASSWORD_DEFAULT),
             'status' => $data['status'],
+            'date_added' => new Time('now'),
+            'date_modified' => new Time('now'),
         ];
         
         $customer_insert_builder->insert($customer_insert_data);
@@ -74,6 +77,7 @@ class Customer_Model extends Model
             'telephone' => $data['telephone'],
             'email' => $data['email'],
             'status' => $data['status'],
+            'date_modified' => new Time('now'),
         ];
 
         if (!empty($data['password'])) {
