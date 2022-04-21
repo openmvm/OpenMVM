@@ -6,18 +6,6 @@
 
 <p>It still lacks a lot of basic features. It is not ready for production yet.</p>
 
-<h3>How to Install:</h3>
-
-<p>OpenMVM is not ready for production. Use a local PHP development server such as: XAMPP, WampServer, EasyPHP, etc.</p>
-
-<ol>
-	<li>Rename env file to .env in both 'root' and 'public/install/'. Also, you may need to change the RewriteBase value in both 'public/.htaccess' and 'public/install/public/.htaccess'.</li>
-	<li>Open the installer page by visiting your app URL</li>
-	<li>Follow the installation steps</li>
-	<li>Login to the Administrator area by visiting the admin url defined in the .env file: [app.baseURL]/admin. Use your administrator username and password</li>
-	<li>Do not forget to delete the install folder 'public/install'</li>
-</ol>
-
 <h3>Current Features</h3>
 
 <h4>Marketplace (front-end) features:</h4>
@@ -31,7 +19,8 @@
 	<li>Single store / Multi store checkout</li>
 	<li>Payment methods (Bank Transfer, Cash on Delivery)</li>
 	<li>Shipping methods (Flat Rate, Weight Based Shipping, Zone Based Shipping)</li>
-	<li>Order Totals (Sub Total, Shipping, Total)</li>
+	<li>Order totals (Sub Total, Shipping, Total)</li>
+	<li>Reset password</li>
 </ul>
 
 <h4>Administrator (back-end) features:</h4>
@@ -64,6 +53,18 @@
 	<li>Language editor</li>
 	<li>Demo manager</li>
 </ul>
+
+<h3>How to Install:</h3>
+
+<p>OpenMVM is not ready for production. Use a local PHP development server such as: XAMPP, WampServer, EasyPHP, etc.</p>
+
+<ol>
+	<li>Rename env file to .env in both 'root' and 'public/install/'. Also, you may need to change the RewriteBase value in both 'public/.htaccess' and 'public/install/public/.htaccess'.</li>
+	<li>Open the installer page by visiting your app URL</li>
+	<li>Follow the installation steps</li>
+	<li>Login to the Administrator area by visiting the admin url defined in the .env file: [app.baseURL]/admin. Use your administrator username and password</li>
+	<li>Do not forget to delete the install folder 'public/install'</li>
+</ol>
 
 <h3>Demo Data</h3>
 
