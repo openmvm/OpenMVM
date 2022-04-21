@@ -79,6 +79,7 @@ class Login extends \App\Controllers\BaseController
             $data['email'] = '';
         }
 
+        $data['reset_password'] = $this->url->customerLink('marketplace/account/reset_password');
         $data['register'] = $this->url->customerLink('marketplace/account/register');
 
         // Header
