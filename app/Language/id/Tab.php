@@ -4,6 +4,7 @@
 return [
     'address' => 'Address',
     'appearance' => 'Appearance',
+    'category' => 'Category',
     'column' => 'Column',
     'data' => 'Data',
     'general' => 'General',
@@ -12,5 +13,5 @@ return [
     'options' => 'Options',
     'rate' => 'Rate',
     'widget_layouts' => 'Widget Layouts',
-    'category' => 'Category',
+    'mail' => 'Mail',
 ];

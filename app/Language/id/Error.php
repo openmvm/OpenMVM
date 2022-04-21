@@ -21,4 +21,5 @@ return [
     'shipping_address_not_found' => 'Shipping address not found! Please add an address.',
     'shipping_method_not_available' => 'No available shipping methods!',
     'try_again' => 'Please try again!',
+    'reset_password_confirm' => 'Reset password failed! Please contact us for assistance.',
 ];

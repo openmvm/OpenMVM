@@ -26,7 +26,9 @@ return [
     'customer_group_add' => 'An customer group has been added successfully!',
     'customer_group_delete' => 'One or more customer groups have been deleted successfully!',
     'customer_group_edit' => 'An customer group has been edited successfully!',
+    'demo_data_install' => 'Demo data has been installed successfully!',
     'file_create' => 'A file has been created successfully!',
+    'reset_password' => 'We have sent an instruction on how to reset your password to your email address. Please check your email.',
     'geo_zone_add' => 'A geo zone has been added successfully!',
     'geo_zone_delete' => 'One or more geo zones have been deleted successfully!',
     'geo_zone_edit' => 'A geo zone has been edited successfully!',
@@ -65,5 +67,4 @@ return [
     'zone_add' => 'A zone has been added successfully!',
     'zone_delete' => 'One or more zones have been deleted successfully!',
     'zone_edit' => 'A zone has been edited successfully!',
-    'demo_data_install' => 'Demo data has been installed successfully!',
 ];

@@ -25,11 +25,12 @@ return [
     'register' => 'Daftar',
     'remove' => 'Hapus',
     'save' => 'Simpan',
+    'search' => 'Search',
     'shopping_cart' => 'Keranjang Belanja',
     'show' => 'Show',
     'tracking_number_add' => 'Add a Tracking Number',
     'uninstall' => 'Lepas',
     'update' => 'Perbarui',
     'upload' => 'Unggah',
-    'search' => 'Search',
+    'reset_password' => 'Reset Password',
 ];

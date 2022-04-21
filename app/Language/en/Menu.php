@@ -15,6 +15,7 @@ return [
     'customer_groups' => 'Customer Groups',
     'customers' => 'Customers',
     'dashboard' => 'Dashboard',
+    'demo_manager' => 'Demo Manager',
     'developer' => 'Developer',
     'error_logs' => 'Error Logs',
     'file_manager' => 'File Manager',
@@ -39,5 +40,5 @@ return [
     'weight_classes' => 'Weight Classes',
     'widgets' => 'Widgets',
     'zones' => 'Zones',
-    'demo_manager' => 'Demo Manager',
+    'analytics' => 'Analytics',
 ];

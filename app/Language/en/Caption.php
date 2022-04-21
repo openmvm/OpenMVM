@@ -17,11 +17,12 @@ return [
     'list_of_length_classes' => 'List of length classes',
     'list_of_order_statuses' => 'List of order statuses',
     'list_of_order_totals' => 'List of order totals',
+    'list_of_pages' => 'List of pages',
     'list_of_payment_methods' => 'List of payment methods',
     'list_of_products' => 'List of products',
     'list_of_shipping_methods' => 'List of shipping methods',
     'list_of_weight_classes' => 'List of weight classes',
     'list_of_widgets' => 'List of widgets',
     'list_of_zones' => 'List of zones',
-    'list_of_pages' => 'List of pages',
+    'list_of_analytics' => 'List of analytics',
 ];

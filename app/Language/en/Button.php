@@ -25,11 +25,12 @@ return [
     'register' => 'Register',
     'remove' => 'Remove',
     'save' => 'Save',
+    'search' => 'Search',
     'shopping_cart' => 'Shopping Cart',
     'show' => 'Show',
     'tracking_number_add' => 'Add a Tracking Number',
     'uninstall' => 'Uninstall',
     'update' => 'Update',
     'upload' => 'Upload',
-    'search' => 'Search',
+    'reset_password' => 'Reset Password',
 ];
