@@ -13,6 +13,9 @@
 <base href="<?php echo $base; ?>" />
 <meta name="description" content="" />
 <meta name="keywords" content="" />
+<?php if (!empty($favicon)) { ?>
+<link rel="shortcut icon" href="<?php echo $favicon; ?>"/>
+<?php } ?>
 <script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-3.6.0.min.js" type="text/javascript"></script>
 <link href="<?php echo $base; ?>/assets/plugins/bootstrap-5.1.3-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
 <script src="<?php echo $base; ?>/assets/plugins/bootstrap-5.1.3-dist/js/bootstrap.min.js" type="text/javascript"></script>

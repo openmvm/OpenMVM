@@ -55,6 +55,12 @@ class Login extends \App\Controllers\BaseController
         $data['base'] = base_url();
         $data['title'] = lang('Heading.login');
 
+        if (!empty($this->setting->get('setting_favicon')) && is_file(ROOTPATH . 'public/assets/images/' . $this->setting->get('setting_favicon'))) {
+            $data['favicon'] = $this->image->resize($this->setting->get('setting_favicon'), 100, 100, true);
+        } else {
+            $data['favicon'] = '';
+        }
+
         $data['validation'] = $this->validation;
 
         return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Administrator\login', $data);

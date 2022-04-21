@@ -22,6 +22,12 @@ class Logout extends \App\Controllers\BaseController
 
         $data['copyrights'] = sprintf(lang('Text.copyright'), $year, $this->setting->get('setting_copyright_name'));
 
+        if (!empty($this->setting->get('setting_favicon')) && is_file(ROOTPATH . 'public/assets/images/' . $this->setting->get('setting_favicon'))) {
+            $data['favicon'] = $this->image->resize($this->setting->get('setting_favicon'), 100, 100, true);
+        } else {
+            $data['favicon'] = '';
+        }
+
         return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Administrator\logout', $data);
     }
 }
