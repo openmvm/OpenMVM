@@ -34,6 +34,11 @@
 		<?php echo $style; ?>
 	<?php } ?>
 <?php } ?>
+<?php if ($analytics) { ?>
+    <?php foreach ($analytics as $analytic) { ?>
+        <?php echo $analytic; ?>
+    <?php } ?>
+<?php } ?>
 </head>
 <body class="bg-light">
 <div id="header" class="header">

@@ -24,6 +24,9 @@ class Header extends \App\Controllers\BaseController
         $this->marketplace_cart = new \App\Controllers\Marketplace\Common\Cart();
         $this->marketplace_offcanvas_left = new \App\Controllers\Marketplace\Common\Offcanvas_Left();
         $this->marketplace_offcanvas_right = new \App\Controllers\Marketplace\Common\Offcanvas_Right();
+        // Models
+        $this->model_component_component = new \App\Models\Marketplace\Component\Component_Model();
+
     }
 
     public function index($header_params = array())
@@ -136,6 +139,19 @@ class Header extends \App\Controllers\BaseController
         }
 
         $data['marketplace_name'] = $this->setting->get('marketplace_name');
+
+        // Get component analytics
+        $analytics = [];
+
+        $installed_analytics = $this->model_component_component->getInstalledComponents('analytics');
+
+        foreach ($installed_analytics as $installed_analytics) {
+            $namespace = '\App\Controllers\Marketplace\Component\Analytics\\' . $installed_analytics['value'];
+
+            $this->analytics = new $namespace;
+
+            $data['analytics'][] = $this->analytics->index();
+        }
 
         // Search
         $search_params = array();
