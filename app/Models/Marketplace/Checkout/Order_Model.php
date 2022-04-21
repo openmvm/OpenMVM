@@ -117,7 +117,7 @@ class Order_Model extends Model
                 $order_shipping_insert_builder->insert($order_shipping_insert_data);
             }
         }
-file_put_contents(ROOTPATH . '/writable/logs/openmvm_log.txt', json_encode($data['totals']) . "\n\n");
+
         // Order totals
         if ($data['totals']) {
             foreach ($data['totals'] as $key => $value) {
