@@ -54,6 +54,7 @@ class BaseController extends Controller
         $this->cart = new \App\Libraries\Cart();
         $this->currency = new \App\Libraries\Currency();
         $this->customer = new \App\Libraries\Customer();
+        $this->email = \Config\Services::email();
         $this->file = new \App\Libraries\File();
         $this->language = new \App\Libraries\Language();
         $this->image = new \App\Libraries\Image();

@@ -43,6 +43,12 @@ class Setting extends \App\Controllers\BaseController
                 $this->validation->setRule('setting_marketplace_meta_title_' . $language['language_id'], lang('Entry.meta_title') . ' ' . lang('Text.in') . ' ' . $language['name'], 'required');
             }
 
+            $this->validation->setRule('setting_smtp_host', lang('Entry.smtp_host'), 'required');
+            $this->validation->setRule('setting_smtp_username', lang('Entry.smtp_username'), 'required');
+            $this->validation->setRule('setting_smtp_password', lang('Entry.smtp_password'), 'required');
+            $this->validation->setRule('setting_smtp_port', lang('Entry.smtp_port'), 'required');
+            $this->validation->setRule('setting_smtp_timeout', lang('Entry.smtp_timeout'), 'required');
+
             if ($this->validation->withRequest($this->request)->run()) {
                 // Query
                 $query = $this->model_system_setting->editSetting('setting', $this->request->getPost());
@@ -74,6 +80,36 @@ class Setting extends \App\Controllers\BaseController
                     } else {
                         $data['error_setting_marketplace_meta_title_' . $language['language_id']] = '';
                     }
+                }
+
+                if ($this->validation->hasError('setting_smtp_host')) {
+                    $data['error_setting_smtp_host'] = $this->validation->getError('setting_smtp_host');
+                } else {
+                    $data['error_setting_smtp_host'] = '';
+                }
+
+                if ($this->validation->hasError('setting_smtp_username')) {
+                    $data['error_setting_smtp_username'] = $this->validation->getError('setting_smtp_username');
+                } else {
+                    $data['error_setting_smtp_username'] = '';
+                }
+
+                if ($this->validation->hasError('setting_smtp_password')) {
+                    $data['error_setting_smtp_password'] = $this->validation->getError('setting_smtp_password');
+                } else {
+                    $data['error_setting_smtp_password'] = '';
+                }
+
+                if ($this->validation->hasError('setting_smtp_port')) {
+                    $data['error_setting_smtp_port'] = $this->validation->getError('setting_smtp_port');
+                } else {
+                    $data['error_setting_smtp_port'] = '';
+                }
+
+                if ($this->validation->hasError('setting_smtp_timeout')) {
+                    $data['error_setting_smtp_timeout'] = $this->validation->getError('setting_smtp_timeout');
+                } else {
+                    $data['error_setting_smtp_timeout'] = '';
                 }
             }
         }
@@ -344,6 +380,53 @@ class Setting extends \App\Controllers\BaseController
             $data['setting_marketplace_theme'] = $this->request->getPost('setting_marketplace_theme');
         } else {
             $data['setting_marketplace_theme'] = $this->model_system_setting->getSettingValue('setting_marketplace_theme');
+        }
+
+        // Mail
+        $data['mail_protocols'] = ['smtp'];
+
+        if ($this->request->getPost('setting_mail_protocol')) {
+            $data['setting_mail_protocol'] = $this->request->getPost('setting_mail_protocol');
+        } else {
+            $data['setting_mail_protocol'] = $this->model_system_setting->getSettingValue('setting_mail_protocol');
+        }
+
+        $data['smtp_encryptions'] = ['none', 'ssl', 'tls'];
+
+        if ($this->request->getPost('setting_smtp_encryption')) {
+            $data['setting_smtp_encryption'] = $this->request->getPost('setting_smtp_encryption');
+        } else {
+            $data['setting_smtp_encryption'] = $this->model_system_setting->getSettingValue('setting_smtp_encryption');
+        }
+
+        if ($this->request->getPost('setting_smtp_host')) {
+            $data['setting_smtp_host'] = $this->request->getPost('setting_smtp_host');
+        } else {
+            $data['setting_smtp_host'] = $this->model_system_setting->getSettingValue('setting_smtp_host');
+        }
+
+        if ($this->request->getPost('setting_smtp_username')) {
+            $data['setting_smtp_username'] = $this->request->getPost('setting_smtp_username');
+        } else {
+            $data['setting_smtp_username'] = $this->model_system_setting->getSettingValue('setting_smtp_username');
+        }
+
+        if ($this->request->getPost('setting_smtp_password')) {
+            $data['setting_smtp_password'] = $this->request->getPost('setting_smtp_password');
+        } else {
+            $data['setting_smtp_password'] = $this->model_system_setting->getSettingValue('setting_smtp_password');
+        }
+
+        if ($this->request->getPost('setting_smtp_port')) {
+            $data['setting_smtp_port'] = $this->request->getPost('setting_smtp_port');
+        } else {
+            $data['setting_smtp_port'] = $this->model_system_setting->getSettingValue('setting_smtp_port');
+        }
+
+        if ($this->request->getPost('setting_smtp_timeout')) {
+            $data['setting_smtp_timeout'] = $this->request->getPost('setting_smtp_timeout');
+        } else {
+            $data['setting_smtp_timeout'] = $this->model_system_setting->getSettingValue('setting_smtp_timeout');
         }
 
         $data['placeholder'] = $this->image->resize('no_image.png', 100, 100, true);

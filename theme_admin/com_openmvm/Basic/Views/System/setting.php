@@ -51,6 +51,9 @@
                     <li class="nav-item" role="presentation">
                     <button class="nav-link" id="appearance-tab" data-bs-toggle="tab" data-bs-target="#appearance" type="button" role="tab" aria-controls="appearance" aria-selected="false"><?php echo lang('Tab.appearance'); ?></button>
                     </li>
+                    <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="mail-tab" data-bs-toggle="tab" data-bs-target="#mail" type="button" role="tab" aria-controls="mail" aria-selected="false"><?php echo lang('Tab.mail'); ?></button>
+                    </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
@@ -311,6 +314,59 @@
                                 </select>
                             </div>
                         </fieldset>
+                    </div>
+                    <div class="tab-pane fade" id="mail" role="tabpanel" aria-labelledby="mail-tab">
+                        <fieldset>
+                            <div class="mb-3">
+                                <label for="input-mail-protocol" class="form-label"><?php echo lang('Entry.mail_protocol'); ?></label>
+                                <select name="setting_mail_protocol" id="input-mail-protocol" class="form-control">
+                                    <?php foreach ($mail_protocols as $mail_protocol) { ?>
+                                        <?php if ($mail_protocol == $setting_mail_protocol) { ?>
+                                        <option value="<?php echo $mail_protocol; ?>" selected="selected"><?php echo $mail_protocol; ?></option>
+                                        <?php } else { ?>
+                                        <option value="<?php echo $mail_protocol; ?>"><?php echo $mail_protocol; ?></option>
+                                        <?php } ?>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-smtp-encryption" class="form-label"><?php echo lang('Entry.smtp_encryption'); ?></label>
+                                <select name="setting_smtp_encryption" id="input-smtp-encryption" class="form-control">
+                                    <?php foreach ($smtp_encryptions as $smtp_encryption) { ?>
+                                        <?php if ($smtp_encryption == $setting_smtp_encryption) { ?>
+                                        <option value="<?php echo $smtp_encryption; ?>" selected="selected"><?php echo $smtp_encryption; ?></option>
+                                        <?php } else { ?>
+                                        <option value="<?php echo $smtp_encryption; ?>"><?php echo $smtp_encryption; ?></option>
+                                        <?php } ?>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-smtp-host" class="form-label"><?php echo lang('Entry.smtp_host'); ?></label>
+                                <input type="text" name="setting_smtp_host" value="<?php echo $setting_smtp_host; ?>" id="input-smtp-host" class="form-control" placeholder="<?php echo lang('Entry.smtp_host'); ?>">
+                                <?php if (!empty($error_setting_smtp_host)) { ?><div class="text-danger small"><?php echo $error_setting_smtp_host; ?></div><?php } ?>
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-smtp-username" class="form-label"><?php echo lang('Entry.smtp_username'); ?></label>
+                                <input type="text" name="setting_smtp_username" value="<?php echo $setting_smtp_username; ?>" id="input-smtp-username" class="form-control" placeholder="<?php echo lang('Entry.smtp_username'); ?>">
+                                <?php if (!empty($error_setting_smtp_username)) { ?><div class="text-danger small"><?php echo $error_setting_smtp_username; ?></div><?php } ?>
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-smtp-password" class="form-label"><?php echo lang('Entry.smtp_password'); ?></label>
+                                <input type="text" name="setting_smtp_password" value="<?php echo $setting_smtp_password; ?>" id="input-smtp-password" class="form-control" placeholder="<?php echo lang('Entry.smtp_password'); ?>">
+                                <?php if (!empty($error_setting_smtp_password)) { ?><div class="text-danger small"><?php echo $error_setting_smtp_password; ?></div><?php } ?>
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-smtp-port" class="form-label"><?php echo lang('Entry.smtp_port'); ?></label>
+                                <input type="number" name="setting_smtp_port" value="<?php echo $setting_smtp_port; ?>" id="input-smtp-port" class="form-control" placeholder="<?php echo lang('Entry.smtp_port'); ?>">
+                                <?php if (!empty($error_setting_smtp_port)) { ?><div class="text-danger small"><?php echo $error_setting_smtp_port; ?></div><?php } ?>
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-smtp-timeout" class="form-label"><?php echo lang('Entry.smtp_timeout'); ?></label>
+                                <input type="number" name="setting_smtp_timeout" value="<?php echo $setting_smtp_timeout; ?>" id="input-smtp-timeout" class="form-control" placeholder="<?php echo lang('Entry.smtp_timeout'); ?>">
+                                <?php if (!empty($error_setting_smtp_timeout)) { ?><div class="text-danger small"><?php echo $error_setting_smtp_timeout; ?></div><?php } ?>
+                            </div>
+                         </fieldset>
                     </div>
                 </div>
             </div>
