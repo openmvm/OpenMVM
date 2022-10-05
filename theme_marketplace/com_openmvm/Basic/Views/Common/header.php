@@ -16,25 +16,28 @@
 <?php if (!empty($favicon)) { ?>
 <link rel="shortcut icon" href="<?php echo $favicon; ?>"/>
 <?php } ?>
-<script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-3.6.0.min.js" type="text/javascript"></script>
-<script src="<?php echo $base; ?>/assets/plugins/bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+<script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-3.6.1.min.js" type="text/javascript"></script>
+<script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-ui-1.13.2/jquery-ui.min.js" type="text/javascript"></script>
+<script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-serializejson/jquery.serializejson.min.js" type="text/javascript"></script>
+<script src="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.0-dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
 <script src="<?php echo $base; ?>/assets/plugins/swipenav/js/jquery-swipe-nav-plugin.js" type="text/javascript"></script>
 <script src="<?php echo $base; ?>/assets/marketplace/theme/com_openmvm/basic/js/basic.js" type="text/javascript"></script>
-<?php if ($scripts) { ?>
+<?php if (!empty($scripts)) { ?>
 	<?php foreach ($scripts as $script) { ?>
 		<?php echo $script; ?>
 	<?php } ?>
 <?php } ?>
-<link href="<?php echo $base; ?>/assets/plugins/bootstrap-5.1.3-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
-<link href="<?php echo $base; ?>/assets/plugins/fontawesome-free-5.15.4-web/css/all.min.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo $base; ?>/assets/plugins/jquery/jquery-ui-1.13.2/jquery-ui.min.css" rel="stylesheet" media="screen" />
+<link href="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.0-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="<?php echo $base; ?>/assets/plugins/fontawesome-free-6.2.0-web/css/all.min.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo $base; ?>/assets/plugins/swipenav/css/jquery-swipe-nav.css" rel="stylesheet" media="screen" />
 <link href="<?php echo $base; ?>/assets/marketplace/theme/com_openmvm/basic/css/basic.css?v=1.0.1" rel="stylesheet" type="text/css" />
-<?php if ($styles) { ?>
+<?php if (!empty($styles)) { ?>
 	<?php foreach ($styles as $style) { ?>
 		<?php echo $style; ?>
 	<?php } ?>
 <?php } ?>
-<?php if ($analytics) { ?>
+<?php if (!empty($analytics)) { ?>
     <?php foreach ($analytics as $analytic) { ?>
         <?php echo $analytic; ?>
     <?php } ?>
@@ -68,6 +71,7 @@
                             <li><a class="dropdown-item small" href="<?php echo $seller_dashboard; ?>"><?php echo lang('Text.seller_dashboard'); ?></a></li>
                             <li><a class="dropdown-item small" href="<?php echo $seller_edit; ?>"><?php echo lang('Text.seller_edit'); ?></a></li>
                             <li><a class="dropdown-item small" href="<?php echo $seller_product; ?>"><?php echo lang('Text.products'); ?></a></li>
+                            <li><a class="dropdown-item small" href="<?php echo $seller_option; ?>"><?php echo lang('Text.options'); ?></a></li>
                             <li><a class="dropdown-item small" href="<?php echo $seller_order; ?>"><?php echo lang('Text.orders'); ?></a></li>
                             <li><a class="dropdown-item small" href="<?php echo $seller_geo_zone; ?>"><?php echo lang('Text.geo_zones'); ?></a></li>
                             <li><a class="dropdown-item small" href="<?php echo $seller_shipping_method; ?>"><?php echo lang('Text.shipping_methods'); ?></a></li>
@@ -110,7 +114,7 @@
 <?php } ?>
 <?php if ($error_warning) { ?>
 <div class="container">
-    <div class="alert alert-warning alert-dismissible border-0 shadow fade show" role="alert">
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <?php echo $error_warning; ?>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
@@ -118,7 +122,7 @@
 <?php } ?>
 <?php if ($success) { ?>
 <div class="container">
-    <div class="alert alert-success alert-dismissible border-0 shadow fade show" role="alert">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
         <?php echo $success; ?>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>

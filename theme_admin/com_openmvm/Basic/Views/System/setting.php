@@ -19,21 +19,16 @@
                 <h3 class="card-title"><i class="fas fa-wrench fa-fw"></i> <?php echo $heading_title; ?></h3>
             </div>
         </div>
-        <?php if ($error_warning) { ?>
-        <div class="alert alert-warning alert-dismissible border-0 shadow fade show" role="alert">
-            <?php echo $error_warning; ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <?php } ?>
-        <?php if ($success) { ?>
-        <div class="alert alert-success alert-dismissible border-0 shadow fade show" role="alert">
-            <?php echo $success; ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <?php } ?>
-        <?php echo form_open($action, ['id' => 'form-language']); ?>
+        <?php echo form_open($action, ['id' => 'form-setting']); ?>
         <div class="card shadow list">
-            <div class="card-header clearfix"><h5 class="pt-1 float-start"><i class="fas fa-edit fa-fw"></i> <?php echo lang('Heading.edit'); ?></h5> <div class="float-end"><button type="submit" class="btn btn-outline-primary btn-sm"><i class="fas fa-save fa-fw"></i></button> <a href="<?php echo $cancel; ?>" class="btn btn-outline-secondary btn-sm"><i class="fas fa-long-arrow-alt-left fa-fw"></i></a></div></div>
+            <div class="card-header clearfix">
+                <h5 class="pt-1 float-start"><i class="fas fa-edit fa-fw"></i> <?php echo lang('Heading.edit'); ?></h5>
+                <div class="float-end">
+                    <button type="button" class="btn btn-sm btn-outline-success button-action" data-form="form-setting" data-form-action="<?php echo $action; ?>" data-icon="fa-save" data-toast-heading-title-success="<?php echo lang('Text.success', [], 'en'); ?>" data-toast-heading-title-error="<?php echo lang('Text.error', [], 'en'); ?>" data-toast-heading-icon-success="fa-check-circle" data-toast-heading-icon-error="fa-triangle-exclamation" data-redirection="false"><i class="fas fa-save fa-fw"></i><span class="d-none d-md-inline-block ms-1"><?php echo lang('Button.save_and_continue', [], 'en'); ?></span></button>
+                    <button type="button" class="btn btn-sm btn-success button-action" data-form="form-setting" data-form-action="<?php echo $action; ?>" data-icon="fa-save" data-toast-heading-title-success="<?php echo lang('Text.success', [], 'en'); ?>" data-toast-heading-title-error="<?php echo lang('Text.error', [], 'en'); ?>" data-toast-heading-icon-success="fa-check-circle" data-toast-heading-icon-error="fa-triangle-exclamation" data-redirection="true"><i class="fas fa-save fa-fw"></i><span class="d-none d-md-inline-block ms-1"><?php echo lang('Button.save', [], 'en'); ?></span></button>
+                    <a href="<?php echo $cancel; ?>" class="btn btn-outline-secondary btn-sm"><i class="fas fa-long-arrow-alt-left fa-fw"></i></a>
+                </div>
+            </div>
             <div class="card-body">
                 <ul class="nav nav-tabs mb-3" id="tab-setting" role="tablist">
                     <li class="nav-item" role="presentation">
@@ -61,7 +56,6 @@
                             <div class="mb-3 required">
                                 <label for="input-marketplace-name" class="form-label"><?php echo lang('Entry.marketplace_name'); ?></label>
                                 <input type="text" name="setting_marketplace_name" value="<?php echo $setting_marketplace_name; ?>" id="input-marketplace-name" class="form-control" placeholder="<?php echo lang('Entry.marketplace_name'); ?>">
-                                <?php if (!empty($error_setting_marketplace_name)) { ?><div class="text-danger small"><?php echo $error_setting_marketplace_name; ?></div><?php } ?>
                             </div>
                             <ul class="nav nav-tabs mb-3" id="description-tab" role="tablist">
                                 <?php foreach ($languages as $language) { ?>
@@ -143,7 +137,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="input-country" class="form-label"><?php echo lang('Entry.country'); ?></label>
-                                <select name="setting_country_id" id="input-country" class="form-control">
+                                <select name="setting_country_id" id="input-country" class="form-select">
                                     <option value=""><?php echo lang('Text.please_select'); ?></option>
                                     <?php foreach ($countries as $country) { ?>
                                         <?php if ($country['country_id'] == $setting_country_id) { ?>
@@ -156,7 +150,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="input-zone" class="form-label"><?php echo lang('Entry.zone'); ?></label>
-                                <select name="setting_zone_id" id="input-zone" class="form-control"></select>
+                                <select name="setting_zone_id" id="input-zone" class="form-select"></select>
                             </div>
                             <div class="mb-3">
                                 <label for="input-city" class="form-label"><?php echo lang('Entry.city'); ?></label>
@@ -177,7 +171,7 @@
                             <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.administrator'); ?></legend>
                             <div class="mb-3">
                                 <label for="input-administrator-group" class="form-label"><?php echo lang('Entry.administrator_group'); ?></label>
-                                <select name="setting_administrator_group_id" id="input-administrator-group" class="form-control">
+                                <select name="setting_administrator_group_id" id="input-administrator-group" class="form-select">
                                     <?php foreach ($administrator_groups as $administrator_group) { ?>
                                         <?php if ($administrator_group['administrator_group_id'] == $setting_administrator_group_id) { ?>
                                         <option value="<?php echo $administrator_group['administrator_group_id']; ?>" selected="selected"><?php echo $administrator_group['name']; ?></option>
@@ -190,7 +184,7 @@
                             <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.customer'); ?></legend>
                             <div class="mb-3">
                                 <label for="input-customer-group" class="form-label"><?php echo lang('Entry.customer_group'); ?></label>
-                                <select name="setting_customer_group_id" id="input-customer-group" class="form-control">
+                                <select name="setting_customer_group_id" id="input-customer-group" class="form-select">
                                     <?php foreach ($customer_groups as $customer_group) { ?>
                                         <?php if ($customer_group['customer_group_id'] == $setting_customer_group_id) { ?>
                                         <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
@@ -212,7 +206,7 @@
                             <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.language'); ?></legend>
                             <div class="mb-3">
                                 <label for="input-admin-language" class="form-label"><?php echo lang('Entry.admin_language'); ?></label>
-                                <select name="setting_admin_language_id" id="input-admin-language" class="form-control">
+                                <select name="setting_admin_language_id" id="input-admin-language" class="form-select">
                                     <?php foreach ($languages as $language) { ?>
                                         <?php if ($language['language_id'] == $setting_admin_language_id) { ?>
                                         <option value="<?php echo $language['language_id']; ?>" selected="selected"><?php echo $language['name']; ?></option>
@@ -224,7 +218,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="input-marketplace-language" class="form-label"><?php echo lang('Entry.marketplace_language'); ?></label>
-                                <select name="setting_marketplace_language_id" id="input-marketplace-language" class="form-control">
+                                <select name="setting_marketplace_language_id" id="input-marketplace-language" class="form-select">
                                     <?php foreach ($languages as $language) { ?>
                                         <?php if ($language['language_id'] == $setting_marketplace_language_id) { ?>
                                         <option value="<?php echo $language['language_id']; ?>" selected="selected"><?php echo $language['name']; ?></option>
@@ -237,7 +231,7 @@
                             <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.currency'); ?></legend>
                             <div class="mb-3">
                                 <label for="input-admin-currency" class="form-label"><?php echo lang('Entry.admin_currency'); ?></label>
-                                <select name="setting_admin_currency_id" id="input-admin-currency" class="form-control">
+                                <select name="setting_admin_currency_id" id="input-admin-currency" class="form-select">
                                     <?php foreach ($currencies as $currency) { ?>
                                         <?php if ($currency['currency_id'] == $setting_admin_currency_id) { ?>
                                         <option value="<?php echo $currency['currency_id']; ?>" selected="selected"><?php echo $currency['name']; ?></option>
@@ -249,7 +243,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="input-marketplace-currency" class="form-label"><?php echo lang('Entry.marketplace_currency'); ?></label>
-                                <select name="setting_marketplace_currency_id" id="input-marketplace-currency" class="form-control">
+                                <select name="setting_marketplace_currency_id" id="input-marketplace-currency" class="form-select">
                                     <?php foreach ($currencies as $currency) { ?>
                                         <?php if ($currency['currency_id'] == $setting_marketplace_currency_id) { ?>
                                         <option value="<?php echo $currency['currency_id']; ?>" selected="selected"><?php echo $currency['name']; ?></option>
@@ -262,7 +256,7 @@
                             <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.weight_class'); ?></legend>
                             <div class="mb-3">
                                 <label for="input-admin-weight-class" class="form-label"><?php echo lang('Entry.admin_weight_class'); ?></label>
-                                <select name="setting_admin_weight_class_id" id="input-admin-weight-class" class="form-control">
+                                <select name="setting_admin_weight_class_id" id="input-admin-weight-class" class="form-select">
                                     <?php foreach ($weight_classes as $weight_class) { ?>
                                         <?php if ($weight_class['weight_class_id'] == $setting_admin_weight_class_id) { ?>
                                         <option value="<?php echo $weight_class['weight_class_id']; ?>" selected="selected"><?php echo $weight_class['title']; ?></option>
@@ -274,7 +268,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="input-marketplace-weight-class" class="form-label"><?php echo lang('Entry.marketplace_weight_class'); ?></label>
-                                <select name="setting_marketplace_weight_class_id" id="input-marketplace-weight-class" class="form-control">
+                                <select name="setting_marketplace_weight_class_id" id="input-marketplace-weight-class" class="form-select">
                                     <?php foreach ($weight_classes as $weight_class) { ?>
                                         <?php if ($weight_class['weight_class_id'] == $setting_marketplace_weight_class_id) { ?>
                                         <option value="<?php echo $weight_class['weight_class_id']; ?>" selected="selected"><?php echo $weight_class['title']; ?></option>
@@ -291,7 +285,7 @@
                             <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.themes'); ?></legend>
                             <div class="mb-3">
                                 <label for="input-admin-theme" class="form-label"><?php echo lang('Entry.admin_theme'); ?></label>
-                                <select name="setting_admin_theme" id="input-admin-theme" class="form-control">
+                                <select name="setting_admin_theme" id="input-admin-theme" class="form-select">
                                     <?php foreach ($admin_themes as $admin_theme) { ?>
                                         <?php if ($admin_theme['theme_author'] . ':' . $admin_theme['theme_name'] == $setting_admin_theme) { ?>
                                         <option value="<?php echo $admin_theme['theme_author'] . ':' . $admin_theme['theme_name']; ?>" selected="selected"><?php echo lang('Text.theme') . ' ' . $admin_theme['theme_name'] . ' ( ' . lang('Text.author') . ': ' . $admin_theme['theme_author'] . ' )'; ?></option>
@@ -303,7 +297,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="input-marketplace-theme" class="form-label"><?php echo lang('Entry.marketplace_theme'); ?></label>
-                                <select name="setting_marketplace_theme" id="input-marketplace-theme" class="form-control">
+                                <select name="setting_marketplace_theme" id="input-marketplace-theme" class="form-select">
                                     <?php foreach ($marketplace_themes as $marketplace_theme) { ?>
                                         <?php if ($marketplace_theme['theme_author'] . ':' . $marketplace_theme['theme_name'] == $setting_marketplace_theme) { ?>
                                         <option value="<?php echo $marketplace_theme['theme_author'] . ':' . $marketplace_theme['theme_name']; ?>" selected="selected"><?php echo lang('Text.theme') . ' ' . $marketplace_theme['theme_name'] . ' ( ' . lang('Text.author') . ': ' . $marketplace_theme['theme_author'] . ' )'; ?></option>
@@ -319,7 +313,7 @@
                         <fieldset>
                             <div class="mb-3">
                                 <label for="input-mail-protocol" class="form-label"><?php echo lang('Entry.mail_protocol'); ?></label>
-                                <select name="setting_mail_protocol" id="input-mail-protocol" class="form-control">
+                                <select name="setting_mail_protocol" id="input-mail-protocol" class="form-select">
                                     <?php foreach ($mail_protocols as $mail_protocol) { ?>
                                         <?php if ($mail_protocol == $setting_mail_protocol) { ?>
                                         <option value="<?php echo $mail_protocol; ?>" selected="selected"><?php echo $mail_protocol; ?></option>
@@ -331,7 +325,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="input-smtp-encryption" class="form-label"><?php echo lang('Entry.smtp_encryption'); ?></label>
-                                <select name="setting_smtp_encryption" id="input-smtp-encryption" class="form-control">
+                                <select name="setting_smtp_encryption" id="input-smtp-encryption" class="form-select">
                                     <?php foreach ($smtp_encryptions as $smtp_encryption) { ?>
                                         <?php if ($smtp_encryption == $setting_smtp_encryption) { ?>
                                         <option value="<?php echo $smtp_encryption; ?>" selected="selected"><?php echo $smtp_encryption; ?></option>
@@ -344,27 +338,22 @@
                             <div class="mb-3">
                                 <label for="input-smtp-host" class="form-label"><?php echo lang('Entry.smtp_host'); ?></label>
                                 <input type="text" name="setting_smtp_host" value="<?php echo $setting_smtp_host; ?>" id="input-smtp-host" class="form-control" placeholder="<?php echo lang('Entry.smtp_host'); ?>">
-                                <?php if (!empty($error_setting_smtp_host)) { ?><div class="text-danger small"><?php echo $error_setting_smtp_host; ?></div><?php } ?>
                             </div>
                             <div class="mb-3">
                                 <label for="input-smtp-username" class="form-label"><?php echo lang('Entry.smtp_username'); ?></label>
                                 <input type="text" name="setting_smtp_username" value="<?php echo $setting_smtp_username; ?>" id="input-smtp-username" class="form-control" placeholder="<?php echo lang('Entry.smtp_username'); ?>">
-                                <?php if (!empty($error_setting_smtp_username)) { ?><div class="text-danger small"><?php echo $error_setting_smtp_username; ?></div><?php } ?>
                             </div>
                             <div class="mb-3">
                                 <label for="input-smtp-password" class="form-label"><?php echo lang('Entry.smtp_password'); ?></label>
                                 <input type="text" name="setting_smtp_password" value="<?php echo $setting_smtp_password; ?>" id="input-smtp-password" class="form-control" placeholder="<?php echo lang('Entry.smtp_password'); ?>">
-                                <?php if (!empty($error_setting_smtp_password)) { ?><div class="text-danger small"><?php echo $error_setting_smtp_password; ?></div><?php } ?>
                             </div>
                             <div class="mb-3">
                                 <label for="input-smtp-port" class="form-label"><?php echo lang('Entry.smtp_port'); ?></label>
                                 <input type="number" name="setting_smtp_port" value="<?php echo $setting_smtp_port; ?>" id="input-smtp-port" class="form-control" placeholder="<?php echo lang('Entry.smtp_port'); ?>">
-                                <?php if (!empty($error_setting_smtp_port)) { ?><div class="text-danger small"><?php echo $error_setting_smtp_port; ?></div><?php } ?>
                             </div>
                             <div class="mb-3">
                                 <label for="input-smtp-timeout" class="form-label"><?php echo lang('Entry.smtp_timeout'); ?></label>
                                 <input type="number" name="setting_smtp_timeout" value="<?php echo $setting_smtp_timeout; ?>" id="input-smtp-timeout" class="form-control" placeholder="<?php echo lang('Entry.smtp_timeout'); ?>">
-                                <?php if (!empty($error_setting_smtp_timeout)) { ?><div class="text-danger small"><?php echo $error_setting_smtp_timeout; ?></div><?php } ?>
                             </div>
                          </fieldset>
                     </div>
@@ -377,7 +366,7 @@
 <script type="text/javascript"><!--
 $('select[name=\'setting_country_id\']').on('change', function() {
 	$.ajax({
-		url: '<?php echo base_url(); ?>' + '/admin/localisation/country/get_country?administrator_token=<?php echo $administrator_token; ?>&country_id=' + this.value,
+		url: '<?php echo base_url(); ?>' + '/<?php echo env('app.adminUrlSegment'); ?>/localisation/country/get_country?administrator_token=<?php echo $administrator_token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'setting_country_id\']').prop('disabled', true);

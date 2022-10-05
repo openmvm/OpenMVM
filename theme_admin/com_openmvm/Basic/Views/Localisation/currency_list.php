@@ -19,21 +19,16 @@
                 <h3 class="card-title"><i class="fas fa-coins fa-fw"></i> <?php echo $heading_title; ?></h3>
             </div>
         </div>
-        <?php if ($error_warning) { ?>
-        <div class="alert alert-warning alert-dismissible border-0 shadow fade show" role="alert">
-            <?php echo $error_warning; ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <?php } ?>
-        <?php if ($success) { ?>
-        <div class="alert alert-success alert-dismissible border-0 shadow fade show" role="alert">
-            <?php echo $success; ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <?php } ?>
         <?php echo form_open($action, ['id' => 'form-currency']); ?>
         <div class="card shadow list">
-            <div class="card-header clearfix"><h5 class="pt-1 float-start"><i class="fas fa-list fa-fw"></i> <?php echo lang('Heading.list'); ?></h5> <div class="float-end"><a href="<?php echo $refresh; ?>" class="btn btn-outline-success btn-sm"><i class="fas fa-sync-alt fa-fw"></i></a> <a href="<?php echo $add; ?>" class="btn btn-outline-primary btn-sm"><i class="fas fa-plus fa-fw"></i></a> <button type="button" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash-alt fa-fw" onclick="confirm('<?php echo lang('Text.are_you_sure'); ?>') ? $('#form-currency').submit() : false;"></i></button> <a href="<?php echo $cancel; ?>" class="btn btn-outline-secondary btn-sm"><i class="fas fa-long-arrow-alt-left fa-fw"></i></a></div></div>
+            <div class="card-header clearfix">
+                <h5 class="pt-1 float-start"><i class="fas fa-list fa-fw"></i> <?php echo lang('Heading.list'); ?></h5>
+                <div class="float-end">
+                    <a href="<?php echo $refresh; ?>" class="btn btn-outline-success btn-sm"><i class="fas fa-sync-alt fa-fw"></i></a> <a href="<?php echo $add; ?>" class="btn btn-outline-primary btn-sm"><i class="fas fa-plus fa-fw"></i></a>
+                    <button type="button" class="btn btn-sm btn-danger button-action" data-form="form-currency" data-form-action="<?php echo $action; ?>" data-form-confirm-text="<?php echo lang('Text.are_you_sure', [], 'en'); ?>" data-icon="fa-trash-can" data-toast-heading-title-success="<?php echo lang('Text.success', [], 'en'); ?>" data-toast-heading-title-error="<?php echo lang('Text.error', [], 'en'); ?>" data-toast-heading-icon-success="fa-check-circle" data-toast-heading-icon-error="fa-triangle-exclamation" data-redirection="true"><i class="fas fa-trash-can fa-fw"></i><span class="d-none d-md-inline-block ms-1"><?php echo lang('Button.delete', [], 'en'); ?></span></button>
+                    <a href="<?php echo $cancel; ?>" class="btn btn-outline-secondary btn-sm"><i class="fas fa-long-arrow-alt-left fa-fw"></i></a>
+                </div>
+            </div>
             <div class="card-body">
                 <table class="table">
                     <caption><?php echo lang('Caption.list_of_currencies'); ?></caption>

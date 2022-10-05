@@ -13,8 +13,8 @@
 <base href="<?php echo $base; ?>" />
 <meta name="description" content="" />
 <meta name="keywords" content="" />
-<script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-3.6.0.min.js" type="text/javascript"></script>
-<script src="<?php echo $base; ?>/assets/plugins/bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+<script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-3.6.1.min.js" type="text/javascript"></script>
+<script src="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.0-dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
 <script src="<?php echo $base; ?>/assets/plugins/swipenav/js/jquery-swipe-nav-plugin.js" type="text/javascript"></script>
 <script src="<?php echo $base; ?>/assets/marketplace/theme/com_openmvm/basic/js/basic.js" type="text/javascript"></script>
 <?php if ($scripts) { ?>
@@ -22,8 +22,8 @@
 		<?php echo $script; ?>
 	<?php } ?>
 <?php } ?>
-<link href="<?php echo $base; ?>/assets/plugins/bootstrap-5.1.3-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
-<link href="<?php echo $base; ?>/assets/plugins/fontawesome-free-5.15.4-web/css/all.min.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.0-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="<?php echo $base; ?>/assets/plugins/fontawesome-free-6.2.0-web/css/all.min.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo $base; ?>/assets/plugins/swipenav/css/jquery-swipe-nav.css" rel="stylesheet" media="screen" />
 <link href="<?php echo $base; ?>/assets/marketplace/theme/com_openmvm/basic/css/basic.css?v=1.0.1" rel="stylesheet" type="text/css" />
 <?php if ($styles) { ?>

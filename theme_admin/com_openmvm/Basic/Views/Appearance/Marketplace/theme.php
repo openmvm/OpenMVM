@@ -19,18 +19,6 @@
                 <h3 class="card-title"><i class="fas fa-paint-roller fa-fw"></i> <?php echo $heading_title; ?></h3>
             </div>
         </div>
-        <?php if ($error_warning) { ?>
-        <div class="alert alert-warning alert-dismissible border-0 shadow fade show" role="alert">
-            <?php echo $error_warning; ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <?php } ?>
-        <?php if ($success) { ?>
-        <div class="alert alert-success alert-dismissible border-0 shadow fade show" role="alert">
-            <?php echo $success; ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <?php } ?>
         <div class="clearfix mb-3">
             <div class="float-end">
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#uploadModal"><i class="fas fa-upload fa-fw"></i> <?php echo lang('Button.upload'); ?></button>

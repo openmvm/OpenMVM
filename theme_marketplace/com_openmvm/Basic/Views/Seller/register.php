@@ -9,12 +9,10 @@
                     <div class="mb-3 required">
                         <label for="input-store-name" class="form-label"><?php echo lang('Entry.store_name'); ?></label>
                         <input type="text" name="store_name" value="<?php echo $store_name; ?>" id="input-store-name" class="form-control" placeholder="<?php echo lang('Entry.store_name'); ?>">
-                        <?php if (!empty($error_store_name)) { ?><div class="text-danger small"><?php echo $error_store_name; ?></div><?php } ?>
                     </div>
                     <div class="mb-3 required">
                         <label for="input-store-description" class="form-label"><?php echo lang('Entry.store_description'); ?></label>
                         <textarea rows="10" name="store_description" value="" id="input-store-description" class="form-control" placeholder="<?php echo lang('Entry.store_description'); ?>"><?php echo $store_description; ?></textarea>
-                        <?php if (!empty($error_store_description)) { ?><div class="text-danger small"><?php echo $error_store_description; ?></div><?php } ?>
                     </div>
                     <div class="mb-3">
                         <label for="input-logo" class="form-label"><?php echo lang('Entry.logo'); ?></label>
@@ -28,7 +26,9 @@
             </div>
         </div>
         <div class="buttons clearfix">
-            <div class="float-end"><button type="submit" class="btn btn-primary" id="button-register"><?php echo lang('Button.register'); ?></button></div>
+            <div class="float-end">
+                <button type="button" class="btn btn-primary button-action" data-form="form-register" data-form-action="<?php echo $action; ?>" data-icon="fa-file-pen" data-toast-heading-title-success="<?php echo lang('Text.success', [], 'en'); ?>" data-toast-heading-title-error="<?php echo lang('Text.error', [], 'en'); ?>" data-toast-heading-icon-success="fa-check-circle" data-toast-heading-icon-error="fa-triangle-exclamation" data-redirection="true"><i class="fas fa-file-pen fa-fw"></i> <?php echo lang('Button.register', [], 'en'); ?></button>
+            </div>
         </div>
         <?php echo form_close(); ?>
     </div>

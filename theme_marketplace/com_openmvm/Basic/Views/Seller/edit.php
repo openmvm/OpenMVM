@@ -24,7 +24,9 @@
             </div>
         </fieldset>
         <div class="buttons clearfix">
-            <div class="float-end"><button type="submit" class="btn btn-primary" id="button-seller"><?php echo lang('Button.edit'); ?></button></div>
+            <div class="float-end">
+                <button type="button" class="btn btn-primary button-action" data-form="form-seller" data-form-action="<?php echo $action; ?>" data-icon="fa-file-pen" data-toast-heading-title-success="<?php echo lang('Text.success', [], 'en'); ?>" data-toast-heading-title-error="<?php echo lang('Text.error', [], 'en'); ?>" data-toast-heading-icon-success="fa-check-circle" data-toast-heading-icon-error="fa-triangle-exclamation" data-redirection="false"><i class="fas fa-file-pen fa-fw"></i> <?php echo lang('Button.edit', [], 'en'); ?></button>
+            </div>
         </div>
         <?php echo form_close(); ?>
     </div>
@@ -68,7 +70,7 @@ $('.upload').on('click', function() {
 
                     return xhr;
                 },
-                url: '<?php echo base_url('marketplace/tool/upload'); ?>',
+                url: '<?php echo $upload; ?>',
                 type: 'post',
                 dataType: 'json',
                 data: new FormData($('#form-upload')[0]),

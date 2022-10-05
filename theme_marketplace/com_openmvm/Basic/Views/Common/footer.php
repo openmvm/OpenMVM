@@ -1,4 +1,4 @@
-    <div class="bg-danger text-center py-1 mt-5"><button type="button" class="btn btn-link link-light text-decoration-none" id="button-back-to-top" onclick="$('html, body').animate({scrollTop: 0}, 250);"><?php echo lang('Button.back_to_top'); ?> <i class="fas fa-long-arrow-alt-up fa-fw"></i></button></div>
+    <div role="button" id="button-back-to-top" class="text-light bg-danger text-center py-3 mt-5" onclick="$('html, body').animate({scrollTop: 0}, 250);"><?php echo lang('Button.back_to_top'); ?> <i class="fas fa-long-arrow-alt-up fa-fw"></i></div>
     <div id="footer" class="footer bg-dark text-white p-3">
         <?php $widgets = $marketplace_common_widget->index(['position' => 'footer']); ?>
         <?php if ($widgets) { ?>

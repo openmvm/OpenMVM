@@ -31,7 +31,10 @@
             </div>
         </fieldset>
         <div class="buttons clearfix">
-            <div class="float-end"><button type="submit" class="btn btn-primary" id="button-profile"><?php echo lang('Button.edit'); ?></button></div>
+            <div class="float-end">
+                <button type="button" class="btn btn-sm btn-outline-success button-action" data-form="form-profile" data-form-action="<?php echo $action; ?>" data-icon="fa-save" data-toast-heading-title-success="<?php echo lang('Text.success', [], 'en'); ?>" data-toast-heading-title-error="<?php echo lang('Text.error', [], 'en'); ?>" data-toast-heading-icon-success="fa-check-circle" data-toast-heading-icon-error="fa-triangle-exclamation" data-redirection="false"><i class="fas fa-save fa-fw"></i><span class="d-none d-md-inline-block ms-1"><?php echo lang('Button.save_and_continue', [], 'en'); ?></span></button>
+                <button type="button" class="btn btn-sm btn-success button-action" data-form="form-profile" data-form-action="<?php echo $action; ?>" data-icon="fa-save" data-toast-heading-title-success="<?php echo lang('Text.success', [], 'en'); ?>" data-toast-heading-title-error="<?php echo lang('Text.error', [], 'en'); ?>" data-toast-heading-icon-success="fa-check-circle" data-toast-heading-icon-error="fa-triangle-exclamation" data-redirection="true"><i class="fas fa-save fa-fw"></i><span class="d-none d-md-inline-block ms-1"><?php echo lang('Button.save', [], 'en'); ?></span></button>
+            </div>
         </div>
         <?php echo form_close(); ?>
     </div>

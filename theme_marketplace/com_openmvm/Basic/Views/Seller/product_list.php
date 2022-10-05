@@ -4,7 +4,14 @@
         <h1 class="border-bottom pb-3 mb-3"><?php echo $heading_title; ?></h1>
         <?php echo form_open($action, ['id' => 'form-product']); ?>
         <div class="card shadow list">
-            <div class="card-header clearfix"><h5 class="pt-1 float-start"><i class="fas fa-list fa-fw"></i> <?php echo lang('Heading.list'); ?></h5> <div class="float-end"><a href="<?php echo $add; ?>" class="btn btn-outline-primary btn-sm"><i class="fas fa-plus fa-fw"></i></a> <button type="button" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash-alt fa-fw" onclick="confirm('<?php echo lang('Text.are_you_sure'); ?>') ? $('#form-product').submit() : false;"></i></button> <a href="<?php echo $cancel; ?>" class="btn btn-outline-secondary btn-sm"><i class="fas fa-long-arrow-alt-left fa-fw"></i></a></div></div>
+            <div class="card-header clearfix">
+                <h5 class="pt-1 float-start"><i class="fas fa-list fa-fw"></i> <?php echo lang('Heading.list'); ?></h5>
+                <div class="float-end">
+                    <a href="<?php echo $add; ?>" class="btn btn-outline-primary btn-sm"><i class="fas fa-plus fa-fw"></i></a>
+                    <button type="button" class="btn btn-sm btn-danger button-action" data-form="form-product" data-form-action="<?php echo $action; ?>" data-form-confirm-text="<?php echo lang('Text.are_you_sure', [], 'en'); ?>" data-icon="fa-trash-can" data-toast-heading-title-success="<?php echo lang('Text.success', [], 'en'); ?>" data-toast-heading-title-error="<?php echo lang('Text.error', [], 'en'); ?>" data-toast-heading-icon-success="fa-check-circle" data-toast-heading-icon-error="fa-triangle-exclamation" data-redirection="true"><i class="fas fa-trash-can fa-fw"></i><span class="d-none d-md-inline-block ms-1"><?php echo lang('Button.delete', [], 'en'); ?></span></button>
+                    <a href="<?php echo $cancel; ?>" class="btn btn-outline-secondary btn-sm"><i class="fas fa-long-arrow-alt-left fa-fw"></i></a>
+                </div>
+            </div>
             <div class="card-body">
                 <table class="table">
                     <caption><?php echo lang('Caption.list_of_products'); ?></caption>
@@ -14,6 +21,7 @@
                             <th scope="col"><?php echo lang('Column.image'); ?></th>
                             <th scope="col"><?php echo lang('Column.name'); ?></th>
                             <th scope="col"><?php echo lang('Column.price'); ?></th>
+                            <th scope="col"><?php echo lang('Column.quantity'); ?></th>
                             <th scope="col"><?php echo lang('Column.status'); ?></th>
                             <th scope="col" class="text-end"><?php echo lang('Column.action'); ?></th>
                         </tr>
@@ -34,13 +42,14 @@
                                 <td><img src="<?php echo $product['thumb']; ?>" class="border p-1" /></td>
                                 <td><?php echo $product['name']; ?></td>
                                 <td><?php echo $product['price']; ?></td>
+                                <td><?php echo $product['quantity']; ?></td>
                                 <td><?php echo $product['status']; ?></td>
                                 <td class="text-end"><a href="<?php echo $product['href']; ?>" class="btn btn-outline-primary btn-sm"><i class="fas fa-edit fa-fw"></i></a></td>
                             </tr>
                             <?php } ?>
                         <?php } else { ?>
                         <tr>
-                            <td colspan="6" class="text-muted text-center"><?php echo lang('Error.no_data_found'); ?></td>
+                            <td colspan="7" class="text-muted text-center"><?php echo lang('Error.no_data_found'); ?></td>
                         </tr>
                         <?php } ?>
                     </tbody>

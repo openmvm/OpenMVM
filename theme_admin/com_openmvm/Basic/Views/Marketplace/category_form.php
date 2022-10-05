@@ -19,21 +19,16 @@
                 <h3 class="card-title"><i class="fas fa-bars fa-fw"></i> <?php echo $heading_title; ?></h3>
             </div>
         </div>
-        <?php if ($error_warning) { ?>
-        <div class="alert alert-warning alert-dismissible border-0 shadow fade show" role="alert">
-            <?php echo $error_warning; ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <?php } ?>
-        <?php if ($success) { ?>
-        <div class="alert alert-success alert-dismissible border-0 shadow fade show" role="alert">
-            <?php echo $success; ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <?php } ?>
         <?php echo form_open($action, ['id' => 'form-category']); ?>
         <div class="card shadow list">
-            <div class="card-header clearfix"><h5 class="pt-1 float-start"><i class="fas fa-edit fa-fw"></i> <?php echo $sub_title; ?></h5> <div class="float-end"><button type="submit" class="btn btn-outline-primary btn-sm"><i class="fas fa-save fa-fw"></i></button> <a href="<?php echo $cancel; ?>" class="btn btn-outline-secondary btn-sm"><i class="fas fa-long-arrow-alt-left fa-fw"></i></a></div></div>
+            <div class="card-header clearfix">
+                <h5 class="pt-1 float-start"><i class="fas fa-edit fa-fw"></i> <?php echo $sub_title; ?></h5>
+                <div class="float-end">
+                    <button type="button" class="btn btn-sm btn-outline-success button-action" data-form="form-category" data-form-action="<?php echo $action; ?>" data-icon="fa-save" data-toast-heading-title-success="<?php echo lang('Text.success', [], 'en'); ?>" data-toast-heading-title-error="<?php echo lang('Text.error', [], 'en'); ?>" data-toast-heading-icon-success="fa-check-circle" data-toast-heading-icon-error="fa-triangle-exclamation" data-redirection="false"><i class="fas fa-save fa-fw"></i><span class="d-none d-md-inline-block ms-1"><?php echo lang('Button.save_and_continue', [], 'en'); ?></span></button>
+                    <button type="button" class="btn btn-sm btn-success button-action" data-form="form-category" data-form-action="<?php echo $action; ?>" data-icon="fa-save" data-toast-heading-title-success="<?php echo lang('Text.success', [], 'en'); ?>" data-toast-heading-title-error="<?php echo lang('Text.error', [], 'en'); ?>" data-toast-heading-icon-success="fa-check-circle" data-toast-heading-icon-error="fa-triangle-exclamation" data-redirection="true"><i class="fas fa-save fa-fw"></i><span class="d-none d-md-inline-block ms-1"><?php echo lang('Button.save', [], 'en'); ?></span></button>
+                    <a href="<?php echo $cancel; ?>" class="btn btn-outline-secondary btn-sm"><i class="fas fa-long-arrow-alt-left fa-fw"></i></a>
+                </div>
+            </div>
             <div class="card-body">
                 <ul class="nav nav-tabs mb-3" id="categoryTab" role="tablist">
                     <li class="nav-item" role="presentation">
@@ -59,7 +54,6 @@
                                     <div class="mb-3 required">
                                         <label for="input-name-<?php echo $language['language_id']; ?>" class="form-label"><?php echo lang('Entry.name'); ?></label>
                                         <input type="text" name="category_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($category_description[$language['language_id']]['name']) ? $category_description[$language['language_id']]['name']: ''; ?>" id="input-name-<?php echo $language['language_id']; ?>" class="form-control" placeholder="<?php echo lang('Entry.name'); ?>">
-                                        <?php if (!empty($error_category_description[$language['language_id']]['name'])) { ?><div class="text-danger small"><?php echo $error_category_description[$language['language_id']]['name']; ?></div><?php } ?>
                                     </div>
                                     <div class="mb-3">
                                         <label for="input-description-<?php echo $language['language_id']; ?>" class="form-label"><?php echo lang('Entry.description'); ?></label>
@@ -144,7 +138,7 @@ $(document).ready(function() {
 $( '#input-parent' ).autocomplete({
     source: function (request, response) {
         $.ajax({
-            url: '<?php echo base_url(); ?>' + '/admin/marketplace/category/autocomplete?administrator_token=<?php echo $administrator_token; ?>',
+            url: '<?php echo base_url(); ?>' + '/<?php echo env('app.adminUrlSegment'); ?>/marketplace/category/autocomplete?administrator_token=<?php echo $administrator_token; ?>',
             dataType: 'json',
             data: {
                 filter_name: request.term

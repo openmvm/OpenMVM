@@ -56,7 +56,9 @@ function getError(file) {
 		url: '<?php echo $get_error; ?>',
 		type: 'post',
 		dataType: 'json',
-		data: 'file=' + file,
+		data: {
+            file: file
+        },
 		beforeSend: function() {
 		},
 		complete: function() {

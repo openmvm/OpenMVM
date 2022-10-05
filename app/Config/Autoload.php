@@ -43,6 +43,9 @@ class Autoload extends AutoloadConfig
     public $psr4 = [
         APP_NAMESPACE => APPPATH, // For custom app namespace
         'Config'      => APPPATH . 'Config',
+        // Main
+        'Main\Admin' => ROOTPATH . 'main/admin',
+        'Main\Marketplace' => ROOTPATH . 'main/marketplace',
         // Plugins
         'Plugins\com_bukausahaonline\Widget_Blank' => ROOTPATH . 'plugins/com_bukausahaonline/Widget_Blank',
         // Theme Admin

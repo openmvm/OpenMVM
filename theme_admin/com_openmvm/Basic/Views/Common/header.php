@@ -16,9 +16,9 @@
 <?php if (!empty($favicon)) { ?>
 <link rel="shortcut icon" href="<?php echo $favicon; ?>"/>
 <?php } ?>
-<script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-3.6.0.min.js" type="text/javascript"></script>
-<script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-ui-1.13.0/jquery-ui.min.js" type="text/javascript"></script>
-<script src="<?php echo $base; ?>/assets/plugins/bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+<script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-3.6.1.min.js" type="text/javascript"></script>
+<script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-ui-1.13.2/jquery-ui.min.js" type="text/javascript"></script>
+<script src="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.0-dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
 <script src="<?php echo $base; ?>/assets/plugins/swipenav/js/jquery-swipe-nav-plugin.js" type="text/javascript"></script>
 <script src="<?php echo $base; ?>/assets/admin/theme/com_openmvm/basic/js/basic.js" type="text/javascript"></script>
 <?php if ($scripts) { ?>
@@ -26,9 +26,9 @@
 		<?php echo $script; ?>
 	<?php } ?>
 <?php } ?>
-<link href="<?php echo $base; ?>/assets/plugins/jquery/jquery-ui-1.13.0/jquery-ui.min.css" rel="stylesheet" media="screen" />
-<link href="<?php echo $base; ?>/assets/plugins/bootstrap-5.1.3-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
-<link href="<?php echo $base; ?>/assets/plugins/fontawesome-free-5.15.4-web/css/all.min.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo $base; ?>/assets/plugins/jquery/jquery-ui-1.13.2/jquery-ui.min.css" rel="stylesheet" media="screen" />
+<link href="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.0-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="<?php echo $base; ?>/assets/plugins/fontawesome-free-6.2.0-web/css/all.min.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo $base; ?>/assets/plugins/swipenav/css/jquery-swipe-nav.css" rel="stylesheet" media="screen" />
 <?php if ($styles) { ?>
 	<?php foreach ($styles as $style) { ?>
@@ -52,7 +52,7 @@
 						<ul class="dropdown-menu dropdown-menu-end">
 							<li><a href="<?php echo $profile; ?>" class="dropdown-item" type="button"><?php echo lang('Text.my_profile'); ?></a></li>
 							<li><hr class="dropdown-divider"></li>
-							<li><a href="<?php echo base_url('admin/administrator/logout'); ?>" class="dropdown-item" type="button"><?php echo lang('Button.logout'); ?></a></li>
+							<li><a href="<?php echo base_url(env('app.adminUrlSegment') . '/administrator/logout'); ?>" class="dropdown-item" type="button"><?php echo lang('Button.logout'); ?></a></li>
 						</ul>
 					</div>
 				</div>

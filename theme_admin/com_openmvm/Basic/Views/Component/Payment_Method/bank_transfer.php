@@ -19,30 +19,24 @@
                 <h3 class="card-title"><i class="fas fa-wallet fa-fw"></i> <?php echo $heading_title; ?></h3>
             </div>
         </div>
-        <?php if ($error_warning) { ?>
-        <div class="alert alert-warning alert-dismissible border-0 shadow fade show" role="alert">
-            <?php echo $error_warning; ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <?php } ?>
-        <?php if ($success) { ?>
-        <div class="alert alert-success alert-dismissible border-0 shadow fade show" role="alert">
-            <?php echo $success; ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <?php } ?>
         <?php echo form_open($action, ['id' => 'form-payment-method']); ?>
         <div class="card shadow list">
-            <div class="card-header clearfix"><h5 class="pt-1 float-start"><i class="fas fa-edit fa-fw"></i> <?php echo lang('Heading.edit'); ?></h5> <div class="float-end"><button type="submit" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="<?php echo lang('Button.save'); ?>"><i class="fas fa-save fa-fw"></i></button> <a href="<?php echo $cancel; ?>" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="<?php echo lang('Button.cancel'); ?>"><i class="fas fa-long-arrow-alt-left fa-fw"></i></a></div></div>
+            <div class="card-header clearfix">
+                <h5 class="pt-1 float-start"><i class="fas fa-edit fa-fw"></i> <?php echo lang('Heading.edit'); ?></h5>
+                <div class="float-end">
+                    <button type="button" class="btn btn-sm btn-outline-success button-action" data-form="form-payment-method" data-form-action="<?php echo $action; ?>" data-icon="fa-save" data-toast-heading-title-success="<?php echo lang('Text.success', [], 'en'); ?>" data-toast-heading-title-error="<?php echo lang('Text.error', [], 'en'); ?>" data-toast-heading-icon-success="fa-check-circle" data-toast-heading-icon-error="fa-triangle-exclamation" data-redirection="false"><i class="fas fa-save fa-fw"></i><span class="d-none d-md-inline-block ms-1"><?php echo lang('Button.save_and_continue', [], 'en'); ?></span></button>
+                    <button type="button" class="btn btn-sm btn-success button-action" data-form="form-payment-method" data-form-action="<?php echo $action; ?>" data-icon="fa-save" data-toast-heading-title-success="<?php echo lang('Text.success', [], 'en'); ?>" data-toast-heading-title-error="<?php echo lang('Text.error', [], 'en'); ?>" data-toast-heading-icon-success="fa-check-circle" data-toast-heading-icon-error="fa-triangle-exclamation" data-redirection="true"><i class="fas fa-save fa-fw"></i><span class="d-none d-md-inline-block ms-1"><?php echo lang('Button.save', [], 'en'); ?></span></button>
+                    <a href="<?php echo $cancel; ?>" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="<?php echo lang('Button.cancel'); ?>"><i class="fas fa-long-arrow-alt-left fa-fw"></i></a>
+                </div>
+            </div>
             <div class="card-body">
                 <fieldset>
                     <div class="mb-3 required">
                         <label for="input-instruction" class="form-label"><?php echo lang('Entry.instructions'); ?></label>
                         <?php foreach ($languages as $language) { ?>
                             <div class="form-floating mb-3">
-                                <textarea name="component_payment_method_bank_transfer_instruction_<?php echo $language['language_id']; ?>" class="form-control" placeholder="Leave a comment here" id="instruction-<?php echo $language['language_id']; ?>" style="height: 200px;"><?php echo ${'component_payment_method_bank_transfer_instruction_' . $language['language_id']}; ?></textarea>
-                                <label for="instruction-<?php echo $language['language_id']; ?>" class="small"><img src="<?php echo base_url('assets/flags/' . $language['code'] . '.png'); ?>" /></label>
-                                <?php if (!empty(${'error_component_payment_method_bank_transfer_instruction_' . $language['language_id']})) { ?><div class="text-danger small"><?php echo ${'error_component_payment_method_bank_transfer_instruction_' . $language['language_id']}; ?></div><?php } ?>
+                                <textarea name="component_payment_method_bank_transfer_instruction_<?php echo $language['language_id']; ?>" class="form-control" placeholder="Leave a comment here" id="input-instruction-<?php echo $language['language_id']; ?>" style="height: 200px;"><?php echo ${'component_payment_method_bank_transfer_instruction_' . $language['language_id']}; ?></textarea>
+                                <label for="input-instruction-<?php echo $language['language_id']; ?>" class="small"><img src="<?php echo base_url('assets/flags/' . $language['code'] . '.png'); ?>" /></label>
                             </div>
                         <?php } ?>
                     </div>
@@ -50,7 +44,6 @@
                         <label for="input-amount" class="form-label"><?php echo lang('Entry.amount'); ?></label>
                         <input type="number" step="any" min="0" name="component_payment_method_bank_transfer_amount" value="<?php echo $component_payment_method_bank_transfer_amount; ?>" id="input-amount" class="form-control" placeholder="<?php echo lang('Entry.amount'); ?>">
                         <div class="text-muted small"><?php echo lang('Help.checkout_total_amount'); ?></div>
-                        <?php if (!empty($error_component_payment_method_bank_transfer_amount)) { ?><div class="text-danger small"><?php echo $error_component_payment_method_bank_transfer_amount; ?></div><?php } ?>
                     </div>
                     <div class="mb-3 required">
                         <label for="input-geo-zone" class="form-label"><?php echo lang('Entry.geo_zone'); ?></label>

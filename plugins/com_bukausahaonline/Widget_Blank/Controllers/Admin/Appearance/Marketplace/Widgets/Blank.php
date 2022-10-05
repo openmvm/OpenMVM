@@ -16,46 +16,9 @@ class Blank extends \App\Controllers\BaseController
 
     public function index()
     {
-        return false;
-    }
-
-    public function edit()
-    {
-        if (!$this->administrator->isLoggedIn() || !$this->administrator->verifyToken($this->request->getGet('administrator_token'))) {
-            return redirect()->to('admin/administrator/login');
-        }
-
         $data['sub_title'] = lang('Heading.edit');
 
-        $data['action'] = $this->url->administratorLink('admin/appearance/marketplace/widgets/com_bukausahaonline/Blank/edit/' . $this->uri->getSegment($this->uri->getTotalSegments()));
-
-        if ($this->request->getMethod() == 'post') {
-            if (!$this->administrator->hasPermission('modify', 'plugins/com_bukausahaonline/Widget_Blank/Controllers/Admin/Appearance/Marketplace/Widgets/Blank')) {
-                $this->session->set('error', lang('Error.modify_permission'));
-
-                return redirect()->to($this->url->administratorLink('admin/appearance/marketplace/widget'));
-            }
-
-            $this->validation->setRule('name', lang('Entry.name'), 'required');
-
-            if ($this->validation->withRequest($this->request)->run()) {
-                // Query
-                $query = $this->model_appearance_widget->editWidget('marketplace', 'com_bukausahaonline', $this->uri->getSegment($this->uri->getTotalSegments() - 2), $this->uri->getSegment($this->uri->getTotalSegments()), $this->request->getPost(), 'Widget_Blank');
-
-                $this->session->set('success', lang('Success.widget_edit'));
-
-                return redirect()->to($this->url->administratorLink('admin/appearance/marketplace/widget'));
-            } else {
-                // Errors
-                $this->session->set('error', lang('Error.form'));
-
-                if ($this->validation->hasError('name')) {
-                    $data['error_name'] = $this->validation->getError('name');
-                } else {
-                    $data['error_name'] = '';
-                }
-            }
-        }
+        $data['action'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/appearance/marketplace/widget/com_bukausahaonline/Blank/save/' . $this->uri->getSegment($this->uri->getTotalSegments()));
 
         return $this->get_form($data);
     }
@@ -64,53 +27,33 @@ class Blank extends \App\Controllers\BaseController
     {
         $data['breadcrumbs'][] = array(
             'text' => lang('Text.dashboard'),
-            'href' => $this->url->administratorLink('admin/common/dashboard'),
+            'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard'),
             'active' => false,
         );
 
         $data['breadcrumbs'][] = array(
             'text' => lang('Text.marketplace_widgets'),
-            'href' => $this->url->administratorLink('admin/appearance/marketplace/widget'),
+            'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/appearance/marketplace/widget'),
             'active' => false,
         );
 
         $data['breadcrumbs'][] = array(
             'text' => lang('Text.blank'),
-            'href' => $this->url->administratorLink('admin/appearance/marketplace/widgets/com_bukausahaonline/Blank/edit' . $this->uri->getSegment($this->uri->getTotalSegments())),
+            'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/appearance/marketplace/widget/com_bukausahaonline/Blank/edit' . $this->uri->getSegment($this->uri->getTotalSegments())),
             'active' => true,
         );
-
-        if ($this->session->has('error')) {
-            $data['error_warning'] = $this->session->get('error');
-
-            $this->session->remove('error');
-        } else {
-            $data['error_warning'] = '';
-        }
-
-        if ($this->session->has('success')) {
-            $data['success'] = $this->session->get('success');
-
-            $this->session->remove('success');
-        } else {
-            $data['success'] = '';
-        }
 
         $data['heading_title'] = lang('Heading.blank');
             
         $widget_info = $this->model_appearance_widget->getWidget($this->uri->getSegment($this->uri->getTotalSegments()));
 
-        if ($this->request->getPost('name')) {
-            $data['name'] = $this->request->getPost('name');
-        } elseif ($widget_info) {
+        if ($widget_info) {
             $data['name'] = $widget_info['name'];
         } else {
             $data['name'] = '';
         }
 
-        if ($this->request->getPost('height')) {
-            $data['height'] = $this->request->getPost('height');
-        } elseif ($widget_info) {
+        if ($widget_info) {
             if (!empty($widget_info['setting']['height'])) {
                 $data['height'] = $widget_info['setting']['height'];
             } else {
@@ -120,9 +63,7 @@ class Blank extends \App\Controllers\BaseController
             $data['height'] = 0;
         }
 
-        if ($this->request->getPost('background_color')) {
-            $data['background_color'] = $this->request->getPost('background_color');
-        } elseif ($widget_info) {
+        if ($widget_info) {
             if (!empty($widget_info['setting']['background_color'])) {
                 $data['background_color'] = $widget_info['setting']['background_color'];
             } else {
@@ -132,15 +73,13 @@ class Blank extends \App\Controllers\BaseController
             $data['background_color'] = '';
         }
 
-        if ($this->request->getPost('status')) {
-            $data['status'] = $this->request->getPost('status');
-        } elseif ($widget_info) {
+        if ($widget_info) {
             $data['status'] = $widget_info['status'];
         } else {
             $data['status'] = 0;
         }
 
-        $data['cancel'] = $this->url->administratorLink('admin/appearance/marketplace/widget');
+        $data['cancel'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/appearance/marketplace/widget');
 
         if ($this->administrator->hasPermission('access', 'plugins/com_bukausahaonline/Widget_Blank/Controllers/Admin/Appearance/Marketplace/Widgets/Blank')) {
             // Header
@@ -161,19 +100,19 @@ class Blank extends \App\Controllers\BaseController
 
             $data['breadcrumbs'][] = array(
                 'text' => lang('Text.dashboard'),
-                'href' => $this->url->administratorLink('admin/common/dashboard'),
+                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard'),
                 'active' => false,
             );
 
             $data['breadcrumbs'][] = array(
                 'text' => lang('Text.marketplace_widgets'),
-                'href' => $this->url->administratorLink('admin/appearance/marketplace/widget'),
+                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/appearance/marketplace/widget'),
                 'active' => false,
             );
 
             $data['breadcrumbs'][] = array(
                 'text' => lang('Text.blank'),
-                'href' => $this->url->administratorLink('admin/appearance/marketplace/widgets/com_bukausahaonline/Blank/edit' . $this->uri->getSegment($this->uri->getTotalSegments())),
+                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/appearance/marketplace/widgets/com_bukausahaonline/Blank/edit' . $this->uri->getSegment($this->uri->getTotalSegments())),
                 'active' => true,
             );
 
@@ -198,5 +137,36 @@ class Blank extends \App\Controllers\BaseController
 
             return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\permission', $data);
         }
+    }
+
+    public function save()
+    {
+        $json = [];
+
+        if ($this->request->getMethod() == 'post') {
+            if (!$this->administrator->hasPermission('modify', 'plugins/com_bukausahaonline/Widget_Blank/Controllers/Admin/Appearance/Marketplace/Widgets/Blank')) {
+                $json['error']['toast'] = lang('Error.modify_permission');
+            }
+
+            $this->validation->setRule('name', lang('Entry.name'), 'required');
+
+            if ($this->validation->withRequest($this->request)->run()) {
+                // Query
+                $query = $this->model_appearance_widget->editWidget('marketplace', 'com_bukausahaonline', $this->uri->getSegment($this->uri->getTotalSegments() - 2), $this->uri->getSegment($this->uri->getTotalSegments()), $this->request->getPost(), 'Widget_Blank');
+
+                $json['success']['toast'] = lang('Success.widget_edit');
+
+                $json['redirect'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/appearance/marketplace/widget');
+            } else {
+                // Errors
+                $json['error']['toast'] = lang('Error.form');
+
+                if ($this->validation->hasError('name')) {
+                    $data['error']['name'] = $this->validation->getError('name');
+                }
+            }
+        }
+
+        return $this->response->setJSON($json);
     }
 }

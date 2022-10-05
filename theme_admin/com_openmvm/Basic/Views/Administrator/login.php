@@ -16,40 +16,34 @@
 <?php if (!empty($favicon)) { ?>
 <link rel="shortcut icon" href="<?php echo $favicon; ?>"/>
 <?php } ?>
-<script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-3.6.0.min.js" type="text/javascript"></script>
-<link href="<?php echo $base; ?>/assets/plugins/bootstrap-5.1.3-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
-<script src="<?php echo $base; ?>/assets/plugins/bootstrap-5.1.3-dist/js/bootstrap.min.js" type="text/javascript"></script>
-<link href="<?php echo $base; ?>/assets/plugins/fontawesome-free-5.15.4-web/css/all.min.css" rel="stylesheet" type="text/css" />
-<link href="<?php echo $base; ?>/assets/admin/theme/openmvm/default/css/default.css" rel="stylesheet" type="text/css" />
-<script src="<?php echo $base; ?>/assets/admin/theme/openmvm/default/js/default.js" type="text/javascript"></script>
+<script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-3.6.1.min.js" type="text/javascript"></script>
+<link href="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.0-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<script src="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.0-dist/js/bootstrap.min.js" type="text/javascript"></script>
+<link href="<?php echo $base; ?>/assets/plugins/fontawesome-free-6.2.0-web/css/all.min.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo $base; ?>/assets/admin/theme/com_openmvm/Basic/css/basic.css" rel="stylesheet" type="text/css" />
+<script src="<?php echo $base; ?>/assets/admin/theme/com_openmvm/Basic/js/basic.js" type="text/javascript"></script>
 </head>
 <body>
     <div class="d-flex align-items-center vh-100">
         <?php echo form_open($action, ['id' => 'form-login', 'class' => 'mx-auto']); ?>
-        <div class="card shadow mb-5">
+        <div class="card shadow mb-3">
             <h3 class="card-header"><?php echo $title; ?></h3>
             <div class="card-body">
-                <?php if ($error_warning) { ?>
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <?php echo $error_warning; ?>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                <?php } ?>
                 <div class="mb-3 required">
                     <label for="input-username" class="form-label"><?php echo lang('Entry.username'); ?></label>
                     <input type="text" name="username" value="" id="input-username" class="form-control" placeholder="<?php echo lang('Entry.username'); ?>">
-                    <?php if ($validation->hasError('username')) { ?><div class="text-danger small"><?php echo $validation->getError('username'); ?></div><?php } ?>
                 </div>
                 <div class="mb-3 required">
                     <label for="input-password" class="form-label"><?php echo lang('Entry.password'); ?></label>
                     <input type="password" name="password" value="" id="input-password" class="form-control" placeholder="<?php echo lang('Entry.password'); ?>">
-                    <?php if ($validation->hasError('password')) { ?><div class="text-danger small"><?php echo $validation->getError('password'); ?></div><?php } ?>
                 </div>
-                <div class="clearfix">
-                    <button type="submit" id="button-login" class="btn btn-outline-primary float-end"><?php echo lang('Button.login'); ?></button>
+                <div class="d-grid">
+                    <button type="button" class="btn btn-primary button-action mb-3" data-form="form-login" data-form-action="<?php echo $action; ?>" data-icon="fa-lock" data-toast-heading-title-success="<?php echo lang('Text.success', [], 'en'); ?>" data-toast-heading-title-error="<?php echo lang('Text.error', [], 'en'); ?>" data-toast-heading-icon-success="fa-check-circle" data-toast-heading-icon-error="fa-triangle-exclamation" data-redirection="true"><i class="fas fa-lock fa-fw"></i> <?php echo lang('Button.login', [], 'en'); ?></button>
+                    <a href="<?php echo $base; ?>" class="btn btn-outline-success" target="_blank"><i class="fas fa-home fa-fw"></i> <?php echo lang('Text.homepage'); ?></a>
                 </div>
             </div>
         </div>
+        
         <div><?php echo $copyrights; ?></div>
         <?php echo form_close(); ?>
     </div>

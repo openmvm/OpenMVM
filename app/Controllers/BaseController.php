@@ -19,7 +19,7 @@ use Psr\Log\LoggerInterface;
  *
  * For security be sure to declare any new methods as protected or private.
  */
-class BaseController extends Controller
+abstract class BaseController extends Controller
 {
     /**
      * Instance of the main Request object.
@@ -75,15 +75,15 @@ class BaseController extends Controller
         
         // Admin
         // Common Controllers
-        $this->admin_header = new \App\Controllers\Admin\Common\Header();
-        $this->admin_column_left = new \App\Controllers\Admin\Common\Column_Left();
-        $this->admin_footer = new \App\Controllers\Admin\Common\Footer();
+        $this->admin_header = new \Main\Admin\Controllers\Common\Header();
+        $this->admin_column_left = new \Main\Admin\Controllers\Common\Column_Left();
+        $this->admin_footer = new \Main\Admin\Controllers\Common\Footer();
         
         // Marketplace
         // Common Controllers
-        $this->marketplace_header = new \App\Controllers\Marketplace\Common\Header();
-        $this->marketplace_offcanvas_left = new \App\Controllers\Marketplace\Common\Offcanvas_Left();
-        $this->marketplace_footer = new \App\Controllers\Marketplace\Common\Footer();
-        $this->marketplace_common_widget = new \App\Controllers\Marketplace\Common\Widget();
+        $this->marketplace_header = new \Main\Marketplace\Controllers\Common\Header();
+        $this->marketplace_offcanvas_left = new \Main\Marketplace\Controllers\Common\Offcanvas_Left();
+        $this->marketplace_footer = new \Main\Marketplace\Controllers\Common\Footer();
+        $this->marketplace_common_widget = new \Main\Marketplace\Controllers\Common\Widget();
     }
 }

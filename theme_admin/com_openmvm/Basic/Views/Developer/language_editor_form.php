@@ -52,7 +52,7 @@
                             <tr id="string-<?php echo $string_row; ?>">
                                 <td scope="row"><input type="text" name="string[<?php echo $string_row; ?>][key]" value="<?php echo $key; ?>" class="form-control" id="" /></td>
                                 <?php foreach ($languages as $language) { ?>
-                                <td><input type="text" name="string[<?php echo $string_row; ?>][value][<?php echo $language['code']; ?>]" value="<?php echo isset($values[$language['code']][$key]) ? htmlentities($values[$language['code']][$key]) : ''; ?>" class="form-control" id="" /></td>
+                                <td><input type="text" name="string[<?php echo $string_row; ?>][value][<?php echo $language['code']; ?>]" value="<?php echo isset($values[$language['code']][$key]) ? htmlentities(stripslashes($values[$language['code']][$key])) : ''; ?>" class="form-control" id="" /></td>
                                 <?php } ?>
                                 <td class="text-end"><button type="button" class="btn btn-outline-danger btn-sm" onclick="$('#string-<?php echo $string_row; ?>').remove();"><i class="fas fa-trash-alt fa-fw"></i></button></td>
                             </tr>

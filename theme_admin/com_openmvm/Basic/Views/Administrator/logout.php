@@ -16,12 +16,12 @@
 <?php if (!empty($favicon)) { ?>
 <link rel="shortcut icon" href="<?php echo $favicon; ?>"/>
 <?php } ?>
-<script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-3.6.0.min.js" type="text/javascript"></script>
-<link href="<?php echo $base; ?>/assets/plugins/bootstrap-5.1.3-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
-<script src="<?php echo $base; ?>/assets/plugins/bootstrap-5.1.3-dist/js/bootstrap.min.js" type="text/javascript"></script>
-<link href="<?php echo $base; ?>/assets/plugins/fontawesome-free-5.15.4-web/css/all.min.css" rel="stylesheet" type="text/css" />
-<link href="<?php echo $base; ?>/assets/admin/theme/openmvm/default/css/default.css" rel="stylesheet" type="text/css" />
-<script src="<?php echo $base; ?>/assets/admin/theme/openmvm/default/js/default.js" type="text/javascript"></script>
+<script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-3.6.1.min.js" type="text/javascript"></script>
+<link href="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.0-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<script src="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.0-dist/js/bootstrap.min.js" type="text/javascript"></script>
+<link href="<?php echo $base; ?>/assets/plugins/fontawesome-free-6.2.0-web/css/all.min.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo $base; ?>/assets/admin/theme/com_openmvm/Basic/css/basic.css" rel="stylesheet" type="text/css" />
+<script src="<?php echo $base; ?>/assets/admin/theme/com_openmvm/Basic/js/basic.js" type="text/javascript"></script>
 </head>
 <body>
     <div class="d-flex align-items-center vh-100">
@@ -30,7 +30,7 @@
                 <h3 class="card-header"><?php echo $title; ?></h3>
                 <div class="card-body">
                     <div class="text-success text-center mb-3"><?php echo lang('Success.logout'); ?></div>
-                    <div class="text-center">[ <a href="<?php echo base_url('admin/administrator/login'); ?>"><?php echo lang('Button.login'); ?></a> ]</div>
+                    <div class="text-center">[ <a href="<?php echo base_url(env('app.adminUrlSegment') . '/administrator/login'); ?>"><?php echo lang('Button.login'); ?></a> ]</div>
                 </div>
             </div>
             <div><?php echo $copyrights; ?></div>

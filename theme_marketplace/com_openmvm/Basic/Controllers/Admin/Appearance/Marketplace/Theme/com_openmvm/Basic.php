@@ -10,9 +10,9 @@ class Basic extends \App\Controllers\BaseController
     public function __construct()
     {
         // Models
-        $this->model_appearance_layout = new \App\Models\Admin\Appearance\Layout_Model();
-        $this->model_appearance_widget = new \App\Models\Admin\Appearance\Widget_Model();
-        $this->model_system_setting = new \App\Models\Admin\System\Setting_Model();
+        $this->model_appearance_layout = new \Main\Admin\Models\Appearance\Layout_Model();
+        $this->model_appearance_widget = new \Main\Admin\Models\Appearance\Widget_Model();
+        $this->model_system_setting = new \Main\Admin\Models\System\Setting_Model();
     }
 
     public function index()
@@ -105,7 +105,7 @@ class Basic extends \App\Controllers\BaseController
         $data['widgets'] = [];
 
         // Get marketplace core widgets
-        $core_path = ROOTPATH . 'app/Controllers/Admin/Appearance/Marketplace/Widgets/*';
+        $core_path = ROOTPATH . 'main/admin/Controllers/Appearance/Marketplace/Widgets/*';
 
         $core_widgets = array_diff(glob($core_path), array('.', '..'));
 

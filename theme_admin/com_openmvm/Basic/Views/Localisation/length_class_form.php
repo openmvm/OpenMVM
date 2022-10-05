@@ -19,21 +19,16 @@
                 <h3 class="card-title"><i class="fas fa-ruler-combined fa-fw"></i> <?php echo $heading_title; ?></h3>
             </div>
         </div>
-        <?php if ($error_warning) { ?>
-        <div class="alert alert-warning alert-dismissible border-0 shadow fade show" role="alert">
-            <?php echo $error_warning; ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <?php } ?>
-        <?php if ($success) { ?>
-        <div class="alert alert-success alert-dismissible border-0 shadow fade show" role="alert">
-            <?php echo $success; ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <?php } ?>
         <?php echo form_open($action, ['id' => 'form-length-class']); ?>
         <div class="card shadow list">
-            <div class="card-header clearfix"><h5 class="pt-1 float-start"><i class="fas fa-edit fa-fw"></i> <?php echo $sub_title; ?></h5> <div class="float-end"><button type="submit" class="btn btn-outline-primary btn-sm"><i class="fas fa-save fa-fw"></i></button> <a href="<?php echo $cancel; ?>" class="btn btn-outline-secondary btn-sm"><i class="fas fa-long-arrow-alt-left fa-fw"></i></a></div></div>
+            <div class="card-header clearfix">
+                <h5 class="pt-1 float-start"><i class="fas fa-edit fa-fw"></i> <?php echo $sub_title; ?></h5>
+                <div class="float-end">
+                    <button type="button" class="btn btn-sm btn-outline-success button-action" data-form="form-length-class" data-form-action="<?php echo $action; ?>" data-icon="fa-save" data-toast-heading-title-success="<?php echo lang('Text.success', [], 'en'); ?>" data-toast-heading-title-error="<?php echo lang('Text.error', [], 'en'); ?>" data-toast-heading-icon-success="fa-check-circle" data-toast-heading-icon-error="fa-triangle-exclamation" data-redirection="false"><i class="fas fa-save fa-fw"></i><span class="d-none d-md-inline-block ms-1"><?php echo lang('Button.save_and_continue', [], 'en'); ?></span></button>
+                    <button type="button" class="btn btn-sm btn-success button-action" data-form="form-length-class" data-form-action="<?php echo $action; ?>" data-icon="fa-save" data-toast-heading-title-success="<?php echo lang('Text.success', [], 'en'); ?>" data-toast-heading-title-error="<?php echo lang('Text.error', [], 'en'); ?>" data-toast-heading-icon-success="fa-check-circle" data-toast-heading-icon-error="fa-triangle-exclamation" data-redirection="true"><i class="fas fa-save fa-fw"></i><span class="d-none d-md-inline-block ms-1"><?php echo lang('Button.save', [], 'en'); ?></span></button>
+                    <a href="<?php echo $cancel; ?>" class="btn btn-outline-secondary btn-sm"><i class="fas fa-long-arrow-alt-left fa-fw"></i></a>
+                </div>
+            </div>
             <div class="card-body">
                 <fieldset>
                     <div class="mb-3 required">
@@ -42,9 +37,8 @@
                         <div class="mb-3">
                             <div class="input-group">
                                 <span class="input-group-text" id="basic-addon-title-<?php echo $language['language_id']; ?>"><img src="<?php echo base_url('assets/flags/' . $language['code'] . '.png'); ?>" /></span>
-                                <input type="text" name="description[<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($description[$language['language_id']]['title']) ? $description[$language['language_id']]['title'] : ''; ?>" class="form-control" placeholder="<?php echo lang('Entry.title'); ?>" aria-label="<?php echo lang('Entry.title'); ?>" aria-describedby="basic-addon-title-<?php echo $language['language_id']; ?>">
+                                <input type="text" name="description[<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($description[$language['language_id']]['title']) ? $description[$language['language_id']]['title'] : ''; ?>" class="form-control" id="input-title-<?php echo $language['language_id']; ?>" placeholder="<?php echo lang('Entry.title'); ?>" aria-label="<?php echo lang('Entry.title'); ?>" aria-describedby="basic-addon-title-<?php echo $language['language_id']; ?>">
                             </div>
-                            <?php if (!empty($error_description[$language['language_id']]['title'])) { ?><div class="text-danger small"><?php echo $error_description[$language['language_id']]['title']; ?></div><?php } ?>
                         </div>
                         <?php } ?>
                     </div>
@@ -54,16 +48,14 @@
                         <div class="mb-3">
                             <div class="input-group">
                                 <span class="input-group-text" id="basic-addon-unit-<?php echo $language['language_id']; ?>"><img src="<?php echo base_url('assets/flags/' . $language['code'] . '.png'); ?>" /></span>
-                                <input type="text" name="description[<?php echo $language['language_id']; ?>][unit]" value="<?php echo isset($description[$language['language_id']]['unit']) ? $description[$language['language_id']]['unit'] : ''; ?>" class="form-control" placeholder="<?php echo lang('Entry.unit'); ?>" aria-label="<?php echo lang('Entry.unit'); ?>" aria-describedby="basic-addon-unit-<?php echo $language['language_id']; ?>">
+                                <input type="text" name="description[<?php echo $language['language_id']; ?>][unit]" value="<?php echo isset($description[$language['language_id']]['unit']) ? $description[$language['language_id']]['unit'] : ''; ?>" class="form-control" id="input-unit-<?php echo $language['language_id']; ?>" placeholder="<?php echo lang('Entry.unit'); ?>" aria-label="<?php echo lang('Entry.unit'); ?>" aria-describedby="basic-addon-unit-<?php echo $language['language_id']; ?>">
                             </div>
-                            <?php if (!empty($error_description[$language['language_id']]['unit'])) { ?><div class="text-danger small"><?php echo $error_description[$language['language_id']]['unit']; ?></div><?php } ?>
                         </div>
                         <?php } ?>
                     </div>
                     <div class="mb-3 required">
                         <label for="input-value" class="form-label"><?php echo lang('Entry.value'); ?></label>
                         <input type="number" min="0" step="any" name="value" value="<?php echo $value; ?>" id="input-value" class="form-control" placeholder="<?php echo lang('Entry.value'); ?>">
-                        <?php if (!empty($error_value)) { ?><div class="text-danger small"><?php echo $error_value; ?></div><?php } ?>
                     </div>
                 </fieldset>
             </div>

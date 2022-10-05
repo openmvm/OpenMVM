@@ -63,7 +63,7 @@
                                             <?php foreach ($header_widgets as $header_widget) { ?>
                                             <tr id="header-widget-<?php echo $header_widget_row; ?>">
                                                 <td>
-                                                    <select name="theme_marketplace_com_openmvm_basic_header_widget[<?php echo $header_widget_row; ?>]" id="input-header-widget-<?php echo $header_widget_row; ?>" class="form-control">
+                                                    <select name="theme_marketplace_com_openmvm_basic_header_widget[<?php echo $header_widget_row; ?>]" id="input-header-widget-<?php echo $header_widget_row; ?>" class="form-select">
                                                         <?php if ($widgets) { ?>
                                                             <?php foreach ($widgets as $widget) { ?>
                                                                 <?php if ($widget['is_installed']) { ?>
@@ -133,7 +133,7 @@
                                                                         <?php foreach ($layout_widget[$layout['layout_id']]['page_top'] as $page_top_widget) { ?>
                                                                         <tr id="layout-<?php echo $layout['layout_id']; ?>-page-top-<?php echo $page_top_widget_row; ?>-widget">
                                                                             <td>
-                                                                                <select name="theme_marketplace_com_openmvm_basic_content_layout_widget[<?php echo $layout['layout_id']; ?>][page_top][<?php echo $page_top_widget_row; ?>]" id="input-layout-<?php echo $layout['layout_id']; ?>-page-top-<?php echo $page_top_widget_row; ?>-widget" class="form-control">
+                                                                                <select name="theme_marketplace_com_openmvm_basic_content_layout_widget[<?php echo $layout['layout_id']; ?>][page_top][<?php echo $page_top_widget_row; ?>]" id="input-layout-<?php echo $layout['layout_id']; ?>-page-top-<?php echo $page_top_widget_row; ?>-widget" class="form-select">
                                                                                 <?php if ($widgets) { ?>
                                                                                     <?php foreach ($widgets as $widget) { ?>
                                                                                         <?php if ($widget['is_installed']) { ?>
@@ -191,7 +191,7 @@
                                                                                 <?php foreach ($layout_widget[$layout['layout_id']]['column_left'] as $column_left_widget) { ?>
                                                                                 <tr id="layout-<?php echo $layout['layout_id']; ?>-column-left-<?php echo $column_left_widget_row; ?>-widget">
                                                                                     <td>
-                                                                                        <select name="theme_marketplace_com_openmvm_basic_content_layout_widget[<?php echo $layout['layout_id']; ?>][column_left][<?php echo $column_left_widget_row; ?>]" id="input-layout-<?php echo $layout['layout_id']; ?>-column-left-<?php echo $column_left_widget_row; ?>-widget" class="form-control">
+                                                                                        <select name="theme_marketplace_com_openmvm_basic_content_layout_widget[<?php echo $layout['layout_id']; ?>][column_left][<?php echo $column_left_widget_row; ?>]" id="input-layout-<?php echo $layout['layout_id']; ?>-column-left-<?php echo $column_left_widget_row; ?>-widget" class="form-select">
                                                                                         <?php if ($widgets) { ?>
                                                                                             <?php foreach ($widgets as $widget) { ?>
                                                                                                 <?php if ($widget['is_installed']) { ?>
@@ -249,7 +249,7 @@
                                                                                 <?php foreach ($layout_widget[$layout['layout_id']]['content_top'] as $content_top_widget) { ?>
                                                                                 <tr id="layout-<?php echo $layout['layout_id']; ?>-content-top-<?php echo $content_top_widget_row; ?>-widget">
                                                                                     <td>
-                                                                                        <select name="theme_marketplace_com_openmvm_basic_content_layout_widget[<?php echo $layout['layout_id']; ?>][content_top][<?php echo $content_top_widget_row; ?>]" id="input-layout-<?php echo $layout['layout_id']; ?>-content-top-<?php echo $content_top_widget_row; ?>-widget" class="form-control">
+                                                                                        <select name="theme_marketplace_com_openmvm_basic_content_layout_widget[<?php echo $layout['layout_id']; ?>][content_top][<?php echo $content_top_widget_row; ?>]" id="input-layout-<?php echo $layout['layout_id']; ?>-content-top-<?php echo $content_top_widget_row; ?>-widget" class="form-select">
                                                                                         <?php if ($widgets) { ?>
                                                                                             <?php foreach ($widgets as $widget) { ?>
                                                                                                 <?php if ($widget['is_installed']) { ?>
@@ -305,7 +305,7 @@
                                                                                 <?php foreach ($layout_widget[$layout['layout_id']]['content_bottom'] as $content_bottom_widget) { ?>
                                                                                 <tr id="layout-<?php echo $layout['layout_id']; ?>-content-bottom-<?php echo $content_bottom_widget_row; ?>-widget">
                                                                                     <td>
-                                                                                        <select name="theme_marketplace_com_openmvm_basic_content_layout_widget[<?php echo $layout['layout_id']; ?>][content_bottom][<?php echo $content_bottom_widget_row; ?>]" id="input-layout-<?php echo $layout['layout_id']; ?>-content-bottom-<?php echo $content_bottom_widget_row; ?>-widget" class="form-control">
+                                                                                        <select name="theme_marketplace_com_openmvm_basic_content_layout_widget[<?php echo $layout['layout_id']; ?>][content_bottom][<?php echo $content_bottom_widget_row; ?>]" id="input-layout-<?php echo $layout['layout_id']; ?>-content-bottom-<?php echo $content_bottom_widget_row; ?>-widget" class="form-select">
                                                                                         <?php if ($widgets) { ?>
                                                                                             <?php foreach ($widgets as $widget) { ?>
                                                                                                 <?php if ($widget['is_installed']) { ?>
@@ -363,7 +363,7 @@
                                                                                 <?php foreach ($layout_widget[$layout['layout_id']]['column_right'] as $column_right_widget) { ?>
                                                                                 <tr id="layout-<?php echo $layout['layout_id']; ?>-column-right-<?php echo $column_right_widget_row; ?>-widget">
                                                                                     <td>
-                                                                                        <select name="theme_marketplace_com_openmvm_basic_content_layout_widget[<?php echo $layout['layout_id']; ?>][column_right][<?php echo $column_right_widget_row; ?>]" id="input-layout-<?php echo $layout['layout_id']; ?>-column-right-<?php echo $column_right_widget_row; ?>-widget" class="form-control">
+                                                                                        <select name="theme_marketplace_com_openmvm_basic_content_layout_widget[<?php echo $layout['layout_id']; ?>][column_right][<?php echo $column_right_widget_row; ?>]" id="input-layout-<?php echo $layout['layout_id']; ?>-column-right-<?php echo $column_right_widget_row; ?>-widget" class="form-select">
                                                                                         <?php if ($widgets) { ?>
                                                                                             <?php foreach ($widgets as $widget) { ?>
                                                                                                 <?php if ($widget['is_installed']) { ?>
@@ -421,7 +421,7 @@
                                                                         <?php foreach ($layout_widget[$layout['layout_id']]['page_bottom'] as $page_bottom_widget) { ?>
                                                                         <tr id="layout-<?php echo $layout['layout_id']; ?>-page-bottom-<?php echo $page_bottom_widget_row; ?>-widget">
                                                                             <td>
-                                                                                <select name="theme_marketplace_com_openmvm_basic_content_layout_widget[<?php echo $layout['layout_id']; ?>][page_bottom][<?php echo $page_bottom_widget_row; ?>]" id="input-layout-<?php echo $layout['layout_id']; ?>-page-bottom-<?php echo $page_bottom_widget_row; ?>-widget" class="form-control">
+                                                                                <select name="theme_marketplace_com_openmvm_basic_content_layout_widget[<?php echo $layout['layout_id']; ?>][page_bottom][<?php echo $page_bottom_widget_row; ?>]" id="input-layout-<?php echo $layout['layout_id']; ?>-page-bottom-<?php echo $page_bottom_widget_row; ?>-widget" class="form-select">
                                                                                 <?php if ($widgets) { ?>
                                                                                     <?php foreach ($widgets as $widget) { ?>
                                                                                         <?php if ($widget['is_installed']) { ?>
@@ -488,7 +488,7 @@
                                             <h6 class="border-bottom pb-3 mb-3"><?php echo lang('Tab.column'); ?> <?php echo $footer_column_row; ?></h6>
                                             <div class="mb-3">
                                                 <label for="input-footer-column-width-<?php echo $footer_column_row; ?>" class="form-label"><?php echo lang('Entry.column_width'); ?></label>
-                                                <select name="theme_marketplace_com_openmvm_basic_footer_column[<?php echo $footer_column_row; ?>][column_width]" id="input-footer-column-width-<?php echo $footer_column_row; ?>" class="form-control">
+                                                <select name="theme_marketplace_com_openmvm_basic_footer_column[<?php echo $footer_column_row; ?>][column_width]" id="input-footer-column-width-<?php echo $footer_column_row; ?>" class="form-select">
                                                     <?php foreach ($column_widths as $column_width) { ?>
                                                         <?php if ($column_width == $footer_column['column_width']) { ?>
                                                         <option value="<?php echo $column_width; ?>" selected="selected"><?php echo $column_width; ?></option>
@@ -513,7 +513,7 @@
                                                                 <?php foreach ($footer_column['widget'] as $footer_column_widget) { ?>
                                                                 <tr id="footer-column-<?php echo $footer_column_row; ?>-widget-<?php echo $footer_column_widget_row; ?>">
                                                                     <td>
-                                                                        <select name="theme_marketplace_com_openmvm_basic_footer_column[<?php echo $footer_column_row; ?>][widget][<?php echo $footer_column_widget_row; ?>]" id="footer-column-<?php echo $footer_column_row; ?>-width-<?php echo $footer_column_widget_row; ?>" class="form-control">
+                                                                        <select name="theme_marketplace_com_openmvm_basic_footer_column[<?php echo $footer_column_row; ?>][widget][<?php echo $footer_column_widget_row; ?>]" id="footer-column-<?php echo $footer_column_row; ?>-width-<?php echo $footer_column_widget_row; ?>" class="form-select">
                                                                         <?php if ($widgets) { ?>
                                                                             <?php foreach ($widgets as $widget) { ?>
                                                                                 <?php if ($widget['is_installed']) { ?>
@@ -568,7 +568,7 @@ var header_widget_row = '<?php echo $header_widget_row; ?>';
 function addHeaderWidget() {
     html = '<tr id="header-widget-' + header_widget_row + '">';
     html += '    <td>';
-    html += '        <select name="theme_marketplace_com_openmvm_basic_header_widget[' + header_widget_row + ']" id="input-header-widget-' + header_widget_row + '" class="form-control">';
+    html += '        <select name="theme_marketplace_com_openmvm_basic_header_widget[' + header_widget_row + ']" id="input-header-widget-' + header_widget_row + '" class="form-select">';
     <?php if ($widgets) { ?>
         <?php foreach ($widgets as $widget) { ?>
             <?php if ($widget['is_installed']) { ?>
@@ -617,7 +617,7 @@ function addContentWidget(position, layout_id) {
 
     html = '<tr id="layout-' + layout_id + '-' + position + '-' + content_widget_row + '-widget">';
     html += '    <td>';
-    html += '        <select name="theme_marketplace_com_openmvm_basic_content_layout_widget[' + layout_id + '][' + position.replace('-', '_') + '][' + content_widget_row + ']" id="input-layout-' + layout_id + '-' + position + '-' + content_widget_row + '-widget" class="form-control">';
+    html += '        <select name="theme_marketplace_com_openmvm_basic_content_layout_widget[' + layout_id + '][' + position.replace('-', '_') + '][' + content_widget_row + ']" id="input-layout-' + layout_id + '-' + position + '-' + content_widget_row + '-widget" class="form-select">';
     <?php if ($widgets) { ?>
         <?php foreach ($widgets as $widget) { ?>
             <?php if ($widget['is_installed']) { ?>
@@ -667,7 +667,7 @@ $( "#button-footer-column-add" ).on( "click", function() {
     html += '<h6 class="border-bottom pb-3 mb-3"><?php echo lang('Tab.column'); ?> ' + footer_column_row + '</h6>';
     html += '    <div class="mb-3">';
     html += '        <label for="input-footer-column-width-' + footer_column_row + '" class="form-label"><?php echo lang('Entry.column_width'); ?></label>';
-    html += '        <select name="theme_marketplace_com_openmvm_basic_footer_column[' + footer_column_row + '][column_width]" id="footer-column-width-' + footer_column_row + '" class="form-control">';
+    html += '        <select name="theme_marketplace_com_openmvm_basic_footer_column[' + footer_column_row + '][column_width]" id="footer-column-width-' + footer_column_row + '" class="form-select">';
     <?php foreach ($column_widths as $column_width) { ?>
         html += '        <option value="<?php echo $column_width; ?>"><?php echo $column_width; ?></option>';
     <?php } ?>
@@ -711,7 +711,7 @@ var footer_column_widget_row = '<?php echo $footer_column_widget_row; ?>';
 function addFooterWidget(footer_column_row) {
     html = '<tr id="footer-column-' + footer_column_row + '-widget-' + footer_column_widget_row + '">';
     html += '    <td>';
-    html += '        <select name="theme_marketplace_com_openmvm_basic_footer_column[' + footer_column_row + '][widget][' + footer_column_widget_row + ']" id="input-footer-column-' + footer_column_row + '-width-' + footer_column_widget_row + '" class="form-control">'
+    html += '        <select name="theme_marketplace_com_openmvm_basic_footer_column[' + footer_column_row + '][widget][' + footer_column_widget_row + ']" id="input-footer-column-' + footer_column_row + '-width-' + footer_column_widget_row + '" class="form-select">'
     <?php if ($widgets) { ?>
         <?php foreach ($widgets as $widget) { ?>
             <?php if ($widget['is_installed']) { ?>
