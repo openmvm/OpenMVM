@@ -14,5 +14,5 @@ return [
 	'entry_username' => 'Username',
 	'entry_password' => 'Password',
 	'entry_passconf' => 'Password Confirmation',
-	'entry_uri_segment' => 'URI Segment',
+	'entry_admin_url_segment' => 'Admin URL Segment',
 ];

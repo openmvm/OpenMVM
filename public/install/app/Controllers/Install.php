@@ -32,7 +32,7 @@ class Install extends BaseController
 			if (base_url() == 'http://localhost:8080' || base_url() == 'http://localhost:8080/') {
 				$old_string = "# app.baseURL = ''";
 
-				$new_string = "app.VERSION = '1.0.0'\napp.baseURL = '" . str_replace('install/public/', '', $install_base_url) . "'";
+				$new_string = "app.VERSION = '0.4.0'\napp.baseURL = '" . str_replace('install/public/', '', $install_base_url) . "'\napp.adminUrlSegment = 'admin'";
 
 				// main_env_file
 				// read the entire string
@@ -149,11 +149,13 @@ class Install extends BaseController
 				!extension_loaded('xml') || 
 				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . '.env') || 
 				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../') . '/') . '.env') || 
+				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'plugins/') || 
 				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'theme_admin/') || 
 				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'theme_marketplace/') || 
 				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'writable/cache/') || 
 				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'writable/downloads/') || 
 				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'writable/logs/') || 
+				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'writable/temp/') || 
 				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'writable/uploads/') || 
 				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'public/assets/admin/theme/') || 
 				!is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . '/public/assets/images/marketplace/') || 
@@ -194,6 +196,10 @@ class Install extends BaseController
 				'writable' => is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../') . '/') . '.env'),
 			),
 			array(
+				'path' => str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'plugins/',
+				'writable' => is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'plugins/'),
+			),
+			array(
 				'path' => str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'theme_admin/',
 				'writable' => is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'theme_admin/'),
 			),
@@ -212,6 +218,10 @@ class Install extends BaseController
 			array(
 				'path' => str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'writable/logs/',
 				'writable' => is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'writable/logs/'),
+			),
+			array(
+				'path' => str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'writable/temp/',
+				'writable' => is_writable(str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'writable/temp/'),
 			),
 			array(
 				'path' => str_replace('\\', '/', realpath(dirname(__FILE__) . '/../../../../') . '/') . 'writable/uploads/',
@@ -335,12 +345,16 @@ class Install extends BaseController
 			$data['username'] = '';
 		}
 
+		if($this->request->getPost('admin_url_segment')) {
+			$data['admin_url_segment'] = $this->request->getPost('admin_url_segment');
+		} else {
+			$data['admin_url_segment'] = 'admin';
+		}
+
 		$data['validation'] = $this->validation;
 
 		// DB Drivers
 		$data['mysqli'] = extension_loaded('mysqli');
-		$data['pdo'] = extension_loaded('pdo');
-		$data['pgsql'] = extension_loaded('pgsql');
 	
 		if ($this->request->getPost()) {
 			$validate = $this->validate([
@@ -354,7 +368,7 @@ class Install extends BaseController
 				'username' => ['label' => lang('Entry.entry_username', array(), 'en-US'), 'rules' => 'required', 'errors' => ['required' => lang('Error.error_required', array(), 'en-US')]],
 				'password' => ['label' => lang('Entry.entry_password', array(), 'en-US'), 'rules' => 'required', 'errors' => ['required' => lang('Error.error_required', array(), 'en-US')]],
 				'passconf' => ['label' => lang('Entry.entry_passconf', array(), 'en-US'), 'rules' => 'required|matches[password]', 'errors' => ['required' => lang('Error.error_required', array(), 'en-US'), 'matches' => lang('Error.error_matches', array(), 'en-US')]],
-				//'uri_segment' => ['label' => lang('Entry.entry_uri_segment', array(), 'en-US'), 'rules' => 'required|alpha_numeric', 'errors' => ['required' => lang('Error.error_required', array(), 'en-US'),'alpha_numeric' => lang('Error.error_alpha_numeric', array(), 'en-US')]],
+				'admin_url_segment' => ['label' => lang('Entry.entry_admin_url_segment', array(), 'en-US'), 'rules' => 'required|alpha_numeric', 'errors' => ['required' => lang('Error.error_required', array(), 'en-US'),'alpha_numeric' => lang('Error.error_alpha_numeric', array(), 'en-US')]],
 			]);
 		}
 
@@ -381,9 +395,9 @@ class Install extends BaseController
 							$install_env_file = '../.env';
 							$main_env_file = '../../../.env';
 
-							$old_string = "# app.adminDir = ''";
+							$old_string = "app.adminUrlSegment = 'admin'";
 
-							$new_string = "app.adminDir = '" . $this->request->getPost('uri_segment') . "'";
+							$new_string = "app.adminUrlSegment = '" . $this->request->getPost('admin_url_segment') . "'";
 
 							// main_env_file
 							// read the entire string
@@ -470,7 +484,7 @@ class Install extends BaseController
 		$data['front_locale'] = 'en-US';
 
 		// Data Text
-		$data['admin_dir'] = 'admin'; //$_SERVER['app.adminDir'];
+		$data['admin_dir'] = $_SERVER['app.adminUrlSegment'];
 
 		// Load Header
 		$header_parameter = array(

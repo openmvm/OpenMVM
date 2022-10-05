@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 16 Apr 2022 pada 09.22
--- Versi server: 10.4.21-MariaDB
--- Versi PHP: 7.3.31
+-- Waktu pembuatan: 05 Okt 2022 pada 05.07
+-- Versi server: 10.4.22-MariaDB
+-- Versi PHP: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -60,7 +60,7 @@ CREATE TABLE `administrator_group` (
 --
 
 INSERT INTO `administrator_group` (`administrator_group_id`, `name`, `permission`) VALUES
-(1, 'Administrator', '{\"access\":[\"Administrator\\/Administrator\",\"Administrator\\/Administrator_Group\",\"Appearance\\/Admin\\/Theme\",\"Appearance\\/Marketplace\\/Layout\",\"Appearance\\/Marketplace\\/Theme\",\"Appearance\\/Marketplace\\/Widget\",\"Appearance\\/Marketplace\\/Widgets\\/Category\",\"Appearance\\/Marketplace\\/Widgets\\/HTML_Content\",\"Appearance\\/Marketplace\\/Widgets\\/Link\",\"Appearance\\/Marketplace\\/Widgets\\/Page\",\"Customer\\/Customer\",\"Customer\\/Customer_Group\",\"Developer\\/Language_Editor\",\"File_Manager\\/Image_Manager\",\"Localisation\\/Country\",\"Localisation\\/Currency\",\"Localisation\\/Geo_Zone\",\"Localisation\\/Language\",\"Localisation\\/Length_Class\",\"Localisation\\/Order_Status\",\"Localisation\\/Weight_Class\",\"Localisation\\/Zone\",\"Marketplace\\/Category\",\"Component\\/Component\\/Order_Total\",\"Component\\/Component\\/Payment_Method\",\"Component\\/Component\\/Shipping_Method\",\"Component\\/Order_Total\\/Shipping\",\"Component\\/Order_Total\\/Sub_Total\",\"Component\\/Order_Total\\/Total\",\"Component\\/Payment_Method\\/Bank_Transfer\",\"Component\\/Payment_Method\\/Cash_On_Delivery\",\"Component\\/Shipping_Method\\/Flat_Rate\",\"Component\\/Shipping_Method\\/Weight_Based\",\"Component\\/Shipping_Method\\/Zone_Based\",\"Page\\/Page\",\"Plugin\\/Plugin\",\"System\\/Error_Log\",\"System\\/Setting\",\"plugins\\/com_bukausahaonline\\/Widget_Blank\\/Controllers\\/Admin\\/Appearance\\/Marketplace\\/Widgets\\/Blank\"],\"modify\":[\"Administrator\\/Administrator\",\"Administrator\\/Administrator_Group\",\"Appearance\\/Admin\\/Theme\",\"Appearance\\/Marketplace\\/Layout\",\"Appearance\\/Marketplace\\/Theme\",\"Appearance\\/Marketplace\\/Widget\",\"Appearance\\/Marketplace\\/Widgets\\/Category\",\"Appearance\\/Marketplace\\/Widgets\\/HTML_Content\",\"Appearance\\/Marketplace\\/Widgets\\/Link\",\"Appearance\\/Marketplace\\/Widgets\\/Page\",\"Customer\\/Customer\",\"Customer\\/Customer_Group\",\"Developer\\/Language_Editor\",\"File_Manager\\/Image_Manager\",\"Localisation\\/Country\",\"Localisation\\/Currency\",\"Localisation\\/Geo_Zone\",\"Localisation\\/Language\",\"Localisation\\/Length_Class\",\"Localisation\\/Order_Status\",\"Localisation\\/Weight_Class\",\"Localisation\\/Zone\",\"Marketplace\\/Category\",\"Component\\/Component\\/Order_Total\",\"Component\\/Component\\/Payment_Method\",\"Component\\/Component\\/Shipping_Method\",\"Component\\/Order_Total\\/Shipping\",\"Component\\/Order_Total\\/Sub_Total\",\"Component\\/Order_Total\\/Total\",\"Component\\/Payment_Method\\/Bank_Transfer\",\"Component\\/Payment_Method\\/Cash_On_Delivery\",\"Component\\/Shipping_Method\\/Flat_Rate\",\"Component\\/Shipping_Method\\/Weight_Based\",\"Component\\/Shipping_Method\\/Zone_Based\",\"Page\\/Page\",\"Plugin\\/Plugin\",\"System\\/Error_Log\",\"System\\/Setting\",\"plugins\\/com_bukausahaonline\\/Widget_Blank\\/Controllers\\/Admin\\/Appearance\\/Marketplace\\/Widgets\\/Blank\"]}'),
+(1, 'Administrator', '{\"access\":[\"Administrator\\/Administrator\",\"Administrator\\/Administrator_Group\",\"Appearance\\/Admin\\/Theme\",\"Appearance\\/Marketplace\\/Layout\",\"Appearance\\/Marketplace\\/Theme\",\"Appearance\\/Marketplace\\/Widget\",\"Appearance\\/Marketplace\\/Widgets\\/Category\",\"Appearance\\/Marketplace\\/Widgets\\/HTML_Content\",\"Appearance\\/Marketplace\\/Widgets\\/Link\",\"Appearance\\/Marketplace\\/Widgets\\/Page\",\"Component\\/Analytics\\/Google_Analytics_4\",\"Component\\/Component\\/Analytics\",\"Component\\/Component\\/Order_Total\",\"Component\\/Component\\/Payment_Method\",\"Component\\/Component\\/Shipping_Method\",\"Component\\/Order_Total\\/Shipping\",\"Component\\/Order_Total\\/Sub_Total\",\"Component\\/Order_Total\\/Total\",\"Component\\/Payment_Method\\/Bank_Transfer\",\"Component\\/Payment_Method\\/Cash_On_Delivery\",\"Component\\/Shipping_Method\\/Flat_Rate\",\"Component\\/Shipping_Method\\/Weight_Based\",\"Component\\/Shipping_Method\\/Zone_Based\",\"Customer\\/Customer\",\"Customer\\/Customer_Group\",\"Developer\\/Demo_Manager\",\"Developer\\/Language_Editor\",\"File_Manager\\/Image_Manager\",\"Localisation\\/Country\",\"Localisation\\/Currency\",\"Localisation\\/Geo_Zone\",\"Localisation\\/Language\",\"Localisation\\/Length_Class\",\"Localisation\\/Order_Status\",\"Localisation\\/Weight_Class\",\"Localisation\\/Zone\",\"Marketplace\\/Category\",\"Page\\/Page\",\"Plugin\\/Plugin\",\"System\\/Error_Log\",\"System\\/Setting\",\"plugins\\/com_bukausahaonline\\/Widget_Blank\\/Controllers\\/Admin\\/Appearance\\/Marketplace\\/Widgets\\/Blank\",\"plugins\\/com_bukausahaonline\\/Widget_Blank\\/Controllers\\/Admin\\/Plugin\\/Plugin\"],\"modify\":[\"Administrator\\/Administrator\",\"Administrator\\/Administrator_Group\",\"Appearance\\/Admin\\/Theme\",\"Appearance\\/Marketplace\\/Layout\",\"Appearance\\/Marketplace\\/Theme\",\"Appearance\\/Marketplace\\/Widget\",\"Appearance\\/Marketplace\\/Widgets\\/Category\",\"Appearance\\/Marketplace\\/Widgets\\/HTML_Content\",\"Appearance\\/Marketplace\\/Widgets\\/Link\",\"Appearance\\/Marketplace\\/Widgets\\/Page\",\"Component\\/Analytics\\/Google_Analytics_4\",\"Component\\/Component\\/Analytics\",\"Component\\/Component\\/Order_Total\",\"Component\\/Component\\/Payment_Method\",\"Component\\/Component\\/Shipping_Method\",\"Component\\/Order_Total\\/Shipping\",\"Component\\/Order_Total\\/Sub_Total\",\"Component\\/Order_Total\\/Total\",\"Component\\/Payment_Method\\/Bank_Transfer\",\"Component\\/Payment_Method\\/Cash_On_Delivery\",\"Component\\/Shipping_Method\\/Flat_Rate\",\"Component\\/Shipping_Method\\/Weight_Based\",\"Component\\/Shipping_Method\\/Zone_Based\",\"Customer\\/Customer\",\"Customer\\/Customer_Group\",\"Developer\\/Demo_Manager\",\"Developer\\/Language_Editor\",\"File_Manager\\/Image_Manager\",\"Localisation\\/Country\",\"Localisation\\/Currency\",\"Localisation\\/Geo_Zone\",\"Localisation\\/Language\",\"Localisation\\/Length_Class\",\"Localisation\\/Order_Status\",\"Localisation\\/Weight_Class\",\"Localisation\\/Zone\",\"Marketplace\\/Category\",\"Page\\/Page\",\"Plugin\\/Plugin\",\"System\\/Error_Log\",\"System\\/Setting\",\"plugins\\/com_bukausahaonline\\/Widget_Blank\\/Controllers\\/Admin\\/Appearance\\/Marketplace\\/Widgets\\/Blank\",\"plugins\\/com_bukausahaonline\\/Widget_Blank\\/Controllers\\/Admin\\/Plugin\\/Plugin\"]}'),
 (2, 'Demonstration', '');
 
 -- --------------------------------------------------------
@@ -77,6 +77,7 @@ CREATE TABLE `cart` (
   `key` varchar(255) NOT NULL,
   `product_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
+  `option` text NOT NULL,
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -142,6 +143,20 @@ CREATE TABLE `component` (
   `value` varchar(255) NOT NULL,
   `date_added` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data untuk tabel `component`
+--
+
+INSERT INTO `component` (`component_id`, `type`, `author`, `value`, `date_added`) VALUES
+(1, 'payment_method', 'com_openmvm', 'Bank_Transfer', '2022-04-11 23:20:02'),
+(2, 'payment_method', 'com_openmvm', 'Cash_On_Delivery', '2022-04-11 23:20:04'),
+(3, 'shipping_method', 'com_openmvm', 'Flat_Rate', '2022-04-11 23:26:41'),
+(4, 'shipping_method', 'com_openmvm', 'Weight_Based', '2022-04-11 23:26:43'),
+(5, 'shipping_method', 'com_openmvm', 'Zone_Based', '2022-04-11 23:26:44'),
+(6, 'order_total', 'com_openmvm', 'Shipping', '2022-04-11 23:27:28'),
+(7, 'order_total', 'com_openmvm', 'Sub_Total', '2022-04-11 23:27:30'),
+(8, 'order_total', 'com_openmvm', 'Total', '2022-04-11 23:27:32');
 
 -- --------------------------------------------------------
 
@@ -219,7 +234,9 @@ CREATE TABLE `customer` (
   `telephone` varchar(16) NOT NULL,
   `email` varchar(128) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `status` int(3) NOT NULL
+  `status` int(3) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -281,7 +298,7 @@ CREATE TABLE `extension` (
 
 INSERT INTO `extension` (`extension_id`, `type`, `value`) VALUES
 (1, 'theme_marketplace', 'com_openmvm:Basic'),
-(2, 'theme_admin', 'com_openmvm:Basic');
+(4, 'theme_admin', 'com_openmvm:Basic');
 
 -- --------------------------------------------------------
 
@@ -435,6 +452,70 @@ INSERT INTO `length_class_description` (`length_class_description_id`, `length_c
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `option`
+--
+
+DROP TABLE IF EXISTS `option`;
+CREATE TABLE `option` (
+  `option_id` int(11) NOT NULL,
+  `seller_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `sort_order` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `option_description`
+--
+
+DROP TABLE IF EXISTS `option_description`;
+CREATE TABLE `option_description` (
+  `option_description_id` int(11) NOT NULL,
+  `option_id` int(11) NOT NULL,
+  `seller_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `option_value`
+--
+
+DROP TABLE IF EXISTS `option_value`;
+CREATE TABLE `option_value` (
+  `option_value_id` int(11) NOT NULL,
+  `option_id` int(11) NOT NULL,
+  `seller_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `sort_order` tinyint(3) NOT NULL,
+  `status` tinyint(1) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `option_value_description`
+--
+
+DROP TABLE IF EXISTS `option_value_description`;
+CREATE TABLE `option_value_description` (
+  `option_value_description_id` int(11) NOT NULL,
+  `option_value_id` int(11) NOT NULL,
+  `option_id` int(11) NOT NULL,
+  `seller_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `order`
 --
 
@@ -495,6 +576,8 @@ CREATE TABLE `order_product` (
   `name` varchar(255) NOT NULL,
   `quantity` int(5) NOT NULL,
   `price` decimal(15,4) NOT NULL,
+  `option` text NOT NULL,
+  `option_ids` text NOT NULL,
   `total` decimal(15,4) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -616,10 +699,10 @@ CREATE TABLE `page` (
 --
 
 INSERT INTO `page` (`page_id`, `sort_order`, `status`, `date_added`, `date_modified`) VALUES
-(1, 0, 1, '2022-04-11 00:55:21', '2022-04-12 10:39:13'),
-(2, 2, 1, '2022-04-11 00:55:25', '2022-04-12 10:39:30'),
-(3, 3, 1, '2022-04-11 08:00:47', '2022-04-12 10:40:09'),
-(4, 4, 1, '2022-04-12 05:27:17', '2022-04-12 10:39:53');
+(1, 0, 1, '2022-04-11 00:55:21', '2022-04-11 02:14:19'),
+(2, 2, 1, '2022-04-11 00:55:25', '2022-04-11 02:14:23'),
+(3, 3, 1, '2022-04-11 08:00:47', '2022-04-12 05:27:50'),
+(4, 4, 1, '2022-04-12 05:27:17', '2022-04-12 05:27:57');
 
 -- --------------------------------------------------------
 
@@ -642,14 +725,14 @@ CREATE TABLE `page_description` (
 --
 
 INSERT INTO `page_description` (`page_description_id`, `page_id`, `language_id`, `title`, `description`, `slug`) VALUES
-(35, 1, 1, 'About Us', '<div id=\"output\" class=\"page-generator__lorem\">About Us</div>\r\n<p>&nbsp;</p>', 'about-us'),
-(36, 1, 2, 'Tentang Kami', '<div id=\"output\">Tentang Kami</div>\r\n<p>&nbsp;</p>', 'tentang-kami'),
-(37, 2, 1, 'Delivery Information', '<div id=\"output\" class=\"page-generator__lorem\">Delivery Information</div>\r\n<p>&nbsp;</p>', 'delivery-information'),
-(38, 2, 2, 'Informasi Pengiriman', '<div id=\"output\" class=\"page-generator__lorem\">Informasi Pengiriman</div>\r\n<p>&nbsp;</p>', 'informasi-pengiriman'),
-(43, 3, 1, 'Terms of Service', '<div id=\"output\" class=\"page-generator__lorem\">Terms of Service</div>\r\n<p>&nbsp;</p>', 'terms-of-service'),
-(44, 3, 2, 'Aturan Layanan', '<div id=\"output\" class=\"page-generator__lorem\">Aturan Layanan</div>\r\n<p>&nbsp;</p>', 'aturan-layanan'),
-(41, 4, 1, 'Privacy Policy', '<p>Privacy Policy</p>', 'privacy-policy'),
-(42, 4, 2, 'Kebijakan Privasi', '<p>Kebijakan Privasi</p>', 'kebijakan-privasi');
+(22, 1, 2, 'Tentang Kami', '<div id=\"output\">ID - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>\r\n<p>&nbsp;</p>', 'tentang-kami'),
+(21, 1, 1, 'About Us', '<div id=\"output\" class=\"page-generator__lorem\">EN - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>\r\n<p>&nbsp;</p>', 'about-us'),
+(24, 2, 2, 'Informasi Pengiriman', '<div id=\"output\" class=\"page-generator__lorem\">ID - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>\r\n<p>&nbsp;</p>', 'informasi-pengiriman'),
+(23, 2, 1, 'Delivery Information', '<div id=\"output\" class=\"page-generator__lorem\">EN - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>\r\n<p>&nbsp;</p>', 'delivery-information'),
+(31, 3, 1, 'Terms of Service', '<div id=\"output\" class=\"page-generator__lorem\">EN - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>\r\n<p>&nbsp;</p>', 'terms-of-service'),
+(32, 3, 2, 'Aturan Layanan', '<div id=\"output\" class=\"page-generator__lorem\">ID - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>\r\n<p>&nbsp;</p>', 'aturan-layanan'),
+(34, 4, 2, 'Kebijakan Privasi', '<p>ID - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>', 'kebijakan-privasi'),
+(33, 4, 1, 'Privacy Policy', '<p>EN - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>', 'privacy-policy');
 
 -- --------------------------------------------------------
 
@@ -663,10 +746,13 @@ CREATE TABLE `product` (
   `seller_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `category_id_path` varchar(255) NOT NULL,
+  `product_option` tinyint(1) NOT NULL,
   `price` decimal(15,8) NOT NULL,
+  `quantity` int(11) NOT NULL,
   `weight` decimal(15,8) NOT NULL,
   `weight_class_id` int(11) NOT NULL,
   `main_image` varchar(255) NOT NULL,
+  `sku` varchar(255) NOT NULL,
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
   `status` tinyint(1) NOT NULL
@@ -694,6 +780,53 @@ CREATE TABLE `product_description` (
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `product_image`
+--
+
+DROP TABLE IF EXISTS `product_image`;
+CREATE TABLE `product_image` (
+  `product_image_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `seller_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `image` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `product_option`
+--
+
+DROP TABLE IF EXISTS `product_option`;
+CREATE TABLE `product_option` (
+  `product_option_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `option_id` int(11) NOT NULL,
+  `seller_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `product_option_value`
+--
+
+DROP TABLE IF EXISTS `product_option_value`;
+CREATE TABLE `product_option_value` (
+  `product_option_value_id` int(11) NOT NULL,
+  `product_option_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `option_id` int(11) NOT NULL,
+  `option_value_id` int(11) NOT NULL,
+  `seller_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `product_to_category`
 --
 
@@ -701,6 +834,76 @@ DROP TABLE IF EXISTS `product_to_category`;
 CREATE TABLE `product_to_category` (
   `product_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `product_variant`
+--
+
+DROP TABLE IF EXISTS `product_variant`;
+CREATE TABLE `product_variant` (
+  `product_variant_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `seller_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `options` text NOT NULL,
+  `sku` varchar(255) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` decimal(15,8) NOT NULL,
+  `weight` decimal(15,8) NOT NULL,
+  `weight_class_id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `product_variant_image`
+--
+
+DROP TABLE IF EXISTS `product_variant_image`;
+CREATE TABLE `product_variant_image` (
+  `product_variant_image_id` int(11) NOT NULL,
+  `product_variant_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `seller_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `image` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `product_variant_option`
+--
+
+DROP TABLE IF EXISTS `product_variant_option`;
+CREATE TABLE `product_variant_option` (
+  `product_variant_option_id` int(11) NOT NULL,
+  `product_variant_id` int(11) NOT NULL,
+  `option_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `seller_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `product_variant_option_value`
+--
+
+DROP TABLE IF EXISTS `product_variant_option_value`;
+CREATE TABLE `product_variant_option_value` (
+  `product_variant_option_value_id` int(11) NOT NULL,
+  `product_variant_option_id` int(11) NOT NULL,
+  `product_variant_id` int(11) NOT NULL,
+  `option_id` int(11) NOT NULL,
+  `option_value_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `seller_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -796,22 +999,22 @@ INSERT INTO `setting` (`setting_id`, `code`, `key`, `value`, `serialized`) VALUE
 (2, 'setting', 'setting_marketplace_description_1', '<p>OpenMVM is an Open-source Multi-vendor Marketplace Platform.</p>', 0),
 (3, 'setting', 'setting_marketplace_meta_title_1', 'OpenMVM', 0),
 (4, 'setting', 'setting_marketplace_meta_description_1', 'OpenMVM is an Open-source Multi-vendor Marketplace Platform.', 0),
-(5, 'setting', 'setting_marketplace_meta_keywords_1', 'openmvm,open-source,multi-vendor,marketplace', 0),
+(5, 'setting', 'setting_marketplace_meta_keywords_1', 'openmvm,marketplace,multi-vendor', 0),
 (6, 'setting', 'setting_marketplace_description_2', '<p>OpenMVM is an Open-source Multi-vendor Marketplace Platform.</p>', 0),
 (7, 'setting', 'setting_marketplace_meta_title_2', 'OpenMVM', 0),
 (8, 'setting', 'setting_marketplace_meta_description_2', 'OpenMVM is an Open-source Multi-vendor Marketplace Platform.', 0),
-(9, 'setting', 'setting_marketplace_meta_keywords_2', 'openmvm,open-source,multi-vendor,marketplace', 0),
+(9, 'setting', 'setting_marketplace_meta_keywords_2', 'openmvm,marketplace,multi-vendor', 0),
 (10, 'setting', 'setting_logo', 'marketplace/logo-openmvm.png', 0),
 (11, 'setting', 'setting_favicon', 'marketplace/favicon-openmvm.png', 0),
 (12, 'setting', 'setting_copyright_name', 'OpenMVM', 0),
 (13, 'setting', 'setting_copyright_year', '2020-2022', 0),
 (14, 'setting', 'setting_address_1', 'Test Address', 0),
 (15, 'setting', 'setting_address_2', '', 0),
-(16, 'setting', 'setting_country_id', '6', 0),
-(17, 'setting', 'setting_zone_id', '5', 0),
-(18, 'setting', 'setting_city', 'Test City', 0),
-(19, 'setting', 'setting_telephone', '+1 123 456 7890', 0),
-(20, 'setting', 'setting_email', 'admin.openmvm@example.com', 0),
+(16, 'setting', 'setting_country_id', '3', 0),
+(17, 'setting', 'setting_zone_id', '2', 0),
+(18, 'setting', 'setting_city', 'Semarang', 0),
+(19, 'setting', 'setting_telephone', '+62 123 456 7890', 0),
+(20, 'setting', 'setting_email', 'test@example.com', 0),
 (21, 'setting', 'setting_administrator_group_id', '1', 0),
 (22, 'setting', 'setting_customer_group_id', '1', 0),
 (23, 'setting', 'setting_order_invoice_prefix', 'OPENMVM-INV', 0),
@@ -822,7 +1025,39 @@ INSERT INTO `setting` (`setting_id`, `code`, `key`, `value`, `serialized`) VALUE
 (28, 'setting', 'setting_admin_weight_class_id', '1', 0),
 (29, 'setting', 'setting_marketplace_weight_class_id', '1', 0),
 (30, 'setting', 'setting_admin_theme', 'com_openmvm:Basic', 0),
-(31, 'setting', 'setting_marketplace_theme', 'com_openmvm:Basic', 0);
+(31, 'setting', 'setting_marketplace_theme', 'com_openmvm:Basic', 0),
+(36, 'theme_marketplace_com_openmvm_basic', 'theme_marketplace_com_openmvm_basic_footer_column', '[{\"column_width\":\"4\",\"widget\":[\"3\"]},{\"column_width\":\"2\",\"widget\":{\"1\":\"2\"}}]', 1),
+(35, 'theme_marketplace_com_openmvm_basic', 'theme_marketplace_com_openmvm_basic_content_layout_widget', '{\"4\":{\"page_top\":[\"1\"]}}', 1),
+(37, 'component_payment_method_bank_transfer', 'component_payment_method_bank_transfer_instruction_1', 'Send your order total amount to this bank account:\r\n\r\nBank Name: Bank\r\nAccount Name: Admin OpenMVM\r\nAccount Number: 01234567890\r\n\r\nWe will process your order after we receive the payment.', 0),
+(38, 'component_payment_method_bank_transfer', 'component_payment_method_bank_transfer_instruction_2', 'Silahkan transfer jumlah total pesanan anda ke rekening bank berikit:\r\n\r\nNama Bank: Bank\r\nNama Rekening: Admin OpenMVM\r\nNomor Rekening: 01234567890\r\n\r\nKami akan memproses pesanan anda setelah pembayaran kami terima.', 0),
+(39, 'component_payment_method_bank_transfer', 'component_payment_method_bank_transfer_amount', '0.01', 0),
+(40, 'component_payment_method_bank_transfer', 'component_payment_method_bank_transfer_geo_zone_id', '3', 0),
+(41, 'component_payment_method_bank_transfer', 'component_payment_method_bank_transfer_order_status_id', '1', 0),
+(42, 'component_payment_method_bank_transfer', 'component_payment_method_bank_transfer_sort_order', '1', 0),
+(43, 'component_payment_method_bank_transfer', 'component_payment_method_bank_transfer_status', '1', 0),
+(44, 'component_payment_method_cash_on_delivery', 'component_payment_method_cash_on_delivery_instruction_1', 'Pay with cash upon delivery.', 0),
+(45, 'component_payment_method_cash_on_delivery', 'component_payment_method_cash_on_delivery_instruction_2', 'Bayar ketika barang diterima.', 0),
+(46, 'component_payment_method_cash_on_delivery', 'component_payment_method_cash_on_delivery_amount', '0.01', 0),
+(47, 'component_payment_method_cash_on_delivery', 'component_payment_method_cash_on_delivery_geo_zone_id', '3', 0),
+(48, 'component_payment_method_cash_on_delivery', 'component_payment_method_cash_on_delivery_order_status_id', '2', 0),
+(49, 'component_payment_method_cash_on_delivery', 'component_payment_method_cash_on_delivery_sort_order', '2', 0),
+(50, 'component_payment_method_cash_on_delivery', 'component_payment_method_cash_on_delivery_status', '1', 0),
+(51, 'component_shipping_method_flat_rate', 'component_shipping_method_flat_rate_amount', '0.01', 0),
+(52, 'component_shipping_method_flat_rate', 'component_shipping_method_flat_rate_geo_zone_id', '3', 0),
+(53, 'component_shipping_method_flat_rate', 'component_shipping_method_flat_rate_sort_order', '1', 0),
+(54, 'component_shipping_method_flat_rate', 'component_shipping_method_flat_rate_status', '1', 0),
+(55, 'component_shipping_method_weight_based', 'component_shipping_method_weight_based_amount', '0.01', 0),
+(56, 'component_shipping_method_weight_based', 'component_shipping_method_weight_based_sort_order', '1', 0),
+(57, 'component_shipping_method_weight_based', 'component_shipping_method_weight_based_status', '1', 0),
+(58, 'component_shipping_method_zone_based', 'component_shipping_method_zone_based_amount', '0.01', 0),
+(59, 'component_shipping_method_zone_based', 'component_shipping_method_zone_based_sort_order', '3', 0),
+(60, 'component_shipping_method_zone_based', 'component_shipping_method_zone_based_status', '1', 0),
+(61, 'component_order_total_shipping', 'component_order_total_shipping_sort_order', '2', 0),
+(62, 'component_order_total_shipping', 'component_order_total_shipping_status', '1', 0),
+(63, 'component_order_total_sub_total', 'component_order_total_sub_total_sort_order', '1', 0),
+(64, 'component_order_total_sub_total', 'component_order_total_sub_total_status', '1', 0),
+(65, 'component_order_total_total', 'component_order_total_total_sort_order', '3', 0),
+(66, 'component_order_total_total', 'component_order_total_total_status', '1', 0);
 
 -- --------------------------------------------------------
 
@@ -1086,6 +1321,30 @@ ALTER TABLE `length_class_description`
   ADD PRIMARY KEY (`length_class_description_id`);
 
 --
+-- Indeks untuk tabel `option`
+--
+ALTER TABLE `option`
+  ADD PRIMARY KEY (`option_id`);
+
+--
+-- Indeks untuk tabel `option_description`
+--
+ALTER TABLE `option_description`
+  ADD PRIMARY KEY (`option_description_id`);
+
+--
+-- Indeks untuk tabel `option_value`
+--
+ALTER TABLE `option_value`
+  ADD PRIMARY KEY (`option_value_id`);
+
+--
+-- Indeks untuk tabel `option_value_description`
+--
+ALTER TABLE `option_value_description`
+  ADD PRIMARY KEY (`option_value_description_id`);
+
+--
 -- Indeks untuk tabel `order`
 --
 ALTER TABLE `order`
@@ -1152,10 +1411,52 @@ ALTER TABLE `product_description`
   ADD PRIMARY KEY (`product_description_id`);
 
 --
+-- Indeks untuk tabel `product_image`
+--
+ALTER TABLE `product_image`
+  ADD PRIMARY KEY (`product_image_id`);
+
+--
+-- Indeks untuk tabel `product_option`
+--
+ALTER TABLE `product_option`
+  ADD PRIMARY KEY (`product_option_id`);
+
+--
+-- Indeks untuk tabel `product_option_value`
+--
+ALTER TABLE `product_option_value`
+  ADD PRIMARY KEY (`product_option_value_id`);
+
+--
 -- Indeks untuk tabel `product_to_category`
 --
 ALTER TABLE `product_to_category`
   ADD PRIMARY KEY (`product_id`,`category_id`);
+
+--
+-- Indeks untuk tabel `product_variant`
+--
+ALTER TABLE `product_variant`
+  ADD PRIMARY KEY (`product_variant_id`);
+
+--
+-- Indeks untuk tabel `product_variant_image`
+--
+ALTER TABLE `product_variant_image`
+  ADD PRIMARY KEY (`product_variant_image_id`);
+
+--
+-- Indeks untuk tabel `product_variant_option`
+--
+ALTER TABLE `product_variant_option`
+  ADD PRIMARY KEY (`product_variant_option_id`);
+
+--
+-- Indeks untuk tabel `product_variant_option_value`
+--
+ALTER TABLE `product_variant_option_value`
+  ADD PRIMARY KEY (`product_variant_option_value_id`);
 
 --
 -- Indeks untuk tabel `seller`
@@ -1261,7 +1562,7 @@ ALTER TABLE `category_description`
 -- AUTO_INCREMENT untuk tabel `component`
 --
 ALTER TABLE `component`
-  MODIFY `component_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `component_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `country`
@@ -1297,7 +1598,7 @@ ALTER TABLE `customer_group`
 -- AUTO_INCREMENT untuk tabel `extension`
 --
 ALTER TABLE `extension`
-  MODIFY `extension_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `extension_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `geo_zone`
@@ -1340,6 +1641,30 @@ ALTER TABLE `length_class`
 --
 ALTER TABLE `length_class_description`
   MODIFY `length_class_description_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `option`
+--
+ALTER TABLE `option`
+  MODIFY `option_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `option_description`
+--
+ALTER TABLE `option_description`
+  MODIFY `option_description_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `option_value`
+--
+ALTER TABLE `option_value`
+  MODIFY `option_value_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `option_value_description`
+--
+ALTER TABLE `option_value_description`
+  MODIFY `option_value_description_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `order`
@@ -1393,7 +1718,7 @@ ALTER TABLE `page`
 -- AUTO_INCREMENT untuk tabel `page_description`
 --
 ALTER TABLE `page_description`
-  MODIFY `page_description_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `page_description_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT untuk tabel `product`
@@ -1406,6 +1731,48 @@ ALTER TABLE `product`
 --
 ALTER TABLE `product_description`
   MODIFY `product_description_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `product_image`
+--
+ALTER TABLE `product_image`
+  MODIFY `product_image_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `product_option`
+--
+ALTER TABLE `product_option`
+  MODIFY `product_option_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `product_option_value`
+--
+ALTER TABLE `product_option_value`
+  MODIFY `product_option_value_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `product_variant`
+--
+ALTER TABLE `product_variant`
+  MODIFY `product_variant_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `product_variant_image`
+--
+ALTER TABLE `product_variant_image`
+  MODIFY `product_variant_image_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `product_variant_option`
+--
+ALTER TABLE `product_variant_option`
+  MODIFY `product_variant_option_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `product_variant_option_value`
+--
+ALTER TABLE `product_variant_option_value`
+  MODIFY `product_variant_option_value_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `seller`
@@ -1435,7 +1802,7 @@ ALTER TABLE `seller_zone_to_geo_zone`
 -- AUTO_INCREMENT untuk tabel `setting`
 --
 ALTER TABLE `setting`
-  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT untuk tabel `weight_class`

@@ -19,26 +19,12 @@
 								<div class="form-group row required mb-3">
 									<label for="input-db-driver" class="col-sm-4 control-label small"><?php echo lang('Entry.entry_db_driver', array(), $front_locale); ?></label>
 									<div class="col-sm-8">
-										<select name="db_driver" id="input-db-driver" class="form-control form-control-sm">
+										<select name="db_driver" id="input-db-driver" class="form-select form-select-sm">
 											<?php if ($mysqli) { ?>
 												<?php if ($db_driver == 'mysqli') { ?>
 													<option value="mysqli" selected="selected">MySQLi</option>
 												<?php } else { ?>
 													<option value="mysqli">MySQLi</option>
-												<?php } ?>
-											<?php } ?>
-											<?php if ($pdo) { ?>
-												<?php if ($db_driver == 'pdo') { ?>
-													<option value="pdo" selected="selected">mPDO</option>
-												<?php } else { ?>
-													<option value="pdo">mPDO</option>
-												<?php } ?>
-											<?php } ?>
-											<?php if ($pgsql) { ?>
-												<?php if ($db_driver == 'pgsql') { ?>
-													<option value="pgsql" selected="selected">PostgreSQL</option>
-												<?php } else { ?>
-													<option value="pgsql">PostgreSQL</option>
 												<?php } ?>
 											<?php } ?>
 										</select>
@@ -103,8 +89,6 @@
 										<div class="text-danger small"><?php echo $validation->showError('lastname'); ?></div>
 									</div>
 								</div>
-							</div>
-							<div class="col-sm-4">
 								<div class="form-group row required mb-3">
 									<label for="input-email" class="col-sm-4 control-label small"><?php echo lang('Entry.entry_email', array(), $front_locale); ?></label>
 									<div class="col-sm-8">
@@ -112,6 +96,8 @@
 										<div class="text-danger small"><?php echo $validation->showError('email'); ?></div>
 									</div>
 								</div>
+							</div>
+							<div class="col-sm-4">
 								<div class="form-group row required mb-3">
 									<label for="input-username" class="col-sm-4 control-label small"><?php echo lang('Entry.entry_username', array(), $front_locale); ?></label>
 									<div class="col-sm-8">
@@ -119,8 +105,6 @@
 										<div class="text-danger small"><?php echo $validation->showError('username'); ?></div>
 									</div>
 								</div>
-							</div>
-							<div class="col-sm-4">
 								<div class="form-group row required mb-3">
 									<label for="input-password" class="col-sm-4 control-label small"><?php echo lang('Entry.entry_password', array(), $front_locale); ?></label>
 									<div class="col-sm-8">
@@ -133,6 +117,15 @@
 									<div class="col-sm-8">
 										<input type="password" name="passconf" value="" id="input-passconf" class="form-control form-control-sm" />
 										<div class="text-danger small"><?php echo $validation->showError('passconf'); ?></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="form-group row required mb-3">
+									<label for="input-admin-url-segment" class="col-sm-4 control-label small"><?php echo lang('Entry.entry_admin_url_segment', array(), $front_locale); ?></label>
+									<div class="col-sm-8">
+										<input type="text" name="admin_url_segment" value="<?php echo $admin_url_segment; ?>" id="input-admin-url-segment" class="form-control form-control-sm" />
+										<div class="text-danger small"><?php echo $validation->showError('admin_url_segment'); ?></div>
 									</div>
 								</div>
 							</div>

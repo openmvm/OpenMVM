@@ -12,6 +12,7 @@ class Install_Model extends \CodeIgniter\Model
 	public function appInstalled()
 	{
 		clearstatcache();
+
 		if (filesize(ROOTPATH . '../app/Config/Database.php') > 0) {
 			return true;
 		} else {
@@ -21,7 +22,7 @@ class Install_Model extends \CodeIgniter\Model
 
 	public function connectDb($data = array())
 	{
-    try {
+    	try {
 			$connected = false;
 
 			if ($data['db_driver'] == 'mysqli') {
@@ -33,36 +34,36 @@ class Install_Model extends \CodeIgniter\Model
 			}
 
 			$custom = array(
-			  'DSN'      => '',
-			  'hostname' => $data['hostname'],
-			  'username' => $data['db_username'],
-			  'password' => $data['db_password'],
-			  'database' => $data['database'],
-			  'DBDriver' => $db_driver,
-			  'DBPrefix' => $data['db_prefix'],
-			  'pConnect' => false,
-			  'DBDebug'  => (ENVIRONMENT !== 'production'),
-			  'cacheOn'  => false,
-			  'cacheDir' => '',
-			  'charset'  => 'utf8',
-			  'DBCollat' => 'utf8_general_ci',
-			  'swapPre'  => '',
-			  'encrypt'  => false,
-			  'compress' => false,
-			  'strictOn' => false,
-			  'failover' => [],
-			  'port'     => 3306,
+				'DSN'      => '',
+				'hostname' => $data['hostname'],
+				'username' => $data['db_username'],
+				'password' => $data['db_password'],
+				'database' => $data['database'],
+				'DBDriver' => $db_driver,
+				'DBPrefix' => $data['db_prefix'],
+				'pConnect' => false,
+				'DBDebug'  => (ENVIRONMENT !== 'production'),
+				'cacheOn'  => false,
+				'cacheDir' => '',
+				'charset'  => 'utf8',
+				'DBCollat' => 'utf8_general_ci',
+				'swapPre'  => '',
+				'encrypt'  => false,
+				'compress' => false,
+				'strictOn' => false,
+				'failover' => [],
+				'port'     => 3306,
 			);
 
-	    $db = \Config\Database::connect($custom);
+		    $db = \Config\Database::connect($custom);
 
-	    if($db->persistentConnect()->ping()) {
-	      // Connection was successful
-	      $connected = true;
-	    }
-    } finally {
-				return $connected;
-    }
+		    if($db->persistentConnect()->ping()) {
+				// Connection was successful
+				$connected = true;
+		    }
+    	} finally {
+			return $connected;
+    	}
 	}
 
 	public function configureDatabase($data = array())
@@ -84,6 +85,7 @@ class Install_Model extends \CodeIgniter\Model
 			'# database.default.password = root',
 			'# database.default.DBDriver = MySQLi',
 			'# database.default.DBPrefix =',
+			'# database.default.port = 3306',
 		);
 		$new_strings = array(
 			'database.default.hostname = ' . $data['hostname'],
@@ -92,6 +94,7 @@ class Install_Model extends \CodeIgniter\Model
 			'database.default.password = ' . $data['db_password'],
 			'database.default.DBDriver = ' . $db_driver,
 			'database.default.DBPrefix = ' . $data['db_prefix'],
+			'database.default.port = 3306',
 		);
 
 		// main_env_file
@@ -130,25 +133,25 @@ class Install_Model extends \CodeIgniter\Model
 		}
 
 		$custom = array(
-		  'DSN'      => '',
-		  'hostname' => $data['hostname'],
-		  'username' => $data['db_username'],
-		  'password' => $data['db_password'],
-		  'database' => $data['database'],
-		  'DBDriver' => $db_driver,
-		  'DBPrefix' => $data['db_prefix'],
-		  'pConnect' => false,
-		  'DBDebug'  => (ENVIRONMENT !== 'production'),
-		  'cacheOn'  => false,
-		  'cacheDir' => '',
-		  'charset'  => 'utf8',
-		  'DBCollat' => 'utf8_general_ci',
-		  'swapPre'  => '',
-		  'encrypt'  => false,
-		  'compress' => false,
-		  'strictOn' => false,
-		  'failover' => [],
-		  'port'     => 3306,
+			'DSN'      => '',
+			'hostname' => $data['hostname'],
+			'username' => $data['db_username'],
+			'password' => $data['db_password'],
+			'database' => $data['database'],
+			'DBDriver' => $db_driver,
+			'DBPrefix' => $data['db_prefix'],
+			'pConnect' => false,
+			'DBDebug'  => (ENVIRONMENT !== 'production'),
+			'cacheOn'  => false,
+			'cacheDir' => '',
+			'charset'  => 'utf8',
+			'DBCollat' => 'utf8_general_ci',
+			'swapPre'  => '',
+			'encrypt'  => false,
+			'compress' => false,
+			'strictOn' => false,
+			'failover' => [],
+			'port'     => 3306,
 		);
 
 		$utils = \Config\Database::utils($custom);
@@ -197,25 +200,25 @@ class Install_Model extends \CodeIgniter\Model
 		}
 
 		$custom = array(
-		  'DSN'      => '',
-		  'hostname' => $data['hostname'],
-		  'username' => $data['db_username'],
-		  'password' => $data['db_password'],
-		  'database' => $data['database'],
-		  'DBDriver' => $db_driver,
-		  'DBPrefix' => $data['db_prefix'],
-		  'pConnect' => false,
-		  'DBDebug'  => (ENVIRONMENT !== 'production'),
-		  'cacheOn'  => false,
-		  'cacheDir' => '',
-		  'charset'  => 'utf8',
-		  'DBCollat' => 'utf8_general_ci',
-		  'swapPre'  => '',
-		  'encrypt'  => false,
-		  'compress' => false,
-		  'strictOn' => false,
-		  'failover' => [],
-		  'port'     => 3306,
+			'DSN'      => '',
+			'hostname' => $data['hostname'],
+			'username' => $data['db_username'],
+			'password' => $data['db_password'],
+			'database' => $data['database'],
+			'DBDriver' => $db_driver,
+			'DBPrefix' => $data['db_prefix'],
+			'pConnect' => false,
+			'DBDebug'  => (ENVIRONMENT !== 'production'),
+			'cacheOn'  => false,
+			'cacheDir' => '',
+			'charset'  => 'utf8',
+			'DBCollat' => 'utf8_general_ci',
+			'swapPre'  => '',
+			'encrypt'  => false,
+			'compress' => false,
+			'strictOn' => false,
+			'failover' => [],
+			'port'     => 3306,
 		);
 
 		// Load Database
@@ -224,17 +227,17 @@ class Install_Model extends \CodeIgniter\Model
 		// Insert Administrator Data
 		$builder = $db->table('administrator');
 
-    $query_data = array(
-      'administrator_group_id' => $this->getSettingValue($data, 'setting', 'setting_administrator_group_id'),
-      'username'               => $data['username'],
-      'password'               => password_hash($data['password'], PASSWORD_DEFAULT),
-      'firstname'              => $data['firstname'],
-      'lastname'               => $data['lastname'],
-      'email'                  => $data['email'],
-      //'avatar'                 => $avatar,
-      'status'                 => 1,
-      'date_added'             => date("Y-m-d H:i:s",now()),
-    );
+	    $query_data = array(
+			'administrator_group_id' => $this->getSettingValue($data, 'setting', 'setting_administrator_group_id'),
+			'username'               => $data['username'],
+			'password'               => password_hash($data['password'], PASSWORD_DEFAULT),
+			'firstname'              => $data['firstname'],
+			'lastname'               => $data['lastname'],
+			'email'                  => $data['email'],
+			'status'                 => 1,
+			'date_added'             => date("Y-m-d H:i:s",now()),
+			'date_modified'          => date("Y-m-d H:i:s",now()),
+	    );
 
 		$query = $builder->insert($query_data);
 
@@ -254,25 +257,25 @@ class Install_Model extends \CodeIgniter\Model
 		}
 
 		$custom = array(
-		  'DSN'      => '',
-		  'hostname' => $data['hostname'],
-		  'username' => $data['db_username'],
-		  'password' => $data['db_password'],
-		  'database' => $data['database'],
-		  'DBDriver' => $db_driver,
-		  'DBPrefix' => $data['db_prefix'],
-		  'pConnect' => false,
-		  'DBDebug'  => (ENVIRONMENT !== 'production'),
-		  'cacheOn'  => false,
-		  'cacheDir' => '',
-		  'charset'  => 'utf8',
-		  'DBCollat' => 'utf8_general_ci',
-		  'swapPre'  => '',
-		  'encrypt'  => false,
-		  'compress' => false,
-		  'strictOn' => false,
-		  'failover' => [],
-		  'port'     => 3306,
+			'DSN'      => '',
+			'hostname' => $data['hostname'],
+			'username' => $data['db_username'],
+			'password' => $data['db_password'],
+			'database' => $data['database'],
+			'DBDriver' => $db_driver,
+			'DBPrefix' => $data['db_prefix'],
+			'pConnect' => false,
+			'DBDebug'  => (ENVIRONMENT !== 'production'),
+			'cacheOn'  => false,
+			'cacheDir' => '',
+			'charset'  => 'utf8',
+			'DBCollat' => 'utf8_general_ci',
+			'swapPre'  => '',
+			'encrypt'  => false,
+			'compress' => false,
+			'strictOn' => false,
+			'failover' => [],
+			'port'     => 3306,
 		);
 
 		// Load Database
@@ -282,10 +285,10 @@ class Install_Model extends \CodeIgniter\Model
 		
 		$builder = $db->table('setting');
 
-	  $query_data = array(
-	    'code'       => $code,
-	    'key'        => $key,
-	  );
+		$query_data = array(
+			'code'       => $code,
+			'key'        => $key,
+		);
 
 		$query = $builder->getWhere($query_data);
 		
@@ -294,10 +297,10 @@ class Install_Model extends \CodeIgniter\Model
 			$result = $row->value;
 		}
 
-    if ($result) {
-      return $result;
-    } else {
-      return null;
-    }
+	    if ($result) {
+			return $result;
+	    } else {
+			return null;
+	    }
 	}
 }
