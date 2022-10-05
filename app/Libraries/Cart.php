@@ -25,8 +25,9 @@ class Cart {
         $this->session = \Config\Services::session();
 
         // Libraries
-        $this->setting = new \App\Libraries\Setting();
         $this->currency = new \App\Libraries\Currency();
+        $this->language = new \App\Libraries\Language();
+        $this->setting = new \App\Libraries\Setting();
         $this->weight = new \App\Libraries\Weight();
 
         // Remove all expired cart items with no customer_id
@@ -87,7 +88,7 @@ class Cart {
             foreach ($cart_query->getResult() as $result) {
                 if ($result->seller_id !== $seller_id) {
                     // Add cart to customer
-                    $this->add($customer_id, $result->seller_id, $result->product_id, $result->quantity);
+                    $this->add($customer_id, $result->seller_id, $result->product_id, $result->quantity, json_decode($result->option, true));
                 }
 
                 // Delete cart
@@ -119,11 +120,16 @@ class Cart {
      */
     public function add($customer_id, $seller_id, $product_id, $quantity, $options = [])
     {
+        if (is_array($options)) {
+            asort($options);
+        }
+            
         $cart_builder = $this->db->table('cart');
         
         $cart_builder->where('customer_id', $customer_id);
         $cart_builder->where('seller_id', $seller_id);
         $cart_builder->where('product_id', $product_id);
+        $cart_builder->where('option', json_encode($options));
         $cart_builder->where('key', $this->getKey());
 
         $cart_query = $cart_builder->get();
@@ -133,10 +139,12 @@ class Cart {
             $cart_update_builder = $this->db->table('cart');
 
             $cart_update_builder->set('quantity', 'quantity + ' . $quantity, false);
+            $cart_update_builder->set('date_modified', new Time('now'));
 
             $cart_update_builder->where('customer_id', $customer_id);
             $cart_update_builder->where('seller_id', $seller_id);
             $cart_update_builder->where('product_id', $product_id);
+            $cart_update_builder->where('option', json_encode($options));
             $cart_update_builder->where('key', $this->getKey());
 
             $cart_update_builder->update();
@@ -150,7 +158,9 @@ class Cart {
                 'key' => $this->getKey(),
                 'product_id' => $product_id,
                 'quantity' => $quantity,
+                'option' => json_encode($options),
                 'date_added' => new Time('now'),
+                'date_modified' => new Time('now'),
             ];
             
             $cart_insert_builder->insert($cart_insert_data);
@@ -231,6 +241,8 @@ class Cart {
         $cart_builder->where('seller_id', $seller_id);
         $cart_builder->where('key', $this->getKey());
 
+        $cart_builder->orderBy('date_modified', 'DESC');
+
         $cart_query = $cart_builder->get();
 
         foreach ($cart_query->getResult() as $result) {
@@ -248,6 +260,118 @@ class Cart {
             $product_query = $product_builder->get();
             
             if ($product = $product_query->getRow()) {
+                // Get options
+                $option_data = [];
+
+                if (is_array(json_decode($result->option, true))) {
+                    $options = json_decode($result->option, true);
+                } else {
+                    $options = [];
+                }
+
+                foreach ($options as $key => $value) {
+                    // Get option
+                    $option_builder = $this->db->table('option o');
+                    
+                    $option_builder->where('o.option_id', $key);
+
+                    $option_query = $option_builder->get();
+
+                    if ($option_row = $option_query->getRow()) {
+                        // Get option description
+                        $option_description_data = [];
+
+                        $option_description_builder = $this->db->table('option_description');
+                    
+                        $option_description_builder->where('option_id', $key);
+
+                        $option_description_query = $option_description_builder->get();
+
+                        foreach ($option_description_query->getResult() as $option_description) {
+                            $option_description_data[$option_description->language_id] = [
+                                'name' => $option_description->name,
+                            ];
+                        }
+
+                        // Get option value
+                        $option_value_data = [];
+
+                        $option_value_builder = $this->db->table('option_value ov');
+                        
+                        $option_value_builder->where('ov.option_id', $key);
+                        $option_value_builder->where('ov.option_value_id', $value);
+
+                        $option_value_query = $option_value_builder->get();
+
+                        if ($option_value_row = $option_value_query->getRow()) {
+                            // Get option value description
+                            $option_value_description_data = [];
+
+                            $option_value_description_builder = $this->db->table('option_value_description');
+                        
+                            $option_value_description_builder->where('option_id', $key);
+                            $option_value_description_builder->where('option_value_id', $value);
+
+                            $option_value_description_query = $option_value_description_builder->get();
+
+                            foreach ($option_value_description_query->getResult() as $option_value_description) {
+                                $option_value_description_data[$option_value_description->language_id] = [
+                                    'name' => $option_value_description->name,
+                                ];
+                            }
+
+                            $option_value_data = [
+                                'option_id' => $option_value_row->option_id,
+                                'option_value_id' => $option_value_row->option_value_id,
+                                'seller_id' => $option_value_row->seller_id,
+                                'customer_id' => $option_value_row->customer_id,
+                                'description' => $option_value_description_data,
+                                'sort_order' => $option_value_row->sort_order,
+                                'status' => $option_value_row->status,
+                            ];
+                        }
+
+                        $option_data[] = [
+                            'option_id' => $option_row->option_id,
+                            'seller_id' => $option_row->seller_id,
+                            'customer_id' => $option_row->customer_id,
+                            'description' => $option_description_data,
+                            'sort_order' => $option_row->sort_order,
+                            'status' => $option_row->status,
+                            'option_value' => $option_value_data,
+                        ];
+                    }
+                }
+
+                $option_data_sort_order = [];
+
+                foreach ($option_data as $key => $value) {
+                    $option_data_sort_order[$key] = $value['sort_order'];
+                }
+
+                array_multisort($option_data_sort_order, SORT_ASC, $option_data);
+
+                // Product variant
+                if (!empty($product->product_option)) {
+                    // Get product variant info
+                    $product_variant_builder = $this->db->table('product_variant');
+                    
+                    $product_variant_builder->where('options', $result->option);
+
+                    $product_variant_query = $product_variant_builder->get();
+
+                    if ($product_variant_row = $product_variant_query->getRow()) {
+                        $price = $product_variant_row->price;
+                        $weight = $product_variant_row->weight;
+                    } else {
+                        $price = $product->price;
+                        $weight = $product->weight;
+                    }
+                } else {
+                    $price = $product->price;
+                    $weight = $product->weight;
+                }
+
                 $products[] = [
                     'cart_id' => $result->cart_id,
                     'customer_id' => $result->customer_id,
@@ -256,13 +380,16 @@ class Cart {
                     'name' => $product->name,
                     'description' => $product->description,
                     'slug' => $product->slug,
-                    'price' => $product->price,
-                    'weight' => $product->weight,
+                    'product_option' => $product->product_option,
+                    'price' => $price,
+                    'weight' => $weight,
                     'weight_class_id' => $product->weight_class_id,
                     'main_image' => $product->main_image,
                     'quantity' => $result->quantity,
-                    'total' => $product->price * $result->quantity,
+                    'total' => $price * $result->quantity,
                     'date_added' => $result->date_added,
+                    'option' => $option_data,
+                    'option_ids' => $result->option,
                 ];
             }
         }

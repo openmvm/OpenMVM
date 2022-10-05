@@ -4,7 +4,14 @@
         <h1 class="border-bottom pb-3 mb-3"><?php echo $heading_title; ?></h1>
         <?php echo form_open($action, ['id' => 'form-product']); ?>
         <div class="card shadow list">
-            <div class="card-header clearfix"><h5 class="pt-1 float-start"><i class="fas fa-edit fa-fw"></i> <?php echo $sub_title; ?></h5> <div class="float-end"><button type="submit" class="btn btn-outline-primary btn-sm"><i class="fas fa-save fa-fw"></i></button> <a href="<?php echo $cancel; ?>" class="btn btn-outline-secondary btn-sm"><i class="fas fa-long-arrow-alt-left fa-fw"></i></a></div></div>
+            <div class="card-header clearfix">
+                <h5 class="pt-1 float-start"><i class="fas fa-edit fa-fw"></i> <?php echo $sub_title; ?></h5>
+                <div class="float-end">
+                    <button type="button" class="btn btn-sm btn-outline-success button-action" data-form="form-product" data-form-action="<?php echo $action; ?>" data-icon="fa-save" data-toast-heading-title-success="<?php echo lang('Text.success', [], 'en'); ?>" data-toast-heading-title-error="<?php echo lang('Text.error', [], 'en'); ?>" data-toast-heading-icon-success="fa-check-circle" data-toast-heading-icon-error="fa-triangle-exclamation" data-redirection="false"><i class="fas fa-save fa-fw"></i><span class="d-none d-md-inline-block ms-1"><?php echo lang('Button.save_and_continue', [], 'en'); ?></span></button>
+                    <button type="button" class="btn btn-sm btn-success button-action" data-form="form-product" data-form-action="<?php echo $action; ?>" data-icon="fa-save" data-toast-heading-title-success="<?php echo lang('Text.success', [], 'en'); ?>" data-toast-heading-title-error="<?php echo lang('Text.error', [], 'en'); ?>" data-toast-heading-icon-success="fa-check-circle" data-toast-heading-icon-error="fa-triangle-exclamation" data-redirection="true"><i class="fas fa-save fa-fw"></i><span class="d-none d-md-inline-block ms-1"><?php echo lang('Button.save', [], 'en'); ?></span></button>
+                    <a href="<?php echo $cancel; ?>" class="btn btn-outline-secondary btn-sm"><i class="fas fa-long-arrow-alt-left fa-fw"></i></a>
+                </div>
+            </div>
             <div class="card-body">
                 <fieldset>
                     <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.general'); ?></legend>
@@ -17,6 +24,18 @@
                             <?php } else { ?>
                             <option value="0" selected="selected"><?php echo lang('Text.disabled'); ?></option>
                             <option value="1"><?php echo lang('Text.enabled'); ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-category" class="form-label"><?php echo lang('Entry.category'); ?></label>
+                        <select name="category_id_path" class="form-control" id="input-category">
+                            <?php foreach ($categories as $category) { ?>
+                                <?php if ($category['category_id_path'] == $category_id_path) { ?>
+                                <option value="<?php echo $category['category_id_path']; ?>" selected="selected"><?php echo $category['category_path']; ?></option>
+                                <?php } else { ?>
+                                <option value="<?php echo $category['category_id_path']; ?>"><?php echo $category['category_path']; ?></option>
+                                <?php } ?>
                             <?php } ?>
                         </select>
                     </div>
@@ -55,48 +74,102 @@
                         </div>
                         <?php } ?>
                     </div>
-                    <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.category'); ?></legend>
-                    <div class="mb-3">
-                        <label for="input-category" class="form-label"><?php echo lang('Entry.category'); ?></label>
-                        <select name="category_id_path" class="form-control" id="input-category">
-                            <?php foreach ($categories as $category) { ?>
-                                <?php if ($category['category_id_path'] == $category_id_path) { ?>
-                                <option value="<?php echo $category['category_id_path']; ?>" selected="selected"><?php echo $category['category_path']; ?></option>
-                                <?php } else { ?>
-                                <option value="<?php echo $category['category_id_path']; ?>"><?php echo $category['category_path']; ?></option>
-                                <?php } ?>
-                            <?php } ?>
-                        </select>
-                    </div>
-                    <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.price'); ?></legend>
-                    <div class="mb-3">
-                        <label for="input-price" class="form-label"><?php echo lang('Entry.price'); ?></label>
-                        <div class="input-group">
-                            <span class="input-group-text" id="input-group-price"><?php echo $default_currency_code; ?></span>
-                            <input type="number" min="0" step="any" name="price" value="<?php echo $price; ?>" class="form-control" id="input-price" placeholder="<?php echo lang('Entry.price'); ?>" aria-label="<?php echo lang('Entry.price'); ?>" aria-describedby="input-group-price" />
+                    <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.product_details'); ?></legend>
+                    <div id="input-is-product-variant-container" class="mb-3">
+                        <div class="form-check form-switch">
+                            <input name="is_product_variant" class="form-check-input" type="checkbox" role="switch" id="input-is-product-variant"<?php if (!empty($is_product_variant)) { ?> checked<?php } ?>>
+                            <label class="form-check-label" for="input-is-product-variant"><?php echo lang('Entry.product_variants'); ?></label>
                         </div>
                     </div>
-                    <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.weight'); ?></legend>
-                    <div class="mb-3">
-                        <label for="input-weight" class="form-label"><?php echo lang('Entry.weight'); ?></label>
-                        <input type="number" min="0" step="any" name="weight" value="<?php echo $weight; ?>" class="form-control" id="input-weight" placeholder="<?php echo lang('Entry.weight'); ?>" aria-label="<?php echo lang('Entry.weight'); ?>" />
+                    <div id="product-default"<?php if (!empty($is_product_variant)) { ?> class="d-none"<?php } ?>>
+                        <div class="mb-3">
+                            <label for="input-sku" class="form-label"><?php echo lang('Entry.sku'); ?></label>
+                            <input type="text" name="sku" value="<?php echo $sku; ?>" class="form-control" id="input-sku" placeholder="<?php echo lang('Entry.sku'); ?>" aria-label="<?php echo lang('Entry.sku'); ?>" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="input-price" class="form-label"><?php echo lang('Entry.price'); ?></label>
+                            <div class="input-group">
+                                <?php if (!empty($default_currency['symbol_left'])) { ?><span class="input-group-text"><?php echo $default_currency['code']; ?> <?php echo $default_currency['symbol_left']; ?></span><?php } ?>
+                                <input type="number" min="0" step="any" name="price" value="<?php echo $price; ?>" class="form-control" id="input-price" placeholder="<?php echo lang('Entry.price'); ?>" aria-label="<?php echo lang('Entry.price'); ?>" aria-describedby="input-group-price" />
+                                <?php if (!empty($default_currency['symbol_right'])) { ?><span class="input-group-text"><?php echo $default_currency['symbol_right']; ?> <?php echo $default_currency['code']; ?></span><?php } ?>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="input-quantity" class="form-label"><?php echo lang('Entry.quantity'); ?></label>
+                            <input type="number" min="0" name="quantity" value="<?php echo $quantity; ?>" class="form-control" id="input-quantity" placeholder="<?php echo lang('Entry.quantity'); ?>" aria-label="<?php echo lang('Entry.quantity'); ?>" />
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label for="input-weight" class="form-label"><?php echo lang('Entry.weight'); ?></label>
+                                    <input type="number" min="0" step="any" name="weight" value="<?php echo $weight; ?>" class="form-control" id="input-weight" placeholder="<?php echo lang('Entry.weight'); ?>" aria-label="<?php echo lang('Entry.weight'); ?>" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="mb-3">
+                                    <label for="input-weight-class" class="form-label"><?php echo lang('Entry.weight_class'); ?></label>
+                                    <select name="weight_class_id" class="form-control" id="input-weight-class">
+                                        <?php foreach ($weight_classes as $weight_class) { ?>
+                                            <?php if ($weight_class['weight_class_id'] == $weight_class_id) { ?>
+                                            <option value="<?php echo $weight_class['weight_class_id']; ?>" selected="selected"><?php echo $weight_class['title']; ?></option>
+                                            <?php } else { ?>
+                                            <option value="<?php echo $weight_class['weight_class_id']; ?>"><?php echo $weight_class['title']; ?></option>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="input-weight-class" class="form-label"><?php echo lang('Entry.weight_class'); ?></label>
-                        <select name="weight_class_id" class="form-control" id="input-weight-class">
-                            <?php foreach ($weight_classes as $weight_class) { ?>
-                                <?php if ($weight_class['weight_class_id'] == $weight_class_id) { ?>
-                                <option value="<?php echo $weight_class['weight_class_id']; ?>" selected="selected"><?php echo $weight_class['title']; ?></option>
-                                <?php } else { ?>
-                                <option value="<?php echo $weight_class['weight_class_id']; ?>"><?php echo $weight_class['title']; ?></option>
-                                <?php } ?>
+                    <div id="product-options" class="<?php if (empty($is_product_variant)) { ?>d-none <?php } ?>mb-3">
+                        <?php $product_option_row = 0; ?>
+                        <?php if (!empty($product_options)) { ?>
+                            <?php foreach ($product_options as $product_option) { ?>
+                            <div id="product-option-<?php echo $product_option_row; ?>" class="position-relative bg-light mb-1 p-3">
+                                <span role="button" class="text-secondary position-absolute top-0 end-0 small" onclick="removeProductOption('<?php echo $product_option_row; ?>');"><span class="fa-stack" style="font-size: 0.5em;"><i class="fas fa-circle fa-stack-2x text-danger"></i><i class="fas fa-times fa-stack-1x text-light"></i></span></span>
+                                <div class="row mb-3">
+                                    <div class="col-sm-2"><label for="input-option-<?php echo $product_option_row; ?>" class="form-label"><?php echo lang('Entry.option'); ?></label></div>
+                                    <div class="col-sm-10">
+                                       <input type="text" name="product_option[<?php echo $product_option_row; ?>][option]" value="<?php echo $product_option['option']; ?>" id="input-option-<?php echo $product_option_row; ?>" class="form-control" placeholder="<?php echo lang('Entry.option'); ?>">
+                                       <input type="hidden" name="product_option[<?php echo $product_option_row; ?>][option_id]" value="<?php echo $product_option['option_id']; ?>" id="input-option-<?php echo $product_option_row; ?>-id" class="form-control" placeholder="<?php echo lang('Entry.option'); ?>">
+
+                                        <?php if (!empty($product_option['option_value'])) { ?>
+                                        <div id="option-values-<?php echo $product_option_row; ?>" class="card mt-1">
+                                            <div class="card-body">
+                                                <?php foreach ($product_option['option_value'] as $option_value) { ?>
+                                                <input type="checkbox" name="product_option[<?php echo $product_option_row; ?>][option_value][]" value="<?php echo $option_value['option_value_id']; ?>" class="btn-check" id="input-option-value-<?php echo $product_option_row; ?>-<?php echo $product_option['option_id']; ?>-<?php echo $option_value['option_value_id']; ?>" autocomplete="off" onclick="setProductOptions();"<?php if (in_array($option_value['option_value_id'], $product_option['product_option_value'])) { ?> checked<?php } ?>>
+                                                <label class="btn btn-outline-primary shadow-none" for="input-option-value-<?php echo $product_option_row; ?>-<?php echo $product_option['option_id']; ?>-<?php echo $option_value['option_value_id']; ?>"><?php echo $option_value['description']['name']; ?></label>
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+                                        <?php } ?>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <?php $product_option_row++; ?>
                             <?php } ?>
-                        </select>
+                        <?php } ?>
+                        <div class="d-grid mb-3"><button type="button" class="btn btn-outline-primary" id="button-option-add" onclick="addProductOption();"><i class="fas fa-plus-circle"></i> <?php echo lang('Button.option_add', [], 'en'); ?></button></div>
+                        <div id="product-variants"></div>
                     </div>
                     <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.images'); ?></legend>
                     <div class="mb-3">
                         <label for="input-main-image" class="form-label"><?php echo lang('Entry.main_image'); ?></label>
                         <div><a href="javascript:void(0);" id="upload-main-image" class="position-relative d-table-cell upload"><img src="<?php echo $thumb; ?>" class="border p-1" /><span class="progress-bar"></span><input type="hidden" name="main_image" value="<?php echo $main_image; ?>" id="main-image" class="form-control" /></a></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-additional-images" class="form-label"><?php echo lang('Entry.additional_images'); ?></label>
+                        <div id="additional-images" class="clearfix">
+                            <?php $additional_image_row = 0; ?>
+                            <?php if (!empty($additional_images)) { ?>
+                                <?php foreach ($additional_images as $additional_image) { ?>
+                                <div class="position-relative float-start me-1"><a href="javascript:void(0);" id="upload-main-image-<?php echo $additional_image_row; ?>" class="position-relative d-table-cell upload"><img src="<?php echo $additional_image['thumb']; ?>" class="border p-1" /><span class="progress-bar"></span><input type="hidden" name="additional_image[<?php echo $additional_image_row; ?>]" value="<?php echo $additional_image['image']; ?>" id="additional-image-<?php echo $additional_image_row; ?>" class="form-control" /></a><span class="position-absolute top-0 end-0" style="z-index: 999999;" onclick="$(this).parent().remove();"><span class="fa-stack" style="font-size: 0.5em;"><i class="fas fa-circle fa-stack-2x text-danger"></i><i class="fas fa-times fa-stack-1x text-light"></i></span></span></div>
+                                <?php $additional_image_row++; ?>
+                                <?php } ?>
+                            <?php } ?>
+                            <div role="button" id="button-upload-additional-image" class="float-start border p-1" onclick="addAdditionalImage();"><div class="d-flex justify-content-center align-items-center text-center bg-light" style="width: 100px; height: 100px;"><i class="fas fa-plus-circle fa-2x text-secondary"></i></div></div>
+                        </div>
                     </div>
                 </fieldset>
             </div>
@@ -119,7 +192,18 @@ $(document).ready(function() {
 });
 //--></script>
 <script type="text/javascript"><!--
-$('.upload').on('click', function() {
+$('input#input-is-product-variant').click(function() {
+    if ($('input#input-is-product-variant').is(':checked')) {
+        $('#product-default').addClass('d-none');
+        $('#product-options').removeClass('d-none');
+    } else {
+        $('#product-default').removeClass('d-none');
+        $('#product-options').addClass('d-none');
+    }
+});
+//--></script>
+<script type="text/javascript"><!--
+$('body').on('click', '.upload', function() {
     var node = this;
 
     $('#form-upload').remove();
@@ -157,7 +241,7 @@ $('.upload').on('click', function() {
 
                     return xhr;
                 },
-                url: '<?php echo base_url('marketplace/tool/upload'); ?>',
+                url: '<?php echo $upload; ?>',
                 type: 'post',
                 dataType: 'json',
                 data: new FormData($('#form-upload')[0]),
@@ -189,5 +273,182 @@ $('.upload').on('click', function() {
         }
     }, 500);
 });
+//--></script>
+<script type="text/javascript"><!--
+var additional_image_row = '<?php echo $additional_image_row; ?>';
+
+function addAdditionalImage() {
+    html = '<div class="position-relative float-start me-1"><a href="javascript:void(0);" id="upload-additional-image-' + additional_image_row + '" class="position-relative d-table-cell upload"><img src="<?php echo $placeholder; ?>" class="border p-1" /><span class="progress-bar"></span><input type="hidden" name="additional_image[' + additional_image_row + ']" value="" id="additional-image-' + additional_image_row + '" class="form-control" /></a><span class="position-absolute top-0 end-0" style="z-index: 999999;" onclick="$(this).parent().remove();"><span class="fa-stack" style="font-size: 0.5em;"><i class="fas fa-circle fa-stack-2x text-danger"></i><i class="fas fa-times fa-stack-1x text-light"></i></span></span></div>';
+
+    $('#button-upload-additional-image').before(html);
+
+    additional_image_row++;
+}
+//--></script>
+<script type="text/javascript"><!--
+var product_option_row = '<?php echo $product_option_row; ?>';
+
+function addProductOption() {
+    html = '<div id="product-option-' + product_option_row +'" class="position-relative bg-light mb-1 p-3">';
+    html += '   <span role="button" class="text-secondary position-absolute top-0 end-0 small" onclick="removeProductOption(\'' + product_option_row + '\');"><span class="fa-stack" style="font-size: 0.5em;"><i class="fas fa-circle fa-stack-2x text-danger"></i><i class="fas fa-times fa-stack-1x text-light"></i></span></span>';
+    html += '   <div class="row mb-3">';
+    html += '       <div class="col-sm-2"><label for="input-option-' + product_option_row + '" class="form-label"><?php echo lang('Entry.option'); ?></label></div>';
+    html += '       <div class="col-sm-10">';
+    html += '           <input type="text" name="product_option[' + product_option_row + '][option]" value="" id="input-option-' + product_option_row + '" class="form-control" placeholder="<?php echo lang('Entry.option'); ?>">';
+    html += '           <input type="hidden" name="product_option[' + product_option_row + '][option_id]" value="" id="input-option-' + product_option_row + '-id" class="form-control" placeholder="<?php echo lang('Entry.option'); ?>">';
+    html += '       </div>';
+    html += '   </div>';
+    html += '</div>';
+
+    $('#button-option-add').parent().before(html);
+
+    productOptionAutocomplete(product_option_row);
+
+    setProductOptions();
+
+    product_option_row++;
+}
+
+function removeProductOption(product_option_row) {
+    $('#product-option-' + product_option_row).remove();
+
+    setProductOptions();
+}
+
+function productOptionAutocomplete(product_option_row) {
+    $( 'input[name=\'product_option[' + product_option_row + '][option]\']' ).autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '<?php echo $option_autocomplete; ?>&filter_name=' + encodeURIComponent(request.term),
+                dataType: 'json',
+                data: {
+                    filter_name: request.term
+                },
+                beforeSend: function() {
+                    //$('select[name=\'setting_country_id\']').prop('disabled', true);
+                },
+                complete: function() {
+                    //$('select[name=\'setting_country_id\']').prop('disabled', false);
+                },
+                success: function(json) {
+                    if (json['error']) {
+                        alert(json['error']);
+                    } else {
+                        if (json.length) {
+                            var none = {
+                                    name: '<?php echo lang('Text.none'); ?>', 
+                                    option_id: 0,
+                                };
+
+                            json.push(none);       
+                            response( json );
+                        } else {
+                            var json = [
+                                {
+                                    name: '<?php echo lang('Text.none'); ?>', 
+                                    option_id: 0,
+                                }
+                            ];
+
+                            response(json);
+                        }
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+            });
+        },
+        minLength: 0,
+        select: function( event, ui ) {
+            $('#input-option-' + product_option_row).val(ui.item.name);
+            $('#input-option-' + product_option_row + '-id').val(ui.item.option_id);
+            $('#input-option-' + product_option_row).autocomplete('close');
+            if (ui.item.option_id != 0) {
+                getProductOptionValues(ui.item.option_id,product_option_row);
+            }
+
+            setProductOptions();
+
+            console.log( 'Selected: ' + ui.item.name + ' aka ' + ui.item.option_id );
+            return false;
+        }
+    }).focus(function () {
+        $(this).autocomplete('search');
+    }).data('ui-autocomplete')._renderItem = function (ul, item) {
+        return $('<li>')
+            .data('item.autocomplete', item)
+            .append('<a>' + item.name + '</a>')
+            .appendTo(ul);
+    };
+}
+
+$('#product-options .col-sm-10').each(function(index, element) {
+    productOptionAutocomplete(index);
+});
+
+function getProductOptionValues(option_id,product_option_row) {
+    $.ajax({
+        url: '<?php echo $get_option; ?>&option_id=' + option_id,
+        dataType: 'json',
+        data: {
+            option_id: option_id
+        },
+        beforeSend: function() {
+            //$('select[name=\'setting_country_id\']').prop('disabled', true);
+        },
+        complete: function() {
+            //$('select[name=\'setting_country_id\']').prop('disabled', false);
+        },
+        success: function(json) {
+            $('#option-values-' + product_option_row).remove();
+
+            if (json['option_values'].length !== 0) {
+                html = '<div id="option-values-' + product_option_row + '" class="card mt-1">';
+                html += '   <div class="card-body">';
+                for (i = 0; i < json['option_values'].length; i++) {
+                    option_value = json['option_values'][i];
+
+                    html += '   <input type="checkbox" name="product_option[' + product_option_row + '][option_value][]" value="' + option_value['option_value_id'] + '" class="btn-check" id="input-option-value-' + product_option_row + '-' + json['option_id'] + '-' + option_value['option_value_id'] + '" autocomplete="off" onclick="setProductOptions();">';
+                    html += '   <label class="btn btn-outline-primary shadow-none" for="input-option-value-' + product_option_row + '-' + json['option_id'] + '-' + option_value['option_value_id'] + '">' + option_value['name'] + '</label>';
+                }
+                html += '   </div>';
+                html += '</div>';
+
+                $('#input-option-' + product_option_row + '-id').after(html);
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+}
+
+setProductOptions();
+
+function setProductOptions() {
+    var product_options = $('#product-options').find('select, textarea, input').serializeJSON();
+
+    $.ajax({
+        url: '<?php echo $set_product_options; ?>',
+        type: 'post',
+        dataType: 'json',
+        data: JSON.stringify(product_options),
+        beforeSend: function() {
+            //$('select[name=\'setting_country_id\']').prop('disabled', true);
+        },
+        complete: function() {
+            //$('select[name=\'setting_country_id\']').prop('disabled', false);
+        },
+        success: function(json) {
+            // Refresh checkout cart
+            $( '#product-variants' ).html( '<div class="text-center text-secondary"><i class="fas fa-spinner fa-spin fa-2x"></i></div>' );
+            $( '#product-variants' ).load( '<?php echo $product_variant; ?>' );
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+}
 //--></script>
 <?php echo $footer; ?>

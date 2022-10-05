@@ -21,6 +21,14 @@
                         <td><img src="<?php echo $product['thumb']; ?>" class="border p-1" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>"></td>
                         <td class="small">
                             <div><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></div>
+                            <?php if (!empty($product['option'])) { ?>
+                            <div class="small">
+                                <div><?php echo lang('Text.options'); ?>:</div>
+                                <?php foreach ($product['option'] as $option) { ?>
+                                <div>- <?php echo $option['description'][$language->getCurrentId()]['name']; ?>: <?php echo $option['option_value']['description'][$language->getCurrentId()]['name']; ?></div>
+                                <?php } ?>
+                            </div>
+                            <?php } ?>
                             <div class="text-muted my-3"><?php echo $product['quantity']; ?> X <?php echo $product['price']; ?></div>
                             <div class="mt-3"><a href="#" class="link-danger text-decoration-none"><i class="fas fa-trash-alt fa-fw"></i> <?php echo lang('Button.remove'); ?></a></div>
                         </td>

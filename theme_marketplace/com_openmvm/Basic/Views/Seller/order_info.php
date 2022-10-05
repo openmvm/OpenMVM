@@ -137,6 +137,14 @@
                     <tr>
                         <td>
                             <div><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></div>
+                            <?php if (!empty($product['option'])) { ?>
+                            <div class="small">
+                                <div><?php echo lang('Text.options'); ?>:</div>
+                                <?php foreach ($product['option'] as $option) { ?>
+                                <div>- <?php echo $option['description'][$language->getCurrentId()]['name']; ?>: <?php echo $option['option_value']['description'][$language->getCurrentId()]['name']; ?></div>
+                                <?php } ?>
+                            </div>
+                            <?php } ?>
                         </td>
                         <td><?php echo $product['quantity']; ?></td>
                         <td><?php echo $product['price']; ?></td>
