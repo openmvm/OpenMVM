@@ -21,6 +21,7 @@
 	<li>Shipping methods (Flat Rate, Weight Based Shipping, Zone Based Shipping)</li>
 	<li>Order totals (Sub Total, Shipping, Total)</li>
 	<li>Reset password</li>
+	<li>Product options / variants</li>
 </ul>
 
 <h4>Administrator (back-end) features:</h4>
@@ -62,7 +63,7 @@
 	<li>Rename env file to .env in both 'root' and 'public/install/'. Also, you may need to change the RewriteBase value in both 'public/.htaccess' and 'public/install/public/.htaccess'.</li>
 	<li>Open the installer page by visiting your app URL</li>
 	<li>Follow the installation steps</li>
-	<li>Login to the Administrator area by visiting the admin url defined in the .env file: [app.baseURL]/admin. Use your administrator username and password</li>
+	<li>Login to the Administrator area by visiting the admin url defined in the .env file: [app.baseURL]/[app.adminUrlSegment]. Use your administrator username and password</li>
 	<li>Do not forget to delete the install folder 'public/install'</li>
 </ol>
 
