@@ -22,38 +22,28 @@ class DownloadResponse extends Response
 {
     /**
      * Download file name
-     *
-     * @var string
      */
-    private $filename;
+    private string $filename;
 
     /**
      * Download for file
-     *
-     * @var File|null
      */
-    private $file;
+    private ?File $file = null;
 
     /**
      * mime set flag
-     *
-     * @var bool
      */
-    private $setMime;
+    private bool $setMime;
 
     /**
      * Download for binary
-     *
-     * @var string|null
      */
-    private $binary;
+    private ?string $binary = null;
 
     /**
      * Download charset
-     *
-     * @var string
      */
-    private $charset = 'UTF-8';
+    private string $charset = 'UTF-8';
 
     /**
      * Download reason
@@ -257,6 +247,8 @@ class DownloadResponse extends Response
     /**
      * {@inheritDoc}
      *
+     * @return $this
+     *
      * @todo Do downloads need CSP or Cookies? Compare with ResponseTrait::send()
      */
     public function send()
@@ -314,8 +306,9 @@ class DownloadResponse extends Response
         $splFileObject = $this->file->openFile('rb');
 
         // Flush 1MB chunks of data
-        while (! $splFileObject->eof() && ($data = $splFileObject->fread(1048576)) !== false) {
+        while (! $splFileObject->eof() && ($data = $splFileObject->fread(1_048_576)) !== false) {
             echo $data;
+            unset($data);
         }
 
         return $this;

@@ -56,8 +56,7 @@ class Forge extends BaseForge
         parent::__construct($db);
 
         if (version_compare($this->db->getVersion(), '3.3', '<')) {
-            $this->createTableIfStr = false;
-            $this->dropTableIfStr   = false;
+            $this->dropTableIfStr = false;
         }
     }
 
@@ -110,7 +109,7 @@ class Forge extends BaseForge
     }
 
     /**
-     * @param mixed $field
+     * @param array|string $field
      *
      * @return array|string|null
      */

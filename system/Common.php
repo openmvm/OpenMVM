@@ -19,6 +19,7 @@ use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Debug\Timer;
 use CodeIgniter\Files\Exceptions\FileNotFoundException;
 use CodeIgniter\HTTP\Exceptions\HTTPException;
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RedirectResponse;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -44,6 +45,7 @@ if (! function_exists('app_timezone')) {
      */
     function app_timezone(): string
     {
+        /** @var App $config */
         $config = config(App::class);
 
         return $config->appTimezone;
@@ -288,6 +290,38 @@ if (! function_exists('csrf_meta')) {
     }
 }
 
+if (! function_exists('csp_style_nonce')) {
+    /**
+     * Generates a nonce attribute for style tag.
+     */
+    function csp_style_nonce(): string
+    {
+        $csp = Services::csp();
+
+        if (! $csp->enabled()) {
+            return '';
+        }
+
+        return 'nonce="' . $csp->getStyleNonce() . '"';
+    }
+}
+
+if (! function_exists('csp_script_nonce')) {
+    /**
+     * Generates a nonce attribute for script tag.
+     */
+    function csp_script_nonce(): string
+    {
+        $csp = Services::csp();
+
+        if (! $csp->enabled()) {
+            return '';
+        }
+
+        return 'nonce="' . $csp->getScriptNonce() . '"';
+    }
+}
+
 if (! function_exists('db_connect')) {
     /**
      * Grabs a database connection and returns it to the user.
@@ -445,13 +479,17 @@ if (! function_exists('force_https')) {
      *
      * @throws HTTPException
      */
-    function force_https(int $duration = 31536000, ?RequestInterface $request = null, ?ResponseInterface $response = null)
+    function force_https(int $duration = 31_536_000, ?RequestInterface $request = null, ?ResponseInterface $response = null)
     {
         if ($request === null) {
             $request = Services::request(null, true);
         }
         if ($response === null) {
             $response = Services::response(null, true);
+        }
+
+        if (! $request instanceof IncomingRequest) {
+            return;
         }
 
         if ((ENVIRONMENT !== 'testing' && (is_cli() || $request->isSecure())) || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'test')) {
@@ -618,7 +656,7 @@ if (! function_exists('helper')) {
                 }
 
                 // All namespaced files get added in next
-                $includes = array_merge($includes, $localIncludes);
+                $includes = [...$includes, ...$localIncludes];
 
                 // And the system default one should be added in last.
                 if (! empty($systemHelper)) {
@@ -773,7 +811,6 @@ if (! function_exists('model')) {
      * @param class-string<T> $name
      *
      * @return T
-     * @phpstan-return Model
      */
     function model(string $name, bool $getShared = true, ?ConnectionInterface &$conn = null)
     {
@@ -873,7 +910,8 @@ if (! function_exists('route_to')) {
      * NOTE: This requires the controller/method to
      * have a route defined in the routes Config file.
      *
-     * @param mixed ...$params
+     * @param string     $method    Named route or Controller::method
+     * @param int|string ...$params One or more parameters to be passed to the route
      *
      * @return false|string
      */
@@ -950,7 +988,6 @@ if (! function_exists('single_service')) {
         $method = new ReflectionMethod($service, $name);
         $count  = $method->getNumberOfParameters();
         $mParam = $method->getParameters();
-        $params = $params ?? [];
 
         if ($count === 1) {
             // This service needs only one argument, which is the shared
@@ -983,10 +1020,26 @@ if (! function_exists('slash_item')) {
      */
     function slash_item(string $item): ?string
     {
-        $config     = config(App::class);
+        $config = config(App::class);
+
+        if (! property_exists($config, $item)) {
+            return null;
+        }
+
         $configItem = $config->{$item};
 
-        if (! isset($configItem) || empty(trim($configItem))) {
+        if (! is_scalar($configItem)) {
+            throw new RuntimeException(sprintf(
+                'Cannot convert "%s::$%s" of type "%s" to type "string".',
+                App::class,
+                $item,
+                gettype($configItem)
+            ));
+        }
+
+        $configItem = trim((string) $configItem);
+
+        if ($configItem === '') {
             return $configItem;
         }
 
@@ -1095,7 +1148,7 @@ if (! function_exists('view_cell')) {
      * View cells are used within views to insert HTML chunks that are managed
      * by other classes.
      *
-     * @param null $params
+     * @param array|string|null $params
      *
      * @throws ReflectionException
      */

@@ -9,8 +9,6 @@
  * the LICENSE file that was distributed with this source code.
  */
 
-use Config\Services;
-
 // CodeIgniter Number Helpers
 
 if (! function_exists('number_to_size')) {
@@ -37,14 +35,14 @@ if (! function_exists('number_to_size')) {
             $generalLocale = substr($locale, 0, $underscorePos);
         }
 
-        if ($num >= 1000000000000) {
-            $num  = round($num / 1099511627776, $precision);
+        if ($num >= 1_000_000_000_000) {
+            $num  = round($num / 1_099_511_627_776, $precision);
             $unit = lang('Number.terabyteAbbr', [], $generalLocale);
-        } elseif ($num >= 1000000000) {
-            $num  = round($num / 1073741824, $precision);
+        } elseif ($num >= 1_000_000_000) {
+            $num  = round($num / 1_073_741_824, $precision);
             $unit = lang('Number.gigabyteAbbr', [], $generalLocale);
-        } elseif ($num >= 1000000) {
-            $num  = round($num / 1048576, $precision);
+        } elseif ($num >= 1_000_000) {
+            $num  = round($num / 1_048_576, $precision);
             $unit = lang('Number.megabyteAbbr', [], $generalLocale);
         } elseif ($num >= 1000) {
             $num  = round($num / 1024, $precision);
@@ -90,18 +88,18 @@ if (! function_exists('number_to_amount')) {
             $generalLocale = substr($locale, 0, $underscorePos);
         }
 
-        if ($num > 1000000000000000) {
+        if ($num > 1_000_000_000_000_000) {
             $suffix = lang('Number.quadrillion', [], $generalLocale);
-            $num    = round(($num / 1000000000000000), $precision);
-        } elseif ($num > 1000000000000) {
+            $num    = round(($num / 1_000_000_000_000_000), $precision);
+        } elseif ($num > 1_000_000_000_000) {
             $suffix = lang('Number.trillion', [], $generalLocale);
-            $num    = round(($num / 1000000000000), $precision);
-        } elseif ($num > 1000000000) {
+            $num    = round(($num / 1_000_000_000_000), $precision);
+        } elseif ($num > 1_000_000_000) {
             $suffix = lang('Number.billion', [], $generalLocale);
-            $num    = round(($num / 1000000000), $precision);
-        } elseif ($num > 1000000) {
+            $num    = round(($num / 1_000_000_000), $precision);
+        } elseif ($num > 1_000_000) {
             $suffix = lang('Number.million', [], $generalLocale);
-            $num    = round(($num / 1000000), $precision);
+            $num    = round(($num / 1_000_000), $precision);
         } elseif ($num > 1000) {
             $suffix = lang('Number.thousand', [], $generalLocale);
             $num    = round(($num / 1000), $precision);
@@ -129,8 +127,9 @@ if (! function_exists('format_number')) {
      */
     function format_number(float $num, int $precision = 1, ?string $locale = null, array $options = []): string
     {
-        // Locale is either passed in here, negotiated with client, or grabbed from our config file.
-        $locale = $locale ?? Services::request()->getLocale();
+        // If locale is not passed, get from the default locale that is set from our config file
+        // or set by HTTP content negotiation.
+        $locale ??= Locale::getDefault();
 
         // Type can be any of the NumberFormatter options, but provide a default.
         $type = (int) ($options['type'] ?? NumberFormatter::DECIMAL);

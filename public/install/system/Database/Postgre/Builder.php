@@ -13,6 +13,7 @@ namespace CodeIgniter\Database\Postgre;
 
 use CodeIgniter\Database\BaseBuilder;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use CodeIgniter\Database\RawSql;
 
 /**
  * Builder for Postgre
@@ -95,7 +96,13 @@ class Builder extends BaseBuilder
 
         $sql = $this->_update($this->QBFrom[0], [$column => "to_number({$column}, '9999999') + {$value}"]);
 
-        return $this->db->query($sql, $this->binds, false);
+        if (! $this->testMode) {
+            $this->resetWrite();
+
+            return $this->db->query($sql, $this->binds, false);
+        }
+
+        return true;
     }
 
     /**
@@ -111,7 +118,13 @@ class Builder extends BaseBuilder
 
         $sql = $this->_update($this->QBFrom[0], [$column => "to_number({$column}, '9999999') - {$value}"]);
 
-        return $this->db->query($sql, $this->binds, false);
+        if (! $this->testMode) {
+            $this->resetWrite();
+
+            return $this->db->query($sql, $this->binds, false);
+        }
+
+        return true;
     }
 
     /**
@@ -241,7 +254,7 @@ class Builder extends BaseBuilder
 
             foreach (array_keys($val) as $field) {
                 if ($field !== $index) {
-                    $final[$field] = $final[$field] ?? [];
+                    $final[$field] ??= [];
 
                     $final[$field][] = "WHEN {$val[$index]} THEN {$val[$field]}";
                 }
@@ -300,9 +313,11 @@ class Builder extends BaseBuilder
     /**
      * Generates the JOIN portion of the query
      *
+     * @param RawSql|string $cond
+     *
      * @return BaseBuilder
      */
-    public function join(string $table, string $cond, string $type = '', ?bool $escape = null)
+    public function join(string $table, $cond, string $type = '', ?bool $escape = null)
     {
         if (! in_array('FULL OUTER', $this->joinTypes, true)) {
             $this->joinTypes = array_merge($this->joinTypes, ['FULL OUTER']);

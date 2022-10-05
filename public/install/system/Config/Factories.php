@@ -11,6 +11,7 @@
 
 namespace CodeIgniter\Config;
 
+use CodeIgniter\Database\ConnectionInterface;
 use CodeIgniter\Model;
 use Config\Services;
 
@@ -23,7 +24,6 @@ use Config\Services;
  * instantiation checks.
  *
  * @method static BaseConfig config(...$arguments)
- * @method static Model models(...$arguments)
  */
 class Factories
 {
@@ -41,7 +41,7 @@ class Factories
      *
      * @var array<string, mixed>
      */
-    private static $configOptions = [
+    private static array $configOptions = [
         'component'  => 'config',
         'path'       => 'Config',
         'instanceOf' => null,
@@ -68,10 +68,26 @@ class Factories
     protected static $instances = [];
 
     /**
+     * This method is only to prevent PHPStan error.
+     * If we have a solution, we can remove this method.
+     * See https://github.com/codeigniter4/CodeIgniter4/pull/5358
+     *
+     * @template T of Model
+     *
+     * @param class-string<T> $name
+     *
+     * @return T
+     */
+    public static function models(string $name, array $options = [], ?ConnectionInterface &$conn = null)
+    {
+        return self::__callStatic('models', [$name, $options, $conn]);
+    }
+
+    /**
      * Loads instances based on the method component name. Either
      * creates a new instance or returns an existing shared instance.
      *
-     * @return mixed
+     * @return object|null
      */
     public static function __callStatic(string $component, array $arguments)
     {
@@ -263,7 +279,7 @@ class Factories
     /**
      * Resets the static arrays, optionally just for one component
      *
-     * @param string $component Lowercase, plural component name
+     * @param string|null $component Lowercase, plural component name
      */
     public static function reset(?string $component = null)
     {

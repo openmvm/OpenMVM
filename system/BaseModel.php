@@ -293,9 +293,9 @@ abstract class BaseModel
         $this->tempAllowCallbacks = $this->allowCallbacks;
 
         /**
-         * @var Validation $validation
+         * @var Validation|null $validation
          */
-        $validation       = $validation ?? Services::validation(null, false);
+        $validation ??= Services::validation(null, false);
         $this->validation = $validation;
 
         $this->initialize();
@@ -353,11 +353,11 @@ abstract class BaseModel
 
     /**
      * Inserts data into the current database
-     * This methods works only with dbCalls
+     * This method works only with dbCalls
      *
      * @param array $data Data
      *
-     * @return bool|int|string
+     * @return bool
      */
     abstract protected function doInsert(array $data);
 
@@ -695,7 +695,7 @@ abstract class BaseModel
      *
      * @throws ReflectionException
      *
-     * @return bool|int|string
+     * @return bool|int|string insert ID or true on success. false on failure.
      */
     public function insert($data = null, bool $returnID = true)
     {
@@ -1073,10 +1073,11 @@ abstract class BaseModel
      */
     public function paginate(?int $perPage = null, string $group = 'default', ?int $page = null, int $segment = 0)
     {
-        $pager = Services::pager(null, null, false);
+        // Since multiple models may use the Pager, the Pager must be shared.
+        $pager = Services::pager();
 
         if ($segment) {
-            $pager->setSegment($segment);
+            $pager->setSegment($segment, $group);
         }
 
         $page = $page >= 1 ? $page : $pager->getCurrentPage($group);
@@ -1344,7 +1345,9 @@ abstract class BaseModel
             return true;
         }
 
-        return $this->validation->setRules($rules, $this->validationMessages)->run($data, null, $this->DBGroup);
+        $this->validation->reset()->setRules($rules, $this->validationMessages);
+
+        return $this->validation->run($data, null, $this->DBGroup);
     }
 
     /**
@@ -1489,9 +1492,9 @@ abstract class BaseModel
     }
 
     /**
-     * Takes a class an returns an array of it's public and protected
+     * Takes a class and returns an array of it's public and protected
      * properties as an array suitable for use in creates and updates.
-     * This method use objectToRawArray internally and does conversion
+     * This method uses objectToRawArray() internally and does conversion
      * to string on all Time instances
      *
      * @param object|string $data        Data
@@ -1521,7 +1524,7 @@ abstract class BaseModel
     }
 
     /**
-     * Takes a class an returns an array of it's public and protected
+     * Takes a class and returns an array of its public and protected
      * properties as an array with raw values.
      *
      * @param object|string $data        Data

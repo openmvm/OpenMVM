@@ -45,9 +45,7 @@ class MemcachedHandler extends BaseHandler
     {
         $this->prefix = $config->prefix;
 
-        if (! empty($config)) {
-            $this->config = array_merge($this->config, $config->memcached);
-        }
+        $this->config = array_merge($this->config, $config->memcached);
     }
 
     /**
@@ -115,8 +113,6 @@ class MemcachedHandler extends BaseHandler
             } else {
                 throw new CriticalError('Cache: Not support Memcache(d) extension.');
             }
-        } catch (CriticalError $e) {
-            throw $e;
         } catch (Exception $e) {
             throw new CriticalError('Cache: Memcache(d) connection refused (' . $e->getMessage() . ').');
         }

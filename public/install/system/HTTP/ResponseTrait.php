@@ -38,6 +38,8 @@ trait ResponseTrait
      * Whether Content Security Policy is being enforced.
      *
      * @var bool
+     *
+     * @deprecated Use $this->CSP->enabled() instead.
      */
     protected $CSPEnabled = false;
 
@@ -163,9 +165,9 @@ trait ResponseTrait
         return $this;
     }
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Convenience Methods
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Sets the date header
@@ -297,7 +299,7 @@ trait ResponseTrait
     }
 
     /**
-     * Handles conversion of the of the data into the appropriate format,
+     * Handles conversion of the data into the appropriate format,
      * and sets the correct Content-Type header for our response.
      *
      * @param array|string $body
@@ -321,11 +323,11 @@ trait ResponseTrait
         return $body;
     }
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Cache Control Methods
     //
     // http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Sets the appropriate headers to ensure this response
@@ -420,9 +422,9 @@ trait ResponseTrait
         return $this;
     }
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Output Methods
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Sends the output to the browser.
@@ -433,7 +435,7 @@ trait ResponseTrait
     {
         // If we're enforcing a Content Security Policy,
         // we need to give it a chance to build out it's headers.
-        if ($this->CSPEnabled === true) {
+        if ($this->CSP->enabled()) {
             $this->CSP->finalize($this);
         } else {
             $this->body = str_replace(['{csp-style-nonce}', '{csp-script-nonce}'], '', $this->body ?? '');
@@ -465,7 +467,7 @@ trait ResponseTrait
         }
 
         // HTTP Status
-        header(sprintf('HTTP/%s %s %s', $this->getProtocolVersion(), $this->getStatusCode(), $this->getReason()), true, $this->getStatusCode());
+        header(sprintf('HTTP/%s %s %s', $this->getProtocolVersion(), $this->getStatusCode(), $this->getReasonPhrase()), true, $this->getStatusCode());
 
         // Send all of our headers
         foreach (array_keys($this->getHeaders()) as $name) {
@@ -541,7 +543,7 @@ trait ResponseTrait
      * @param string              $expire   Cookie expiration time in seconds
      * @param string              $domain   Cookie domain (e.g.: '.yourdomain.com')
      * @param string              $path     Cookie path (default: '/')
-     * @param string              $prefix   Cookie name prefix
+     * @param string              $prefix   Cookie name prefix ('': the default prefix)
      * @param bool                $secure   Whether to only transfer cookies via SSL
      * @param bool                $httponly Whether only make the cookie accessible via HTTP (no javascript)
      * @param string|null         $samesite
@@ -616,6 +618,9 @@ trait ResponseTrait
     /**
      * Returns the cookie
      *
+     * @param string $prefix Cookie prefix.
+     *                       '': the default prefix
+     *
      * @return Cookie|Cookie[]|null
      */
     public function getCookie(?string $name = null, string $prefix = '')
@@ -629,7 +634,7 @@ trait ResponseTrait
 
             return $this->cookieStore->get($name, $prefix);
         } catch (CookieException $e) {
-            log_message('error', $e->getMessage());
+            log_message('error', (string) $e);
 
             return null;
         }
@@ -652,6 +657,7 @@ trait ResponseTrait
         $store    = $this->cookieStore;
         $found    = false;
 
+        /** @var Cookie $cookie */
         foreach ($store as $cookie) {
             if ($cookie->getPrefixedName() === $prefixed) {
                 if ($domain !== $cookie->getDomain()) {
@@ -749,8 +755,9 @@ trait ResponseTrait
      * Generates the headers that force a download to happen. And
      * sends the file to the browser.
      *
-     * @param string      $filename The path to the file to send
-     * @param string|null $data     The data to be downloaded
+     * @param string      $filename The name you want the downloaded file to be named
+     *                              or the path to the file to send
+     * @param string|null $data     The data to be downloaded. Set null if the $filename is the file path
      * @param bool        $setMime  Whether to try and send the actual MIME type
      *
      * @return DownloadResponse|null

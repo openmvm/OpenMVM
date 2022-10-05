@@ -42,6 +42,11 @@ class Connection extends BaseConnection
      */
     public $escapeChar = '"';
 
+    protected $connect_timeout;
+    protected $options;
+    protected $sslmode;
+    protected $service;
+
     /**
      * Connect to the database.
      *
@@ -127,14 +132,14 @@ class Connection extends BaseConnection
     /**
      * Executes the query against the database.
      *
-     * @return mixed
+     * @return false|resource
      */
     protected function execute(string $sql)
     {
         try {
             return pg_query($this->connID, $sql);
         } catch (ErrorException $e) {
-            log_message('error', $e);
+            log_message('error', (string) $e);
             if ($this->DBDebug) {
                 throw $e;
             }
@@ -199,10 +204,16 @@ class Connection extends BaseConnection
 
     /**
      * Generates the SQL for listing tables in a platform-dependent manner.
+     *
+     * @param string|null $tableName If $tableName is provided will return only this table if exists.
      */
-    protected function _listTables(bool $prefixLimit = false): string
+    protected function _listTables(bool $prefixLimit = false, ?string $tableName = null): string
     {
         $sql = 'SELECT "table_name" FROM "information_schema"."tables" WHERE "table_schema" = \'' . $this->schema . "'";
+
+        if ($tableName !== null) {
+            return $sql . ' AND "table_name" LIKE ' . $this->escape($tableName);
+        }
 
         if ($prefixLimit !== false && $this->DBPrefix !== '') {
             return $sql . ' AND "table_name" LIKE \''
@@ -234,9 +245,9 @@ class Connection extends BaseConnection
      */
     protected function _fieldData(string $table): array
     {
-        $sql = 'SELECT "column_name", "data_type", "character_maximum_length", "numeric_precision", "column_default"
-			FROM "information_schema"."columns"
-			WHERE LOWER("table_name") = '
+        $sql = 'SELECT "column_name", "data_type", "character_maximum_length", "numeric_precision", "column_default",  "is_nullable"
+            FROM "information_schema"."columns"
+            WHERE LOWER("table_name") = '
                 . $this->escape(strtolower($table))
                 . ' ORDER BY "ordinal_position"';
 
@@ -252,6 +263,7 @@ class Connection extends BaseConnection
 
             $retVal[$i]->name       = $query[$i]->column_name;
             $retVal[$i]->type       = $query[$i]->data_type;
+            $retVal[$i]->nullable   = $query[$i]->is_nullable === 'YES';
             $retVal[$i]->default    = $query[$i]->column_default;
             $retVal[$i]->max_length = $query[$i]->character_maximum_length > 0 ? $query[$i]->character_maximum_length : $query[$i]->numeric_precision;
         }
@@ -284,9 +296,7 @@ class Connection extends BaseConnection
             $obj         = new stdClass();
             $obj->name   = $row->indexname;
             $_fields     = explode(',', preg_replace('/^.*\((.+?)\)$/', '$1', trim($row->indexdef)));
-            $obj->fields = array_map(static function ($v) {
-                return trim($v);
-            }, $_fields);
+            $obj->fields = array_map(static fn ($v) => trim($v), $_fields);
 
             if (strpos($row->indexdef, 'CREATE UNIQUE INDEX pk') === 0) {
                 $obj->type = 'PRIMARY';

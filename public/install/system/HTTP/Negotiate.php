@@ -18,7 +18,7 @@ use CodeIgniter\HTTP\Exceptions\HTTPException;
  *
  * Provides methods to negotiate with the HTTP headers to determine the best
  * type match between what the application supports and what the requesting
- * getServer wants.
+ * server wants.
  *
  * @see http://tools.ietf.org/html/rfc7231#section-5.3
  */
@@ -27,7 +27,7 @@ class Negotiate
     /**
      * Request
      *
-     * @var IncomingRequest|RequestInterface
+     * @var IncomingRequest
      */
     protected $request;
 
@@ -37,6 +37,8 @@ class Negotiate
     public function __construct(?RequestInterface $request = null)
     {
         if ($request !== null) {
+            assert($request instanceof IncomingRequest);
+
             $this->request = $request;
         }
     }
@@ -48,6 +50,8 @@ class Negotiate
      */
     public function setRequest(RequestInterface $request)
     {
+        assert($request instanceof IncomingRequest);
+
         $this->request = $request;
 
         return $this;
@@ -118,9 +122,9 @@ class Negotiate
         return $this->getBestMatch($supported, $this->request->getHeaderLine('accept-language'), false, false, true);
     }
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Utility Methods
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Does the grunt work of comparing any of the app-supported values

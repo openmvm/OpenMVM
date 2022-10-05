@@ -212,7 +212,7 @@ trait RequestTrait
      * @param int|null          $filter Filter constant
      * @param array|int|null    $flags  Options
      *
-     * @return mixed
+     * @return array|bool|string|null
      */
     public function fetchGlobal(string $method, $index = null, ?int $filter = null, $flags = null)
     {
@@ -223,8 +223,8 @@ trait RequestTrait
         }
 
         // Null filters cause null values to return.
-        $filter = $filter ?? FILTER_DEFAULT;
-        $flags  = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
+        $filter ??= FILTER_DEFAULT;
+        $flags = is_array($flags) ? $flags : (is_numeric($flags) ? (int) $flags : 0);
 
         // Return all values when $index is null
         if ($index === null) {

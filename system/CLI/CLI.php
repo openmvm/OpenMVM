@@ -469,7 +469,7 @@ class CLI
      */
     public static function color(string $text, string $foreground, ?string $background = null, ?string $format = null): string
     {
-        if (! static::$isColored) {
+        if (! static::$isColored || $text === '') {
             return $text;
         }
 
@@ -481,6 +481,48 @@ class CLI
             throw CLIException::forInvalidColor('background', $background);
         }
 
+        $newText = '';
+
+        // Detect if color method was already in use with this text
+        if (strpos($text, "\033[0m") !== false) {
+            $pattern = '/\\033\\[0;.+?\\033\\[0m/u';
+
+            preg_match_all($pattern, $text, $matches);
+            $coloredStrings = $matches[0];
+
+            // No colored string found. Invalid strings with no `\033[0;??`.
+            if ($coloredStrings === []) {
+                return $newText . self::getColoredText($text, $foreground, $background, $format);
+            }
+
+            $nonColoredText = preg_replace(
+                $pattern,
+                '<<__colored_string__>>',
+                $text
+            );
+            $nonColoredChunks = preg_split(
+                '/<<__colored_string__>>/u',
+                $nonColoredText
+            );
+
+            foreach ($nonColoredChunks as $i => $chunk) {
+                if ($chunk !== '') {
+                    $newText .= self::getColoredText($chunk, $foreground, $background, $format);
+                }
+
+                if (isset($coloredStrings[$i])) {
+                    $newText .= $coloredStrings[$i];
+                }
+            }
+        } else {
+            $newText .= self::getColoredText($text, $foreground, $background, $format);
+        }
+
+        return $newText;
+    }
+
+    private static function getColoredText(string $text, string $foreground, ?string $background, ?string $format): string
+    {
         $string = "\033[" . static::$foreground_colors[$foreground] . 'm';
 
         if ($background !== null) {
@@ -489,30 +531,6 @@ class CLI
 
         if ($format === 'underline') {
             $string .= "\033[4m";
-        }
-
-        // Detect if color method was already in use with this text
-        if (strpos($text, "\033[0m") !== false) {
-            // Split the text into parts so that we can see
-            // if any part missing the color definition
-            $chunks = mb_split('\\033\\[0m', $text);
-            // Reset text
-            $text = '';
-
-            foreach ($chunks as $chunk) {
-                if ($chunk === '') {
-                    continue;
-                }
-
-                // If chunk doesn't have colors defined we need to add them
-                if (strpos($chunk, "\033[") === false) {
-                    $chunk = static::color($chunk, $foreground, $background, $format);
-                    // Add color reset before chunk and clear end of the string
-                    $text .= rtrim("\033[0m" . $chunk, "\033[0m");
-                } else {
-                    $text .= $chunk;
-                }
-            }
         }
 
         return $string . $text . "\033[0m";
@@ -655,7 +673,7 @@ class CLI
             // Then let the developer know of the error.
             static::$height = null;
             static::$width  = null;
-            log_message('error', $e->getMessage());
+            log_message('error', (string) $e);
         }
     }
 
@@ -738,9 +756,9 @@ class CLI
         return $lines;
     }
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Command-Line 'URI' support
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Parses the command line it was called from and collects all
@@ -820,7 +838,7 @@ class CLI
      * Gets a single command-line option. Returns TRUE if the option
      * exists, but doesn't have a value, and is simply acting as a flag.
      *
-     * @return mixed
+     * @return string|true|null
      */
     public static function getOption(string $name)
     {

@@ -13,6 +13,8 @@ namespace CodeIgniter\Debug;
 
 use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\Exceptions\HTTPException;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
 use Config\Exceptions as ExceptionsConfig;
@@ -50,9 +52,9 @@ class Exceptions
     protected $config;
 
     /**
-     * The incoming request.
+     * The request.
      *
-     * @var IncomingRequest
+     * @var CLIRequest|IncomingRequest
      */
     protected $request;
 
@@ -63,7 +65,10 @@ class Exceptions
      */
     protected $response;
 
-    public function __construct(ExceptionsConfig $config, IncomingRequest $request, Response $response)
+    /**
+     * @param CLIRequest|IncomingRequest $request
+     */
+    public function __construct(ExceptionsConfig $config, $request, Response $response)
     {
         $this->ob_level = ob_get_level();
         $this->viewPath = rtrim($config->errorViewPath, '\\/ ') . DIRECTORY_SEPARATOR;
@@ -102,14 +107,26 @@ class Exceptions
         [$statusCode, $exitCode] = $this->determineCodes($exception);
 
         if ($this->config->log === true && ! in_array($statusCode, $this->config->ignoreCodes, true)) {
-            log_message('critical', $exception->getMessage() . "\n{trace}", [
-                'trace' => $exception->getTraceAsString(),
+            log_message('critical', "{message}\nin {exFile} on line {exLine}.\n{trace}", [
+                'message' => $exception->getMessage(),
+                'exFile'  => clean_path($exception->getFile()), // {file} refers to THIS file
+                'exLine'  => $exception->getLine(), // {line} refers to THIS line
+                'trace'   => self::renderBacktrace($exception->getTrace()),
             ]);
         }
 
         if (! is_cli()) {
-            $this->response->setStatusCode($statusCode);
-            header(sprintf('HTTP/%s %s %s', $this->request->getProtocolVersion(), $this->response->getStatusCode(), $this->response->getReasonPhrase()), true, $statusCode);
+            try {
+                $this->response->setStatusCode($statusCode);
+            } catch (HTTPException $e) {
+                // Workaround for invalid HTTP status code.
+                $statusCode = 500;
+                $this->response->setStatusCode($statusCode);
+            }
+
+            if (! headers_sent()) {
+                header(sprintf('HTTP/%s %s %s', $this->request->getProtocolVersion(), $this->response->getStatusCode(), $this->response->getReasonPhrase()), true, $statusCode);
+            }
 
             if (strpos($this->request->getHeaderLine('accept'), 'text/html') === false) {
                 $this->respond(ENVIRONMENT === 'development' ? $this->collectVars($exception, $statusCode) : '', $statusCode)->send();
@@ -160,7 +177,7 @@ class Exceptions
         ['type' => $type, 'message' => $message, 'file' => $file, 'line' => $line] = $error;
 
         if (in_array($type, [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_PARSE], true)) {
-            $this->exceptionHandler(new ErrorException($message, $type, 0, $file, $line));
+            $this->exceptionHandler(new ErrorException($message, 0, $type, $file, $line));
         }
     }
 
@@ -252,7 +269,7 @@ class Exceptions
             'title'   => get_class($exception),
             'type'    => get_class($exception),
             'code'    => $statusCode,
-            'message' => $exception->getMessage() ?? '(null)',
+            'message' => $exception->getMessage(),
             'file'    => $exception->getFile(),
             'line'    => $exception->getLine(),
             'trace'   => $trace,
@@ -312,12 +329,14 @@ class Exceptions
         return [$statusCode, $exitStatus];
     }
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Display Methods
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * This makes nicer looking paths for the error output.
+     *
+     * @deprecated Use dedicated `clean_path()` function.
      */
     public static function cleanPath(string $file): string
     {
@@ -352,11 +371,11 @@ class Exceptions
             return $bytes . 'B';
         }
 
-        if ($bytes < 1048576) {
+        if ($bytes < 1_048_576) {
             return round($bytes / 1024, 2) . 'KB';
         }
 
-        return round($bytes / 1048576, 2) . 'MB';
+        return round($bytes / 1_048_576, 2) . 'MB';
     }
 
     /**
@@ -429,5 +448,56 @@ class Exceptions
         }
 
         return '<pre><code>' . $out . '</code></pre>';
+    }
+
+    private static function renderBacktrace(array $backtrace): string
+    {
+        $backtraces = [];
+
+        foreach ($backtrace as $index => $trace) {
+            $frame = $trace + ['file' => '[internal function]', 'line' => '', 'class' => '', 'type' => '', 'args' => []];
+
+            if ($frame['file'] !== '[internal function]') {
+                $frame['file'] = sprintf('%s(%s)', $frame['file'], $frame['line']);
+            }
+
+            unset($frame['line']);
+            $idx = $index;
+            $idx = str_pad((string) ++$idx, 2, ' ', STR_PAD_LEFT);
+
+            $args = implode(', ', array_map(static function ($value): string {
+                switch (true) {
+                    case is_object($value):
+                        return sprintf('Object(%s)', get_class($value));
+
+                    case is_array($value):
+                        return $value !== [] ? '[...]' : '[]';
+
+                    case $value === null:
+                        return 'null';
+
+                    case is_resource($value):
+                        return sprintf('resource (%s)', get_resource_type($value));
+
+                    case is_string($value):
+                        return var_export(clean_path($value), true);
+
+                    default:
+                        return var_export($value, true);
+                }
+            }, $frame['args']));
+
+            $backtraces[] = sprintf(
+                '%s %s: %s%s%s(%s)',
+                $idx,
+                clean_path($frame['file']),
+                $frame['class'],
+                $frame['type'],
+                $frame['function'],
+                $args
+            );
+        }
+
+        return implode("\n", $backtraces);
     }
 }

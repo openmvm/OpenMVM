@@ -89,7 +89,12 @@ class File extends SplFileInfo
      */
     public function guessExtension(): ?string
     {
-        return Mimes::guessExtensionFromType($this->getMimeType());
+        // naively get the path extension using pathinfo
+        $pathinfo = pathinfo($this->getRealPath() ?: $this->__toString()) + ['extension' => ''];
+
+        $proposedExtension = $pathinfo['extension'];
+
+        return Mimes::guessExtensionFromType($this->getMimeType(), $proposedExtension);
     }
 
     /**
@@ -131,8 +136,8 @@ class File extends SplFileInfo
      */
     public function move(string $targetPath, ?string $name = null, bool $overwrite = false)
     {
-        $targetPath  = rtrim($targetPath, '/') . '/';
-        $name        = $name ?? $this->getBaseName();
+        $targetPath = rtrim($targetPath, '/') . '/';
+        $name ??= $this->getBaseName();
         $destination = $overwrite ? $targetPath . $name : $this->getDestination($targetPath . $name);
 
         $oldName = $this->getRealPath() ?: $this->__toString();

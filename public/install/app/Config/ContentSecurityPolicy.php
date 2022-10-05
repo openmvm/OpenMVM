@@ -15,9 +15,9 @@ use CodeIgniter\Config\BaseConfig;
  */
 class ContentSecurityPolicy extends BaseConfig
 {
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Broadbrush CSP management
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     /**
      * Default CSP report context
@@ -43,10 +43,10 @@ class ContentSecurityPolicy extends BaseConfig
      */
     public $upgradeInsecureRequests = false;
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Sources allowed
     // Note: once you set a policy to 'none', it cannot be further restricted
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     /**
      * Will default to self if not overridden
@@ -164,4 +164,25 @@ class ContentSecurityPolicy extends BaseConfig
      * @var string|string[]|null
      */
     public $sandbox;
+
+    /**
+     * Nonce tag for style
+     *
+     * @var string
+     */
+    public $styleNonceTag = '{csp-style-nonce}';
+
+    /**
+     * Nonce tag for script
+     *
+     * @var string
+     */
+    public $scriptNonceTag = '{csp-script-nonce}';
+
+    /**
+     * Replace nonce tag automatically
+     *
+     * @var bool
+     */
+    public $autoNonce = true;
 }

@@ -28,6 +28,7 @@ use CodeIgniter\Filters\Filters;
 use CodeIgniter\Format\Format;
 use CodeIgniter\Honeypot\Honeypot;
 use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\ContentSecurityPolicy;
 use CodeIgniter\HTTP\CURLRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Negotiate;
@@ -56,6 +57,7 @@ use CodeIgniter\View\View;
 use Config\App;
 use Config\Autoload;
 use Config\Cache;
+use Config\ContentSecurityPolicy as CSPConfig;
 use Config\Encryption;
 use Config\Exceptions as ConfigExceptions;
 use Config\Filters as ConfigFilters;
@@ -90,40 +92,43 @@ use Config\View as ConfigView;
  * @see http://blog.ircmaxell.com/2015/11/simple-easy-risk-and-change.html
  * @see http://www.infoq.com/presentations/Simple-Made-Easy
  *
- * @method static CacheInterface cache(Cache $config = null, $getShared = true)
- * @method static CLIRequest clirequest(App $config = null, $getShared = true)
- * @method static CodeIgniter codeigniter(App $config = null, $getShared = true)
- * @method static Commands commands($getShared = true)
- * @method static CURLRequest curlrequest($options = [], ResponseInterface $response = null, App $config = null, $getShared = true)
- * @method static Email email($config = null, $getShared = true)
- * @method static EncrypterInterface encrypter(Encryption $config = null, $getShared = false)
- * @method static Exceptions exceptions(ConfigExceptions $config = null, IncomingRequest $request = null, Response $response = null, $getShared = true)
- * @method static Filters filters(ConfigFilters $config = null, $getShared = true)
- * @method static Format format(ConfigFormat $config = null, $getShared = true)
- * @method static Honeypot honeypot(ConfigHoneyPot $config = null, $getShared = true)
- * @method static BaseHandler image($handler = null, Images $config = null, $getShared = true)
- * @method static Iterator iterator($getShared = true)
- * @method static Language language($locale = null, $getShared = true)
- * @method static Logger logger($getShared = true)
- * @method static MigrationRunner migrations(Migrations $config = null, ConnectionInterface $db = null, $getShared = true)
- * @method static Negotiate negotiator(RequestInterface $request = null, $getShared = true)
- * @method static Pager pager(ConfigPager $config = null, RendererInterface $view = null, $getShared = true)
- * @method static Parser parser($viewPath = null, ConfigView $config = null, $getShared = true)
- * @method static RedirectResponse redirectresponse(App $config = null, $getShared = true)
- * @method static View renderer($viewPath = null, ConfigView $config = null, $getShared = true)
- * @method static IncomingRequest request(App $config = null, $getShared = true)
- * @method static Response response(App $config = null, $getShared = true)
- * @method static Router router(RouteCollectionInterface $routes = null, Request $request = null, $getShared = true)
- * @method static RouteCollection routes($getShared = true)
- * @method static Security security(App $config = null, $getShared = true)
- * @method static Session session(App $config = null, $getShared = true)
- * @method static Throttler throttler($getShared = true)
- * @method static Timer timer($getShared = true)
- * @method static Toolbar toolbar(ConfigToolbar $config = null, $getShared = true)
- * @method static Typography typography($getShared = true)
- * @method static URI uri($uri = null, $getShared = true)
- * @method static Validation validation(ConfigValidation $config = null, $getShared = true)
- * @method static Cell viewcell($getShared = true)
+ * @method static CacheInterface             cache(Cache $config = null, $getShared = true)
+ * @method static CLIRequest                 clirequest(App $config = null, $getShared = true)
+ * @method static CodeIgniter                codeigniter(App $config = null, $getShared = true)
+ * @method static Commands                   commands($getShared = true)
+ * @method static void                       createRequest(App $config, bool $isCli = false)
+ * @method static ContentSecurityPolicy      csp(CSPConfig $config = null, $getShared = true)
+ * @method static CURLRequest                curlrequest($options = [], ResponseInterface $response = null, App $config = null, $getShared = true)
+ * @method static Email                      email($config = null, $getShared = true)
+ * @method static EncrypterInterface         encrypter(Encryption $config = null, $getShared = false)
+ * @method static Exceptions                 exceptions(ConfigExceptions $config = null, IncomingRequest $request = null, Response $response = null, $getShared = true)
+ * @method static Filters                    filters(ConfigFilters $config = null, $getShared = true)
+ * @method static Format                     format(ConfigFormat $config = null, $getShared = true)
+ * @method static Honeypot                   honeypot(ConfigHoneyPot $config = null, $getShared = true)
+ * @method static BaseHandler                image($handler = null, Images $config = null, $getShared = true)
+ * @method static IncomingRequest            incomingrequest(?App $config = null, bool $getShared = true)
+ * @method static Iterator                   iterator($getShared = true)
+ * @method static Language                   language($locale = null, $getShared = true)
+ * @method static Logger                     logger($getShared = true)
+ * @method static MigrationRunner            migrations(Migrations $config = null, ConnectionInterface $db = null, $getShared = true)
+ * @method static Negotiate                  negotiator(RequestInterface $request = null, $getShared = true)
+ * @method static Pager                      pager(ConfigPager $config = null, RendererInterface $view = null, $getShared = true)
+ * @method static Parser                     parser($viewPath = null, ConfigView $config = null, $getShared = true)
+ * @method static RedirectResponse           redirectresponse(App $config = null, $getShared = true)
+ * @method static View                       renderer($viewPath = null, ConfigView $config = null, $getShared = true)
+ * @method static IncomingRequest|CLIRequest request(App $config = null, $getShared = true)
+ * @method static Response                   response(App $config = null, $getShared = true)
+ * @method static Router                     router(RouteCollectionInterface $routes = null, Request $request = null, $getShared = true)
+ * @method static RouteCollection            routes($getShared = true)
+ * @method static Security                   security(App $config = null, $getShared = true)
+ * @method static Session                    session(App $config = null, $getShared = true)
+ * @method static Throttler                  throttler($getShared = true)
+ * @method static Timer                      timer($getShared = true)
+ * @method static Toolbar                    toolbar(ConfigToolbar $config = null, $getShared = true)
+ * @method static Typography                 typography($getShared = true)
+ * @method static URI                        uri($uri = null, $getShared = true)
+ * @method static Validation                 validation(ConfigValidation $config = null, $getShared = true)
+ * @method static Cell                       viewcell($getShared = true)
  */
 class BaseService
 {
@@ -162,7 +167,7 @@ class BaseService
      *
      * @var array<string>
      */
-    private static $serviceNames = [];
+    private static array $serviceNames = [];
 
     /**
      * Returns a shared instance of any of the class' services.
@@ -270,7 +275,7 @@ class BaseService
     /**
      * Reset shared instances and mocks for testing.
      */
-    public static function reset(bool $initAutoloader = false)
+    public static function reset(bool $initAutoloader = true)
     {
         static::$mocks     = [];
         static::$instances = [];
@@ -285,6 +290,7 @@ class BaseService
      */
     public static function resetSingle(string $name)
     {
+        $name = strtolower($name);
         unset(static::$mocks[$name], static::$instances[$name]);
     }
 
@@ -328,7 +334,7 @@ class BaseService
                 foreach ($files as $file) {
                     $classname = $locator->getClassname($file);
 
-                    if (! in_array($classname, ['CodeIgniter\\Config\\Services'], true)) {
+                    if (! in_array($classname, [Services::class], true)) {
                         static::$services[] = new $classname();
                     }
                 }
@@ -365,7 +371,7 @@ class BaseService
                 foreach ($files as $file) {
                     $classname = $locator->getClassname($file);
 
-                    if ($classname !== 'CodeIgniter\\Config\\Services') {
+                    if ($classname !== Services::class) {
                         self::$serviceNames[] = $classname;
                         static::$services[]   = new $classname();
                     }

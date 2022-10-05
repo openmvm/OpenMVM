@@ -19,12 +19,6 @@ use Imagick;
 /**
  * Class ImageMagickHandler
  *
- * To make this library as compatible as possible with the broadest
- * number of installations, we do not use the Imagick extension,
- * but simply use the command line version.
- *
- * hmm - the width & height accessors at the end use the imagick extension.
- *
  * FIXME - This needs conversion & unit testing, to use the imagick extension
  */
 class ImageMagickHandler extends BaseHandler
@@ -49,7 +43,7 @@ class ImageMagickHandler extends BaseHandler
 
         // We should never see this, so can't test it
         // @codeCoverageIgnoreStart
-        if (! (extension_loaded('imagick') || class_exists('Imagick'))) {
+        if (! (extension_loaded('imagick') || class_exists(Imagick::class))) {
             throw ImageException::forMissingExtension('IMAGICK');
         }
         // @codeCoverageIgnoreEnd

@@ -62,9 +62,9 @@ class Time extends DateTime
      */
     protected static $testNow;
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Constructors
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Time constructor.
@@ -77,12 +77,12 @@ class Time extends DateTime
     {
         $this->locale = $locale ?: Locale::getDefault();
 
-        $time = $time ?? '';
+        $time ??= '';
 
         // If a test instance has been provided, use it instead.
         if ($time === '' && static::$testNow instanceof self) {
             $timezone = $timezone ?: static::$testNow->getTimezone();
-            $time     = (string) static::$testNow->toDateTimeString();
+            $time     = static::$testNow->format('Y-m-d H:i:s');
         }
 
         $timezone       = $timezone ?: date_default_timezone_get();
@@ -213,9 +213,9 @@ class Time extends DateTime
      */
     public static function create(?int $year = null, ?int $month = null, ?int $day = null, ?int $hour = null, ?int $minutes = null, ?int $seconds = null, $timezone = null, ?string $locale = null)
     {
-        $year    = $year ?? date('Y');
-        $month   = $month ?? date('m');
-        $day     = $day ?? date('d');
+        $year ??= date('Y');
+        $month ??= date('m');
+        $day ??= date('d');
         $hour    = empty($hour) ? 0 : $hour;
         $minutes = empty($minutes) ? 0 : $minutes;
         $seconds = empty($seconds) ? 0 : $seconds;
@@ -256,7 +256,10 @@ class Time extends DateTime
      */
     public static function createFromTimestamp(int $timestamp, $timezone = null, ?string $locale = null)
     {
-        return new self(gmdate('Y-m-d H:i:s', $timestamp), $timezone ?? 'UTC', $locale);
+        $time = new self(gmdate('Y-m-d H:i:s', $timestamp), 'UTC', $locale);
+        $timezone ??= 'UTC';
+
+        return $time->setTimezone($timezone);
     }
 
     /**
@@ -282,6 +285,7 @@ class Time extends DateTime
      * @return Time
      *
      * @deprecated         Use createFromInstance() instead
+     *
      * @codeCoverageIgnore
      */
     public static function instance(DateTime $dateTime, ?string $locale = null)
@@ -304,9 +308,9 @@ class Time extends DateTime
         return $dateTime;
     }
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // For Testing
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Creates an instance of Time that will be returned during testing
@@ -344,9 +348,9 @@ class Time extends DateTime
         return static::$testNow !== null;
     }
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Getters
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Returns the localized Year
@@ -449,7 +453,7 @@ class Time extends DateTime
     }
 
     /**
-     * Returns the age in years from the "current" date and 'now'
+     * Returns the age in years from the date and 'now'
      *
      * @throws Exception
      *
@@ -457,11 +461,8 @@ class Time extends DateTime
      */
     public function getAge()
     {
-        $now  = self::now()->getTimestamp();
-        $time = $this->getTimestamp();
-
         // future dates have no age
-        return max(0, date('Y', $now) - date('Y', $time));
+        return max(0, $this->difference(self::now())->getYears());
     }
 
     /**
@@ -509,9 +510,9 @@ class Time extends DateTime
         return $this->timezone->getName();
     }
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Setters
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Sets the current year for this instance.
@@ -688,9 +689,9 @@ class Time extends DateTime
         return self::parse($time, $this->timezone, $this->locale);
     }
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Add/Subtract
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Returns a new Time instance with $seconds added to the time.
@@ -836,9 +837,9 @@ class Time extends DateTime
         return $time->sub(DateInterval::createFromDateString("{$years} years"));
     }
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Formatters
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Returns the localized value of the date in the format 'Y-m-d H:i:s'
@@ -899,14 +900,14 @@ class Time extends DateTime
      */
     public function toLocalizedString(?string $format = null)
     {
-        $format = $format ?? $this->toStringFormat;
+        $format ??= $this->toStringFormat;
 
         return IntlDateFormatter::formatObject($this->toDateTime(), $format, $this->locale);
     }
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Comparison
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Determines if the datetime passed in is equal to the current instance.
@@ -984,9 +985,9 @@ class Time extends DateTime
         return $ourTime > $testTime;
     }
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Differences
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Returns a text string that is easily readable that describes
@@ -1002,7 +1003,7 @@ class Time extends DateTime
      */
     public function humanize()
     {
-        $now  = IntlCalendar::fromDateTime(self::now($this->timezone)->toDateTimeString());
+        $now  = IntlCalendar::fromDateTime(self::now($this->timezone));
         $time = $this->getCalendar()->getTime();
 
         $years   = $now->fieldDifference($time, IntlCalendar::FIELD_YEAR);
@@ -1060,9 +1061,9 @@ class Time extends DateTime
         return new TimeDifference($ourTime, $testTime);
     }
 
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
     // Utilities
-    //--------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
     /**
      * Returns a Time instance with the timezone converted to UTC.
@@ -1103,7 +1104,7 @@ class Time extends DateTime
      */
     public function getCalendar()
     {
-        return IntlCalendar::fromDateTime($this->toDateTimeString());
+        return IntlCalendar::fromDateTime($this);
     }
 
     /**

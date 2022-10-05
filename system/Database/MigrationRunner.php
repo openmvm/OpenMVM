@@ -40,7 +40,8 @@ class MigrationRunner
     protected $table;
 
     /**
-     * The Namespace  where migrations can be found.
+     * The Namespace where migrations can be found.
+     * `null` is all namespaces.
      *
      * @var string|null
      */
@@ -401,6 +402,10 @@ class MigrationRunner
         $migrations = [];
 
         foreach ($namespaces as $namespace) {
+            if (ENVIRONMENT !== 'testing' && $namespace === 'Tests\Support') {
+                continue;
+            }
+
             foreach ($this->findNamespaceMigrations($namespace) as $migration) {
                 $migrations[$migration->uid] = $migration;
             }
@@ -423,7 +428,7 @@ class MigrationRunner
         if (! empty($this->path)) {
             helper('filesystem');
             $dir   = rtrim($this->path, DIRECTORY_SEPARATOR) . '/';
-            $files = get_filenames($dir, true);
+            $files = get_filenames($dir, true, false, false);
         } else {
             $files = $locator->listNamespaceFiles($namespace, '/Database/Migrations/');
         }

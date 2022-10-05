@@ -28,6 +28,7 @@ class Table
      * All of the fields this table represents.
      *
      * @var array
+     * @phpstan-var array<string, array<string, bool|int|string|null>>
      */
     protected $fields = [];
 
@@ -239,6 +240,13 @@ class Table
 
         $this->forge->addField($fields);
 
+        $fieldNames = array_keys($fields);
+
+        $this->keys = array_filter(
+            $this->keys,
+            static fn ($index) => count(array_intersect($index['fields'], $fieldNames)) === count($index['fields'])
+        );
+
         // Unique/Index keys
         if (is_array($this->keys)) {
             foreach ($this->keys as $key) {
@@ -276,10 +284,18 @@ class Table
             $exFields[]  = $name;
         }
 
-        $exFields  = implode(', ', $exFields);
-        $newFields = implode(', ', $newFields);
+        $exFields = implode(
+            ', ',
+            array_map(fn ($item) => $this->db->protectIdentifiers($item), $exFields)
+        );
+        $newFields = implode(
+            ', ',
+            array_map(fn ($item) => $this->db->protectIdentifiers($item), $newFields)
+        );
 
-        $this->db->query("INSERT INTO {$this->prefixedTableName}({$newFields}) SELECT {$exFields} FROM {$this->db->DBPrefix}temp_{$this->tableName}");
+        $this->db->query(
+            "INSERT INTO {$this->prefixedTableName}({$newFields}) SELECT {$exFields} FROM {$this->db->DBPrefix}temp_{$this->tableName}"
+        );
     }
 
     /**
@@ -289,6 +305,7 @@ class Table
      * @param array|bool $fields
      *
      * @return mixed
+     * @phpstan-return ($fields is array ? array : mixed)
      */
     protected function formatFields($fields)
     {

@@ -131,7 +131,7 @@ interface RouteCollectionInterface
     /**
      * Returns the current value of the translateURIDashes setting.
      *
-     * @return mixed
+     * @return bool
      */
     public function shouldTranslateURIDashes();
 
@@ -145,7 +145,7 @@ interface RouteCollectionInterface
     /**
      * Returns the raw array of available routes.
      *
-     * @return mixed
+     * @return array
      */
     public function getRoutes();
 
@@ -169,7 +169,8 @@ interface RouteCollectionInterface
      *      // Equals 'path/$param1/$param2'
      *      reverseRoute('Controller::method', $param1, $param2);
      *
-     * @param array ...$params
+     * @param string     $search    Named route or Controller::method
+     * @param int|string ...$params
      *
      * @return false|string
      */

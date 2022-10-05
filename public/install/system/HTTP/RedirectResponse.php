@@ -44,16 +44,20 @@ class RedirectResponse extends Response
      * Sets the URI to redirect to but as a reverse-routed or named route
      * instead of a raw URI.
      *
+     * @param string $route Named route or Controller::method
+     *
      * @throws HTTPException
      *
      * @return $this
      */
     public function route(string $route, array $params = [], int $code = 302, string $method = 'auto')
     {
+        $namedRoute = $route;
+
         $route = Services::routes()->reverseRoute($route, ...$params);
 
         if (! $route) {
-            throw HTTPException::forInvalidRedirectRoute($route);
+            throw HTTPException::forInvalidRedirectRoute($namedRoute);
         }
 
         return $this->redirect(site_url($route), $method, $code);
@@ -85,18 +89,35 @@ class RedirectResponse extends Response
     public function withInput()
     {
         $session = Services::session();
-
         $session->setFlashdata('_ci_old_input', [
             'get'  => $_GET ?? [],
             'post' => $_POST ?? [],
         ]);
 
-        // If the validation has any errors, transmit those back
-        // so they can be displayed when the validation is handled
-        // within a method different than displaying the form.
+        // @TODO Remove this in the future.
+        //      See https://github.com/codeigniter4/CodeIgniter4/issues/5839#issuecomment-1086624600
+        $this->withErrors();
+
+        return $this;
+    }
+
+    /**
+     * Set validation errors in the session.
+     *
+     * If the validation has any errors, transmit those back
+     * so they can be displayed when the validation is handled
+     * within a method different than displaying the form.
+     *
+     * @TODO Make this method public when removing $this->withErrors() in withInput().
+     *
+     * @return $this
+     */
+    private function withErrors(): self
+    {
         $validation = Services::validation();
 
         if ($validation->getErrors()) {
+            $session = Services::session();
             $session->setFlashdata('_ci_validation_errors', serialize($validation->getErrors()));
         }
 
