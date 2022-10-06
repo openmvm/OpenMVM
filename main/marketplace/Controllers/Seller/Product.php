@@ -87,11 +87,25 @@ class Product extends \App\Controllers\BaseController
             // Get product description
             $product_description_info = $this->model_seller_product->getProductDescription($product['product_id']);
 
+            // Get product variant min and max prices
+            $product_variant_price = $this->model_seller_product->getProductVariantMinMaxPrices($product['product_id']);
+
+            if ($product_variant_price) {
+                $min_price = $this->currency->format($product_variant_price['min_price'], $this->currency->getCurrentCode());
+                $max_price = $this->currency->format($product_variant_price['max_price'], $this->currency->getCurrentCode());
+            } else {
+                $min_price = $this->currency->format(0, $this->currency->getCurrentCode());
+                $max_price = $this->currency->format(0, $this->currency->getCurrentCode());
+            }
+
             $data['products'][] = [
                 'product_id' => $product['product_id'],
                 'name' => $product_description_info['name'],
                 'thumb' => $thumb,
+                'product_option' => $product['product_option'],
                 'price' => $this->currency->format($product['price'], $this->currency->getCurrentCode()),
+                'min_price' => $min_price,
+                'max_price' => $max_price,
                 'quantity' => $product['quantity'],
                 'status' => $product['status'] ? lang('Text.enabled', [], $this->language->getCurrentCode()) : lang('Text.disabled', [], $this->language->getCurrentCode()),
                 'href' => $this->url->customerLink('marketplace/seller/product/edit/' . $product['product_id'], '', true),

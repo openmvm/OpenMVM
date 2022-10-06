@@ -41,7 +41,17 @@
                                 </th>
                                 <td><img src="<?php echo $product['thumb']; ?>" class="border p-1" /></td>
                                 <td><?php echo $product['name']; ?></td>
-                                <td><?php echo $product['price']; ?></td>
+                                <td>
+                                    <?php if ($product['product_option']) { ?>
+                                        <?php if ($product['min_price'] !== $product['max_price']) { ?>
+                                        <span><?php echo $product['min_price']; ?></span> - <span><?php echo $product['max_price']; ?></span>
+                                        <?php } else { ?>
+                                        <span><?php echo $product['min_price']; ?></span>
+                                        <?php } ?>
+                                    <?php } else { ?>
+                                    <span><?php echo $product['price']; ?></span>
+                                    <?php } ?>
+                                </td>
                                 <td><?php echo $product['quantity']; ?></td>
                                 <td><?php echo $product['status']; ?></td>
                                 <td class="text-end"><a href="<?php echo $product['href']; ?>" class="btn btn-outline-primary btn-sm"><i class="fas fa-edit fa-fw"></i></a></td>
