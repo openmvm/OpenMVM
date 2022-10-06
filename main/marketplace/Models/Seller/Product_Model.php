@@ -671,14 +671,6 @@ class Product_Model extends Model
 
         $product_variant_query = $builder->get();
 
-        $file = ROOTPATH . 'writable/logs/openmvm.log';
-        // Open the file to get existing content
-        $current = file_get_contents($file);
-        // Append a new person to the file
-        $current .= $this->db->getLastQuery();
-        $current .= "\n\n";
-        file_put_contents($file, $current);
-
         $product_variant = [];
 
         if ($row = $product_variant_query->getRow()) {
@@ -692,6 +684,30 @@ class Product_Model extends Model
                 'price' => $row->price,
                 'weight' => $row->weight,
                 'weight_class_id' => $row->weight_class_id,
+            ];
+        }
+
+        return $product_variant;
+    }
+
+    public function getProductVariantMinMaxPrices($product_id)
+    {
+        $product_variant_builder = $this->db->table('product_variant');
+        $product_variant_builder->selectMin('price', 'min_price');
+        $product_variant_builder->selectMax('price', 'max_price');
+
+        $product_variant_builder->where('product_id', $product_id);
+        $product_variant_builder->where('seller_id', $this->customer->getSellerId());
+        $product_variant_builder->where('customer_id', $this->customer->getId());
+
+        $product_variant_query = $product_variant_builder->get();
+
+        $product_variant = [];
+
+        if ($product_variant_row = $product_variant_query->getRow()) {
+            $product_variant = [
+                'min_price' => $product_variant_row->min_price,
+                'max_price' => $product_variant_row->max_price,
             ];
         }
 
