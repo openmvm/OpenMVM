@@ -73,12 +73,10 @@
                                     <div class="mb-3 required">
                                         <label for="input-marketplace-description-language-<?php echo $language['language_id']; ?>" class="form-label"><?php echo lang('Entry.description'); ?></label>
                                         <textarea name="setting_marketplace_description_<?php echo $language['language_id']; ?>" id="input-marketplace-description-language-<?php echo $language['language_id']; ?>" class="form-control editor" placeholder="<?php echo lang('Entry.description'); ?>"><?php echo ${'setting_marketplace_description_' . $language['language_id']}; ?></textarea>
-                                        <?php if (!empty(${'error_setting_marketplace_description_' . $language['language_id']})) { ?><div class="text-danger small"><?php echo ${'error_setting_marketplace_description_' . $language['language_id']}; ?></div><?php } ?>
                                     </div>
                                     <div class="mb-3 required">
                                         <label for="input-marketplace-meta-title-language-<?php echo $language['language_id']; ?>" class="form-label"><?php echo lang('Entry.meta_title'); ?></label>
                                         <input type="text" name="setting_marketplace_meta_title_<?php echo $language['language_id']; ?>" value="<?php echo ${'setting_marketplace_meta_title_' . $language['language_id']}; ?>" id="input-marketplace-meta-title-language-<?php echo $language['language_id']; ?>" class="form-control" placeholder="<?php echo lang('Entry.meta_title'); ?>" />
-                                        <?php if (!empty(${'error_setting_marketplace_meta_title_' . $language['language_id']})) { ?><div class="text-danger small"><?php echo ${'error_setting_marketplace_meta_title_' . $language['language_id']}; ?></div><?php } ?>
                                     </div>
                                     <div class="mb-3">
                                         <label for="input-marketplace-meta-description-language-<?php echo $language['language_id']; ?>" class="form-label"><?php echo lang('Entry.meta_description'); ?></label>
