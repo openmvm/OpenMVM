@@ -43,6 +43,7 @@ class Order_Status_Model extends Model
                     'order_status_id' => $order_status_id,
                     'language_id' => $language_id,
                     'name' => $value['name'],
+                    'message' => $value['message'],
                 ];
                 
                 $order_status_description_builder->insert($order_status_description_insert_data);
@@ -77,6 +78,7 @@ class Order_Status_Model extends Model
                     'order_status_id' => $order_status_id,
                     'language_id' => $language_id,
                     'name' => $value['name'],
+                    'message' => $value['message'],
                 ];
                 
                 $order_status_description_insert_builder->insert($order_status_description_insert_data);
@@ -121,6 +123,7 @@ class Order_Status_Model extends Model
             $order_statuses[] = [
                 'order_status_id' => $result->order_status_id,
                 'name' => $result->name,
+                'message' => $result->message,
             ];
         }
 
@@ -163,6 +166,7 @@ class Order_Status_Model extends Model
                 'order_status_id' => $result->order_status_id,
                 'language_id' => $result->language_id,
                 'name' => $result->name,
+                'message' => $result->message,
             ];
         }
 
@@ -186,6 +190,7 @@ class Order_Status_Model extends Model
                 'order_status_id' => $row->order_status_id,
                 'language_id' => $row->language_id,
                 'name' => $row->name,
+                'message' => $row->message,
             ];
         }
 

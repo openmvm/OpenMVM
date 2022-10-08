@@ -35,48 +35,6 @@ class Order_Status extends \App\Controllers\BaseController
 
         $data['action'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/order_status/save/' . $this->uri->getSegment($this->uri->getTotalSegments()));
 
-        if ($this->request->getMethod() == 'post') {
-            if (!$this->administrator->hasPermission('modify', 'Localisation/Order_Status')) {
-                $this->session->set('error', lang('Error.modify_permission'));
-
-                return redirect()->to($this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/order_status/edit/' . $this->uri->getSegment($this->uri->getTotalSegments())));
-            }
-
-            $languages = $this->model_localisation_language->getlanguages();
-
-            foreach ($languages as $language) {
-                $this->validation->setRule('description.' . $language['language_id'] . '.name', lang('Entry.name') . ' ' . lang('Text.in') . ' ' . $language['name'], 'required');
-            }
-
-            if ($this->validation->withRequest($this->request)->run()) {
-                // Query
-                $query = $this->model_localisation_order_status->editOrderStatus($this->uri->getSegment($this->uri->getTotalSegments()), $this->request->getPost());
-
-                $this->session->set('success', lang('Success.order_status_edit'));
-
-                return redirect()->to($this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/order_status'));
-            } else {
-                // Errors
-                $this->session->set('error', lang('Error.form'));
-
-                $languages = $this->model_localisation_language->getlanguages();
-
-                foreach ($languages as $language) {
-                    if ($this->validation->hasError('description.' . $language['language_id'] . '.name')) {
-                        $data['error_description'][$language['language_id']]['name'] = $this->validation->getError('description.' . $language['language_id'] . '.name');
-                    } else {
-                        $data['error_description'][$language['language_id']]['name'] = '';
-                    }
-
-                    if ($this->validation->hasError('description.' . $language['language_id'] . '.unit')) {
-                        $data['error_description'][$language['language_id']]['unit'] = $this->validation->getError('description.' . $language['language_id'] . '.unit');
-                    } else {
-                        $data['error_description'][$language['language_id']]['unit'] = '';
-                    }
-                }
-            }
-        }
-
         return $this->get_form($data);
     }
 
@@ -220,8 +178,12 @@ class Order_Status extends \App\Controllers\BaseController
 
         if ($this->administrator->hasPermission('access', 'Localisation/Order_Status')) {
             // Header
+            $scripts = [
+                '<script src="' . base_url() . '/assets/plugins/tinymce_6.1.2/js/tinymce/tinymce.min.js" type="text/javascript"></script>',
+            ];
             $header_params = array(
                 'title' => lang('Heading.order_statuses'),
+                'scripts' => $scripts,
             );
             $data['header'] = $this->admin_header->index($header_params);
             // Column Left

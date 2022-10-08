@@ -31,13 +31,23 @@
             </div>
             <div class="card-body">
                 <fieldset>
-                    <div class="mb-3 required">
-                        <label for="input-name" class="form-label"><?php echo lang('Entry.name'); ?></label>
+                    <ul class="nav nav-tabs mb-3" id="description-tab" role="tablist">
                         <?php foreach ($languages as $language) { ?>
-                        <div class="mb-3">
-                            <div class="input-group">
-                                <span class="input-group-text" id="basic-addon-name-<?php echo $language['language_id']; ?>"><img src="<?php echo base_url('assets/flags/' . $language['code'] . '.png'); ?>" /></span>
-                                <input type="text" name="description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($description[$language['language_id']]['name']) ? $description[$language['language_id']]['name'] : ''; ?>" class="form-control" id="input-name-<?php echo $language['language_id']; ?>" placeholder="<?php echo lang('Entry.name'); ?>" aria-label="<?php echo lang('Entry.name'); ?>" aria-describedby="basic-addon-name-<?php echo $language['language_id']; ?>">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="language-<?php echo $language['language_id']; ?>-tab" data-bs-toggle="tab" data-bs-target="#language-<?php echo $language['language_id']; ?>-tab-pane" type="button" role="tab" aria-controls="language-<?php echo $language['language_id']; ?>-tab-pane" aria-selected="false"><img src="<?php echo base_url('assets/flags/' . $language['code'] . '.png'); ?>" /> <?php echo $language['name']; ?></button>
+                        </li>
+                        <?php } ?>
+                    </ul>
+                    <div class="tab-content" id="description-tab-content">
+                        <?php foreach ($languages as $language) { ?>
+                        <div class="tab-pane fade" id="language-<?php echo $language['language_id']; ?>-tab-pane" role="tabpanel" aria-labelledby="language-<?php echo $language['language_id']; ?>-tab" tabindex="0">
+                            <div class="mb-3 required">
+                                <label for="input-name" class="form-label"><?php echo lang('Entry.name'); ?></label>
+                                <input type="text" name="description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($description[$language['language_id']]['name']) ? $description[$language['language_id']]['name'] : ''; ?>" class="form-control" id="input-description-name-<?php echo $language['language_id']; ?>" placeholder="<?php echo lang('Entry.name'); ?>" aria-label="<?php echo lang('Entry.name'); ?>" aria-describedby="description-name-<?php echo $language['language_id']; ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-description-message-<?php echo $language['language_id']; ?>" class="form-label"><?php echo lang('Entry.default_message'); ?></label>
+                                <textarea name="description[<?php echo $language['language_id']; ?>][message]" id="input-description-message-<?php echo $language['language_id']; ?>" class="form-control editor" placeholder="<?php echo lang('Entry.default_message'); ?>"><?php echo isset($description[$language['language_id']]['message']) ? $description[$language['language_id']]['message'] : ''; ?></textarea>
                             </div>
                         </div>
                         <?php } ?>
@@ -48,4 +58,18 @@
         <?php echo form_close(); ?>
     </div>
 </div>
+<script type="text/javascript"><!--
+$(document).ready(function() {
+    var triggerFirstTabEl = document.querySelector('#description-tab li:first-child button')
+    new bootstrap.Tab(triggerFirstTabEl).show()
+});
+//--></script>
+<script type="text/javascript"><!--
+$(document).ready(function() {
+    tinymce.init({
+    selector: '.editor',
+    height: 300,
+    });
+});
+//--></script>
 <?php echo $footer; ?>
