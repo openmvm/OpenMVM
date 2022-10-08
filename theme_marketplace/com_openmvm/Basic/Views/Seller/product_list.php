@@ -52,7 +52,17 @@
                                     <span><?php echo $product['price']; ?></span>
                                     <?php } ?>
                                 </td>
-                                <td><?php echo $product['quantity']; ?></td>
+                                <td>
+                                    <?php if ($product['product_option']) { ?>
+                                        <?php if ($product['min_quantity'] !== $product['max_quantity']) { ?>
+                                        <span><?php echo $product['min_quantity']; ?></span> - <span><?php echo $product['max_quantity']; ?></span>
+                                        <?php } else { ?>
+                                        <span><?php echo $product['min_quantity']; ?></span>
+                                        <?php } ?>
+                                    <?php } else { ?>
+                                    <span><?php echo $product['quantity']; ?></span>
+                                    <?php } ?>
+                                </td>
                                 <td><?php echo $product['status']; ?></td>
                                 <td class="text-end"><a href="<?php echo $product['href']; ?>" class="btn btn-outline-primary btn-sm"><i class="fas fa-edit fa-fw"></i></a></td>
                             </tr>

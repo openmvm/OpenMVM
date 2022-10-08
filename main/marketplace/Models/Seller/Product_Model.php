@@ -714,6 +714,30 @@ class Product_Model extends Model
         return $product_variant;
     }
 
+    public function getProductVariantMinMaxQuantities($product_id)
+    {
+        $product_variant_builder = $this->db->table('product_variant');
+        $product_variant_builder->selectMin('quantity', 'min_quantity');
+        $product_variant_builder->selectMax('quantity', 'max_quantity');
+
+        $product_variant_builder->where('product_id', $product_id);
+        $product_variant_builder->where('seller_id', $this->customer->getSellerId());
+        $product_variant_builder->where('customer_id', $this->customer->getId());
+
+        $product_variant_query = $product_variant_builder->get();
+
+        $product_variant = [];
+
+        if ($product_variant_row = $product_variant_query->getRow()) {
+            $product_variant = [
+                'min_quantity' => $product_variant_row->min_quantity,
+                'max_quantity' => $product_variant_row->max_quantity,
+            ];
+        }
+
+        return $product_variant;
+    }
+
     public function getProductImages($product_id)
     {
         $builder = $this->db->table('product_image');

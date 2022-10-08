@@ -98,6 +98,17 @@ class Product extends \App\Controllers\BaseController
                 $max_price = $this->currency->format(0, $this->currency->getCurrentCode());
             }
 
+            // Get product variant min and max quantities
+            $product_variant_quantity = $this->model_seller_product->getProductVariantMinMaxQuantities($product['product_id']);
+
+            if ($product_variant_quantity) {
+                $min_quantity = $product_variant_quantity['min_quantity'];
+                $max_quantity = $product_variant_quantity['max_quantity'];
+            } else {
+                $min_quantity = 0;
+                $max_quantity = 0;
+            }
+
             $data['products'][] = [
                 'product_id' => $product['product_id'],
                 'name' => $product_description_info['name'],
@@ -107,6 +118,8 @@ class Product extends \App\Controllers\BaseController
                 'min_price' => $min_price,
                 'max_price' => $max_price,
                 'quantity' => $product['quantity'],
+                'min_quantity' => $min_quantity,
+                'max_quantity' => $max_quantity,
                 'status' => $product['status'] ? lang('Text.enabled', [], $this->language->getCurrentCode()) : lang('Text.disabled', [], $this->language->getCurrentCode()),
                 'href' => $this->url->customerLink('marketplace/seller/product/edit/' . $product['product_id'], '', true),
             ];
