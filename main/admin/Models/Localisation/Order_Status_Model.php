@@ -107,6 +107,10 @@ class Order_Status_Model extends Model
 
         $order_status_builder->where('order_status_description.language_id', $this->language->getCurrentId(true));
 
+        if (!empty($data['filter_name'])) {
+            $order_status_builder->like('order_status_description.name', $data['filter_name']);
+        }
+
         $order_status_builder->orderBy('order_status_description.name', 'ASC');
 
         $order_status_query = $order_status_builder->get();
@@ -171,7 +175,7 @@ class Order_Status_Model extends Model
         
         $order_status_description_builder->where('order_status_id', $order_status_id);
 
-        $order_status_description_query = $builder->get();
+        $order_status_description_query = $order_status_description_builder->get();
 
         $order_status_description = [];
 

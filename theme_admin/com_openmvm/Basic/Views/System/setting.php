@@ -47,6 +47,9 @@
                     <button class="nav-link" id="appearance-tab" data-bs-toggle="tab" data-bs-target="#appearance" type="button" role="tab" aria-controls="appearance" aria-selected="false"><?php echo lang('Tab.appearance'); ?></button>
                     </li>
                     <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="order-status-tab" data-bs-toggle="tab" data-bs-target="#order-status" type="button" role="tab" aria-controls="order-status" aria-selected="false"><?php echo lang('Tab.order_statuses'); ?></button>
+                    </li>
+                    <li class="nav-item" role="presentation">
                     <button class="nav-link" id="mail-tab" data-bs-toggle="tab" data-bs-target="#mail" type="button" role="tab" aria-controls="mail" aria-selected="false"><?php echo lang('Tab.mail'); ?></button>
                     </li>
                 </ul>
@@ -309,6 +312,72 @@
                             </div>
                         </fieldset>
                     </div>
+                    <div class="tab-pane fade" id="order-status" role="tabpanel" aria-labelledby="order-status-tab">
+                        <fieldset>
+                            <legend class="border-bottom pb-2 mb-3"><?php echo lang('Text.seller'); ?></legend>
+                            <div class="mb-3">
+                                <div class="form-label"><?php echo lang('Entry.non_rejectable_order_statuses'); ?></div>
+                                <div class="card overflow-auto" style="height: 120px;">
+                                    <div class="card-body">
+                                        <?php foreach ($order_statuses as $order_status) { ?>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="setting_non_rejectable_order_status[]" value="<?php echo $order_status['order_status_id']; ?>" id="non-rejectable-order-status-<?php echo $order_status['order_status_id']; ?>"<?php if ($setting_non_rejectable_order_status !== null && in_array($order_status['order_status_id'], $setting_non_rejectable_order_status)) { ?> checked<?php } ?>>
+                                            <label class="form-check-label" for="non-rejectable-order-status-<?php echo $order_status['order_status_id']; ?>">
+                                                <?php echo $order_status['name']; ?>
+                                            </label>
+                                        </div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-rejected-order-status" class="form-label"><?php echo lang('Entry.rejected_order_status'); ?></label>
+                                <input type="text" name="setting_rejected_order_status" value="<?php echo $setting_rejected_order_status['name']; ?>" id="input-rejected-order-status" class="form-control order-status-autocomplete" placeholder="<?php echo lang('Entry.rejected_order_status'); ?>">
+                                <input type="hidden" name="setting_rejected_order_status_id" value="<?php echo $setting_rejected_order_status_id; ?>" id="input-rejected-order-status-id" class="form-control" placeholder="<?php echo lang('Entry.rejected_order_status'); ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-accepted-order-status" class="form-label"><?php echo lang('Entry.accepted_order_status'); ?></label>
+                                <input type="text" name="setting_accepted_order_status" value="<?php echo $setting_accepted_order_status['name']; ?>" id="input-accepted-order-status" class="form-control order-status-autocomplete" placeholder="<?php echo lang('Entry.accepted_order_status'); ?>">
+                                <input type="hidden" name="setting_accepted_order_status_id" value="<?php echo $setting_accepted_order_status_id; ?>" id="input-accepted-order-status-id" class="form-control" placeholder="<?php echo lang('Entry.accepted_order_status'); ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-shipped-order-status" class="form-label"><?php echo lang('Entry.shipped_order_status'); ?></label>
+                                <input type="text" name="setting_shipped_order_status" value="<?php echo $setting_shipped_order_status['name']; ?>" id="input-shipped-order-status" class="form-control order-status-autocomplete" placeholder="<?php echo lang('Entry.shipped_order_status'); ?>">
+                                <input type="hidden" name="setting_shipped_order_status_id" value="<?php echo $setting_shipped_order_status_id; ?>" id="input-shipped-order-status-id" class="form-control" placeholder="<?php echo lang('Entry.shipped_order_status'); ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-delivered-order-status" class="form-label"><?php echo lang('Entry.delivered_order_status'); ?></label>
+                                <input type="text" name="setting_delivered_order_status" value="<?php echo $setting_delivered_order_status['name']; ?>" id="input-delivered-order-status" class="form-control order-status-autocomplete" placeholder="<?php echo lang('Entry.delivered_order_status'); ?>">
+                                <input type="hidden" name="setting_delivered_order_status_id" value="<?php echo $setting_delivered_order_status_id; ?>" id="input-delivered-order-status-id" class="form-control" placeholder="<?php echo lang('Entry.delivered_order_status'); ?>">
+                            </div>
+                            <legend class="border-bottom pb-2 mb-3"><?php echo lang('Text.customer'); ?></legend>
+                            <div class="mb-3">
+                                <div class="form-label"><?php echo lang('Entry.non_cancelable_order_statuses'); ?></div>
+                                <div class="card overflow-auto" style="height: 120px;">
+                                    <div class="card-body">
+                                        <?php foreach ($order_statuses as $order_status) { ?>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="setting_non_cancelable_order_status[]" value="<?php echo $order_status['order_status_id']; ?>" id="non-cancelable-order-status-<?php echo $order_status['order_status_id']; ?>"<?php if ($setting_non_cancelable_order_status !== null && in_array($order_status['order_status_id'], $setting_non_cancelable_order_status)) { ?> checked<?php } ?>>
+                                            <label class="form-check-label" for="non-cancelable-order-status-<?php echo $order_status['order_status_id']; ?>">
+                                                <?php echo $order_status['name']; ?>
+                                            </label>
+                                        </div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-canceled-order-status" class="form-label"><?php echo lang('Entry.canceled_order_status'); ?></label>
+                                <input type="text" name="setting_canceled_order_status" value="<?php echo $setting_canceled_order_status['name']; ?>" id="input-canceled-order-status" class="form-control order-status-autocomplete" placeholder="<?php echo lang('Entry.canceled_order_status'); ?>">
+                                <input type="hidden" name="setting_canceled_order_status_id" value="<?php echo $setting_canceled_order_status_id; ?>" id="input-canceled-order-status-id" class="form-control" placeholder="<?php echo lang('Entry.canceled_order_status'); ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-completed-order-status" class="form-label"><?php echo lang('Entry.completed_order_status'); ?></label>
+                                <input type="text" name="setting_completed_order_status" value="<?php echo $setting_completed_order_status['name']; ?>" id="input-completed-order-status" class="form-control order-status-autocomplete" placeholder="<?php echo lang('Entry.completed_order_status'); ?>">
+                                <input type="hidden" name="setting_completed_order_status_id" value="<?php echo $setting_completed_order_status_id; ?>" id="input-completed-order-status-id" class="form-control" placeholder="<?php echo lang('Entry.completed_order_status'); ?>">
+                            </div>
+                        </fieldset>
+                    </div>
                     <div class="tab-pane fade" id="mail" role="tabpanel" aria-labelledby="mail-tab">
                         <fieldset>
                             <div class="mb-3">
@@ -415,6 +484,72 @@ $(document).ready(function() {
 $(document).ready(function() {
     var triggerFirstTabEl = document.querySelector('#description-tab li:first-child button')
     new bootstrap.Tab(triggerFirstTabEl).show()
+});
+//--></script>
+<script type="text/javascript"><!--
+$(document).ready(function() {
+    $('body').on('focus', '.order-status-autocomplete', function(){
+        var node = this;
+        $(node).autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '<?php echo $order_status_autocomplete; ?>',
+                    dataType: 'json',
+                    data: {
+                        filter_name: request.term
+                    },
+                    beforeSend: function() {
+                        //$('select[name=\'setting_country_id\']').prop('disabled', true);
+                    },
+                    complete: function() {
+                        //$('select[name=\'setting_country_id\']').prop('disabled', false);
+                    },
+                    success: function(json) {
+                        if (json['error']) {
+                            alert(json['error']);
+                        } else {
+                            if (json.length) {
+                                var none = {
+                                        name: '<?php echo lang('Text.none'); ?>', 
+                                        order_status_id: 0,
+                                    };
+
+                                json.push(none);       
+                                response( json );
+                            } else {
+                                var json = [
+                                    {
+                                        name: '<?php echo lang('Text.none'); ?>', 
+                                        order_status_id: 0,
+                                    }
+                                ];
+
+                                response(json);
+                            }
+                        }
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    }
+                });
+            },
+            minLength: 0,
+            select: function( event, ui ) {
+                $(node).val(ui.item.name);
+                $(node).next('input[type=hidden]').val(ui.item.order_status_id);
+                $(node).autocomplete('close');
+                console.log( 'Selected: ' + ui.item.name + ' aka ' + ui.item.order_status_id );
+                return false;
+            }
+        }).focus(function () {
+            $(this).autocomplete('search');
+        }).data('ui-autocomplete')._renderItem = function (ul, item) {
+            return $('<li>')
+                .data('item.autocomplete', item)
+                .append('<a>' + item.name + '</a>')
+                .appendTo(ul);
+        };
+    });
 });
 //--></script>
 <?php echo $footer; ?>

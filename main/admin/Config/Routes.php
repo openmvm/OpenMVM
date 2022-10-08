@@ -331,6 +331,7 @@ $routes->group('/', function ($routes) {
                 $routes->match(['get', 'post'], 'add', '\Main\Admin\Controllers\Localisation\Order_Status::add', ['filter' => 'admin_auth']);
                 $routes->match(['get', 'post'], 'edit/(:num)', '\Main\Admin\Controllers\Localisation\Order_Status::edit', ['filter' => 'admin_auth']);
                 $routes->match(['get', 'post'], 'delete', '\Main\Admin\Controllers\Localisation\Order_Status::delete', ['filter' => 'admin_auth']);
+                $routes->match(['get', 'post'], 'autocomplete', '\Main\Admin\Controllers\Localisation\Order_Status::autocomplete', ['filter' => 'admin_auth']);
                 $routes->group('save', function ($routes) {
                     $routes->match(['get', 'post'], '/', '\Main\Admin\Controllers\Localisation\Order_Status::save', ['filter' => 'admin_auth']);
                     $routes->match(['get', 'post'], '(:num)', '\Main\Admin\Controllers\Localisation\Order_Status::save', ['filter' => 'admin_auth']);

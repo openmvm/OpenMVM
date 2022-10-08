@@ -13,6 +13,7 @@ class Setting extends \App\Controllers\BaseController
         $this->model_localisation_language = new \Main\Admin\Models\Localisation\Language_Model();
         $this->model_localisation_country = new \Main\Admin\Models\Localisation\Country_Model();
         $this->model_localisation_currency = new \Main\Admin\Models\Localisation\Currency_Model();
+        $this->model_localisation_order_status = new \Main\Admin\Models\Localisation\Order_Status_Model();
         $this->model_localisation_weight_class = new \Main\Admin\Models\Localisation\Weight_Class_Model();
         $this->model_system_setting = new \Main\Admin\Models\System\Setting_Model();
         $this->model_administrator_administrator_group = new \Main\Admin\Models\Administrator\Administrator_Group_Model();
@@ -163,6 +164,39 @@ class Setting extends \App\Controllers\BaseController
 
         $data['setting_marketplace_theme'] = $this->model_system_setting->getSettingValue('setting_marketplace_theme');
 
+        // Order statuses
+        $data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+
+        // Seller
+        $data['setting_non_rejectable_order_status'] = $this->model_system_setting->getSettingValue('setting_non_rejectable_order_status');
+
+        $data['setting_rejected_order_status'] = $this->model_localisation_order_status->getOrderStatusDescription($this->model_system_setting->getSettingValue('setting_rejected_order_status_id'));
+
+        $data['setting_rejected_order_status_id'] = $this->model_system_setting->getSettingValue('setting_rejected_order_status_id');
+
+        $data['setting_accepted_order_status'] = $this->model_localisation_order_status->getOrderStatusDescription($this->model_system_setting->getSettingValue('setting_accepted_order_status_id'));
+
+        $data['setting_accepted_order_status_id'] = $this->model_system_setting->getSettingValue('setting_accepted_order_status_id');
+
+        $data['setting_shipped_order_status'] = $this->model_localisation_order_status->getOrderStatusDescription($this->model_system_setting->getSettingValue('setting_shipped_order_status_id'));
+
+        $data['setting_shipped_order_status_id'] = $this->model_system_setting->getSettingValue('setting_shipped_order_status_id');
+
+        $data['setting_delivered_order_status'] = $this->model_localisation_order_status->getOrderStatusDescription($this->model_system_setting->getSettingValue('setting_delivered_order_status_id'));
+
+        $data['setting_delivered_order_status_id'] = $this->model_system_setting->getSettingValue('setting_delivered_order_status_id');
+
+        // Customer
+        $data['setting_non_cancelable_order_status'] = $this->model_system_setting->getSettingValue('setting_non_cancelable_order_status');
+
+        $data['setting_canceled_order_status'] = $this->model_localisation_order_status->getOrderStatusDescription($this->model_system_setting->getSettingValue('setting_canceled_order_status_id'));
+
+        $data['setting_canceled_order_status_id'] = $this->model_system_setting->getSettingValue('setting_canceled_order_status_id');
+
+        $data['setting_completed_order_status'] = $this->model_localisation_order_status->getOrderStatusDescription($this->model_system_setting->getSettingValue('setting_completed_order_status_id'));
+
+        $data['setting_completed_order_status_id'] = $this->model_system_setting->getSettingValue('setting_completed_order_status_id');
+
         // Mail
         $data['mail_protocols'] = ['smtp'];
 
@@ -192,6 +226,7 @@ class Setting extends \App\Controllers\BaseController
         $data['validation'] = $this->validation;
 
         $data['cancel'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard');
+        $data['order_status_autocomplete'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/order_status/autocomplete');
 
         $data['administrator_token'] = $this->administrator->getToken();
 

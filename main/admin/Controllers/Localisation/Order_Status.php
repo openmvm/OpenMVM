@@ -355,4 +355,38 @@ class Order_Status extends \App\Controllers\BaseController
 
         return $this->response->setJSON($json);
     }
+
+    public function autocomplete()
+    {
+        $json = [];
+
+        if (!$this->administrator->hasPermission('access', 'Localisation/Order_Status')) {
+            $json['error'] = lang('Error.access_permission');
+        }
+
+        if (empty($json['error'])) {
+            if (!empty($this->request->getGet('filter_name'))) {
+                $filter_name = $this->request->getGet('filter_name');
+            } else {
+                $filter_name = '';
+            }
+
+            $filter_data = [
+                'filter_name' => $filter_name,
+            ];
+
+            $order_statuses = $this->model_localisation_order_status->getOrderStatuses($filter_data);
+
+            if ($order_statuses) {
+                foreach ($order_statuses as $order_status) {
+                    $json[] = [
+                        'order_status_id' => $order_status['order_status_id'],
+                        'name' => $order_status['name'],
+                    ];
+                }
+            }
+        }
+
+        return $this->response->setJSON($json);
+    }
 }
