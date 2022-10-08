@@ -28,6 +28,7 @@ return [
     'cover' => 'Cover',
     'customer_group' => 'Customer Group',
     'decimal_place' => 'Decimal Place',
+    'default_message' => 'Default Message',
     'delivered_order_status' => 'Delivered Order Status',
     'description' => 'Description',
     'dialing_code' => 'Dialing Code',
