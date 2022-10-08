@@ -314,7 +314,7 @@
                     </div>
                     <div class="tab-pane fade" id="order-status" role="tabpanel" aria-labelledby="order-status-tab">
                         <fieldset>
-                            <legend class="border-bottom pb-2 mb-3"><?php echo lang('Text.seller'); ?></legend>
+                            <legend class="lead border-bottom border-warning pb-2 mb-3"><?php echo lang('Text.seller'); ?></legend>
                             <div class="mb-3">
                                 <div class="form-label"><?php echo lang('Entry.non_rejectable_order_statuses'); ?></div>
                                 <div class="card overflow-auto" style="height: 120px;">
@@ -350,7 +350,7 @@
                                 <input type="text" name="setting_delivered_order_status" value="<?php echo $setting_delivered_order_status['name']; ?>" id="input-delivered-order-status" class="form-control order-status-autocomplete" placeholder="<?php echo lang('Entry.delivered_order_status'); ?>">
                                 <input type="hidden" name="setting_delivered_order_status_id" value="<?php echo $setting_delivered_order_status_id; ?>" id="input-delivered-order-status-id" class="form-control" placeholder="<?php echo lang('Entry.delivered_order_status'); ?>">
                             </div>
-                            <legend class="border-bottom pb-2 mb-3"><?php echo lang('Text.customer'); ?></legend>
+                            <legend class="lead border-bottom border-warning pb-2 mb-3"><?php echo lang('Text.customer'); ?></legend>
                             <div class="mb-3">
                                 <div class="form-label"><?php echo lang('Entry.non_cancelable_order_statuses'); ?></div>
                                 <div class="card overflow-auto" style="height: 120px;">

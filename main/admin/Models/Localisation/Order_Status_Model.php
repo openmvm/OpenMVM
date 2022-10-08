@@ -174,6 +174,7 @@ class Order_Status_Model extends Model
         $order_status_description_builder = $this->db->table('order_status_description');
         
         $order_status_description_builder->where('order_status_id', $order_status_id);
+        $order_status_description_builder->where('language_id', $this->language->getCurrentId(true));
 
         $order_status_description_query = $order_status_description_builder->get();
 
