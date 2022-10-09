@@ -168,11 +168,17 @@ class Setting extends \App\Controllers\BaseController
         $data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
         // Seller
-        $data['setting_non_rejectable_order_status'] = $this->model_system_setting->getSettingValue('setting_non_rejectable_order_status');
+        $data['setting_processing_order_statuses'] = $this->model_system_setting->getSettingValue('setting_processing_order_statuses');
+
+        $data['setting_completed_order_statuses'] = $this->model_system_setting->getSettingValue('setting_completed_order_statuses');
+
+        $data['setting_non_rejectable_order_statuses'] = $this->model_system_setting->getSettingValue('setting_non_rejectable_order_statuses');
 
         $data['setting_rejected_order_status'] = $this->model_localisation_order_status->getOrderStatusDescription($this->model_system_setting->getSettingValue('setting_rejected_order_status_id'));
 
         $data['setting_rejected_order_status_id'] = $this->model_system_setting->getSettingValue('setting_rejected_order_status_id');
+
+        $data['setting_non_acceptable_order_statuses'] = $this->model_system_setting->getSettingValue('setting_non_acceptable_order_statuses');
 
         $data['setting_accepted_order_status'] = $this->model_localisation_order_status->getOrderStatusDescription($this->model_system_setting->getSettingValue('setting_accepted_order_status_id'));
 
@@ -187,7 +193,7 @@ class Setting extends \App\Controllers\BaseController
         $data['setting_delivered_order_status_id'] = $this->model_system_setting->getSettingValue('setting_delivered_order_status_id');
 
         // Customer
-        $data['setting_non_cancelable_order_status'] = $this->model_system_setting->getSettingValue('setting_non_cancelable_order_status');
+        $data['setting_non_cancelable_order_statuses'] = $this->model_system_setting->getSettingValue('setting_non_cancelable_order_statuses');
 
         $data['setting_canceled_order_status'] = $this->model_localisation_order_status->getOrderStatusDescription($this->model_system_setting->getSettingValue('setting_canceled_order_status_id'));
 

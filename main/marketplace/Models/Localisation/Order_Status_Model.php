@@ -82,6 +82,7 @@ class Order_Status_Model extends Model
                 'order_status_id' => $result->order_status_id,
                 'language_id' => $result->language_id,
                 'name' => $result->name,
+                'message' => $result->message,
             ];
         }
 
@@ -93,6 +94,7 @@ class Order_Status_Model extends Model
         $order_status_description_builder = $this->db->table('order_status_description');
         
         $order_status_description_builder->where('order_status_id', $order_status_id);
+        $order_status_description_builder->where('language_id', $this->language->getCurrentId());
 
         $order_status_description_query = $order_status_description_builder->get();
 
@@ -104,6 +106,7 @@ class Order_Status_Model extends Model
                 'order_status_id' => $row->order_status_id,
                 'language_id' => $row->language_id,
                 'name' => $row->name,
+                'message' => $row->message,
             ];
         }
 

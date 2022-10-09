@@ -36,6 +36,7 @@ $routes->group('/', function ($routes) {
             $routes->group('order', function ($routes) {
                 $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Account\Order::index', ['filter' => 'marketplace_auth']);
                 $routes->match(['get', 'post'], 'info/(:num)', '\Main\Marketplace\Controllers\Account\Order::info', ['filter' => 'marketplace_auth']);
+                $routes->match(['get', 'post'], 'update_order_status', '\Main\Marketplace\Controllers\Account\Order::update_order_status', ['filter' => 'marketplace_auth']);
             });
             // Profile
             $routes->group('profile', function ($routes) {
@@ -205,6 +206,7 @@ $routes->group('/', function ($routes) {
                 $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Order::index', ['filter' => 'marketplace_auth']);
                 $routes->match(['get', 'post'], 'info/(:num)', '\Main\Marketplace\Controllers\Seller\Order::info', ['filter' => 'marketplace_auth']);
                 $routes->match(['get', 'post'], 'add_tracking_number', '\Main\Marketplace\Controllers\Seller\Order::add_tracking_number', ['filter' => 'marketplace_auth']);
+                $routes->match(['get', 'post'], 'update_order_status', '\Main\Marketplace\Controllers\Seller\Order::update_order_status', ['filter' => 'marketplace_auth']);
             });
             // Product
             $routes->group('product', function ($routes) {

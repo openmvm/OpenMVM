@@ -97,8 +97,8 @@
                     <tbody>
                         <?php foreach ($order_statuses as $order_status) { ?>
                         <tr>
-                            <td><strong>- <?php echo $order_status['store_name']; ?></strong></td>
-                            <td><strong>:</strong> <?php echo $order_status['order_status']; ?></td>
+                            <td>- <?php echo $order_status['store_name']; ?></td>
+                            <td>: <strong><?php echo $order_status['order_status']['name']; ?></strong> <?php if (!in_array($order_status['order_status']['order_status_id'], $non_cancelable_order_statuses)) { ?>[ <span role="button" class="link-danger" onclick="updateOrderStatus(this, '<?php echo $order_status['order_id']; ?>', '<?php echo $canceled_order_status_id; ?>', '<?php echo $order_status['seller_id']; ?>');"><?php echo lang('Button.cancel_order', [], 'en'); ?></span> ]<?php } ?> <?php if ($order_status['order_status']['order_status_id'] === $delivered_order_status_id) { ?>[ <span role="button" class="link-success" onclick="updateOrderStatus(this, '<?php echo $order_status['order_id']; ?>', '<?php echo $completed_order_status_id; ?>', '<?php echo $order_status['seller_id']; ?>');"><?php echo lang('Button.complete_order', [], 'en'); ?></span> ]<?php } ?></td>
                         </tr>
                         <?php } ?>
                     </tbody>
@@ -283,4 +283,38 @@
         <?php } ?>
     </div>
 </div>
+<script type="text/javascript"><!--
+function updateOrderStatus(event, order_id, order_status_id, seller_id) {
+    $.ajax({
+        url: '<?php echo $update_order_status; ?>',
+        method: 'post',
+        dataType: 'json',
+        data: {
+            order_id: order_id,
+            order_status_id: order_status_id,
+            seller_id: seller_id,
+        },
+        beforeSend: function() {
+            $(event).html('<i class="fas fa-spinner fa-spin"></i>');
+        },
+        complete: function() {
+            
+        },
+        success: function(json) {
+            if (json['success']) {
+                alert(json['success']);
+            }
+
+            if (json['error']) {
+                alert(json['error']);
+            }
+
+            window.location.href = json['redirect'];
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+}
+//--></script> 
 <?php echo $footer; ?>

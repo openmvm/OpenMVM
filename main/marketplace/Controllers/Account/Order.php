@@ -10,6 +10,7 @@ class Order extends \App\Controllers\BaseController
     public function __construct()
     {
         $this->model_account_order = new \Main\Marketplace\Models\Account\Order_Model();
+        $this->model_checkout_order = new \Main\Marketplace\Models\Checkout\Order_Model();
         $this->model_customer_customer = new \Main\Marketplace\Models\Customer\Customer_Model();
         $this->model_customer_customer_address = new \Main\Marketplace\Models\Customer\Customer_Address_Model();
         $this->model_localisation_country = new \Main\Marketplace\Models\Localisation\Country_Model();
@@ -414,20 +415,29 @@ class Order extends \App\Controllers\BaseController
                 $seller_info = $this->model_seller_seller->getSeller($seller_id);
 
                 if ($seller_info) {
+                    $order_status_data = [];
+    
                     // Get order status histories
                     $order_status = $this->model_account_order->getLatestOrderStatus($order_info['order_id'], $seller_id);
 
                     $order_status_description = $this->model_localisation_order_status->getOrderStatusDescription($order_status['order_status_id']);
 
                     if ($order_status_description) {
-                        $order_status = $order_status_description['name'];
+                        $order_status_description = $order_status_description['name'];
                     } else {
-                        $order_status = '';
+                        $order_status_description = '';
                     }
 
+                    $order_status_data = [
+                        'order_status_id' => $order_status['order_status_id'],
+                        'name' => $order_status_description,
+                    ];
+
                     $data['order_statuses'][] = [
+                        'seller_id' => $seller_id,
                         'store_name' => $seller_info['store_name'],
-                        'order_status' => $order_status,
+                        'order_id' => $order_info['order_id'],
+                        'order_status' => $order_status_data,
                     ];
                 }
             }
@@ -472,6 +482,13 @@ class Order extends \App\Controllers\BaseController
 
             $data['language'] = $this->language;
 
+            $data['non_cancelable_order_statuses'] = $this->setting->get('setting_non_cancelable_order_statuses');
+            $data['delivered_order_status_id'] = $this->setting->get('setting_delivered_order_status_id');
+            $data['canceled_order_status_id'] = $this->setting->get('setting_canceled_order_status_id');
+            $data['completed_order_status_id'] = $this->setting->get('setting_completed_order_status_id');
+
+            $data['update_order_status'] = $this->url->customerLink('marketplace/account/order/update_order_status', '', true);
+
             // Header
             $header_params = array(
                 'title' => lang('Heading.order_info', [], $this->language->getCurrentCode()),
@@ -497,5 +514,42 @@ class Order extends \App\Controllers\BaseController
     
             return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Common\error', $data);    
         }
+    }
+
+    public function update_order_status()
+    {
+        $json = [];
+
+        if (!empty($this->request->getPost('order_id')) && !empty($this->request->getPost('order_status_id')) && !empty($this->request->getPost('seller_id'))) {
+            // Get order status info
+            $order_status_info = $this->model_localisation_order_status->getOrderStatus($this->request->getPost('order_status_id'));
+
+            if ($order_status_info) {
+                $order_id = $this->request->getPost('order_id');
+                $seller_id = $this->request->getPost('seller_id');
+                $order_status_id = $order_status_info['order_status_id'];
+
+                // Get order status description
+                $order_status_description = $this->model_localisation_order_status->getOrderStatusDescription($order_status_id);
+
+                if ($order_status_description) {
+                    $comment = $order_status_description['message'];
+                } else {
+                    $comment = '';
+                }
+
+                $this->model_checkout_order->addOrderStatusHistory($order_id, $seller_id, $order_status_id, $comment, true);
+
+                $json['success'] = $order_status_description['message'];
+
+                $json['redirect'] = $this->url->customerLink('marketplace/account/order/info/' . $order_id, '', true);
+            } else {
+                $json['error'] = lang('Text.error', [], 'en');
+            }
+        } else {
+            $json['error'] = lang('Text.error', [], 'en');
+        }
+
+        return $this->response->setJSON($json);
     }
 }

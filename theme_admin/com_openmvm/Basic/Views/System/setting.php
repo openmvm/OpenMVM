@@ -312,6 +312,37 @@
                     </div>
                     <div class="tab-pane fade" id="order-status" role="tabpanel" aria-labelledby="order-status-tab">
                         <fieldset>
+                            <legend class="lead border-bottom border-warning pb-2 mb-3"><?php echo lang('Text.general'); ?></legend>
+                            <div class="mb-3">
+                                <div class="form-label"><?php echo lang('Entry.processing_order_statuses'); ?></div>
+                                <div class="card overflow-auto" style="height: 120px;">
+                                    <div class="card-body">
+                                        <?php foreach ($order_statuses as $order_status) { ?>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="setting_processing_order_statuses[]" value="<?php echo $order_status['order_status_id']; ?>" id="processing-order-statuses-<?php echo $order_status['order_status_id']; ?>"<?php if ($setting_processing_order_statuses !== null && in_array($order_status['order_status_id'], $setting_processing_order_statuses)) { ?> checked<?php } ?>>
+                                            <label class="form-check-label" for="processing-order-statuses-<?php echo $order_status['order_status_id']; ?>">
+                                                <?php echo $order_status['name']; ?>
+                                            </label>
+                                        </div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-label"><?php echo lang('Entry.completed_order_statuses'); ?></div>
+                                <div class="card overflow-auto" style="height: 120px;">
+                                    <div class="card-body">
+                                        <?php foreach ($order_statuses as $order_status) { ?>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="setting_completed_order_statuses[]" value="<?php echo $order_status['order_status_id']; ?>" id="completed-order-statuses-<?php echo $order_status['order_status_id']; ?>"<?php if ($setting_completed_order_statuses !== null && in_array($order_status['order_status_id'], $setting_completed_order_statuses)) { ?> checked<?php } ?>>
+                                            <label class="form-check-label" for="completed-order-statuses-<?php echo $order_status['order_status_id']; ?>">
+                                                <?php echo $order_status['name']; ?>
+                                            </label>
+                                        </div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
                             <legend class="lead border-bottom border-warning pb-2 mb-3"><?php echo lang('Text.seller'); ?></legend>
                             <div class="mb-3">
                                 <div class="form-label"><?php echo lang('Entry.non_rejectable_order_statuses'); ?></div>
@@ -319,8 +350,8 @@
                                     <div class="card-body">
                                         <?php foreach ($order_statuses as $order_status) { ?>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="setting_non_rejectable_order_status[]" value="<?php echo $order_status['order_status_id']; ?>" id="non-rejectable-order-status-<?php echo $order_status['order_status_id']; ?>"<?php if ($setting_non_rejectable_order_status !== null && in_array($order_status['order_status_id'], $setting_non_rejectable_order_status)) { ?> checked<?php } ?>>
-                                            <label class="form-check-label" for="non-rejectable-order-status-<?php echo $order_status['order_status_id']; ?>">
+                                            <input class="form-check-input" type="checkbox" name="setting_non_rejectable_order_statuses[]" value="<?php echo $order_status['order_status_id']; ?>" id="non-rejectable-order-statuses-<?php echo $order_status['order_status_id']; ?>"<?php if ($setting_non_rejectable_order_statuses !== null && in_array($order_status['order_status_id'], $setting_non_rejectable_order_statuses)) { ?> checked<?php } ?>>
+                                            <label class="form-check-label" for="non-rejectable-order-statuses-<?php echo $order_status['order_status_id']; ?>">
                                                 <?php echo $order_status['name']; ?>
                                             </label>
                                         </div>
@@ -332,6 +363,21 @@
                                 <label for="input-rejected-order-status" class="form-label"><?php echo lang('Entry.rejected_order_status'); ?></label>
                                 <input type="text" name="setting_rejected_order_status" value="<?php echo $setting_rejected_order_status['name']; ?>" id="input-rejected-order-status" class="form-control order-status-autocomplete" placeholder="<?php echo lang('Entry.rejected_order_status'); ?>">
                                 <input type="hidden" name="setting_rejected_order_status_id" value="<?php echo $setting_rejected_order_status_id; ?>" id="input-rejected-order-status-id" class="form-control" placeholder="<?php echo lang('Entry.rejected_order_status'); ?>">
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-label"><?php echo lang('Entry.non_acceptable_order_statuses'); ?></div>
+                                <div class="card overflow-auto" style="height: 120px;">
+                                    <div class="card-body">
+                                        <?php foreach ($order_statuses as $order_status) { ?>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="setting_non_acceptable_order_statuses[]" value="<?php echo $order_status['order_status_id']; ?>" id="non-acceptable-order-statuses-<?php echo $order_status['order_status_id']; ?>"<?php if ($setting_non_acceptable_order_statuses !== null && in_array($order_status['order_status_id'], $setting_non_acceptable_order_statuses)) { ?> checked<?php } ?>>
+                                            <label class="form-check-label" for="non-acceptable-order-statuses-<?php echo $order_status['order_status_id']; ?>">
+                                                <?php echo $order_status['name']; ?>
+                                            </label>
+                                        </div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <label for="input-accepted-order-status" class="form-label"><?php echo lang('Entry.accepted_order_status'); ?></label>
@@ -355,8 +401,8 @@
                                     <div class="card-body">
                                         <?php foreach ($order_statuses as $order_status) { ?>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="setting_non_cancelable_order_status[]" value="<?php echo $order_status['order_status_id']; ?>" id="non-cancelable-order-status-<?php echo $order_status['order_status_id']; ?>"<?php if ($setting_non_cancelable_order_status !== null && in_array($order_status['order_status_id'], $setting_non_cancelable_order_status)) { ?> checked<?php } ?>>
-                                            <label class="form-check-label" for="non-cancelable-order-status-<?php echo $order_status['order_status_id']; ?>">
+                                            <input class="form-check-input" type="checkbox" name="setting_non_cancelable_order_statuses[]" value="<?php echo $order_status['order_status_id']; ?>" id="non-cancelable-order-statuses-<?php echo $order_status['order_status_id']; ?>"<?php if ($setting_non_cancelable_order_statuses !== null && in_array($order_status['order_status_id'], $setting_non_cancelable_order_statuses)) { ?> checked<?php } ?>>
+                                            <label class="form-check-label" for="non-cancelable-order-statuses-<?php echo $order_status['order_status_id']; ?>">
                                                 <?php echo $order_status['name']; ?>
                                             </label>
                                         </div>

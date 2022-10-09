@@ -36,7 +36,7 @@
                                         </tr>
                                         <tr>
                                             <td><strong><?php echo lang('Text.order_status'); ?></strong></td>
-                                            <td><strong>:</strong> <?php echo $order['order_status']; ?></td>
+                                            <td><strong>:</strong> <?php echo $order['order_status']['name']; ?></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -66,7 +66,20 @@
                                 <?php } ?>
                             </td>
                             <td><?php echo $order['total']; ?></td>
-                            <td class="text-end"><a href="<?php echo $order['info']; ?>" class="btn btn-info"><i class="fas fa-eye fa-fw"></i></a></td>
+                            <td class="text-end">
+                                <div class="d-grid">
+                                    <a href="<?php echo $order['info']; ?>" class="btn btn-outline-info btn-sm mb-2"><i class="fas fa-eye fa-fw"></i> <?php echo lang('Button.show_order', [], 'en'); ?></a>
+                                    <?php if (!in_array($order['order_status']['order_status_id'], $non_acceptable_order_statuses)) { ?>
+                                    <button type="button" class="btn btn-outline-success btn-sm mb-2" onclick="updateOrderStatus(this, '<?php echo $order['order_id']; ?>', '<?php echo $accepted_order_status_id; ?>');"><i class="fas fa-check fa-fw"></i> <?php echo lang('Button.accept_order', [], 'en'); ?></button>
+                                    <?php } ?>
+                                    <?php if (!in_array($order['order_status']['order_status_id'], $non_rejectable_order_statuses)) { ?>
+                                    <button type="button" class="btn btn-outline-danger btn-sm mb-2" onclick="updateOrderStatus(this, '<?php echo $order['order_id']; ?>', '<?php echo $rejected_order_status_id; ?>');"><i class="fas fa-times fa-fw"></i> <?php echo lang('Button.reject_order', [], 'en'); ?></button>
+                                    <?php } ?>
+                                    <?php if ($order['order_status']['order_status_id'] == $shipped_order_status_id) { ?>
+                                    <button type="button" class="btn btn-outline-warning btn-sm mb-2" onclick="updateOrderStatus(this, '<?php echo $order['order_id']; ?>', '<?php echo $delivered_order_status_id; ?>');"><i class="fas fa-truck-ramp-box fa-fw"></i> <?php echo lang('Button.mark_as_delivered', [], 'en'); ?></button>
+                                    <?php } ?>
+                                </div>
+                            </td>
                         </tr>
                         <?php } ?>
                     <?php } else { ?>
@@ -79,4 +92,37 @@
         </div>
     </div>
 </div>
+<script type="text/javascript"><!--
+function updateOrderStatus(event, order_id, order_status_id) {
+    $.ajax({
+        url: '<?php echo $update_order_status; ?>',
+        method: 'post',
+        dataType: 'json',
+        data: {
+            order_id: order_id,
+            order_status_id: order_status_id,
+        },
+        beforeSend: function() {
+            $(event).html('<i class="fas fa-spinner fa-spin"></i>');
+        },
+        complete: function() {
+            
+        },
+        success: function(json) {
+            if (json['success']) {
+                alert(json['success']);
+            }
+
+            if (json['error']) {
+                alert(json['error']);
+            }
+
+            window.location.href = json['redirect'];
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+}
+//--></script> 
 <?php echo $footer; ?>

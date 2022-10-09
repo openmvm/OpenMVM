@@ -10,6 +10,7 @@ class Order extends \App\Controllers\BaseController
     public function __construct()
     {
         $this->model_seller_order = new \Main\Marketplace\Models\Seller\Order_Model();
+        $this->model_checkout_order = new \Main\Marketplace\Models\Checkout\Order_Model();
         $this->model_customer_customer = new \Main\Marketplace\Models\Customer\Customer_Model();
         $this->model_customer_customer_address = new \Main\Marketplace\Models\Customer\Customer_Address_Model();
         $this->model_localisation_country = new \Main\Marketplace\Models\Localisation\Country_Model();
@@ -96,7 +97,7 @@ class Order extends \App\Controllers\BaseController
             }
 
             // Order statuses
-            $order_status_data = '';
+            $order_status_data = [];
     
             // Get order status histories
             $order_status = $this->model_seller_order->getLatestOrderStatus($order['order_id'], $this->customer->getSellerId());
@@ -105,12 +106,15 @@ class Order extends \App\Controllers\BaseController
                 $order_status_description = $this->model_localisation_order_status->getOrderStatusDescription($order_status['order_status_id']);
 
                 if ($order_status_description) {
-                    $order_status = $order_status_description['name'];
+                    $order_status_description = $order_status_description['name'];
                 } else {
-                    $order_status = '';
+                    $order_status_description = '';
                 }
 
-                $order_status_data = $order_status;
+                $order_status_data = [
+                    'order_status_id' => $order_status['order_status_id'],
+                    'name' => $order_status_description,
+                ];
             }
 
             // Get order total
@@ -136,8 +140,18 @@ class Order extends \App\Controllers\BaseController
         }
 
         $data['cancel'] = $this->url->customerLink('marketplace/seller/dashboard', '', true);
+        $data['update_order_status'] = $this->url->customerLink('marketplace/seller/order/update_order_status', '', true);
 
         $data['language'] = $this->language;
+
+        $data['non_rejectable_order_statuses'] = $this->setting->get('setting_non_rejectable_order_statuses');
+        $data['non_acceptable_order_statuses'] = $this->setting->get('setting_non_acceptable_order_statuses');
+        $data['processing_order_statuses'] = $this->setting->get('setting_processing_order_statuses');
+        $data['completed_order_statuses'] = $this->setting->get('setting_completed_order_statuses');
+        $data['accepted_order_status_id'] = $this->setting->get('setting_accepted_order_status_id');
+        $data['rejected_order_status_id'] = $this->setting->get('setting_rejected_order_status_id');
+        $data['shipped_order_status_id'] = $this->setting->get('setting_shipped_order_status_id');
+        $data['delivered_order_status_id'] = $this->setting->get('setting_delivered_order_status_id');
 
         // Header
         $header_params = array(
@@ -351,7 +365,7 @@ class Order extends \App\Controllers\BaseController
             }
 
             // Order status
-            // Get order status histories
+            // Get latest order status
             $data['order_status'] = '';
 
             $order_status = $this->model_seller_order->getLatestOrderStatus($order_info['order_id'], $this->customer->getSellerId());
@@ -416,22 +430,87 @@ class Order extends \App\Controllers\BaseController
         $json = [];
 
         if (!empty($this->request->getGet('order_id'))) {
+            // Get latest order status
+            $order_status = $this->model_seller_order->getLatestOrderStatus($order_info['order_id'], $this->customer->getSellerId());
+
+            if ($order_status) {
+                $current_order_status_order_id = $order_status['order_status_id'];
+            } else {
+                $current_order_status_order_id = 0;
+            }
 
             // Get order shipping info
             $order_shipping_info = $this->model_seller_order->getOrderShipping($this->request->getGet('order_id'), $this->customer->getSellerId());
 
             if ($order_shipping_info) {
-                $this->model_seller_order->editTrackingNumber($this->request->getGet('order_id'), $this->customer->getSellerId(), $this->request->getPost());
+                $order_id = $this->request->getGet('order_id');
+                $seller_id = $this->customer->getSellerId();
+                $order_status_id = $this->setting->get('setting_shipped_order_status_id');
 
-                $json['redirect'] = $this->url->customerLink('marketplace/seller/order/info/' . $this->request->getGet('order_id'), '', true);
+                if ($current_order_status_order_id === $this->setting->get('setting_accepted_order_status_id') || $current_order_status_order_id === $this->setting->get('setting_shipped_order_status_id')) {
+                    // Edit tracking number
+                    $this->model_seller_order->editTrackingNumber($this->request->getGet('order_id'), $this->customer->getSellerId(), $this->request->getPost());
 
-                $json['success'] = lang('Success.tracking_number_update', [], $this->language->getCurrentCode());
+                    // Get order status description
+                    $order_status_description = $this->model_localisation_order_status->getOrderStatusDescription($order_status_id);
+
+                    if ($order_status_description) {
+                        $comment = $order_status_description['message'];
+                    } else {
+                        $comment = '';
+                    }
+
+                    $this->model_checkout_order->addOrderStatusHistory($order_id, $seller_id, $order_status_id, $comment, true);
+
+                    $json['redirect'] = $this->url->customerLink('marketplace/seller/order/info/' . $this->request->getGet('order_id'), '', true);
+
+                    $json['success'] = lang('Success.tracking_number_update', [], $this->language->getCurrentCode());
+                } else {
+                    $json['error'] = lang('Error.try_again', [], $this->language->getCurrentCode());
+                }
             } else {
                 $json['error'] = lang('Error.try_again', [], $this->language->getCurrentCode());
             }
         } else {
             $json['error'] = lang('Error.try_again', [], $this->language->getCurrentCode());
         }
+
+        return $this->response->setJSON($json);
+    }
+
+    public function update_order_status()
+    {
+        $json = [];
+
+        if (!empty($this->request->getPost('order_id')) && !empty($this->request->getPost('order_status_id'))) {
+            // Get order status info
+            $order_status_info = $this->model_localisation_order_status->getOrderStatus($this->request->getPost('order_status_id'));
+
+            if ($order_status_info) {
+                $order_id = $this->request->getPost('order_id');
+                $seller_id = $this->customer->getSellerId();
+                $order_status_id = $order_status_info['order_status_id'];
+
+                // Get order status description
+                $order_status_description = $this->model_localisation_order_status->getOrderStatusDescription($order_status_id);
+
+                if ($order_status_description) {
+                    $comment = $order_status_description['message'];
+                } else {
+                    $comment = '';
+                }
+
+                $this->model_checkout_order->addOrderStatusHistory($order_id, $seller_id, $order_status_id, $comment, true);
+
+                $json['success'] = $order_status_description['message'];
+            } else {
+                $json['error'] = lang('Text.error', [], 'en');
+            }
+        } else {
+            $json['error'] = lang('Text.error', [], 'en');
+        }
+
+        $json['redirect'] = $this->url->customerLink('marketplace/seller/order', '', true);
 
         return $this->response->setJSON($json);
     }
