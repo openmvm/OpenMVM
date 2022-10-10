@@ -76,6 +76,5 @@ class Image {
         }
 
         return base_url('assets/images/cache/' . $new_name);
-        //return $orientation;
     }
 }
