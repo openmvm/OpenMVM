@@ -116,6 +116,15 @@ class Weight_Based extends \App\Controllers\BaseController
         $footer_params = array();
         $data['footer'] = $this->marketplace_footer->index($footer_params);
 
-        return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Seller\Shipping_Method\weight_based', $data);
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeMarketplace',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Seller\Shipping_Method\weight_based',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 }

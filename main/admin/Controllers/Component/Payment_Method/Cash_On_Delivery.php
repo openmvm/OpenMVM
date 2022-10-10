@@ -73,62 +73,28 @@ class Cash_On_Delivery extends \App\Controllers\BaseController
 
         $data['administrator_token'] = $this->administrator->getToken();
 
-        if ($this->administrator->hasPermission('access', 'Component/Payment_Method/Cash_On_Delivery')) {
-            // Header
-            $header_params = [
-                'title' => lang('Heading.cash_on_delivery'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
+        // Header
+        $header_params = [
+            'title' => lang('Heading.cash_on_delivery'),
+        ];
+        $data['header'] = $this->admin_header->index($header_params);
+        // Column Left
+        $column_left_params = [];
+        $data['column_left'] = $this->admin_column_left->index($column_left_params);
+        // Footer
+        $footer_params = [];
+        $data['footer'] = $this->admin_footer->index($footer_params);
 
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Component\Payment_Method\cash_on_delivery', $data);
-        } else {
-            $data = [];
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.dashboard'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard'),
-                'active' => false,
-            );
-    
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.payment_methods'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/component/component/payment_method'),
-                'active' => false,
-            );
-            
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.cash_on_delivery'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/component/payment_method/cash_on_delivery'),
-                'active' => true,
-            );
-
-            $data['heading_title'] = lang('Heading.cash_on_delivery');
-
-            $data['code_number'] = 403;
-            $data['code_text'] = lang('Text.forbidden');
-
-            $data['message'] = lang('Error.access_permission');
-
-            // Header
-            $header_params = [
-                'title' => lang('Heading.cash_on_delivery'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
-
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\permission', $data);
-        }
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Component\Payment_Method\cash_on_delivery',
+            'permission' => 'Component/Payment_Method/Cash_On_Delivery',
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function save()

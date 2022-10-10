@@ -45,7 +45,16 @@ class Link extends \App\Controllers\BaseController
 
             $data['widget'] = $widget++;
 
-            return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Appearance\Marketplace\Widgets\link', $data);
+            // Generate view
+            $template_setting = [
+                'location' => 'ThemeMarketplace',
+                'author' => 'com_openmvm',
+                'theme' => 'Basic',
+                'view' => 'Appearance\Marketplace\Widgets\link',
+                'permission' => false,
+                'override' => false,
+            ];
+            return $this->template->render($template_setting, $data);
         }
     }
 }

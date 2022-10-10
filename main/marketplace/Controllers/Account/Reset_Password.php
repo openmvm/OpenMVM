@@ -81,7 +81,16 @@ class Reset_Password extends \App\Controllers\BaseController
         $footer_params = array();
         $data['footer'] = $this->marketplace_footer->index($footer_params);
 
-        return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Account\reset_password', $data);
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeMarketplace',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Account\reset_password',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function confirm()
@@ -174,6 +183,15 @@ class Reset_Password extends \App\Controllers\BaseController
         $footer_params = array();
         $data['footer'] = $this->marketplace_footer->index($footer_params);
 
-        return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Account\reset_password_confirm', $data);
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeMarketplace',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Account\reset_password_confirm',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 }

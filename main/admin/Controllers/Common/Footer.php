@@ -28,6 +28,15 @@ class Footer extends \App\Controllers\BaseController
 
         $data['rendered'] = sprintf(lang('Text.rendered', [], $this->language->getCurrentCode()), '{elapsed_time}');
 
-        return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\footer', $data);
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Common\footer',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 }

@@ -29,56 +29,28 @@ class Image_Manager extends \App\Controllers\BaseController
 
         $data['image_manager_workspace'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/file_manager/image_manager/workspace');
 
-        if ($this->administrator->hasPermission('access', 'File_Manager/Image_Manager')) {
-            // Header
-            $header_params = array(
-                'title' => lang('Heading.image_manager'),
-            );
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = array();
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = array();
-            $data['footer'] = $this->admin_footer->index($footer_params);
+        // Header
+        $header_params = array(
+            'title' => lang('Heading.image_manager'),
+        );
+        $data['header'] = $this->admin_header->index($header_params);
+        // Column Left
+        $column_left_params = array();
+        $data['column_left'] = $this->admin_column_left->index($column_left_params);
+        // Footer
+        $footer_params = array();
+        $data['footer'] = $this->admin_footer->index($footer_params);
 
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'File_Manager\image_manager', $data);
-        } else {
-            $data = [];
-            
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.dashboard'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard'),
-                'active' => false,
-            );
-    
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.image_manager'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/file_manager/image_manager'),
-                'active' => true,
-            );
-        
-            $data['heading_title'] = lang('Heading.image_manager');
-
-            $data['code_number'] = 403;
-            $data['code_text'] = lang('Text.forbidden');
-
-            $data['message'] = lang('Error.access_permission');
-
-            // Header
-            $header_params = [
-                'title' => lang('Heading.image_manager'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
-
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\permission', $data);
-        }
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'File_Manager\image_manager',
+            'permission' => 'File_Manager/Image_Manager',
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function workspace()
@@ -91,56 +63,28 @@ class Image_Manager extends \App\Controllers\BaseController
         $data['refresh'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/file_manager/image_manager/refresh');
         $data['remove'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/file_manager/image_manager/remove');
 
-        if ($this->administrator->hasPermission('access', 'File_Manager/Image_Manager')) {
-            // Header
-            $header_params = array(
-                'title' => lang('Heading.image_manager'),
-            );
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = array();
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = array();
-            $data['footer'] = $this->admin_footer->index($footer_params);
+        // Header
+        $header_params = array(
+            'title' => lang('Heading.image_manager'),
+        );
+        $data['header'] = $this->admin_header->index($header_params);
+        // Column Left
+        $column_left_params = array();
+        $data['column_left'] = $this->admin_column_left->index($column_left_params);
+        // Footer
+        $footer_params = array();
+        $data['footer'] = $this->admin_footer->index($footer_params);
 
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'File_Manager\image_manager_workspace', $data);
-        } else {
-            $data = [];
-            
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.dashboard'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard'),
-                'active' => false,
-            );
-    
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.image_manager'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/file_manager/image_manager'),
-                'active' => true,
-            );
-        
-            $data['heading_title'] = lang('Heading.image_manager');
-
-            $data['code_number'] = 403;
-            $data['code_text'] = lang('Text.forbidden');
-
-            $data['message'] = lang('Error.access_permission');
-
-            // Header
-            $header_params = [
-                'title' => lang('Heading.image_manager'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
-
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\permission', $data);
-        }
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'File_Manager\image_manager_workspace',
+            'permission' => 'File_Manager/Image_Manager',
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function create_directory()

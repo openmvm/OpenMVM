@@ -163,7 +163,16 @@ class Order extends \App\Controllers\BaseController
         $footer_params = array();
         $data['footer'] = $this->marketplace_footer->index($footer_params);
 
-        return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Seller\order_list', $data);
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeMarketplace',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Seller\order_list',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function info()
@@ -408,7 +417,16 @@ class Order extends \App\Controllers\BaseController
             $footer_params = array();
             $data['footer'] = $this->marketplace_footer->index($footer_params);
 
-            return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Seller\order_info', $data);
+            // Generate view
+            $template_setting = [
+                'location' => 'ThemeMarketplace',
+                'author' => 'com_openmvm',
+                'theme' => 'Basic',
+                'view' => 'Seller\order_info',
+                'permission' => false,
+                'override' => false,
+            ];
+            return $this->template->render($template_setting, $data);
         } else {
             $data['message'] = lang('Error.no_data_found', [], $this->language->getCurrentCode());
     
@@ -421,7 +439,16 @@ class Order extends \App\Controllers\BaseController
             $footer_params = array();
             $data['footer'] = $this->marketplace_footer->index($footer_params);
     
-            return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Common\error', $data);    
+            // Generate view
+            $template_setting = [
+                'location' => 'ThemeMarketplace',
+                'author' => 'com_openmvm',
+                'theme' => 'Basic',
+                'view' => 'Common\error',
+                'permission' => false,
+                'override' => false,
+            ];
+            return $this->template->render($template_setting, $data);
         }
     }
 

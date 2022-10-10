@@ -45,56 +45,28 @@ class Error_Log extends \App\Controllers\BaseController
         $data['get_error'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/system/error_log/get_error');
         $data['delete_error'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/system/error_log/delete_error');
 
-        if ($this->administrator->hasPermission('access', 'System/Error_Log')) {
-            // Header
-            $header_params = array(
-                'title' => lang('Heading.error_logs'),
-            );
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = array();
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = array();
-            $data['footer'] = $this->admin_footer->index($footer_params);
+        // Header
+        $header_params = array(
+            'title' => lang('Heading.error_logs'),
+        );
+        $data['header'] = $this->admin_header->index($header_params);
+        // Column Left
+        $column_left_params = array();
+        $data['column_left'] = $this->admin_column_left->index($column_left_params);
+        // Footer
+        $footer_params = array();
+        $data['footer'] = $this->admin_footer->index($footer_params);
 
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'System\error_log', $data);
-        } else {
-            $data = [];
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.dashboard'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard'),
-                'active' => false,
-            );
-    
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.error_logs'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/system/error_log'),
-                'active' => true,
-            );
-    
-            $data['heading_title'] = lang('Heading.error_logs');
-    
-            $data['code_number'] = 403;
-            $data['code_text'] = lang('Text.forbidden');
-
-            $data['message'] = lang('Error.access_permission');
-
-            // Header
-            $header_params = [
-                'title' => lang('Heading.error_logs'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
-
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\permission', $data);
-        }
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'System\error_log',
+            'permission' => 'System/Error_Log',
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function get_error()

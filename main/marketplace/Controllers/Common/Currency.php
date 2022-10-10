@@ -28,7 +28,16 @@ class Currency extends \App\Controllers\BaseController
 
         $data['set_currency'] = $this->url->customerLink('marketplace/common/currency/set_currency');
 
-        return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Common\currency', $data);
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeMarketplace',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Common\currency',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function set_currency()

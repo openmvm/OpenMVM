@@ -236,60 +236,32 @@ class Setting extends \App\Controllers\BaseController
 
         $data['administrator_token'] = $this->administrator->getToken();
 
-        if ($this->administrator->hasPermission('access', 'System/Setting')) {
-            // Header
-            $scripts = [
-                '<script src="' . base_url() . '/assets/plugins/tinymce_6.1.2/js/tinymce/tinymce.min.js" type="text/javascript"></script>',
-            ];
-            $header_params = [
-                'title' => lang('Heading.settings'),
-                'scripts' => $scripts,
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
+        // Header
+        $scripts = [
+            '<script src="' . base_url() . '/assets/plugins/tinymce_6.2.0/js/tinymce/tinymce.min.js" type="text/javascript"></script>',
+        ];
+        $header_params = [
+            'title' => lang('Heading.settings'),
+            'scripts' => $scripts,
+        ];
+        $data['header'] = $this->admin_header->index($header_params);
+        // Column Left
+        $column_left_params = [];
+        $data['column_left'] = $this->admin_column_left->index($column_left_params);
+        // Footer
+        $footer_params = [];
+        $data['footer'] = $this->admin_footer->index($footer_params);
 
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'System\setting', $data);
-        } else {
-            $data = [];
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.dashboard'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard'),
-                'active' => false,
-            );
-    
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.settings'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/system/setting'),
-                'active' => true,
-            );
-    
-            $data['heading_title'] = lang('Heading.settings');
-
-            $data['code_number'] = 403;
-            $data['code_text'] = lang('Text.forbidden');
-
-            $data['message'] = lang('Error.access_permission');
-
-            // Header
-            $header_params = [
-                'title' => lang('Heading.settings'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
-
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\permission', $data);
-        }
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'System\setting',
+            'permission' => 'System/Setting',
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function save()

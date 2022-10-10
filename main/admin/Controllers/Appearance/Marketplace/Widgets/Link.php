@@ -83,66 +83,32 @@ class Link extends \App\Controllers\BaseController
 
         $data['cancel'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/appearance/marketplace/widget');
 
-        if ($this->administrator->hasPermission('access', 'Appearance/Marketplace/Widgets/Link')) {
-            // Header
-            $scripts = [
-                '<script src="' . base_url() . '/assets/plugins/tinymce_6.1.2/js/tinymce/tinymce.min.js" type="text/javascript"></script>',
-            ];
-            $header_params = array(
-                'title' => lang('Heading.link'),
-                'scripts' => $scripts,
-            );
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = array();
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = array();
-            $data['footer'] = $this->admin_footer->index($footer_params);
+        // Header
+        $scripts = [
+            '<script src="' . base_url() . '/assets/plugins/tinymce_6.2.0/js/tinymce/tinymce.min.js" type="text/javascript"></script>',
+        ];
+        $header_params = array(
+            'title' => lang('Heading.link'),
+            'scripts' => $scripts,
+        );
+        $data['header'] = $this->admin_header->index($header_params);
+        // Column Left
+        $column_left_params = array();
+        $data['column_left'] = $this->admin_column_left->index($column_left_params);
+        // Footer
+        $footer_params = array();
+        $data['footer'] = $this->admin_footer->index($footer_params);
 
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Appearance\Marketplace\Widgets\link', $data);
-        } else {
-            $data = [];
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.dashboard'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard'),
-                'active' => false,
-            );
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.marketplace_widgets'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/appearance/marketplace/widget'),
-                'active' => false,
-            );
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.link'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/appearance/marketplace/widget/link'),
-                'active' => true,
-            );
-
-            $data['heading_title'] = lang('Heading.link');
-
-            $data['code_number'] = 403;
-            $data['code_text'] = lang('Text.forbidden');
-
-            $data['message'] = lang('Error.access_permission');
-
-            // Header
-            $header_params = [
-                'title' => lang('Heading.link'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
-
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\permission', $data);
-        }
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Appearance\Marketplace\Widgets\link',
+            'permission' => 'Appearance/Marketplace/Widgets/Link',
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function save()

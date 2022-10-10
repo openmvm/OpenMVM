@@ -173,6 +173,15 @@ class Header extends \App\Controllers\BaseController
         $offcanvas_right_params = array();
         $data['offcanvas_right'] = $this->marketplace_offcanvas_right->index($offcanvas_right_params);
 
-        return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Common\header', $data);
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeMarketplace',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Common\header',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 }

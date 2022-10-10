@@ -54,7 +54,16 @@ class Product extends \App\Controllers\BaseController
         $footer_params = array();
         $data['footer'] = $this->marketplace_footer->index($footer_params);
 
-        return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Product\product_all', $data);
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeMarketplace',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Product\product_all',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function get($product)
@@ -234,10 +243,10 @@ class Product extends \App\Controllers\BaseController
 
             // Header
             $scripts = [
-                '<script src="' . base_url() . '/assets/plugins/swiper-8.3.2/swiper-bundle.min.js" type="text/javascript"></script>',
+                '<script src="' . base_url() . '/assets/plugins/swiper-8.4.3/swiper-bundle.min.js" type="text/javascript"></script>',
             ];
             $styles = [
-                '<link rel="stylesheet" href="' . base_url() . '/assets/plugins/swiper-8.3.2/swiper-bundle.min.css" />',
+                '<link rel="stylesheet" href="' . base_url() . '/assets/plugins/swiper-8.4.3/swiper-bundle.min.css" />',
             ];
             $header_params = array(
                 'title' => $product_info['name'],
@@ -249,8 +258,17 @@ class Product extends \App\Controllers\BaseController
             // Footer
             $footer_params = array();
             $data['footer'] = $this->marketplace_footer->index($footer_params);
-    
-            return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Product\product', $data);    
+        
+            // Generate view
+            $template_setting = [
+                'location' => 'ThemeMarketplace',
+                'author' => 'com_openmvm',
+                'theme' => 'Basic',
+                'view' => 'Product\product',
+                'permission' => false,
+                'override' => false,
+            ];
+            return $this->template->render($template_setting, $data);
         } else {
             $data['message'] = lang('Error.no_data_found', [], $this->language->getCurrentCode());
     
@@ -263,7 +281,16 @@ class Product extends \App\Controllers\BaseController
             $footer_params = array();
             $data['footer'] = $this->marketplace_footer->index($footer_params);
     
-            return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Common\error', $data);    
+            // Generate view
+            $template_setting = [
+                'location' => 'ThemeMarketplace',
+                'author' => 'com_openmvm',
+                'theme' => 'Basic',
+                'view' => 'Common\error',
+                'permission' => false,
+                'override' => false,
+            ];
+            return $this->template->render($template_setting, $data);
         }
     }
 

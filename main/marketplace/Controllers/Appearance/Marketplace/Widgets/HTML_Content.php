@@ -36,7 +36,16 @@ class HTML_Content extends \App\Controllers\BaseController
 
             $data['widget'] = $widget++;
 
-            return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Appearance\Marketplace\Widgets\html_content', $data);
+            // Generate view
+            $template_setting = [
+                'location' => 'ThemeMarketplace',
+                'author' => 'com_openmvm',
+                'theme' => 'Basic',
+                'view' => 'Appearance\Marketplace\Widgets\html_content',
+                'permission' => false,
+                'override' => false,
+            ];
+            return $this->template->render($template_setting, $data);
         }
     }
 }

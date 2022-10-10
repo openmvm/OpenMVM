@@ -58,62 +58,28 @@ class Zone_Based extends \App\Controllers\BaseController
 
         $data['administrator_token'] = $this->administrator->getToken();
 
-        if ($this->administrator->hasPermission('access', 'Component/Shipping_Method/Zone_Based')) {
-            // Header
-            $header_params = [
-                'title' => lang('Heading.zone_based'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
+        // Header
+        $header_params = [
+            'title' => lang('Heading.zone_based'),
+        ];
+        $data['header'] = $this->admin_header->index($header_params);
+        // Column Left
+        $column_left_params = [];
+        $data['column_left'] = $this->admin_column_left->index($column_left_params);
+        // Footer
+        $footer_params = [];
+        $data['footer'] = $this->admin_footer->index($footer_params);
 
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Component\Shipping_Method\zone_based', $data);
-        } else {
-            $data = [];
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.dashboard'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard'),
-                'active' => false,
-            );
-    
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.shipping_methods'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/component/component/shipping_method'),
-                'active' => false,
-            );
-            
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.zone_based'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/component/shipping_method/zone_based'),
-                'active' => true,
-            );
-
-            $data['heading_title'] = lang('Heading.zone_based');
-
-            $data['code_number'] = 403;
-            $data['code_text'] = lang('Text.forbidden');
-
-            $data['message'] = lang('Error.access_permission');
-
-            // Header
-            $header_params = [
-                'title' => lang('Heading.zone_based'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
-
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\permission', $data);
-        }
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Component\Shipping_Method\zone_based',
+            'permission' => 'Component/Shipping_Method/Zone_Based',
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function save()

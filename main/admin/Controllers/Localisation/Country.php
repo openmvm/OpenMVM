@@ -35,34 +35,6 @@ class Country extends \App\Controllers\BaseController
 
         $data['action'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/country/save/' . $this->uri->getSegment($this->uri->getTotalSegments()));
 
-        if ($this->request->getMethod() == 'post') {
-            if (!$this->administrator->hasPermission('modify', 'Localisation/Country')) {
-                $this->session->set('error', lang('Error.modify_permission'));
-
-                return redirect()->to($this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/country/edit/' . $this->uri->getSegment($this->uri->getTotalSegments())));
-            }
-
-            $this->validation->setRule('name', lang('Entry.name'), 'required');
-
-            if ($this->validation->withRequest($this->request)->run()) {
-                // Query
-                $query = $this->model_localisation_country->editCountry($this->uri->getSegment($this->uri->getTotalSegments()), $this->request->getPost());
-
-                $this->session->set('success', lang('Success.country_edit'));
-
-                return redirect()->to($this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/country'));
-            } else {
-                // Errors
-                $this->session->set('error', lang('Error.form'));
-
-                if ($this->validation->hasError('name')) {
-                    $data['error_name'] = $this->validation->getError('name');
-                } else {
-                    $data['error_name'] = '';
-                }
-            }
-        }
-
         return $this->get_form($data);
     }
 
@@ -107,57 +79,29 @@ class Country extends \App\Controllers\BaseController
 
         $data['add'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/country/add');
         $data['cancel'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard');
-		
-        if ($this->administrator->hasPermission('access', 'Localisation/Country')) {
-            // Header
-            $header_params = array(
-                'title' => lang('Heading.countries'),
-            );
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = array();
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = array();
-            $data['footer'] = $this->admin_footer->index($footer_params);
+	
+        // Header
+        $header_params = array(
+            'title' => lang('Heading.countries'),
+        );
+        $data['header'] = $this->admin_header->index($header_params);
+        // Column Left
+        $column_left_params = array();
+        $data['column_left'] = $this->admin_column_left->index($column_left_params);
+        // Footer
+        $footer_params = array();
+        $data['footer'] = $this->admin_footer->index($footer_params);
 
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Localisation\country_list', $data);
-        } else {
-            $data = [];
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.dashboard'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard'),
-                'active' => false,
-            );
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.countries'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/country'),
-                'active' => true,
-            );
-
-            $data['heading_title'] = lang('Heading.countries');
-
-            $data['code_number'] = 403;
-            $data['code_text'] = lang('Text.forbidden');
-
-            $data['message'] = lang('Error.access_permission');
-
-            // Header
-            $header_params = [
-                'title' => lang('Heading.countries'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
-
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\permission', $data);
-        }
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Localisation\country_list',
+            'permission' => 'Localisation/Country',
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function get_form($data)
@@ -240,70 +184,28 @@ class Country extends \App\Controllers\BaseController
         
         $data['cancel'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/country');
 
-        if ($this->administrator->hasPermission('access', 'Localisation/Country')) {
-            // Header
-            $header_params = array(
-                'title' => lang('Heading.countries'),
-            );
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = array();
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = array();
-            $data['footer'] = $this->admin_footer->index($footer_params);
+        // Header
+        $header_params = array(
+            'title' => lang('Heading.countries'),
+        );
+        $data['header'] = $this->admin_header->index($header_params);
+        // Column Left
+        $column_left_params = array();
+        $data['column_left'] = $this->admin_column_left->index($column_left_params);
+        // Footer
+        $footer_params = array();
+        $data['footer'] = $this->admin_footer->index($footer_params);
 
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Localisation\country_form', $data);
-        } else {
-            $data = [];
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.dashboard'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard'),
-                'active' => false,
-            );
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.countries'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/country'),
-                'active' => false,
-            );
-
-            if ($this->uri->getSegment($this->uri->getTotalSegments() - 1) == 'edit') {
-                $data['breadcrumbs'][] = array(
-                    'text' => lang('Text.edit'),
-                    'href' => '',
-                    'active' => true,
-                );
-            } else {
-                $data['breadcrumbs'][] = array(
-                    'text' => lang('Text.add'),
-                    'href' => '',
-                    'active' => true,
-                );
-            }
-
-            $data['heading_title'] = lang('Heading.countries');
-
-            $data['code_number'] = 403;
-            $data['code_text'] = lang('Text.forbidden');
-
-            $data['message'] = lang('Error.access_permission');
-
-            // Header
-            $header_params = [
-                'title' => lang('Heading.countries'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
-
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\permission', $data);
-        }
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Localisation\country_form',
+            'permission' => 'Localisation/Country',
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function delete()

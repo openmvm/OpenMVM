@@ -28,6 +28,15 @@ class Logout extends \App\Controllers\BaseController
             $data['favicon'] = '';
         }
 
-        return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Administrator\logout', $data);
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Administrator\logout',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 }

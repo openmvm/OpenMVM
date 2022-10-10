@@ -77,57 +77,29 @@ class Category extends \App\Controllers\BaseController
 
         $data['add'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/marketplace/category/add');
         $data['cancel'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard');
-		
-        if ($this->administrator->hasPermission('access', 'Marketplace/Category')) {
-            // Header
-            $header_params = array(
-                'title' => lang('Heading.categories'),
-            );
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = array();
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = array();
-            $data['footer'] = $this->admin_footer->index($footer_params);
+	
+        // Header
+        $header_params = array(
+            'title' => lang('Heading.categories'),
+        );
+        $data['header'] = $this->admin_header->index($header_params);
+        // Column Left
+        $column_left_params = array();
+        $data['column_left'] = $this->admin_column_left->index($column_left_params);
+        // Footer
+        $footer_params = array();
+        $data['footer'] = $this->admin_footer->index($footer_params);
 
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Marketplace\category_list', $data);
-        } else {
-            $data = [];
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.dashboard'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard'),
-                'active' => false,
-            );
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.categories'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/marketplace/category'),
-                'active' => true,
-            );
-    
-            $data['heading_title'] = lang('Heading.categories');
-
-            $data['code_number'] = 403;
-            $data['code_text'] = lang('Text.forbidden');
-
-            $data['message'] = lang('Error.access_permission');
-
-            // Header
-            $header_params = [
-                'title' => lang('Heading.categories'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
-
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\permission', $data);
-        }
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Marketplace\category_list',
+            'permission' => 'Marketplace/Category',
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function get_form($data)
@@ -216,74 +188,32 @@ class Category extends \App\Controllers\BaseController
 
         $data['administrator_token'] = $this->administrator->getToken();
 
-        if ($this->administrator->hasPermission('access', 'Marketplace/Category')) {
-            // Header
-            $scripts = [
-                '<script src="' . base_url() . '/assets/plugins/tinymce_6.1.2/js/tinymce/tinymce.min.js" type="text/javascript"></script>',
-            ];
-            $header_params = array(
-                'title' => lang('Heading.categories'),
-                'scripts' => $scripts,
-            );
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = array();
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = array();
-            $data['footer'] = $this->admin_footer->index($footer_params);
+        // Header
+        $scripts = [
+            '<script src="' . base_url() . '/assets/plugins/tinymce_6.2.0/js/tinymce/tinymce.min.js" type="text/javascript"></script>',
+        ];
+        $header_params = array(
+            'title' => lang('Heading.categories'),
+            'scripts' => $scripts,
+        );
+        $data['header'] = $this->admin_header->index($header_params);
+        // Column Left
+        $column_left_params = array();
+        $data['column_left'] = $this->admin_column_left->index($column_left_params);
+        // Footer
+        $footer_params = array();
+        $data['footer'] = $this->admin_footer->index($footer_params);
 
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Marketplace\category_form', $data);
-        } else {
-            $data = [];
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.dashboard'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard'),
-                'active' => false,
-            );
-    
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.categories'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/marketplace/category'),
-                'active' => false,
-            );
-    
-            if ($this->uri->getSegment($this->uri->getTotalSegments() - 1) == 'edit') {
-                $data['breadcrumbs'][] = array(
-                    'text' => lang('Text.edit'),
-                    'href' => '',
-                    'active' => true,
-                );
-            } else {
-                $data['breadcrumbs'][] = array(
-                    'text' => lang('Text.add'),
-                    'href' => '',
-                    'active' => true,
-                );
-            }
-    
-            $data['heading_title'] = lang('Heading.categories');
-
-            $data['code_number'] = 403;
-            $data['code_text'] = lang('Text.forbidden');
-
-            $data['message'] = lang('Error.access_permission');
-
-            // Header
-            $header_params = [
-                'title' => lang('Heading.categories'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
-
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\permission', $data);
-        }
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Marketplace\category_form',
+            'permission' => 'Marketplace/Category',
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function delete()

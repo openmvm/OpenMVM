@@ -60,62 +60,28 @@ class Flat_Rate extends \App\Controllers\BaseController
 
         $data['administrator_token'] = $this->administrator->getToken();
 
-        if ($this->administrator->hasPermission('access', 'Component/Shipping_Method/Flat_Rate')) {
-            // Header
-            $header_params = [
-                'title' => lang('Heading.flat_rate'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
+        // Header
+        $header_params = [
+            'title' => lang('Heading.flat_rate'),
+        ];
+        $data['header'] = $this->admin_header->index($header_params);
+        // Column Left
+        $column_left_params = [];
+        $data['column_left'] = $this->admin_column_left->index($column_left_params);
+        // Footer
+        $footer_params = [];
+        $data['footer'] = $this->admin_footer->index($footer_params);
 
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Component\Shipping_Method\flat_rate', $data);
-        } else {
-            $data = [];
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.dashboard'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard'),
-                'active' => false,
-            );
-    
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.shipping_methods'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/component/component/shipping_method'),
-                'active' => false,
-            );
-            
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.flat_rate'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/component/shipping_method/flat_rate'),
-                'active' => true,
-            );
-
-            $data['heading_title'] = lang('Heading.flat_rate');
-
-            $data['code_number'] = 403;
-            $data['code_text'] = lang('Text.forbidden');
-
-            $data['message'] = lang('Error.access_permission');
-
-            // Header
-            $header_params = [
-                'title' => lang('Heading.flat_rate'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
-
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\permission', $data);
-        }
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Component\Shipping_Method\flat_rate',
+            'permission' => 'Component/Shipping_Method/Flat_Rate',
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function save()

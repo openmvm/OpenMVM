@@ -28,6 +28,15 @@ class Footer extends \App\Controllers\BaseController
         // Widget
         $data['marketplace_common_widget'] = $this->marketplace_common_widget;
 
-        return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Common\footer', $data);
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeMarketplace',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Common\footer',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 }

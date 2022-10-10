@@ -74,6 +74,15 @@ class Cart extends \App\Controllers\BaseController
 
         $data['language'] = $this->language;
 
-        return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Common\cart', $data);
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeMarketplace',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Common\cart',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 }

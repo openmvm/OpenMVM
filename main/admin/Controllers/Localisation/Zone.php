@@ -35,34 +35,6 @@ class Zone extends \App\Controllers\BaseController
 
         $data['action'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/zone/save/' . $this->uri->getSegment($this->uri->getTotalSegments()));
 
-        if ($this->request->getMethod() == 'post') {
-            if (!$this->administrator->hasPermission('modify', 'Localisation/Zone')) {
-                $this->session->set('error', lang('Error.modify_permission'));
-
-                return redirect()->to($this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/zone/edit/' . $this->uri->getSegment($this->uri->getTotalSegments())));
-            }
-
-            $this->validation->setRule('name', lang('Entry.name'), 'required');
-
-            if ($this->validation->withRequest($this->request)->run()) {
-                // Query
-                $query = $this->model_localisation_zone->editZone($this->uri->getSegment($this->uri->getTotalSegments()), $this->request->getPost());
-
-                $this->session->set('success', lang('Success.zone_edit'));
-
-                return redirect()->to($this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/zone'));
-            } else {
-                // Errors
-                $this->session->set('error', lang('Error.form'));
-
-                if ($this->validation->hasError('name')) {
-                    $data['error_name'] = $this->validation->getError('name');
-                } else {
-                    $data['error_name'] = '';
-                }
-            }
-        }
-
         return $this->get_form($data);
     }
 
@@ -116,57 +88,29 @@ class Zone extends \App\Controllers\BaseController
 
         $data['add'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/zone/add');
         $data['cancel'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard');
-		
-        if ($this->administrator->hasPermission('access', 'Localisation/Zone')) {
-            // Header
-            $header_params = array(
-                'title' => lang('Heading.zones'),
-            );
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = array();
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = array();
-            $data['footer'] = $this->admin_footer->index($footer_params);
+	
+        // Header
+        $header_params = array(
+            'title' => lang('Heading.zones'),
+        );
+        $data['header'] = $this->admin_header->index($header_params);
+        // Column Left
+        $column_left_params = array();
+        $data['column_left'] = $this->admin_column_left->index($column_left_params);
+        // Footer
+        $footer_params = array();
+        $data['footer'] = $this->admin_footer->index($footer_params);
 
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Localisation\zone_list', $data);
-        } else {
-            $data = [];
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.dashboard'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard'),
-                'active' => false,
-            );
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.zones'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/zone'),
-                'active' => true,
-            );
-
-            $data['heading_title'] = lang('Heading.zones');
-
-            $data['code_number'] = 403;
-            $data['code_text'] = lang('Text.forbidden');
-
-            $data['message'] = lang('Error.access_permission');
-
-            // Header
-            $header_params = [
-                'title' => lang('Heading.zones'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
-
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\permission', $data);
-        }
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Localisation\zone_list',
+            'permission' => 'Localisation/Zone',
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function get_form($data)
@@ -239,70 +183,28 @@ class Zone extends \App\Controllers\BaseController
         
         $data['cancel'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/zone');
 
-        if ($this->administrator->hasPermission('access', 'Localisation/Zone')) {
-            // Header
-            $header_params = array(
-                'title' => lang('Heading.zones'),
-            );
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = array();
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = array();
-            $data['footer'] = $this->admin_footer->index($footer_params);
+        // Header
+        $header_params = array(
+            'title' => lang('Heading.zones'),
+        );
+        $data['header'] = $this->admin_header->index($header_params);
+        // Column Left
+        $column_left_params = array();
+        $data['column_left'] = $this->admin_column_left->index($column_left_params);
+        // Footer
+        $footer_params = array();
+        $data['footer'] = $this->admin_footer->index($footer_params);
 
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Localisation\zone_form', $data);
-        } else {
-            $data = [];
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.dashboard'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard'),
-                'active' => false,
-            );
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.zones'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/zone'),
-                'active' => false,
-            );
-
-            if ($this->uri->getSegment($this->uri->getTotalSegments() - 1) == 'edit') {
-                $data['breadcrumbs'][] = array(
-                    'text' => lang('Text.edit'),
-                    'href' => '',
-                    'active' => true,
-                );
-            } else {
-                $data['breadcrumbs'][] = array(
-                    'text' => lang('Text.add'),
-                    'href' => '',
-                    'active' => true,
-                );
-            }
-
-            $data['heading_title'] = lang('Heading.zones');
-
-            $data['code_number'] = 403;
-            $data['code_text'] = lang('Text.forbidden');
-
-            $data['message'] = lang('Error.access_permission');
-
-            // Header
-            $header_params = [
-                'title' => lang('Heading.zones'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
-
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\permission', $data);
-        }
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Localisation\zone_form',
+            'permission' => 'Localisation/Zone',
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function delete()

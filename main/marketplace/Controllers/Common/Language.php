@@ -28,7 +28,16 @@ class Language extends \App\Controllers\BaseController
 
         $data['set_language'] = $this->url->customerLink('marketplace/common/language/set_language');
 
-        return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Common\language', $data);
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeMarketplace',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Common\language',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function set_language()

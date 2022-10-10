@@ -146,7 +146,16 @@ class Product extends \App\Controllers\BaseController
         $footer_params = array();
         $data['footer'] = $this->marketplace_footer->index($footer_params);
 
-        return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Seller\product_list', $data);
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeMarketplace',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Seller\product_list',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function get_form($data)
@@ -361,11 +370,11 @@ class Product extends \App\Controllers\BaseController
 
         // Header
         $scripts = [
-            '<script src="' . base_url() . '/assets/plugins/tinymce_6.1.2/js/tinymce/tinymce.min.js" type="text/javascript"></script>',
-            '<script src="' . base_url() . '/assets/plugins/swiper-8.3.2/swiper-bundle.min.js" type="text/javascript"></script>',
+            '<script src="' . base_url() . '/assets/plugins/tinymce_6.2.0/js/tinymce/tinymce.min.js" type="text/javascript"></script>',
+            '<script src="' . base_url() . '/assets/plugins/swiper-8.4.3/swiper-bundle.min.js" type="text/javascript"></script>',
         ];
         $styles = [
-            '<link rel="stylesheet" href="' . base_url() . '/assets/plugins/swiper-8.3.2/swiper-bundle.min.css" />',
+            '<link rel="stylesheet" href="' . base_url() . '/assets/plugins/swiper-8.4.3/swiper-bundle.min.css" />',
         ];
         $header_params = array(
             'title' => lang('Heading.products', [], $this->language->getCurrentCode()),
@@ -378,7 +387,16 @@ class Product extends \App\Controllers\BaseController
         $footer_params = array();
         $data['footer'] = $this->marketplace_footer->index($footer_params);
 
-        return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Seller\product_form', $data);
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeMarketplace',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Seller\product_form',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function set_product_options()
@@ -524,7 +542,16 @@ class Product extends \App\Controllers\BaseController
             $data['default_currency'] = [];
         }
 
-        return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Seller\product_variant', $data);
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeMarketplace',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Seller\product_variant',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function product_variants($input)

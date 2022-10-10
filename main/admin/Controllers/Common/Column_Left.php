@@ -388,6 +388,15 @@ class Column_Left extends \App\Controllers\BaseController
             'children' => $developer,
         ];
 
-        return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\column_left', $data);
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Common\column_left',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 }

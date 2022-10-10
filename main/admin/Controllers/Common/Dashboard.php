@@ -43,6 +43,15 @@ class Dashboard extends \App\Controllers\BaseController
         $footer_params = array();
         $data['footer'] = $this->admin_footer->index($footer_params);
 
-        return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\dashboard', $data);
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Common\dashboard',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 }

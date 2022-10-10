@@ -64,7 +64,16 @@ class Checkout extends \App\Controllers\BaseController
         $footer_params = array();
         $data['footer'] = $this->marketplace_footer->index($footer_params);
 
-        return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Checkout\checkout', $data);
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeMarketplace',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Checkout\checkout',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function add_address()
@@ -242,7 +251,16 @@ class Checkout extends \App\Controllers\BaseController
 
             $data['countries'] = $this->model_localisation_country->getCountries();
 
-            return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Checkout\checkout_payment_address', $data);
+            // Generate view
+            $template_setting = [
+                'location' => 'ThemeMarketplace',
+                'author' => 'com_openmvm',
+                'theme' => 'Basic',
+                'view' => 'Checkout\checkout_payment_address',
+                'permission' => false,
+                'override' => false,
+            ];
+            return $this->template->render($template_setting, $data);
         }
     }
 
@@ -357,7 +375,16 @@ class Checkout extends \App\Controllers\BaseController
 
             $data['countries'] = $this->model_localisation_country->getCountries();
 
-            return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Checkout\checkout_shipping_address', $data);
+            // Generate view
+            $template_setting = [
+                'location' => 'ThemeMarketplace',
+                'author' => 'com_openmvm',
+                'theme' => 'Basic',
+                'view' => 'Checkout\checkout_shipping_address',
+                'permission' => false,
+                'override' => false,
+            ];
+            return $this->template->render($template_setting, $data);
         }
     }
 
@@ -507,7 +534,16 @@ class Checkout extends \App\Controllers\BaseController
                 $data['checkout_confirm'] = $this->url->customerLink('marketplace/checkout/checkout/confirm', '', true);
             }
 
-            return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Checkout\checkout_shipping_method', $data);
+            // Generate view
+            $template_setting = [
+                'location' => 'ThemeMarketplace',
+                'author' => 'com_openmvm',
+                'theme' => 'Basic',
+                'view' => 'Checkout\checkout_shipping_method',
+                'permission' => false,
+                'override' => false,
+            ];
+            return $this->template->render($template_setting, $data);
         }
     }
 
@@ -613,7 +649,16 @@ class Checkout extends \App\Controllers\BaseController
                 $data['checkout_confirm'] = $this->url->customerLink('marketplace/checkout/checkout/confirm', '', true);
             }
 
-            return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Checkout\checkout_payment_method', $data);
+            // Generate view
+            $template_setting = [
+                'location' => 'ThemeMarketplace',
+                'author' => 'com_openmvm',
+                'theme' => 'Basic',
+                'view' => 'Checkout\checkout_payment_method',
+                'permission' => false,
+                'override' => false,
+            ];
+            return $this->template->render($template_setting, $data);
         }
     }
 
@@ -868,7 +913,16 @@ class Checkout extends \App\Controllers\BaseController
 
             $data['language'] = $this->language;
 
-            return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Checkout\checkout_cart', $data);
+            // Generate view
+            $template_setting = [
+                'location' => 'ThemeMarketplace',
+                'author' => 'com_openmvm',
+                'theme' => 'Basic',
+                'view' => 'Checkout\checkout_cart',
+                'permission' => false,
+                'override' => false,
+            ];
+            return $this->template->render($template_setting, $data);
         }
     }
 
@@ -1089,7 +1143,16 @@ class Checkout extends \App\Controllers\BaseController
 
             }
 
-            return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Checkout\checkout_confirm', $data);
+            // Generate view
+            $template_setting = [
+                'location' => 'ThemeMarketplace',
+                'author' => 'com_openmvm',
+                'theme' => 'Basic',
+                'view' => 'Checkout\checkout_confirm',
+                'permission' => false,
+                'override' => false,
+            ];
+            return $this->template->render($template_setting, $data);
         }
     }
 }

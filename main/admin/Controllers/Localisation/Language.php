@@ -34,41 +34,6 @@ class Language extends \App\Controllers\BaseController
 
         $data['action'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/language/save/' . $this->uri->getSegment($this->uri->getTotalSegments()));
 
-        if ($this->request->getMethod() == 'post') {
-            if (!$this->administrator->hasPermission('modify', 'Localisation/Language')) {
-                $this->session->set('error', lang('Error.modify_permission'));
-
-                return redirect()->to($this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/language/edit/' . $this->uri->getSegment($this->uri->getTotalSegments())));
-            }
-
-            $this->validation->setRule('name', lang('Entry.name'), 'required');
-            $this->validation->setRule('code', lang('Entry.code'), 'required');
-
-            if ($this->validation->withRequest($this->request)->run()) {
-                // Query
-                $query = $this->model_localisation_language->editLanguage($this->uri->getSegment($this->uri->getTotalSegments()), $this->request->getPost());
-
-                $this->session->set('success', lang('Success.language_edit'));
-
-                return redirect()->to($this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/language'));
-            } else {
-                // Errors
-                $this->session->set('error', lang('Error.form'));
-
-                if ($this->validation->hasError('name')) {
-                    $data['error_name'] = $this->validation->getError('name');
-                } else {
-                    $data['error_name'] = '';
-                }
-
-                if ($this->validation->hasError('code')) {
-                    $data['error_code'] = $this->validation->getError('code');
-                } else {
-                    $data['error_code'] = '';
-                }
-            }
-        }
-
         return $this->get_form($data);
     }
 
@@ -114,57 +79,29 @@ class Language extends \App\Controllers\BaseController
 
         $data['add'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/language/add');
         $data['cancel'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard');
-		
-        if ($this->administrator->hasPermission('access', 'Localisation/Language')) {
-            // Header
-            $header_params = array(
-                'title' => lang('Heading.languages'),
-            );
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = array();
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = array();
-            $data['footer'] = $this->admin_footer->index($footer_params);
+	
+        // Header
+        $header_params = array(
+            'title' => lang('Heading.languages'),
+        );
+        $data['header'] = $this->admin_header->index($header_params);
+        // Column Left
+        $column_left_params = array();
+        $data['column_left'] = $this->admin_column_left->index($column_left_params);
+        // Footer
+        $footer_params = array();
+        $data['footer'] = $this->admin_footer->index($footer_params);
 
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Localisation\language_list', $data);
-        } else {
-            $data = [];
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.dashboard'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard'),
-                'active' => false,
-            );
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.languages'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/language'),
-                'active' => true,
-            );
-    
-            $data['heading_title'] = lang('Heading.languages');
-
-            $data['code_number'] = 403;
-            $data['code_text'] = lang('Text.forbidden');
-
-            $data['message'] = lang('Error.access_permission');
-
-            // Header
-            $header_params = [
-                'title' => lang('Heading.languages'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
-
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\permission', $data);
-        }
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Localisation\language_list',
+            'permission' => 'Localisation/Language',
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function get_form($data)
@@ -237,70 +174,28 @@ class Language extends \App\Controllers\BaseController
         
         $data['cancel'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard');
 
-        if ($this->administrator->hasPermission('access', 'Localisation/Language')) {
-            // Header
-            $header_params = array(
-                'title' => lang('Heading.languages'),
-            );
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = array();
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = array();
-            $data['footer'] = $this->admin_footer->index($footer_params);
+        // Header
+        $header_params = array(
+            'title' => lang('Heading.languages'),
+        );
+        $data['header'] = $this->admin_header->index($header_params);
+        // Column Left
+        $column_left_params = array();
+        $data['column_left'] = $this->admin_column_left->index($column_left_params);
+        // Footer
+        $footer_params = array();
+        $data['footer'] = $this->admin_footer->index($footer_params);
 
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Localisation\language_form', $data);
-        } else {
-            $data = [];
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.dashboard'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard'),
-                'active' => false,
-            );
-    
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.languages'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/language'),
-                'active' => false,
-            );
-    
-            if ($this->uri->getSegment($this->uri->getTotalSegments() - 1) == 'edit') {
-                $data['breadcrumbs'][] = array(
-                    'text' => lang('Text.edit'),
-                    'href' => '',
-                    'active' => true,
-                );
-            } else {
-                $data['breadcrumbs'][] = array(
-                    'text' => lang('Text.add'),
-                    'href' => '',
-                    'active' => true,
-                );
-            }
-    
-            $data['heading_title'] = lang('Heading.languages');
-
-            $data['code_number'] = 403;
-            $data['code_text'] = lang('Text.forbidden');
-
-            $data['message'] = lang('Error.access_permission');
-
-            // Header
-            $header_params = [
-                'title' => lang('Heading.languages'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
-
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\permission', $data);
-        }
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Localisation\language_form',
+            'permission' => 'Localisation/Language',
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function delete()

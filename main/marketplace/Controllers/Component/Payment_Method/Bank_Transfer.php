@@ -40,7 +40,16 @@ class Bank_Transfer extends \App\Controllers\BaseController
             $data['confirm'] = $this->url->customerLink('marketplace/component/payment_method/bank_transfer/confirm', '', true);
         }
 
-        return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Component\Payment_Method\bank_transfer', $data);
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeMarketplace',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Component\Payment_Method\bank_transfer',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function confirm()

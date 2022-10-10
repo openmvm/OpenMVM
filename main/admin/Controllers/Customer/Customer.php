@@ -27,138 +27,6 @@ class Customer extends \App\Controllers\BaseController
 
         $data['action'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/customer/customer/save');
 
-        if ($this->request->getMethod() == 'post') {
-            if (!$this->administrator->hasPermission('modify', 'Customer/Customer')) {
-                $this->session->set('error', lang('Error.modify_permission'));
-
-                return redirect()->to($this->url->administratorLink(env('app.adminUrlSegment') . '/customer/customer/add'));
-            }
-
-            $this->validation->setRule('firstname', lang('Entry.firstname'), 'required');
-            $this->validation->setRule('lastname', lang('Entry.lastname'), 'required');
-            $this->validation->setRule('telephone', lang('Entry.telephone'), 'required');
-            $this->validation->setRule('username', lang('Entry.username'), 'required|alpha_numeric_space|is_unique[customer.username]|min_length[2]|max_length[35]');
-            $this->validation->setRule('email', lang('Entry.email'), 'required|valid_email|is_unique[customer.email]');
-            $this->validation->setRule('password', lang('Entry.password'), 'required');
-            $this->validation->setRule('passconf', lang('Entry.passconf'), 'required|matches[password]');
-
-            if (!empty($this->request->getPost('customer_address'))) {
-                $customer_address = $this->request->getPost('customer_address');
-
-                foreach ($customer_address as $key => $value) {
-                    $this->validation->setRule('customer_address.' . $key . '.firstname', lang('Entry.firstname'), 'required');
-                    $this->validation->setRule('customer_address.' . $key . '.lastname', lang('Entry.lastname'), 'required');
-                    $this->validation->setRule('customer_address.' . $key . '.address_1', lang('Entry.address_1'), 'required');
-                    $this->validation->setRule('customer_address.' . $key . '.city', lang('Entry.city'), 'required');
-                    $this->validation->setRule('customer_address.' . $key . '.country_id', lang('Entry.country'), 'required|greater_than[0]');
-                    $this->validation->setRule('customer_address.' . $key . '.zone_id', lang('Entry.zone'), 'required|greater_than[0]');
-                    $this->validation->setRule('customer_address.' . $key . '.telephone', lang('Entry.telephone'), 'required');
-                }
-            }
-
-            if ($this->validation->withRequest($this->request)->run()) {
-                // Query
-                $query = $this->model_customer_customer->addCustomer($this->request->getPost());
-
-                $this->session->set('success', lang('Success.customer_add'));
-
-                return redirect()->to($this->url->administratorLink(env('app.adminUrlSegment') . '/customer/customer'));
-            } else {
-                // Errors
-                $this->session->set('error', lang('Error.form'));
-
-                if ($this->validation->hasError('username')) {
-                    $data['error_username'] = $this->validation->getError('username');
-                } else {
-                    $data['error_username'] = '';
-                }
-
-                if ($this->validation->hasError('firstname')) {
-                    $data['error_firstname'] = $this->validation->getError('firstname');
-                } else {
-                    $data['error_firstname'] = '';
-                }
-
-                if ($this->validation->hasError('lastname')) {
-                    $data['error_lastname'] = $this->validation->getError('lastname');
-                } else {
-                    $data['error_lastname'] = '';
-                }
-
-                if ($this->validation->hasError('telephone')) {
-                    $data['error_telephone'] = $this->validation->getError('telephone');
-                } else {
-                    $data['error_telephone'] = '';
-                }
-
-                if ($this->validation->hasError('email')) {
-                    $data['error_email'] = $this->validation->getError('email');
-                } else {
-                    $data['error_email'] = '';
-                }
-
-                if ($this->validation->hasError('password')) {
-                    $data['error_password'] = $this->validation->getError('password');
-                } else {
-                    $data['error_password'] = '';
-                }
-
-                if ($this->validation->hasError('passconf')) {
-                    $data['error_passconf'] = $this->validation->getError('passconf');
-                } else {
-                    $data['error_passconf'] = '';
-                }
-
-                if (!empty($this->request->getPost('customer_address'))) {
-                    $customer_address = $this->request->getPost('customer_address');
-
-                    foreach ($customer_address as $key => $value) {
-                        if ($this->validation->hasError('customer_address.' . $key . '.firstname')) {
-                            $data['error_customer_address_' . $key . '_firstname'] = $this->validation->getError('customer_address.' . $key . '.firstname');
-                        } else {
-                            $data['error_customer_address_' . $key . '_firstname'] = '';
-                        }
-
-                        if ($this->validation->hasError('customer_address.' . $key . '.lastname')) {
-                            $data['error_customer_address_' . $key . '_lastname'] = $this->validation->getError('customer_address.' . $key . '.lastname');
-                        } else {
-                            $data['error_customer_address_' . $key . '_lastname'] = '';
-                        }
-
-                        if ($this->validation->hasError('customer_address.' . $key . '.address_1')) {
-                            $data['error_customer_address_' . $key . '_address_1'] = $this->validation->getError('customer_address.' . $key . '.address_1');
-                        } else {
-                            $data['error_customer_address_' . $key . '_address_1'] = '';
-                        }
-
-                        if ($this->validation->hasError('customer_address.' . $key . '.city')) {
-                            $data['error_customer_address_' . $key . '_city'] = $this->validation->getError('customer_address.' . $key . '.city');
-                        } else {
-                            $data['error_customer_address_' . $key . '_city'] = '';
-                        }
-
-                        if ($this->validation->hasError('customer_address.' . $key . '.country_id')) {
-                            $data['error_customer_address_' . $$key . '_country_id'] = $this->validation->getError('customer_address.' . $key . '.country_id');
-                        } else {
-                            $data['error_customer_address_' . $key . '_country_id'] = '';
-                        }
-
-                        if ($this->validation->hasError('customer_address.' . $key . '.zone_id')) {
-                            $data['error_customer_address_' . $key . '_zone_id'] = $this->validation->getError('customer_address.' . $key . '.zone_id');
-                        } else {
-                            $data['error_customer_address_' . $key . '_zone_id'] = '';
-                        }
-
-                        if ($this->validation->hasError('customer_address.' . $key . '.telephone')) {
-                            $data['error_customer_address_' . $key . '.telephone'] = $this->validation->getError('customer_address.' . $key . '.telephone');
-                        } else {
-                            $data['error_customer_address_' . $key . '_telephone'] = '';
-                        }
-                    }
-                }
-            }
-        }
-
         return $this->get_form($data);
     }
 
@@ -226,57 +94,29 @@ class Customer extends \App\Controllers\BaseController
 
         $data['add'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/customer/customer/add');
         $data['cancel'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard');
-		
-        if ($this->administrator->hasPermission('access', 'Customer/Customer')) {
-            // Header
-            $header_params = array(
-                'title' => lang('Heading.customers'),
-            );
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = array();
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = array();
-            $data['footer'] = $this->admin_footer->index($footer_params);
+	
+        // Header
+        $header_params = array(
+            'title' => lang('Heading.customers'),
+        );
+        $data['header'] = $this->admin_header->index($header_params);
+        // Column Left
+        $column_left_params = array();
+        $data['column_left'] = $this->admin_column_left->index($column_left_params);
+        // Footer
+        $footer_params = array();
+        $data['footer'] = $this->admin_footer->index($footer_params);
 
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Customer\customer_list', $data);
-        } else {
-            $data = [];
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.dashboard'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard'),
-                'active' => false,
-            );
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.customers'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/customer/customer'),
-                'active' => true,
-            );
-
-            $data['heading_title'] = lang('Heading.customers');
-
-            $data['code_number'] = 403;
-            $data['code_text'] = lang('Text.forbidden');
-
-            $data['message'] = lang('Error.access_permission');
-
-            // Header
-            $header_params = [
-                'title' => lang('Heading.customers'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
-
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\permission', $data);
-        }
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Customer\customer_list',
+            'permission' => 'Customer/Customer',
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function get_form($data)
@@ -331,65 +171,49 @@ class Customer extends \App\Controllers\BaseController
 
         $data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups();
 
-        if ($this->request->getPost('customer_group_id')) {
-            $data['customer_group_id'] = $this->request->getPost('customer_group_id');
-        } elseif ($customer_info) {
+        if ($customer_info) {
             $data['customer_group_id'] = $customer_info['customer_group_id'];
         } else {
             $data['customer_group_id'] = '';
         }
 
-        if ($this->request->getPost('username')) {
-            $data['username'] = $this->request->getPost('username');
-        } elseif ($customer_info) {
+        if ($customer_info) {
             $data['username'] = $customer_info['username'];
         } else {
             $data['username'] = '';
         }
 
-        if ($this->request->getPost('firstname')) {
-            $data['firstname'] = $this->request->getPost('firstname');
-        } elseif ($customer_info) {
+        if ($customer_info) {
             $data['firstname'] = $customer_info['firstname'];
         } else {
             $data['firstname'] = '';
         }
 
-        if ($this->request->getPost('lastname')) {
-            $data['lastname'] = $this->request->getPost('lastname');
-        } elseif ($customer_info) {
+        if ($customer_info) {
             $data['lastname'] = $customer_info['lastname'];
         } else {
             $data['lastname'] = '';
         }
 
-        if ($this->request->getPost('telephone')) {
-            $data['telephone'] = $this->request->getPost('telephone');
-        } elseif ($customer_info) {
+        if ($customer_info) {
             $data['telephone'] = $customer_info['telephone'];
         } else {
             $data['telephone'] = '';
         }
 
-        if ($this->request->getPost('email')) {
-            $data['email'] = $this->request->getPost('email');
-        } elseif ($customer_info) {
+        if ($customer_info) {
             $data['email'] = $customer_info['email'];
         } else {
             $data['email'] = '';
         }
 
-        if ($this->request->getPost('status')) {
-            $data['status'] = $this->request->getPost('status');
-        } elseif ($customer_info) {
+        if ($customer_info) {
             $data['status'] = $customer_info['status'];
         } else {
             $data['status'] = 1;
         }
 
-        if ($this->request->getPost('customer_address')) {
-            $data['customer_addresses'] = $this->request->getPost('customer_address');
-        } elseif ($customer_info) {
+        if ($customer_info) {
             $data['customer_addresses'] = $this->model_customer_customer->getCustomerAddresses($customer_info['customer_id']);
         } else {
             $data['customer_addresses'] = [];
@@ -403,70 +227,28 @@ class Customer extends \App\Controllers\BaseController
 
         $data['administrator_token'] = $this->administrator->getToken();
 
-        if ($this->administrator->hasPermission('access', 'Customer/Customer')) {
-            // Header
-            $header_params = array(
-                'title' => lang('Heading.customers'),
-            );
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = array();
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = array();
-            $data['footer'] = $this->admin_footer->index($footer_params);
+        // Header
+        $header_params = array(
+            'title' => lang('Heading.customers'),
+        );
+        $data['header'] = $this->admin_header->index($header_params);
+        // Column Left
+        $column_left_params = array();
+        $data['column_left'] = $this->admin_column_left->index($column_left_params);
+        // Footer
+        $footer_params = array();
+        $data['footer'] = $this->admin_footer->index($footer_params);
 
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Customer\customer_form', $data);
-        } else {
-            $data = [];
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.dashboard'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard'),
-                'active' => false,
-            );
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.customers'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/customer/customer'),
-                'active' => false,
-            );
-
-            if ($this->uri->getSegment($this->uri->getTotalSegments() - 1) == 'edit') {
-                $data['breadcrumbs'][] = array(
-                    'text' => lang('Text.edit'),
-                    'href' => '',
-                    'active' => true,
-                );
-            } else {
-                $data['breadcrumbs'][] = array(
-                    'text' => lang('Text.add'),
-                    'href' => '',
-                    'active' => true,
-                );
-            }
-
-            $data['heading_title'] = lang('Heading.customers');
-
-            $data['code_number'] = 403;
-            $data['code_text'] = lang('Text.forbidden');
-
-            $data['message'] = lang('Error.access_permission');
-
-            // Header
-            $header_params = [
-                'title' => lang('Heading.customers'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
-
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\permission', $data);
-        }
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Customer\customer_form',
+            'permission' => 'Customer/Customer',
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function delete()

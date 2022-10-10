@@ -52,7 +52,16 @@ class Category extends \App\Controllers\BaseController
         $footer_params = array();
         $data['footer'] = $this->marketplace_footer->index($footer_params);
 
-        return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Product\category_all', $data);
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeMarketplace',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Product\category_all',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function get($category)
@@ -151,8 +160,17 @@ class Category extends \App\Controllers\BaseController
             // Footer
             $footer_params = array();
             $data['footer'] = $this->marketplace_footer->index($footer_params);
-    
-            return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Product\category', $data);    
+        
+            // Generate view
+            $template_setting = [
+                'location' => 'ThemeMarketplace',
+                'author' => 'com_openmvm',
+                'theme' => 'Basic',
+                'view' => 'Product\category',
+                'permission' => false,
+                'override' => false,
+            ];
+            return $this->template->render($template_setting, $data);
         } else {
             $data['message'] = lang('Error.no_data_found', [], $this->language->getCurrentCode());
     
@@ -165,7 +183,16 @@ class Category extends \App\Controllers\BaseController
             $footer_params = array();
             $data['footer'] = $this->marketplace_footer->index($footer_params);
     
-            return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Common\error', $data);    
+            // Generate view
+            $template_setting = [
+                'location' => 'ThemeMarketplace',
+                'author' => 'com_openmvm',
+                'theme' => 'Basic',
+                'view' => 'Common\error',
+                'permission' => false,
+                'override' => false,
+            ];
+            return $this->template->render($template_setting, $data);
         }
     }
 }

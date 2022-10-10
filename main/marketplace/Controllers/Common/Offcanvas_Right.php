@@ -24,6 +24,15 @@ class Offcanvas_Right extends \App\Controllers\BaseController
 
         $data['logged_in'] = $this->customer->isLoggedIn();
 
-        return $this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Common\offcanvas_right', $data);
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeMarketplace',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Common\offcanvas_right',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 }
