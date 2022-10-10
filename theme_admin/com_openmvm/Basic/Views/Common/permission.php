@@ -21,8 +21,8 @@
         </div>
         <div class="card border-0 shadow heading mb-3">
             <div class="card-body py-5">
-                <h1 class="text-center text-danger"><?php echo $code_number; ?> <?php echo $code_text; ?></h1>
-                <h5 class="text-center text-danger"><?php echo $message; ?></h5>
+                <h1 class="text-center text-danger">403 Forbidden</h1>
+                <h5 class="text-center text-danger"><?php echo lang('Error.access_permission', [], 'en'); ?></h5>
             </div>
         </div>
     </div>
