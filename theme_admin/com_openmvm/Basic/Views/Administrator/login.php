@@ -17,8 +17,8 @@
 <link rel="shortcut icon" href="<?php echo $favicon; ?>"/>
 <?php } ?>
 <script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-3.6.1.min.js" type="text/javascript"></script>
-<link href="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.0-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
-<script src="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.0-dist/js/bootstrap.min.js" type="text/javascript"></script>
+<link href="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.2-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<script src="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.2-dist/js/bootstrap.min.js" type="text/javascript"></script>
 <link href="<?php echo $base; ?>/assets/plugins/fontawesome-free-6.2.0-web/css/all.min.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo $base; ?>/assets/admin/theme/com_openmvm/Basic/css/basic.css" rel="stylesheet" type="text/css" />
 <script src="<?php echo $base; ?>/assets/admin/theme/com_openmvm/Basic/js/basic.js" type="text/javascript"></script>

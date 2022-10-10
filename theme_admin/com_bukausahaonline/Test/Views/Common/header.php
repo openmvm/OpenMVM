@@ -14,7 +14,7 @@
 <meta name="description" content="" />
 <meta name="keywords" content="" />
 <script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-3.6.1.min.js" type="text/javascript"></script>
-<script src="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.0-dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+<script src="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
 <script src="<?php echo $base; ?>/assets/plugins/swipenav/js/jquery-swipe-nav-plugin.js" type="text/javascript"></script>
 <script src="<?php echo $base; ?>/assets/admin/theme/openmvm/basic/js/basic.js" type="text/javascript"></script>
 <?php if ($scripts) { ?>
@@ -22,7 +22,7 @@
 		<?php echo $script; ?>
 	<?php } ?>
 <?php } ?>
-<link href="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.0-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.2-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
 <link href="<?php echo $base; ?>/assets/plugins/fontawesome-free-6.2.0-web/css/all.min.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo $base; ?>/assets/plugins/swipenav/css/jquery-swipe-nav.css" rel="stylesheet" media="screen" />
 <link href="<?php echo $base; ?>/assets/admin/theme/openmvm/basic/css/basic.css" rel="stylesheet" type="text/css" />

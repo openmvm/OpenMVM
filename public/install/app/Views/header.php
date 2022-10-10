@@ -10,11 +10,11 @@
 <meta name="description" content="<?php echo $meta_description; ?>"/>
 <meta name="keywords" content="<?php echo $meta_keywords; ?>"/>
 <script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-3.6.1.min.js" type="text/javascript"></script>
-<script src="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.0-dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+<script src="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
 <?php foreach ($scripts as $script) { ?>
 <?php echo $script; ?>
 <?php } ?>
-<link href="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.0-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.2-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
 <link href="<?php echo $base; ?>/assets/plugins/fontawesome-free-6.2.0-web/css/all.min.css" rel="stylesheet" type="text/css" />
 <?php foreach ($styles as $style) { ?>
 <?php echo $style; ?>
