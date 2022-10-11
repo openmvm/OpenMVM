@@ -282,7 +282,7 @@ class Order_Model extends Model
                 'order_id' => $result->order_id,
                 'seller_id' => $result->seller_id,
                 'order_status_id' => $result->order_status_id,
-                'comment' => $result->comment,
+                'comment' => json_decode($result->comment, true),
                 'notify' => $result->notify,
                 'date_added' => $result->date_added,
             ];

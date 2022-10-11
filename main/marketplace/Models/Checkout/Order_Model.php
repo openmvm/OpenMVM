@@ -284,7 +284,7 @@ class Order_Model extends Model
         return $order_id;
     }
 
-    public function addOrderStatusHistory($order_id, $seller_id, $order_status_id, $comment = '', $notify = false)
+    public function addOrderStatusHistory($order_id, $seller_id, $order_status_id, $comment = [], $notify = false)
     {
         // Update order status id
         $order_update_builder = $this->db->table('order');
@@ -303,7 +303,7 @@ class Order_Model extends Model
             'order_id' => $order_id,
             'seller_id' => $seller_id,
             'order_status_id' => $order_status_id,
-            'comment' => $comment,
+            'comment' => json_encode($comment),
             'notify' => ($notify) ? 1 : 0,
             'date_added' => new Time('now'),
         ];

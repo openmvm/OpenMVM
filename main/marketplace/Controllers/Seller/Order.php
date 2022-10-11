@@ -362,12 +362,18 @@ class Order extends \App\Controllers\BaseController
                 // Get order status description
                 $order_status_description = $this->model_localisation_order_status->getOrderStatusDescription($order_status_history['order_status_id']);
 
+                if (!empty($order_status_history['comment'][$this->language->getCurrentId()])) {
+                    $comment = $order_status_history['comment'][$this->language->getCurrentId()];
+                } else {
+                    $comment = '';
+                }
+
                 $data['order_status_histories'][] = [
                     'order_status_history_id' => $order_status_history['order_status_history_id'],
                     'order_id' => $order_status_history['order_id'],
                     'order_status_id' => $order_status_history['order_status_id'],
                     'order_status' => $order_status_description['name'],
-                    'comment' => nl2br($order_status_history['comment']),
+                    'comment' => html_entity_decode(nl2br($comment), ENT_QUOTES, 'UTF-8'),
                     'notify' => $order_status_history['notify'],
                     'date_added' => date(lang('Common.datetime_format', [], $this->language->getCurrentCode()), strtotime($order_status_history['date_added'])),
                 ];
@@ -458,7 +464,7 @@ class Order extends \App\Controllers\BaseController
 
         if (!empty($this->request->getGet('order_id'))) {
             // Get latest order status
-            $order_status = $this->model_seller_order->getLatestOrderStatus($order_info['order_id'], $this->customer->getSellerId());
+            $order_status = $this->model_seller_order->getLatestOrderStatus($this->request->getGet('order_id'), $this->customer->getSellerId());
 
             if ($order_status) {
                 $current_order_status_order_id = $order_status['order_status_id'];
@@ -478,13 +484,15 @@ class Order extends \App\Controllers\BaseController
                     // Edit tracking number
                     $this->model_seller_order->editTrackingNumber($this->request->getGet('order_id'), $this->customer->getSellerId(), $this->request->getPost());
 
-                    // Get order status description
-                    $order_status_description = $this->model_localisation_order_status->getOrderStatusDescription($order_status_id);
+                    // Get order status descriptions
+                    $order_status_descriptions = $this->model_localisation_order_status->getOrderStatusDescriptions($order_status_id);
 
-                    if ($order_status_description) {
-                        $comment = $order_status_description['message'];
+                    if ($order_status_descriptions) {
+                        foreach ($order_status_descriptions as $key => $value) {
+                            $comment[$key] = $value['message'];
+                        }
                     } else {
-                        $comment = '';
+                        $comment = [];
                     }
 
                     $this->model_checkout_order->addOrderStatusHistory($order_id, $seller_id, $order_status_id, $comment, true);
@@ -518,18 +526,20 @@ class Order extends \App\Controllers\BaseController
                 $seller_id = $this->customer->getSellerId();
                 $order_status_id = $order_status_info['order_status_id'];
 
-                // Get order status description
-                $order_status_description = $this->model_localisation_order_status->getOrderStatusDescription($order_status_id);
+                // Get order status descriptions
+                $order_status_descriptions = $this->model_localisation_order_status->getOrderStatusDescriptions($order_status_id);
 
-                if ($order_status_description) {
-                    $comment = $order_status_description['message'];
+                if ($order_status_descriptions) {
+                    foreach ($order_status_descriptions as $key => $value) {
+                        $comment[$key] = $value['message'];
+                    }
                 } else {
-                    $comment = '';
+                    $comment = [];
                 }
 
                 $this->model_checkout_order->addOrderStatusHistory($order_id, $seller_id, $order_status_id, $comment, true);
 
-                $json['success'] = $order_status_description['message'];
+                $json['success'] = $comment[$this->language->getCurrentId()];
             } else {
                 $json['error'] = lang('Text.error', [], 'en');
             }

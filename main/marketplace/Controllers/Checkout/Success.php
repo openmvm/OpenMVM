@@ -225,12 +225,18 @@ class Success extends \App\Controllers\BaseController
                         // Get order status description
                         $order_status_description = $this->model_localisation_order_status->getOrderStatusDescription($order_status_history['order_status_id']);
 
+                        if (!empty($order_status_history['comment'][$this->language->getCurrentId()])) {
+                            $comment = $order_status_history['comment'][$this->language->getCurrentId()];
+                        } else {
+                            $comment = '';
+                        }
+
                         $order_status_history_data[] = [
                             'order_status_history_id' => $order_status_history['order_status_history_id'],
                             'order_id' => $order_status_history['order_id'],
                             'order_status_id' => $order_status_history['order_status_id'],
                             'order_status' => $order_status_description['name'],
-                            'comment' => nl2br($order_status_history['comment']),
+                            'comment' => html_entity_decode(nl2br($comment), ENT_QUOTES, 'UTF-8'),
                             'notify' => $order_status_history['notify'],
                             'date_added' => date(lang('Common.datetime_format', [], $this->language->getCurrentCode()), strtotime($order_status_history['date_added'])),
                         ];

@@ -26,6 +26,7 @@ class Bank_Transfer extends \App\Controllers\BaseController
         $this->model_customer_customer_address = new \Main\Marketplace\Models\Customer\Customer_Address_Model();
         $this->model_localisation_country = new \Main\Marketplace\Models\Localisation\Country_Model();
         $this->model_localisation_zone = new \Main\Marketplace\Models\Localisation\Zone_Model();
+        $this->model_localisation_language = new \Main\Marketplace\Models\Localisation\Language_Model();
         $this->model_checkout_order = new \Main\Marketplace\Models\Checkout\Order_Model();
         $this->model_seller_seller = new \Main\Marketplace\Models\Seller\Seller_Model();
     }
@@ -60,6 +61,9 @@ class Bank_Transfer extends \App\Controllers\BaseController
             $error = false;
 
             if (!$error) {
+                // Get languages
+                $languages = $this->model_localisation_language->getLanguages();
+
                 // Get cart sellers
                 if (!empty($this->request->getGet('seller_id'))) {
                     $seller_info = $this->model_seller_seller->getSeller($this->request->getGet('seller_id'));
@@ -79,7 +83,13 @@ class Bank_Transfer extends \App\Controllers\BaseController
 
                     $order_status_id = $this->setting->get('component_payment_method_bank_transfer_order_status_id');
 
-                    $comment = $this->setting->get('component_payment_method_bank_transfer_instruction_' . $this->language->getCurrentId());
+                    $comment = [];
+
+                    foreach ($languages as $language) {
+                        if (!empty($this->setting->get('component_payment_method_bank_transfer_instruction_' . $language['language_id']))) {
+                            $comment[$language['language_id']] = $this->setting->get('component_payment_method_bank_transfer_instruction_' . $language['language_id']);
+                        }
+                    }
 
                     $notify = true;
 

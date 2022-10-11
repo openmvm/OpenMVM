@@ -60,6 +60,9 @@ class Cash_On_Delivery extends \App\Controllers\BaseController
             $error = false;
 
             if (!$error) {
+                // Get languages
+                $languages = $this->model_localisation_language->getLanguages();
+
                 // Get cart sellers
                 if (!empty($this->request->getGet('seller_id'))) {
                     $seller_info = $this->model_seller_seller->getSeller($this->request->getGet('seller_id'));
@@ -79,7 +82,13 @@ class Cash_On_Delivery extends \App\Controllers\BaseController
 
                     $order_status_id = $this->setting->get('component_payment_method_cash_on_delivery_order_status_id');
 
-                    $comment = $this->setting->get('component_payment_method_cash_on_delivery_instruction_' . $this->language->getCurrentId());
+                    $comment = [];
+
+                    foreach ($languages as $language) {
+                        if (!empty($this->setting->get('component_payment_method_cash_on_delivery_instruction_' . $language['language_id']))) {
+                            $comment[$language['language_id']] = $this->setting->get('component_payment_method_cash_on_delivery_instruction_' . $language['language_id']);
+                        }
+                    }
 
                     $notify = true;
 
