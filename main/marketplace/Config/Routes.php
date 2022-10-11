@@ -53,6 +53,8 @@ $routes->group('/', function ($routes) {
             });
             // Reset password
             $routes->match(['get', 'post'], 'reset_password', '\Main\Marketplace\Controllers\Account\Reset_Password::index');
+            // Wallet
+            $routes->match(['get', 'post'], 'wallet', '\Main\Marketplace\Controllers\Account\Wallet::index');
         });
         // Checkout
         $routes->group('checkout', function ($routes) {

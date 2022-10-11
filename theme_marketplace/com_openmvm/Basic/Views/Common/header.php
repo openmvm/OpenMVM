@@ -54,6 +54,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <?php echo $search; ?>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <?php echo $wallet; ?>
                     <?php echo $language; ?>
                     <?php echo $currency; ?>
                     <li class="nav-item dropdown">
@@ -65,6 +66,7 @@
                             <li><a class="dropdown-item small" href="<?php echo $my_orders; ?>"><?php echo lang('Text.my_orders'); ?></a></li>
                             <li><a class="dropdown-item small" href="<?php echo $edit_profile; ?>"><?php echo lang('Text.edit_profile'); ?></a></li>
                             <li><a class="dropdown-item small" href="<?php echo $my_address_book; ?>"><?php echo lang('Text.my_address_book'); ?></a></li>
+                            <li><a class="dropdown-item small" href="<?php echo $my_wallet; ?>"><?php echo lang('Text.my_wallet'); ?></a></li>
                             <li><hr class="dropdown-divider"></li>
                             <?php if ($is_seller) { ?>
                             <li><h6 class="dropdown-header"><?php echo lang('Text.seller'); ?></h6></li>

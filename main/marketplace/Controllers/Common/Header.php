@@ -21,6 +21,7 @@ class Header extends \App\Controllers\BaseController
         $this->marketplace_search = new \Main\Marketplace\Controllers\Common\Search();
         $this->marketplace_language = new \Main\Marketplace\Controllers\Common\Language();
         $this->marketplace_currency = new \Main\Marketplace\Controllers\Common\Currency();
+        $this->marketplace_wallet = new \Main\Marketplace\Controllers\Common\Wallet();
         $this->marketplace_cart = new \Main\Marketplace\Controllers\Common\Cart();
         $this->marketplace_offcanvas_left = new \Main\Marketplace\Controllers\Common\Offcanvas_Left();
         $this->marketplace_offcanvas_right = new \Main\Marketplace\Controllers\Common\Offcanvas_Right();
@@ -107,6 +108,7 @@ class Header extends \App\Controllers\BaseController
         $data['my_orders'] = $this->url->customerLink('marketplace/account/order', '', true);
         $data['edit_profile'] = $this->url->customerLink('marketplace/account/profile', '', true);
         $data['my_address_book'] = $this->url->customerLink('marketplace/account/address', '', true);
+        $data['my_wallet'] = $this->url->customerLink('marketplace/account/wallet', '', true);
         $data['seller_register'] = $this->url->customerLink('marketplace/seller/register', '', true);
         $data['seller_dashboard'] = $this->url->customerLink('marketplace/seller/dashboard', '', true);
         $data['seller_edit'] = $this->url->customerLink('marketplace/seller/edit', '', true);
@@ -163,6 +165,9 @@ class Header extends \App\Controllers\BaseController
         // Currency
         $currency_params = array();
         $data['currency'] = $this->marketplace_currency->index($currency_params);
+        // Wallet
+        $wallet_params = array();
+        $data['wallet'] = $this->marketplace_wallet->index($wallet_params);
         // Cart
         $cart_params = array();
         $data['cart'] = $this->marketplace_cart->index($cart_params);

@@ -20,6 +20,7 @@ class Customer {
 	private $email;
 	private $is_seller;
 	private $seller_id;
+    private $wallet_balance;
 
     /**
      * Constructor.
@@ -44,6 +45,7 @@ class Customer {
                     $this->lastname = $row_customer->lastname;
                     $this->email = $row_customer->email;
 
+                    // Seller
                     $seller_builder = $this->db->table('seller');
                     $seller_builder->where('customer_id', $row_customer->customer_id);
                     $seller_builder->where('status', 1);
@@ -56,6 +58,23 @@ class Customer {
                         $this->is_seller = false;
                         $this->seller_id = 0;
                     }
+
+                    // Wallet
+                    $wallet_builder = $this->db->table('wallet');
+
+                    $wallet_builder->select('SUM(amount) AS total');
+
+                    $wallet_builder->where('customer_id', $row_customer->customer_id);
+                    $wallet_builder->groupBy('customer_id');
+
+                    $wallet_query = $wallet_builder->get();
+
+                    if ($wallet_row = $wallet_query->getRow()) {
+                        $this->wallet_balance = $wallet_row->total;
+                    } else {
+                        $this->wallet_balance = 0;
+                    }
+
                 } else {
                     $this->logout();
                 }
@@ -92,6 +111,7 @@ class Customer {
             $this->lastname = $row_customer->lastname;
             $this->email = $row_customer->email;
 
+            // Seller
             $seller_builder = $this->db->table('seller');
             $seller_builder->where('customer_id', $row_customer->customer_id);
             $seller_builder->where('status', 1);
@@ -103,6 +123,22 @@ class Customer {
             } else {
                 $this->is_seller = false;
                 $this->seller_id = 0;
+            }
+
+            // Wallet
+            $wallet_builder = $this->db->table('wallet');
+
+            $wallet_builder->select('SUM(amount) AS total');
+
+            $wallet_builder->where('customer_id', $customer_id);
+            $wallet_builder->groupBy('customer_id');
+
+            $wallet_query = $wallet_builder->get();
+
+            if ($wallet_row = $wallet_query->getRow()) {
+                $this->wallet_balance = $wallet_row->total;
+            } else {
+                $this->wallet_balance = 0;
             }
 
             return true;
@@ -128,6 +164,7 @@ class Customer {
         $this->email = '';
         $this->is_seller = '';
         $this->seller_id = '';
+        $this->wallet_balance = '';
     }
 
     /**
@@ -209,6 +246,15 @@ class Customer {
     public function getSellerId()
     {
         return $this->seller_id;
+    }
+
+    /**
+     * Customer wallet balance.
+     *
+     */
+    public function getWalletBalance()
+    {
+        return $this->wallet_balance;
     }
 
     /**
