@@ -630,20 +630,31 @@ CREATE TABLE `order_status_description` (
   `order_status_description_id` int(11) NOT NULL,
   `order_status_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
-  `name` varchar(128) NOT NULL
+  `name` varchar(128) NOT NULL,
+  `message` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `order_status_description`
 --
 
-INSERT INTO `order_status_description` (`order_status_description_id`, `order_status_id`, `language_id`, `name`) VALUES
-(1, 1, 1, 'Pending'),
-(2, 1, 2, 'Pending'),
-(3, 2, 1, 'Processing'),
-(4, 2, 2, 'Processing'),
-(8, 3, 2, 'Complete'),
-(7, 3, 1, 'Complete');
+INSERT INTO `order_status_description` (`order_status_description_id`, `order_status_id`, `language_id`, `name`, `message`) VALUES
+(31, 1, 1, 'Pending', '<p>The order has pending status.</p>'),
+(33, 2, 1, 'Processing', '<p>The order has processing status.</p>'),
+(27, 3, 1, 'Completed', '<p>Order completed.</p>'),
+(35, 4, 1, 'Rejected', '<p>Your order has been rejected by the seller.</p>'),
+(29, 7, 1, 'Delivered', '<p>Your order has been delivered to you.</p>'),
+(25, 8, 1, 'Canceled', '<p>The order has been canceled by the customer.</p>'),
+(41, 5, 1, 'Accepted', '<p>Your order has been accepted by the seller.</p>'),
+(42, 5, 2, 'Diterima', '<p>Pesanan anda telah diterima oleh penjual.</p>'),
+(26, 8, 2, 'Dibatalkan', '<p>Pesanan telah dibatalkan oleh pembeli.</p>'),
+(28, 3, 2, 'Selesai', '<p>Pesanan selesai.</p>'),
+(30, 7, 2, 'Diterima', '<p>Pesanan sudah anda terima.</p>'),
+(32, 1, 2, 'Pending', '<p>Pesanan ditunda.</p>'),
+(34, 2, 2, 'Processing', '<p>Pesanan diproses.</p>'),
+(36, 4, 2, 'Ditolak', '<p>Pesanan ditolak oleh penjual.</p>'),
+(40, 6, 2, 'Dikirim', '<p>Pesanan anda telah dikirim. Anda bisa menggunakan nomor resi yang diberikan oleh penjual untuk mengetahui status pengiriman pesanan anda.</p>'),
+(39, 6, 1, 'Shipped', '<p>Your order has been shipped to you. You can use the tracking number gave by the seller to track your order.</p>');
 
 -- --------------------------------------------------------
 
@@ -1058,6 +1069,21 @@ INSERT INTO `setting` (`setting_id`, `code`, `key`, `value`, `serialized`) VALUE
 (64, 'component_order_total_sub_total', 'component_order_total_sub_total_status', '1', 0),
 (65, 'component_order_total_total', 'component_order_total_total_sort_order', '3', 0),
 (66, 'component_order_total_total', 'component_order_total_total_status', '1', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wallet`
+--
+
+CREATE TABLE `wallet` (
+  `wallet_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `amount` decimal(15,8) NOT NULL,
+  `description` text NOT NULL,
+  `comment` text NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1489,6 +1515,12 @@ ALTER TABLE `setting`
   ADD PRIMARY KEY (`setting_id`);
 
 --
+-- Indexes for table `wallet`
+--
+ALTER TABLE `wallet`
+  ADD PRIMARY KEY (`wallet_id`);
+
+--
 -- Indeks untuk tabel `weight_class`
 --
 ALTER TABLE `weight_class`
@@ -1803,6 +1835,12 @@ ALTER TABLE `seller_zone_to_geo_zone`
 --
 ALTER TABLE `setting`
   MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+
+--
+-- AUTO_INCREMENT for table `wallet`
+--
+ALTER TABLE `wallet`
+  MODIFY `wallet_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `weight_class`
