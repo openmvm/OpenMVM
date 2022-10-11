@@ -49,7 +49,16 @@ class Basic extends \App\Controllers\BaseController
         $footer_params = array();
         $data['footer'] = $this->admin_footer->index($footer_params);
 
-        return $this->template->render('ThemeAdminAdminSetting', 'com_openmvm', 'Basic', 'Appearance\Admin\Theme\com_openmvm\basic', $data);
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Appearance\Admin\Theme\com_openmvm\basic',
+            'permission' => 'Appearance/Admin/Theme',
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function get_info()

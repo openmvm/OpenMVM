@@ -49,7 +49,16 @@ class Test extends \App\Controllers\BaseController
         $footer_params = array();
         $data['footer'] = $this->admin_footer->index($footer_params);
 
-        return $this->template->render('ThemeAdmin', 'com_bukausahaonline', 'Test', 'Appearance\Admin\Theme\com_bukausahaonline\test', $data, true);
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_bukausahaonline',
+            'theme' => 'Test',
+            'view' => 'Appearance\Admin\Theme\com_bukausahaonline\test',
+            'permission' => 'Appearance/Admin/Theme',
+            'override' => true,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function get_info()

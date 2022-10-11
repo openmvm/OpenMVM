@@ -18,16 +18,16 @@ class Basic extends \App\Controllers\BaseController
     public function index()
     {
         if (!$this->administrator->isLoggedIn() || !$this->administrator->verifyToken($this->request->getGet('administrator_token'))) {
-            return redirect()->to('admin/administrator/login');
+            return redirect()->to(env('app.adminUrlSegment') . '/administrator/login');
         }
 
-        $data['action'] = $this->url->administratorLink('admin/appearance/marketplace/theme/com_openmvm/basic');
+        $data['action'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/appearance/marketplace/theme/com_openmvm/basic');
 
         if ($this->request->getMethod() == 'post') {
             if (!$this->administrator->hasPermission('modify', 'Appearance/Marketplace/Theme')) {
                 $this->session->set('error', lang('Error.modify_permission'));
 
-                return redirect()->to($this->url->administratorLink('admin/appearance/marketplace/theme/com_openmvm/basic'));
+                return redirect()->to($this->url->administratorLink(env('app.adminUrlSegment') . '/appearance/marketplace/theme/com_openmvm/basic'));
             }
 
             // Query
@@ -35,7 +35,7 @@ class Basic extends \App\Controllers\BaseController
 
             $this->session->set('success', lang('Success.theme_edit'));
 
-            return redirect()->to($this->url->administratorLink('admin/appearance/marketplace/theme/com_openmvm/basic'));
+            return redirect()->to($this->url->administratorLink(env('app.adminUrlSegment') . '/appearance/marketplace/theme/com_openmvm/basic'));
         }
 
         return $this->get_form($data);
@@ -45,19 +45,19 @@ class Basic extends \App\Controllers\BaseController
     {
         $data['breadcrumbs'][] = array(
             'text' => lang('Text.dashboard'),
-            'href' => $this->url->administratorLink('admin/common/dashboard'),
+            'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard'),
             'active' => false,
         );
 
         $data['breadcrumbs'][] = array(
             'text' => lang('Text.marketplace_themes'),
-            'href' => $this->url->administratorLink('admin/appearance/marketplace/theme'),
+            'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/appearance/marketplace/theme'),
             'active' => false,
         );
 
         $data['breadcrumbs'][] = array(
             'text' => lang('Text.theme_basic'),
-            'href' => $this->url->administratorLink('admin/appearance/marketplace/theme/com_openmvm/basic'),
+            'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/appearance/marketplace/theme/com_openmvm/basic'),
             'active' => true,
         );
 
@@ -198,64 +198,30 @@ class Basic extends \App\Controllers\BaseController
 
         $data['column_widths'] = [1,2,3,4,5,6,7,8,9,10,11,12];
 
-        $data['cancel'] = $this->url->administratorLink('admin/appearance/marketplace/theme');
+        $data['cancel'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/appearance/marketplace/theme');
 
-        if ($this->administrator->hasPermission('access', 'Appearance/Marketplace/Theme')) {
-            // Header
-            $header_params = array(
-                'title' => lang('Heading.themes'),
-            );
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = array();
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = array();
-            $data['footer'] = $this->admin_footer->index($footer_params);
+        // Header
+        $header_params = array(
+            'title' => lang('Heading.themes'),
+        );
+        $data['header'] = $this->admin_header->index($header_params);
+        // Column Left
+        $column_left_params = array();
+        $data['column_left'] = $this->admin_column_left->index($column_left_params);
+        // Footer
+        $footer_params = array();
+        $data['footer'] = $this->admin_footer->index($footer_params);
 
-            return $this->template->render('ThemeMarketplaceAdminSetting', 'com_openmvm', 'Basic', 'Admin\Appearance\Marketplace\Theme\com_openmvm\basic', $data);
-        } else {
-            $data = [];
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.dashboard'),
-                'href' => $this->url->administratorLink('admin/common/dashboard'),
-                'active' => false,
-            );
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.marketplace_themes'),
-                'href' => $this->url->administratorLink('admin/appearance/marketplace/theme'),
-                'active' => false,
-            );
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.theme_basic'),
-                'href' => $this->url->administratorLink('admin/appearance/marketplace/theme/com_openmvm/basic'),
-                'active' => true,
-            );
-
-            $data['heading_title'] = lang('Heading.themes');
-
-            $data['code_number'] = 403;
-            $data['code_text'] = lang('Text.forbidden');
-
-            $data['message'] = lang('Error.access_permission');
-
-            // Header
-            $header_params = [
-                'title' => lang('Heading.themes'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
-
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\permission', $data);
-        }
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeMarketplaceAdminSetting',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Admin\Appearance\Marketplace\Theme\com_openmvm\basic',
+            'permission' => 'Appearance/Marketplace/Theme',
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function get_info()

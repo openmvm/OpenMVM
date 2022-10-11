@@ -37,62 +37,28 @@ class Test extends \App\Controllers\BaseController
 
         $data['heading_title'] = lang('Heading.bukausahaonline_marketplace_theme_test');
 
-        if ($this->administrator->hasPermission('access', 'Appearance/Marketplace/Theme')) {
-            // Header
-            $header_params = array(
-                'title' => lang('Heading.themes'),
-            );
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = array();
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = array();
-            $data['footer'] = $this->admin_footer->index($footer_params);
+        // Header
+        $header_params = array(
+            'title' => lang('Heading.themes'),
+        );
+        $data['header'] = $this->admin_header->index($header_params);
+        // Column Left
+        $column_left_params = array();
+        $data['column_left'] = $this->admin_column_left->index($column_left_params);
+        // Footer
+        $footer_params = array();
+        $data['footer'] = $this->admin_footer->index($footer_params);
 
-            return $this->template->render('ThemeMarketplaceAdminSetting', 'com_bukausahaonline', 'Test', 'Admin\Appearance\Marketplace\Theme\com_bukausahaonline\test', $data);
-        } else {
-            $data = [];
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.dashboard'),
-                'href' => $this->url->administratorLink('admin/common/dashboard'),
-                'active' => false,
-            );
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.marketplace_themes'),
-                'href' => $this->url->administratorLink('admin/appearance/marketplace/theme'),
-                'active' => false,
-            );
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.theme_basic'),
-                'href' => $this->url->administratorLink('admin/appearance/marketplace/theme/com_bukausahaonline/test'),
-                'active' => true,
-            );
-
-            $data['heading_title'] = lang('Heading.themes');
-
-            $data['code_number'] = 403;
-            $data['code_text'] = lang('Text.forbidden');
-
-            $data['message'] = lang('Error.access_permission');
-
-            // Header
-            $header_params = [
-                'title' => lang('Heading.themes'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
-
-            return $this->template->render('ThemeAdmin', 'OpenMVM', 'Basic', 'Common\permission', $data);
-        }
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeMarketplaceAdminSetting',
+            'author' => 'com_bukausahaonline',
+            'theme' => 'Test',
+            'view' => 'Admin\Appearance\Marketplace\Theme\com_bukausahaonline\test',
+            'permission' => 'Appearance/Marketplace/Theme',
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function get_info()
