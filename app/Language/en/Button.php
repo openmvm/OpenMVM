@@ -20,6 +20,7 @@ return [
     'confirm' => 'Confirm',
     'delete' => 'Delete',
     'details' => 'Details',
+    'development_mode' => 'Development Mode',
     'edit' => 'Edit',
     'install' => 'Install',
     'login' => 'Login',

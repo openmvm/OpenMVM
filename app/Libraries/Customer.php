@@ -130,7 +130,7 @@ class Customer {
 
             $wallet_builder->select('SUM(amount) AS total');
 
-            $wallet_builder->where('customer_id', $customer_id);
+            $wallet_builder->where('customer_id', $row_customer->customer_id);
             $wallet_builder->groupBy('customer_id');
 
             $wallet_query = $wallet_builder->get();

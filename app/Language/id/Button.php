@@ -20,6 +20,7 @@ return [
     'confirm' => 'Confirm',
     'delete' => 'Hapus',
     'details' => 'Details',
+    'development_mode' => 'Development Mode',
     'edit' => 'Ubah',
     'install' => 'Pasang',
     'login' => 'Masuk',

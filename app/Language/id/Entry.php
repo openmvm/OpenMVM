@@ -34,6 +34,7 @@ return [
     'default_message' => 'Default Message',
     'delivered_order_status' => 'Delivered Order Status',
     'description' => 'Description',
+    'developer_mode' => 'Developer Mode',
     'dialing_code' => 'Dialing Code',
     'display' => 'Display',
     'email' => 'Email',
