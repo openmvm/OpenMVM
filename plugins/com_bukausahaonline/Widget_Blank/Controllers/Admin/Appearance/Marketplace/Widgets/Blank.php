@@ -10,8 +10,8 @@ class Blank extends \App\Controllers\BaseController
     public function __construct()
     {
         // Models
-        $this->model_appearance_widget = new \App\Models\Admin\Appearance\Widget_Model();
-        $this->model_localisation_language = new \App\Models\Admin\Localisation\Language_Model();
+        $this->model_appearance_widget = new \Main\Admin\Models\Appearance\Widget_Model();
+        $this->model_localisation_language = new \Main\Admin\Models\Localisation\Language_Model();
     }
 
     public function index()
@@ -81,62 +81,29 @@ class Blank extends \App\Controllers\BaseController
 
         $data['cancel'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/appearance/marketplace/widget');
 
-        if ($this->administrator->hasPermission('access', 'plugins/com_bukausahaonline/Widget_Blank/Controllers/Admin/Appearance/Marketplace/Widgets/Blank')) {
-            // Header
-            $header_params = array(
-                'title' => lang('Heading.blank'),
-            );
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = array();
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = array();
-            $data['footer'] = $this->admin_footer->index($footer_params);
+        // Header
+        $header_params = array(
+            'title' => lang('Heading.blank'),
+        );
+        $data['header'] = $this->admin_header->index($header_params);
+        // Column Left
+        $column_left_params = array();
+        $data['column_left'] = $this->admin_column_left->index($column_left_params);
+        // Footer
+        $footer_params = array();
+        $data['footer'] = $this->admin_footer->index($footer_params);
 
-            return $this->template->render('Plugins', 'com_bukausahaonline', 'Widget_Blank', 'Admin\Appearance\Marketplace\Widgets\blank', $data, true);
-        } else {
-            $data = [];
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.dashboard'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard'),
-                'active' => false,
-            );
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.marketplace_widgets'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/appearance/marketplace/widget'),
-                'active' => false,
-            );
-
-            $data['breadcrumbs'][] = array(
-                'text' => lang('Text.blank'),
-                'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/appearance/marketplace/widgets/com_bukausahaonline/Blank/edit' . $this->uri->getSegment($this->uri->getTotalSegments())),
-                'active' => true,
-            );
-
-            $data['heading_title'] = lang('Heading.blank');
-
-            $data['code_number'] = 403;
-            $data['code_text'] = lang('Text.forbidden');
-
-            $data['message'] = lang('Error.access_permission');
-
-            // Header
-            $header_params = [
-                'title' => lang('Heading.blank'),
-            ];
-            $data['header'] = $this->admin_header->index($header_params);
-            // Column Left
-            $column_left_params = [];
-            $data['column_left'] = $this->admin_column_left->index($column_left_params);
-            // Footer
-            $footer_params = [];
-            $data['footer'] = $this->admin_footer->index($footer_params);
-
-            return $this->template->render('ThemeAdmin', 'com_openmvm', 'Basic', 'Common\permission', $data);
-        }
+        // Generate view
+        $template_setting = [
+            'location' => 'Plugins',
+            'author' => 'com_bukausahaonline',
+            'theme' => 'Widget_Blank',
+            'view' => 'Admin\Appearance\Marketplace\Widgets\blank',
+            'permission' => 'plugins/com_bukausahaonline/Widget_Blank/Controllers/Admin/Appearance/Marketplace/Widgets/Blank',
+            'override' => true,
+        ];
+        return $this->template->render($template_setting, $data);
+        //return $this->template->render('Plugins', 'com_bukausahaonline', 'Widget_Blank', 'Admin\Appearance\Marketplace\Widgets\blank', $data, true);
     }
 
     public function save()
