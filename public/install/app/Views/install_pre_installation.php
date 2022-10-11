@@ -28,8 +28,8 @@
 							    <tr>
 							      <th scope="row"><?php echo lang('Text.text_php_version', array(), $front_locale); ?></th>
 							      <td><?php echo $php_version; ?></td>
-							      <td>7.3+</td>
-							      <td><?php if ($php_version >= '7.3') { ?><span class="text-success"><i class="fas fa-check-circle fa-fw"></i></span><?php } else { ?><span class="text-danger"><i class="fas fa-minus-circle fa-fw"></i><?php } ?></td>
+							      <td>7.4+</td>
+							      <td><?php if ($php_version >= '7.4') { ?><span class="text-success"><i class="fas fa-check-circle fa-fw"></i></span><?php } else { ?><span class="text-danger"><i class="fas fa-minus-circle fa-fw"></i><?php } ?></td>
 							    </tr>
 							  </span>
 							</table>

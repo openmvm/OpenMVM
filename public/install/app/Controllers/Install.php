@@ -32,7 +32,7 @@ class Install extends BaseController
 			if (base_url() == 'http://localhost:8080' || base_url() == 'http://localhost:8080/') {
 				$old_string = "# app.baseURL = ''";
 
-				$new_string = "app.VERSION = '0.4.0'\napp.baseURL = '" . str_replace('install/public/', '', $install_base_url) . "'\napp.adminUrlSegment = 'admin'";
+				$new_string = "app.VERSION = '0.5.0'\napp.baseURL = '" . str_replace('install/public/', '', $install_base_url) . "'\napp.adminUrlSegment = 'admin'";
 
 				// main_env_file
 				// read the entire string
@@ -140,7 +140,7 @@ class Install extends BaseController
 	public function preInstallation()
 	{
 		if ($this->request->getMethod() == 'post') {
-			if (phpversion() < '7.3' || 
+			if (phpversion() < '7.4' || 
 				!extension_loaded('intl') || 
 				!extension_loaded('curl') || 
 				!extension_loaded('json') || 
