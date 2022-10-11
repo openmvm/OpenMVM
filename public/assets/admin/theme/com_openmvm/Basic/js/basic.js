@@ -10,6 +10,17 @@ function getURLParam(key) {
     }
 }
 
+function getAdminUrlSegment() {
+    let base = $('base').attr('href');
+    let currentUrl = window.location.href;
+    let urlSegments = currentUrl.replace(base, '');
+    let urlSegment = urlSegments.split('/');
+
+    var adminUrlSegment = urlSegment[1];
+
+    return adminUrlSegment;
+}
+
 $( document ).ready(function() {
     /* From actions */
     $('body').on('click', '.button-action', function() {
@@ -145,7 +156,7 @@ $( document ).ready(function() {
         $('body').append(html);
 
         $.ajax({
-            url: base + '/admin/file_manager/image_manager/workspace?administrator_token=' + getURLParam('administrator_token'),
+            url: base + '/' + getAdminUrlSegment() + '/file_manager/image_manager/workspace?administrator_token=' + getURLParam('administrator_token'),
             dataType: 'html',
             beforeSend: function() {
                 
