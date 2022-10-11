@@ -102,11 +102,11 @@ class Template {
                 $directory = 'theme_admin';
 
                 $locale = $this->language->getCurrentCode(true);
-            } elseif ($type == 'ThemeAdminAdminSetting') {
+            } elseif ($location == 'ThemeAdminAdminSetting') {
                 $selected_author = $author;
                 $selected_theme = $theme;
 
-                $type = 'ThemeAdmin';
+                $location = 'ThemeAdmin';
                 $directory = 'theme_admin';
             } elseif ($location == 'ThemeMarketplaceAdminSetting') {
                 $selected_author = $author;
