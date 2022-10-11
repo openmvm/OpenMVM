@@ -346,6 +346,14 @@ class Column_Left extends \App\Controllers\BaseController
         ];
 
         $system[] = [
+            'id' => 'menu-system-performance',
+            'icon' => 'fas fa-dot-circle fa-fw',
+            'text' => lang('Menu.performance'),
+            'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/system/performance'),
+            'children' => [],
+        ];
+
+        $system[] = [
             'id' => 'menu-system-error-log',
             'icon' => 'fas fa-dot-circle fa-fw',
             'text' => lang('Menu.error_logs'),

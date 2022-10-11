@@ -414,6 +414,12 @@ $routes->group('/', function ($routes) {
                 $routes->match(['get', 'post'], 'get_error', '\Main\Admin\Controllers\System\Error_Log::get_error', ['filter' => 'admin_auth']);
                 $routes->match(['get', 'post'], 'delete_error', '\Main\Admin\Controllers\System\Error_Log::delete_error', ['filter' => 'admin_auth']);
             });
+            // Performance
+            $routes->group('performance', function ($routes) {
+                $routes->match(['get', 'post'], '/', '\Main\Admin\Controllers\System\Performance::index', ['filter' => 'admin_auth']);
+                $routes->match(['get', 'post'], 'clear_cache', '\Main\Admin\Controllers\System\Performance::clear_cache', ['filter' => 'admin_auth']);
+                $routes->match(['get', 'post'], 'save', '\Main\Admin\Controllers\System\Performance::save', ['filter' => 'admin_auth']);
+            });
             // Setting
             $routes->group('setting', function ($routes) {
                 $routes->match(['get', 'post'], '/', '\Main\Admin\Controllers\System\Setting::index', ['filter' => 'admin_auth']);
