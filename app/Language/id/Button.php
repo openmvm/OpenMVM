@@ -14,6 +14,7 @@ return [
     'cart' => 'Keranjang',
     'checkout' => 'Bayar',
     'checkout_all' => 'Bayar Semua',
+    'clear_cache' => 'Clear Cache',
     'close' => 'Close',
     'complete_order' => 'Complete Order',
     'confirm' => 'Confirm',

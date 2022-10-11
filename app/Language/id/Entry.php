@@ -15,6 +15,8 @@ return [
     'amount' => 'Amount',
     'avatar' => 'Avatar',
     'background_color' => 'Background Color',
+    'cache_status' => 'Cache Status',
+    'cache_ttl' => 'Cache Time to Live',
     'canceled_order_status' => 'Canceled Order Status',
     'category' => 'Category',
     'city' => 'City',

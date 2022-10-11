@@ -5,6 +5,7 @@ return [
     'admin' => 'Admin',
     'administrator_groups' => 'Administrator Groups',
     'administrators' => 'Administrators',
+    'analytics' => 'Analytics',
     'appearance' => 'Appearance',
     'attribute_groups' => 'Attribute Groups',
     'attributes' => 'Attributes',
@@ -31,6 +32,7 @@ return [
     'order_totals' => 'Order Totals',
     'pages' => 'Pages',
     'payment_methods' => 'Payment Methods',
+    'performance' => 'Performance',
     'plugins' => 'Plugins',
     'products' => 'Products',
     'settings' => 'Settings',
@@ -40,5 +42,4 @@ return [
     'weight_classes' => 'Weight Classes',
     'widgets' => 'Widgets',
     'zones' => 'Zones',
-    'analytics' => 'Analytics',
 ];

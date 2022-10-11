@@ -14,6 +14,7 @@ return [
     'cart' => 'Cart',
     'checkout' => 'Checkout',
     'checkout_all' => 'Checkout All',
+    'clear_cache' => 'Clear Cache',
     'close' => 'Close',
     'complete_order' => 'Complete Order',
     'confirm' => 'Confirm',

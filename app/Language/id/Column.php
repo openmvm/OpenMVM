@@ -4,6 +4,7 @@
 return [
     'action' => 'Action',
     'address' => 'Address',
+    'amount' => 'Amount',
     'author' => 'Author',
     'code' => 'Code',
     'comment' => 'Comment',
@@ -11,6 +12,7 @@ return [
     'country' => 'Country',
     'data' => 'Data',
     'date_added' => 'Date Added',
+    'description' => 'Description',
     'email' => 'Email',
     'file' => 'File',
     'firstname' => 'Firstname',
