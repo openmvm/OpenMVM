@@ -44,6 +44,8 @@ class Header extends \App\Controllers\BaseController
 
         $data['styles'] = array_unique($styles);
 
+        $data['update_setting_value'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/system/setting/update_setting_value');
+        $data['set_environment'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/system/setting/set_environment');
         $data['profile'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/administrator/administrator/edit/' . $this->administrator->getId());
         $data['welcome'] = sprintf(lang('Text.welcome'), $this->administrator->getFirstname());
 
@@ -52,6 +54,8 @@ class Header extends \App\Controllers\BaseController
         } else {
             $data['favicon'] = '';
         }
+
+        $data['environment'] = $this->setting->get('setting_environment');
 
         // Generate view
         $template_setting = [

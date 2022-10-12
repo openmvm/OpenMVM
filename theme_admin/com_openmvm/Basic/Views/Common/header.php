@@ -44,11 +44,14 @@
 				<a href="javascript:void(0);" id="menuBtn" class="toggle float-start" data-bs-toggle="collapse" data-bs-target="#columnLeftContent" aria-controls="columnLeftContent" aria-expanded="false" aria-label="Toggle navigation">
 					<i class="fas fa-bars"></i>
 				</a>
-				<h3 class="float-start"><?php echo lang('Text.administrator'); ?></h3>
+				<div class="float-start">
+					<h3 class="d-none d-md-inline"><?php echo lang('Text.administrator'); ?></h3>
+				</div>
 				<div class="float-end">
+					<button type="button" data-environment="<?php if ($environment === 'production') { ?>production<?php } else { ?>development<?php } ?>" class="btn btn-primary d-inline" id="button-environment"><i class="fas <?php if ($environment === 'production') { ?>fa-check<?php } else { ?>fa-circle-minus<?php } ?> fa-fw"></i><span class="d-none d-sm-inline ms-2"><?php echo lang('Button.production', [], 'en'); ?></span></button>
 					<div class="btn-group">
-						<a href="<?php echo base_url(); ?>" class="btn btn-link link-secondary text-decoration-none" target="_blank"><?php echo lang('Button.open_marketplace'); ?></a>
-						<button type="button" class="btn btn-link link-secondary text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $welcome; ?></button>
+						<a href="<?php echo base_url(); ?>" class="btn btn-link link-secondary text-decoration-none d-inline-block" target="_blank"><i class="fas fa-home fa-fw"></i><span class="d-none d-sm-inline ms-2"><?php echo lang('Button.marketplace'); ?></span></a>
+						<button type="button" class="btn btn-link link-secondary text-decoration-none d-inline-block dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user-tie fa-fw"></i><span class="d-none d-sm-inline ms-2"><?php echo $welcome; ?></span></button>
 						<ul class="dropdown-menu dropdown-menu-end">
 							<li><a href="<?php echo $profile; ?>" class="dropdown-item" type="button"><?php echo lang('Text.my_profile'); ?></a></li>
 							<li><hr class="dropdown-divider"></li>
@@ -59,3 +62,77 @@
 			</div>
 		</div>
 	</div>
+<script type="text/javascript"><!--
+$('body').on('click', '#button-environment', function() {
+	var environment = $('#button-environment').attr('data-environment');
+	var code = 'setting';
+	var key = 'setting_environment';
+
+	if (environment === 'production') {
+		var value = 'development';
+	} else {
+		var value = 'production';
+	}
+
+	$.ajax({
+		url: '<?php echo $update_setting_value; ?>',
+		method: 'post',
+		dataType: 'json',
+		data: {
+			code: code,
+			key: key,
+			value: value
+		},
+		beforeSend: function() {
+			if (environment === 'production') {
+				$('#button-environment i').removeClass('fa-check').addClass('fa-spinner fa-spin');
+			} else {
+				$('#button-environment i').removeClass('fa-circle-minus').addClass('fa-spinner fa-spin');
+			}
+		},
+		complete: function() {
+		},
+		success: function(json) {
+			if (environment === 'production') {
+				$('#button-environment i').removeClass('fa-spinner fa-spin').addClass('fa-circle-minus');
+			} else {
+				$('#button-environment i').removeClass('fa-spinner fa-spin').addClass('fa-check');
+			}
+
+			if (environment === 'production') {
+				set_environment = 'development';
+			} else {
+				set_environment = 'production';
+			}
+
+			$('#button-environment').attr('data-environment', set_environment);
+
+			setEnvironment(set_environment);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+function setEnvironment(environment) {
+	$.ajax({
+		url: '<?php echo $set_environment; ?>',
+		method: 'post',
+		dataType: 'json',
+		data: {
+			environment: environment
+		},
+		beforeSend: function() {
+		},
+		complete: function() {
+		},
+		success: function(json) {
+			window.location.reload(true);
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+}
+//--></script> 

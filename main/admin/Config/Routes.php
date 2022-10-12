@@ -423,6 +423,8 @@ $routes->group('/', function ($routes) {
             // Setting
             $routes->group('setting', function ($routes) {
                 $routes->match(['get', 'post'], '/', '\Main\Admin\Controllers\System\Setting::index', ['filter' => 'admin_auth']);
+                $routes->match(['get', 'post'], 'update_setting_value', '\Main\Admin\Controllers\System\Setting::update_setting_value', ['filter' => 'admin_auth']);
+                $routes->match(['get', 'post'], 'set_environment', '\Main\Admin\Controllers\System\Setting::set_environment', ['filter' => 'admin_auth']);
                 $routes->match(['get', 'post'], 'save', '\Main\Admin\Controllers\System\Setting::save', ['filter' => 'admin_auth']);
             });
         });
