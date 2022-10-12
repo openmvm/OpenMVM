@@ -46,6 +46,28 @@ class Setting_Model extends Model
         }
     }
 
+    public function addSettingValue($code, $key, $value)
+    {
+        $builder = $this->db->table('setting');
+
+        if (is_array($value)) {
+            $value = json_encode($value);
+            $serialized = 1;
+        } else {
+            $value = $value;
+            $serialized = 0;
+        }
+
+        $insert_data = [
+            'code' => $code,
+            'key' => $key,
+            'value' => $value,
+            'serialized' => $serialized,
+        ];
+
+        $builder->insert($insert_data);
+    }
+
     public function editSettingValue($code, $key, $value)
     {
         $builder = $this->db->table('setting');
