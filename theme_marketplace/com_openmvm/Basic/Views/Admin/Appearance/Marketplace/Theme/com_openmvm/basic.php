@@ -509,7 +509,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <?php if ($footer_column['widget']) { ?>
+                                                            <?php if (!empty($footer_column['widget'])) { ?>
                                                                 <?php foreach ($footer_column['widget'] as $footer_column_widget) { ?>
                                                                 <tr id="footer-column-<?php echo $footer_column_row; ?>-widget-<?php echo $footer_column_widget_row; ?>">
                                                                     <td>
