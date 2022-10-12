@@ -5,7 +5,7 @@
         <div class="row">
             <?php foreach ($widgets as $widget) { ?>
                 <div class="col-sm-<?php echo $widget['column_width']; ?>">
-                    <?php if ($widget['widget']) { ?>
+                    <?php if (!empty($widget['widget'])) { ?>
                         <?php foreach ($widget['widget'] as $key => $value) { ?>
                             <div><?php echo $marketplace_common_widget->get($value); ?></div>
                         <?php } ?>
