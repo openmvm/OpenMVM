@@ -22,6 +22,7 @@
 	<li>Order totals (Sub Total, Shipping, Total)</li>
 	<li>Reset password</li>
 	<li>Product options / variants</li>
+	<li>Wallet</li>
 </ul>
 
 <h4>Administrator (back-end) features:</h4>
@@ -53,6 +54,8 @@
 	<li>Error logs</li>
 	<li>Language editor</li>
 	<li>Demo manager</li>
+	<li>Enable / disable view caching</li>
+	<li>Enable / disable development mode</li>
 </ul>
 
 <h3>How to Install:</h3>
