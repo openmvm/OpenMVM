@@ -198,7 +198,7 @@ class Length_Class extends \App\Controllers\BaseController
 
                     $json['redirect'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/localisation/length_class');
                 } else {
-                    $json['error']['toast'] = lang('Error.country_delete');
+                    $json['error']['toast'] = lang('Error.length_class_delete');
                 }                
             }
         }

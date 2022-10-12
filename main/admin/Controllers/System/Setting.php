@@ -129,8 +129,8 @@ class Setting extends \App\Controllers\BaseController
             $admin_theme_segment = explode('/', $admin_theme);
             $total_segments = count($admin_theme_segment);
 
-            $admin_theme_author = str_replace('_', ' ', $admin_theme_segment[$total_segments - 2]);
-            $admin_theme_name = str_replace('_', ' ', pathinfo($admin_theme_segment[$total_segments - 1], PATHINFO_FILENAME));
+            $admin_theme_author = $admin_theme_segment[$total_segments - 2];
+            $admin_theme_name = pathinfo($admin_theme_segment[$total_segments - 1], PATHINFO_FILENAME);
 
             $data['admin_themes'][] = [
                 'path' => $admin_theme,
@@ -151,8 +151,8 @@ class Setting extends \App\Controllers\BaseController
             $marketplace_theme_segment = explode('/', $marketplace_theme);
             $total_segments = count($marketplace_theme_segment);
 
-            $marketplace_theme_author = str_replace('_', ' ', $marketplace_theme_segment[$total_segments - 2]);
-            $marketplace_theme_name = str_replace('_', ' ', pathinfo($marketplace_theme_segment[$total_segments - 1], PATHINFO_FILENAME));
+            $marketplace_theme_author = $marketplace_theme_segment[$total_segments - 2];
+            $marketplace_theme_name = pathinfo($marketplace_theme_segment[$total_segments - 1], PATHINFO_FILENAME);
 
             $data['marketplace_themes'][] = [
                 'path' => $marketplace_theme,
@@ -332,6 +332,69 @@ class Setting extends \App\Controllers\BaseController
                 }
             }
         }
+
+        return $this->response->setJSON($json);
+    }
+
+    public function update_setting_value()
+    {
+        $json = [];
+
+        // Update setting value
+        if ($this->request->getPost('code') !== null) {
+            $code = $this->request->getPost('code');
+        } else {
+            $code = '';
+        }
+
+        if ($this->request->getPost('key') !== null) {
+            $key = $this->request->getPost('key');
+        } else {
+            $key = '';
+        }
+
+        if ($this->request->getPost('value') !== null) {
+            $value = $this->request->getPost('value');
+        } else {
+            $value = '';
+        }
+
+        if ($code !== '' && $key !== '' && $value !== '') {
+            if ($this->setting->get($key) !== null) {
+                $query = $this->model_system_setting->editSettingValue($code, $key, $value);
+            } else {
+                $query = $this->model_system_setting->addSettingValue($code, $key, $value);
+            }
+        }
+
+        return $this->response->setJSON($json);
+    }
+
+    public function set_environment()
+    {
+        $json = [];
+
+        // Check the .env file and set the app.baseURL
+        //$install_env_file = '../../../../.env';
+        $main_env_file = ROOTPATH . '/.env';
+
+        if ($this->setting->get('setting_environment') === 'production') {
+            $old_string = ['# CI_ENVIRONMENT = development', 'CI_ENVIRONMENT = development'];
+            $new_string = ['CI_ENVIRONMENT = production', 'CI_ENVIRONMENT = production'];
+        } else {
+            $old_string = ['# CI_ENVIRONMENT = production', 'CI_ENVIRONMENT = production'];
+            $new_string = ['CI_ENVIRONMENT = development', 'CI_ENVIRONMENT = development'];
+        }
+
+        // main_env_file
+        // read the entire string
+        $main_env_file_content = file_get_contents($main_env_file);
+
+        // replace something in the file string - this is a VERY simple example
+        $main_env_file_content = str_replace($old_string, $new_string, $main_env_file_content);
+
+        // write the entire string
+        file_put_contents($main_env_file, $main_env_file_content);
 
         return $this->response->setJSON($json);
     }

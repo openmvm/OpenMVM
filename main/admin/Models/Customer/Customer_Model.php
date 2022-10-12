@@ -118,6 +118,173 @@ class Customer_Model extends Model
 
     public function deleteCustomer($customer_id)
     {
+        // Delete customer order
+        // Get customer order
+        $builder = $this->db->table('order');
+
+        $builder->where('customer_id', $customer_id);
+
+        $query = $builder->get();
+
+        foreach ($query->getResult() as $result) {
+            // Delete order product
+            $builder = $this->db->table('order_product');
+
+            $builder->where('order_id', $result->order_id);
+            $builder->delete();
+
+            // Delete order shipping
+            $builder = $this->db->table('order_shipping');
+
+            $builder->where('order_id', $result->order_id);
+            $builder->delete();
+
+            // Delete order status history
+            $builder = $this->db->table('order_status_history');
+
+            $builder->where('order_id', $result->order_id);
+            $builder->delete();
+
+            // Delete order total
+            $builder = $this->db->table('order_total');
+
+            $builder->where('order_id', $result->order_id);
+            $builder->delete();
+        }
+
+        // Delete order
+        $builder = $this->db->table('order');
+
+        $builder->where('customer_id', $customer_id);
+        $builder->delete();
+
+        // Delete customer product
+        // Get customer product
+        $builder = $this->db->table('product');
+
+        $builder->where('customer_id', $customer_id);
+
+        $query = $builder->get();
+
+        foreach ($query->getResult() as $result) {
+            // Delete product description
+            $builder = $this->db->table('product_description');
+
+            $builder->where('product_id', $result->product_id);
+            $builder->delete();
+
+            // Delete product image
+            $builder = $this->db->table('product_image');
+
+            $builder->where('product_id', $result->product_id);
+            $builder->delete();
+
+            // Delete product option
+            $builder = $this->db->table('product_option');
+
+            $builder->where('product_id', $result->product_id);
+            $builder->delete();
+
+            // Delete product option value
+            $builder = $this->db->table('product_option_value');
+
+            $builder->where('product_id', $result->product_id);
+            $builder->delete();
+
+            // Delete product to category
+            $builder = $this->db->table('product_to_category');
+
+            $builder->where('product_id', $result->product_id);
+            $builder->delete();
+
+            // Delete product variant
+            $builder = $this->db->table('product_variant');
+
+            $builder->where('product_id', $result->product_id);
+            $builder->delete();
+
+            // Delete product variant image
+            $builder = $this->db->table('product_variant_image');
+
+            $builder->where('product_id', $result->product_id);
+            $builder->delete();
+
+            // Delete product variant option
+            $builder = $this->db->table('product_variant_option');
+
+            $builder->where('product_id', $result->product_id);
+            $builder->delete();
+
+            // Delete product variant option value
+            $builder = $this->db->table('product_variant_option_value');
+
+            $builder->where('product_id', $result->product_id);
+            $builder->delete();
+        }
+
+        // Delete product
+        $builder = $this->db->table('product');
+
+        $builder->where('customer_id', $customer_id);
+        $builder->delete();
+
+        // Delete customer seller info
+        $builder = $this->db->table('seller');
+        
+        $builder->where('customer_id', $customer_id);
+
+        $query = $builder->get();
+
+        if ($row = $query->getRow()) {
+            // Delete seller geo zone
+            $builder = $this->db->table('seller_geo_zone');
+
+            $builder->where('seller_id', $row->seller_id);
+            $builder->delete();
+
+            // Delete seller shipping method
+            $builder = $this->db->table('seller_shipping_method');
+
+            $builder->where('seller_id', $row->seller_id);
+            $builder->delete();
+
+            // Delete seller zone to geo zone
+            $builder = $this->db->table('seller_zone_to_geo_zone');
+
+            $builder->where('seller_id', $row->seller_id);
+            $builder->delete();
+        }
+
+        // Delete seller
+        $builder = $this->db->table('seller');
+
+        $builder->where('customer_id', $customer_id);
+        $builder->delete();
+
+        // Delete option
+        $builder = $this->db->table('option');
+
+        $builder->where('customer_id', $customer_id);
+        $builder->delete();
+
+        // Delete option description
+        $builder = $this->db->table('option_description');
+
+        $builder->where('customer_id', $customer_id);
+        $builder->delete();
+
+        // Delete option value
+        $builder = $this->db->table('option_value');
+
+        $builder->where('customer_id', $customer_id);
+        $builder->delete();
+
+        // Delete option value description
+        $builder = $this->db->table('option_value_description');
+
+        $builder->where('customer_id', $customer_id);
+        $builder->delete();
+
         // Delete customer
         $builder = $this->db->table('customer');
 
@@ -135,6 +302,7 @@ class Customer_Model extends Model
 
         $builder->where('customer_id', $customer_id);
         $builder->delete();
+
     }
 
     public function getCustomers($data = [])

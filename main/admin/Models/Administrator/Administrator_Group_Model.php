@@ -25,7 +25,7 @@ class Administrator_Group_Model extends Model
 
         $insert_data = [
             'name' => $data['name'],
-            'permission' => ($data['permission'] !== null) ? json_encode($data['permission']) : '',
+            'permission' => isset($data['permission']) ? json_encode($data['permission']) : '',
         ];
         
         $builder->insert($insert_data);
@@ -39,7 +39,7 @@ class Administrator_Group_Model extends Model
 
         $update_data = [
             'name' => $data['name'],
-            'permission' => ($data['permission'] !== null) ? json_encode($data['permission']) : '',
+            'permission' => isset($data['permission']) ? json_encode($data['permission']) : '',
         ];
 
         $builder->where('administrator_group_id', $administrator_group_id);

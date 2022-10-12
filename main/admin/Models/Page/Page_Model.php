@@ -106,7 +106,7 @@ class Page_Model extends Model
 
         $page_description_delete_builder = $this->db->table('page_description');
 
-        $page_description_delete_builder->where('pages_id', $pages_id);
+        $page_description_delete_builder->where('page_id', $page_id);
         $page_description_delete_builder->delete();
     }
 

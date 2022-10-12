@@ -40,13 +40,13 @@
                     <?php foreach ($languages as $language) { ?>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="title-<?php echo $language['language_id']; ?>-title"><img src="<?php echo base_url('assets/flags/' . $language['code'] . '.png'); ?>" /></span>
-                        <input type="text" name="title[<?php echo $language['language_id']; ?>][title]" value="<?php echo $title[$language['language_id']]['title']; ?>" class="form-control" placeholder="<?php echo lang('Entry.title'); ?>" aria-label="<?php echo lang('Entry.title'); ?>" aria-describedby="title-<?php echo $language['language_id']; ?>-title">
+                        <input type="text" name="title[<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($title[$language['language_id']]['title']) ? $title[$language['language_id']]['title'] : ''; ?>" class="form-control" placeholder="<?php echo lang('Entry.title'); ?>" aria-label="<?php echo lang('Entry.title'); ?>" aria-describedby="title-<?php echo $language['language_id']; ?>-title">
                     </div>
                     <?php } ?>
                 </div>
                 <div class="mb-3">
                     <label for="input-status" class="form-label"><?php echo lang('Entry.status'); ?></label>
-                    <select name="status" id="input-status" class="form-control">
+                    <select name="status" id="input-status" class="form-select">
                         <?php if ($status) { ?>
                         <option value="0"><?php echo lang('Text.disabled'); ?></option>
                         <option value="1" selected="selected"><?php echo lang('Text.enabled'); ?></option>
@@ -77,7 +77,7 @@
                                             <input type="hidden" name="page[<?php echo $page_row; ?>][page_id]" value="<?php echo $page['page_id']; ?>" id="input-page-page-id-<?php echo $page_row; ?>" class="form-control" placeholder="<?php echo lang('Entry.page'); ?>">
                                         </td>
                                         <td>
-                                            <select name="page[<?php echo $page_row; ?>][target]" id="input-page-target-<?php echo $page_row; ?>" class="form-control">
+                                            <select name="page[<?php echo $page_row; ?>][target]" id="input-page-target-<?php echo $page_row; ?>" class="form-select">
                                                 <?php if ($page['target'] == 'new') { ?>
                                                 <option value="new" selected="selected"><?php echo lang('Text.new_tab'); ?></option>
                                                 <option value="current"><?php echo lang('Text.current_tab'); ?></option>
@@ -116,7 +116,7 @@ $( "#button-page-add" ).on( "click", function() {
     html += '        <input type="hidden" name="page[' + page_row + '][page_id]" value="" id="input-page-page-id-' + page_row + '" class="form-control" placeholder="<?php echo lang('Entry.page'); ?>">';
     html += '    </td>';
     html += '    <td>';
-    html += '        <select name="page[' + page_row + '][target]" id="input-page-target-' + page_row + '" class="form-control">';
+    html += '        <select name="page[' + page_row + '][target]" id="input-page-target-' + page_row + '" class="form-select">';
     html += '            <option value="new"><?php echo lang('Text.new_tab'); ?></option>';
     html += '            <option value="current" selected="selected"><?php echo lang('Text.current_tab'); ?></option>';
     html += '        </select>';
@@ -135,7 +135,7 @@ function pageautocomplete(page_row) {
     $( '#input-page-title-' + page_row + '' ).autocomplete({
         source: function (request, response) {
             $.ajax({
-                url: '<?php echo base_url(); ?>' + '/admin/page/page/autocomplete?administrator_token=<?php echo $administrator_token; ?>',
+                url: '<?php echo $page_autocomplete; ?>',
                 dataType: 'json',
                 data: {
                     filter_name: request.term

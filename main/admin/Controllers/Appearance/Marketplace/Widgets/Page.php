@@ -104,6 +104,7 @@ class Page extends \App\Controllers\BaseController
         $data['languages'] = $this->model_localisation_language->getLanguages();
 
         $data['cancel'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/appearance/marketplace/widget');
+        $data['page_autocomplete'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/page/page/autocomplete');
 
         $data['administrator_token'] = $this->administrator->getToken();
 
