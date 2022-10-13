@@ -119,6 +119,46 @@ class Product_Model extends Model
             $product_to_category_insert_builder->insert($product_to_category_insert_data);
         }
 
+        // Product option
+        if (!empty($data['product_option'])) {
+            foreach ($data['product_option'] as $product_option) {
+                // Insert product option
+                $product_option_insert_builder = $this->db->table('product_option');
+
+                $product_option_insert_data = [
+                    'product_id' => $product_id,
+                    'option_id' => $product_option['option_id'],
+                    'seller_id' => $this->customer->getSellerId(),
+                    'customer_id' => $this->customer->getId(),
+                ];
+                
+                $product_option_insert_builder->insert($product_option_insert_data);
+
+                $product_option_id = $this->db->insertID();
+
+                // Insert product option value
+                if (!empty($product_option['option_value'])) {
+                    foreach ($product_option['option_value'] as $option_value) {
+                        // Insert product option value
+                        $product_option_value_insert_builder = $this->db->table('product_option_value');
+
+                        $product_option_value_insert_data = [
+                            'product_option_id' => $product_option_id,
+                            'product_id' => $product_id,
+                            'option_id' => $product_option['option_id'],
+                            'option_value_id' => $option_value,
+                            'seller_id' => $this->customer->getSellerId(),
+                            'customer_id' => $this->customer->getId(),
+                        ];
+                        
+                        $product_option_value_insert_builder->insert($product_option_value_insert_data);
+
+                        $product_option_value_id = $this->db->insertID();
+                    }
+                }
+            }
+        }
+
         // Product variants
         if (!empty($data['product_variant'])) {
             foreach ($data['product_variant'] as $product_variant) {

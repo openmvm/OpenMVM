@@ -39,7 +39,11 @@
 							<div class="col-sm-6">
 								<select name="product_variant[<?php echo $key; ?>][weight_class_id]" class="form-select">
 									<?php foreach ($weight_classes as $weight_class) { ?>
-									<option value="<?php echo $weight_class['weight_class_id']; ?>"><?php echo $weight_class['title']; ?></option>
+										<?php if ($weight_class['weight_class_id'] == $value['weight_class_id']) { ?>
+										<option value="<?php echo $weight_class['weight_class_id']; ?>" selected><?php echo $weight_class['title']; ?></option>
+										<?php } else { ?>
+										<option value="<?php echo $weight_class['weight_class_id']; ?>"><?php echo $weight_class['title']; ?></option>
+										<?php } ?>
 									<?php } ?>
 								</select>
 							</div>
