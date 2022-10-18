@@ -22,6 +22,7 @@ return [
     'details' => 'Details',
     'development_mode' => 'Development Mode',
     'edit' => 'Ubah',
+    'favorite' => 'Favorite',
     'install' => 'Pasang',
     'login' => 'Masuk',
     'logout' => 'Keluar',

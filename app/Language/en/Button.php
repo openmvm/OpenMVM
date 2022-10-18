@@ -22,6 +22,7 @@ return [
     'details' => 'Details',
     'development_mode' => 'Development Mode',
     'edit' => 'Edit',
+    'favorite' => 'Favorite',
     'install' => 'Install',
     'login' => 'Login',
     'logout' => 'Logout',

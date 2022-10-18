@@ -43,6 +43,7 @@ return [
     'my_address_book' => 'My Address Book',
     'my_orders' => 'My Orders',
     'my_wallet' => 'My Wallet',
+    'my_wishlist' => 'My Wishlist',
     'not_found' => 'Not Found',
     'options' => 'Options',
     'order_info' => 'Order Info',

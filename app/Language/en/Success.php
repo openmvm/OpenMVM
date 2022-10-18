@@ -3,6 +3,7 @@
 // Success
 return [
     'add_to_cart' => 'A product has been added to your shopping cart!',
+    'add_to_wishlist' => 'This product has been added to your wishlist!',
     'administrator_add' => 'An administrator has been added successfully!',
     'administrator_delete' => 'One or more administrators have been deleted successfully!',
     'administrator_edit' => 'An administrator has been edited successfully!',
@@ -54,6 +55,7 @@ return [
     'product_delete' => 'One or more products have been deleted successfully!',
     'product_edit' => 'A product has been edited successfully!',
     'profile_edit' => 'Your profile has been edited successfully!',
+    'remove_from_wishlist' => 'This product has been removed from your wishlist!',
     'reset_password' => 'We have sent an instruction on how to reset your password to your email address. Please check your email.',
     'seller_edit' => 'Your seller info has been edited successfully!',
     'setting_edit' => 'Settings have been edited successfully!',
