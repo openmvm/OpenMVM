@@ -49,6 +49,9 @@
                             <div id="form-product">
                                 <div class="mb-3">
                                     <h3><?php echo $heading_title; ?></h3>
+                                    <div>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm" id="button-favorite"><i class="fas fa-heart<?php if ($is_wishlist) { ?> text-danger<?php } ?> me-2"></i><?php echo lang('Button.favorite', [], 'en'); ?></button>
+                                    </div>
                                 </div>
                                 <div id="price" class="text-danger bg-light fs-1 px-3 mb-3">
                                     <?php if ($is_product_option) { ?>
@@ -276,4 +279,59 @@ var swiper2 = new Swiper('.product-images', {
     },
 });
 //--></script> 
+<script type="text/javascript"><!--
+$( "#button-favorite" ).on( "click", function() {
+    var product_id = '<?php echo $product_id; ?>';
+
+    $.ajax({
+        url: '<?php echo base_url('marketplace/product/product/add_to_wishlist'); ?>',
+        type: 'post',
+        data: {
+            product_id: product_id
+        },
+        dataType: 'json',
+        beforeSend: function() {
+            $('#button-favorite i').removeClass('fa-heart').addClass('fa-spinner fa-spin');
+        },
+        complete: function() {
+            $('#button-favorite i').removeClass('fa-spinner fa-spin').addClass('fa-heart');
+        },
+        success: function(json) {
+            if (json['is_wishlist']) {
+                $('#button-favorite i').addClass('text-danger');
+            } else {
+                $('#button-favorite i').removeClass('text-danger');
+            }
+
+            $('#toast-container').remove();
+
+            html = '<div id="toast-container" class="position-fixed bottom-0 end-0 p-3" style="z-index: 11;">';
+            html += '    <div id="liveToast" class="toast bg-success" role="alert" aria-live="assertive" aria-atomic="true">';
+            html += '        <div class="toast-header">';
+            html += '            <i class="fas fa-times-circle text-success me-1"></i>';
+            html += '            <strong class="text-success me-auto"><?php echo lang('Text.success'); ?></strong>';
+            html += '            <small><?php echo lang('Text.add_to_wishlist'); ?></small>';
+            html += '            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>';
+            html += '        </div>';
+            html += '        <div class="toast-body text-light">';
+            html +=              json['success'];
+            if (json['additional_message']) {
+                html +=              ' ' + json['additional_message'];
+            }
+            html += '        </div>';
+            html += '    </div>';
+            html += '</div>';
+
+            $('body').append(html);
+
+            var toastLiveExample = document.getElementById('liveToast');
+            var toast = new bootstrap.Toast(toastLiveExample);
+            toast.show();
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+//--></script>
 <?php echo $footer; ?>

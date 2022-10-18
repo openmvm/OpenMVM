@@ -55,6 +55,8 @@ $routes->group('/', function ($routes) {
             $routes->match(['get', 'post'], 'reset_password', '\Main\Marketplace\Controllers\Account\Reset_Password::index');
             // Wallet
             $routes->match(['get', 'post'], 'wallet', '\Main\Marketplace\Controllers\Account\Wallet::index');
+            // Wishlist
+            $routes->match(['get', 'post'], 'wishlist', '\Main\Marketplace\Controllers\Account\Wishlist::index', ['filter' => 'marketplace_auth']);
         });
         // Checkout
         $routes->group('checkout', function ($routes) {
@@ -119,6 +121,16 @@ $routes->group('/', function ($routes) {
                 $routes->match(['get', 'post'], 'get_country', '\Main\Marketplace\Controllers\Localisation\Country::get_country');
             });
         });
+        // Page
+        $routes->group('page', function ($routes) {
+            // Page
+            $routes->group('page', function ($routes) {
+                // Get
+                $routes->group('get', function ($routes) {
+                    $routes->match(['get', 'post'], '(:any)', '\Main\Marketplace\Controllers\Page\Page::get/$1');
+                });
+            });
+        });
         // Product
         $routes->group('product', function ($routes) {
             // Category
@@ -131,6 +143,7 @@ $routes->group('/', function ($routes) {
                 $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Product\Product::index');
                 $routes->match(['get', 'post'], 'get/(:any)', '\Main\Marketplace\Controllers\Product\Product::get/$1');
                 $routes->match(['get', 'post'], 'get_product_variant', '\Main\Marketplace\Controllers\Product\Product::get_product_variant');
+                $routes->match(['get', 'post'], 'add_to_wishlist', '\Main\Marketplace\Controllers\Product\Product::add_to_wishlist');
             });
             // Search
             $routes->match(['get', 'post'], 'search', '\Main\Marketplace\Controllers\Product\Search::index');

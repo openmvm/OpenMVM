@@ -67,6 +67,7 @@ abstract class BaseController extends Controller
         $this->url = new \App\Libraries\Url();
         $this->validation =  \Config\Services::validation();
         $this->weight = new \App\Libraries\Weight();
+        $this->wishlist = new \App\Libraries\Wishlist();
         $this->zip = new \App\Libraries\Zip();
 
         // Helper

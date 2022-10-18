@@ -105,6 +105,7 @@ class Header extends \App\Controllers\BaseController
 
         $data['logged_in'] = $this->customer->isLoggedIn();
         $data['my_account'] = $this->url->customerLink('marketplace/account/account', '', true);
+        $data['my_wishlist'] = $this->url->customerLink('marketplace/account/wishlist', '', true);
         $data['my_orders'] = $this->url->customerLink('marketplace/account/order', '', true);
         $data['edit_profile'] = $this->url->customerLink('marketplace/account/profile', '', true);
         $data['my_address_book'] = $this->url->customerLink('marketplace/account/address', '', true);

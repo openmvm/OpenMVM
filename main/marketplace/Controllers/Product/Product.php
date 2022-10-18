@@ -136,6 +136,8 @@ class Product extends \App\Controllers\BaseController
             $data['name'] = $product_info['name'];
             $data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
 
+            $data['is_wishlist'] = $this->wishlist->check($this->customer->getId(), $product_info['product_id']);
+
             // Images
             if (is_file(ROOTPATH . 'public/assets/images/' . $product_info['main_image'])) {
                 $data['thumb'] = $this->image->resize($product_info['main_image'], 100, 100, true);
@@ -355,6 +357,42 @@ class Product extends \App\Controllers\BaseController
             }
 
             $json['result'] = json_encode($product_variant_info);
+        }
+
+        return $this->response->setJSON($json);
+    }
+
+    public function add_to_wishlist()
+    {
+        $json = [];
+
+        $is_wishlist = $this->wishlist->check($this->customer->getId(), $this->request->getPost('product_id'));
+
+        if ($is_wishlist) {
+            // Remove wishlist
+            $this->wishlist->remove($this->customer->getId(), $this->request->getPost('product_id'));
+        } else {
+            // Add wishlist
+            $this->wishlist->add($this->customer->getId(), $this->request->getPost('product_id'));
+        }
+
+        $is_wishlist = $this->wishlist->check($this->customer->getId(), $this->request->getPost('product_id'));
+
+        if ($is_wishlist) {
+            $json['is_wishlist'] = true;
+
+            $json['success'] = lang('Success.add_to_wishlist');
+
+            if ($this->customer->getId()) {
+                $json['additional_message'] = '';
+            } else {
+                $json['additional_message'] = lang('Text.login_wishlist');
+            }
+        } else {
+            $json['is_wishlist'] = false;
+
+            $json['success'] = lang('Success.remove_from_wishlist');
+            $json['additional_message'] = '';
         }
 
         return $this->response->setJSON($json);
