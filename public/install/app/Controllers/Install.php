@@ -30,9 +30,9 @@ class Install extends BaseController
 
 		if (file_exists($main_env_file) && file_exists($install_env_file)) {
 			if (base_url() == 'http://localhost:8080' || base_url() == 'http://localhost:8080/') {
-				$old_string = "# app.baseURL = ''";
+				$old_string = ["# CI_ENVIRONMENT = production", "# app.baseURL = ''"];
 
-				$new_string = "app.VERSION = '0.5.0'\napp.baseURL = '" . str_replace('install/public/', '', $install_base_url) . "'\napp.adminUrlSegment = 'admin'";
+				$new_string = ["CI_ENVIRONMENT = development", "app.VERSION = '0.5.0'\napp.baseURL = '" . str_replace('install/public/', '', $install_base_url) . "'\napp.adminUrlSegment = 'admin'"];
 
 				// main_env_file
 				// read the entire string
