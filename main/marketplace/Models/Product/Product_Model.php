@@ -63,7 +63,8 @@ class Product_Model extends Model
         }
 
         if (!empty($data['filter_name'])) {
-            $builder->like('pd.name', $data['filter_name']);
+            //$builder->like('pd.name', $data['filter_name']);
+            $builder->where('MATCH (pd.name) AGAINST ("' . $data['filter_name'] . '" IN BOOLEAN MODE)', null, false);
         }
 
         $product_query = $builder->get();

@@ -15,19 +15,29 @@ $( document ).ready(function() {
 
     /* Search */
 	$('#search input[name="search"]').keypress(function (e) {
+        var type = $('#search input[name="type"]').val();
         var keyword = $('#search input[name="search"]').val();
 
 		if (e.which == 13) {
-			window.location.href = base + '/marketplace/product/search?keyword=' + keyword;
+            if (type == 'seller') {
+                window.location.href = base + '/marketplace/seller/search?keyword=' + keyword;
+            } else {
+                window.location.href = base + '/marketplace/product/search?keyword=' + keyword;
+            }
 
 			return false;
 		}
 	});
 
 	$('#search').on('click', '#button-search', function() {
+        var type = $('#search input[name="type"]').val();
         var keyword = $('#search input[name="search"]').val();
 
-		window.location.href = base + '/marketplace/product/search?keyword=' + keyword;
+        if (type == 'seller') {
+            window.location.href = base + '/marketplace/seller/search?keyword=' + keyword;
+        } else {
+            window.location.href = base + '/marketplace/product/search?keyword=' + keyword;
+        }
 	});
 	
     /* From actions */

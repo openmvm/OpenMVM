@@ -99,12 +99,18 @@ class Seller_Model extends Model
     {
         $builder = $this->db->table('seller');
 
+        if (!empty($data['filter_name'])) {
+            //$builder->like('store_name', $data['filter_name']);
+            $builder->where('MATCH (store_name) AGAINST ("' . $data['filter_name'] . '" IN BOOLEAN MODE)', null, false);
+        }
+
         $seller_query = $builder->get();
 
         $sellers = [];
 
         foreach ($seller_query->getResult() as $result) {
             $sellers[] = [
+                'seller_id' => $result->seller_id,
                 'customer_id' => $result->customer_id,
                 'store_name' => $result->store_name,
                 'store_description' => $result->store_description,

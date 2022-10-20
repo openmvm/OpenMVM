@@ -243,6 +243,8 @@ $routes->group('/', function ($routes) {
                     $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Register::go', ['filter' => 'marketplace_auth']);
                 });
             });
+            // Search
+            $routes->match(['get', 'post'], 'search', '\Main\Marketplace\Controllers\Seller\Search::index');
             // Seller
             $routes->group('seller', function ($routes) {
                 $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Seller::index');
