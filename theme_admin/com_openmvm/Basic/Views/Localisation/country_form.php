@@ -50,7 +50,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="input-postal-code-required" class="form-label"><?php echo lang('Entry.postal_code_required'); ?></label>
-                        <select name="postal_code_required" id="input-postal-code-required" class="form-control">
+                        <select name="postal_code_required" id="input-postal-code-required" class="form-select">
                             <?php if ($postal_code_required) { ?>
                             <option value="0"><?php echo lang('Text.no'); ?></option>
                             <option value="1" selected="selected"><?php echo lang('Text.yes'); ?></option>
@@ -66,7 +66,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="input-status" class="form-label"><?php echo lang('Entry.status'); ?></label>
-                        <select name="status" id="input-status" class="form-control">
+                        <select name="status" id="input-status" class="form-select">
                             <?php if ($status) { ?>
                             <option value="0"><?php echo lang('Text.disabled'); ?></option>
                             <option value="1" selected="selected"><?php echo lang('Text.enabled'); ?></option>

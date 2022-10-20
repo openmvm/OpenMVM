@@ -37,7 +37,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="input-country" class="form-label"><?php echo lang('Entry.country'); ?></label>
-                        <select name="country_id" id="input-country" class="form-control">
+                        <select name="country_id" id="input-country" class="form-select">
                             <?php foreach ($countries as $country) { ?>
                                 <?php if ($country['country_id'] == $country_id) { ?>
                                 <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="input-status" class="form-label"><?php echo lang('Entry.status'); ?></label>
-                        <select name="status" id="input-status" class="form-control">
+                        <select name="status" id="input-status" class="form-select">
                             <?php if ($status) { ?>
                             <option value="0"><?php echo lang('Text.disabled'); ?></option>
                             <option value="1" selected="selected"><?php echo lang('Text.enabled'); ?></option>

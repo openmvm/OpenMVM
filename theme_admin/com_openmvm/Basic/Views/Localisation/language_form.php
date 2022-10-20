@@ -38,7 +38,7 @@
                     </div>
                     <div class="mb-3 required">
                         <label for="input-code" class="form-label"><?php echo lang('Entry.code'); ?></label>
-                        <select name="code" id="input-code" class="form-control">
+                        <select name="code" id="input-code" class="form-select">
                             <option value=""><?php echo lang('Text.please_select'); ?></option>
                             <?php foreach ($directories as $directory) { ?>
                                 <?php if ($directory == $code) { ?>
@@ -56,7 +56,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="input-status" class="form-label"><?php echo lang('Entry.status'); ?></label>
-                        <select name="status" id="input-status" class="form-control">
+                        <select name="status" id="input-status" class="form-select">
                             <?php if ($status) { ?>
                             <option value="0"><?php echo lang('Text.disabled'); ?></option>
                             <option value="1" selected="selected"><?php echo lang('Text.enabled'); ?></option>

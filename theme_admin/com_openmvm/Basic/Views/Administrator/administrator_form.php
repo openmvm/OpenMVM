@@ -33,7 +33,7 @@
                 <fieldset>
                     <div class="mb-3">
                         <label for="input-administrator-group" class="form-label"><?php echo lang('Entry.administrator_group'); ?></label>
-                        <select name="administrator_group_id" id="input-administrator-group" class="form-control">
+                        <select name="administrator_group_id" id="input-administrator-group" class="form-select">
                             <?php foreach ($administrator_groups as $administrator_group) { ?>
                                 <?php if ($administrator_group['administrator_group_id'] == $administrator_group_id) { ?>
                                 <option value="<?php echo $administrator_group['administrator_group_id']; ?>" selected="selected"><?php echo $administrator_group['name']; ?></option>
@@ -86,7 +86,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="input-status" class="form-label"><?php echo lang('Entry.status'); ?></label>
-                        <select name="status" id="input-status" class="form-control">
+                        <select name="status" id="input-status" class="form-select">
                             <?php if ($status) { ?>
                             <option value="0"><?php echo lang('Text.disabled'); ?></option>
                             <option value="1" selected="selected"><?php echo lang('Text.enabled'); ?></option>

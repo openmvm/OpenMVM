@@ -37,7 +37,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="input-status" class="form-label"><?php echo lang('Entry.status'); ?></label>
-                        <select name="component_order_total_sub_total_status" id="input-status" class="form-control">
+                        <select name="component_order_total_sub_total_status" id="input-status" class="form-select">
                             <?php if ($component_order_total_sub_total_status) { ?>
                             <option value="0"><?php echo lang('Text.disabled'); ?></option>
                             <option value="1" selected="selected"><?php echo lang('Text.enabled'); ?></option>

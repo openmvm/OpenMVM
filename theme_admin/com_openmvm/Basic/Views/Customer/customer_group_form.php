@@ -38,7 +38,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="input-email-verification" class="form-label"><?php echo lang('Entry.email_verification'); ?></label>
-                        <select name="email_verification" id="input-email-verification" class="form-control">
+                        <select name="email_verification" id="input-email-verification" class="form-select">
                             <?php if ($email_verification) { ?>
                             <option value="0"><?php echo lang('Text.no'); ?></option>
                             <option value="1" selected="selected"><?php echo lang('Text.yes'); ?></option>

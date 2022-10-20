@@ -47,7 +47,7 @@
                     </div>
                     <div class="mb-3 required">
                         <label for="input-geo-zone" class="form-label"><?php echo lang('Entry.geo_zone'); ?></label>
-                        <select name="component_payment_method_cash_on_delivery_geo_zone_id" class="form-control" id="input-geo-zone">
+                        <select name="component_payment_method_cash_on_delivery_geo_zone_id" class="form-select" id="input-geo-zone">
                             <?php foreach ($geo_zones as $geo_zone) { ?>
                                 <?php if ($geo_zone['geo_zone_id'] == $component_payment_method_cash_on_delivery_geo_zone_id) { ?>
                                 <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
@@ -59,7 +59,7 @@
                     </div>
                     <div class="mb-3 required">
                         <label for="input-order-status" class="form-label"><?php echo lang('Entry.order_status'); ?></label>
-                        <select name="component_payment_method_cash_on_delivery_order_status_id" class="form-control" id="input-order-status">
+                        <select name="component_payment_method_cash_on_delivery_order_status_id" class="form-select" id="input-order-status">
                             <?php foreach ($order_statuses as $order_status) { ?>
                                 <?php if ($order_status['order_status_id'] == $component_payment_method_cash_on_delivery_order_status_id) { ?>
                                 <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
@@ -75,7 +75,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="input-status" class="form-label"><?php echo lang('Entry.status'); ?></label>
-                        <select name="component_payment_method_cash_on_delivery_status" id="input-status" class="form-control">
+                        <select name="component_payment_method_cash_on_delivery_status" id="input-status" class="form-select">
                             <?php if ($component_payment_method_cash_on_delivery_status) { ?>
                             <option value="0"><?php echo lang('Text.disabled'); ?></option>
                             <option value="1" selected="selected"><?php echo lang('Text.enabled'); ?></option>

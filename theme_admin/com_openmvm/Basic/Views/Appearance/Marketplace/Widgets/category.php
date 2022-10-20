@@ -37,7 +37,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="input-display" class="form-label"><?php echo lang('Entry.display'); ?></label>
-                    <select name="display" id="input-display" class="form-control">
+                    <select name="display" id="input-display" class="form-select">
                         <?php if ($display == 'grid') { ?>
                         <option value="grid" selected="selected"><?php echo lang('Text.grid'); ?></option>
                         <?php } else { ?>
@@ -56,7 +56,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="input-status" class="form-label"><?php echo lang('Entry.status'); ?></label>
-                    <select name="status" id="input-status" class="form-control">
+                    <select name="status" id="input-status" class="form-select">
                         <?php if ($status) { ?>
                         <option value="0"><?php echo lang('Text.disabled'); ?></option>
                         <option value="1" selected="selected"><?php echo lang('Text.enabled'); ?></option>
@@ -92,7 +92,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="input-category-image-<?php echo $category_row; ?>" class="form-label"><?php echo lang('Entry.image'); ?></label>
-                                        <select name="category[<?php echo $category_row; ?>][image]" id="category-image-<?php echo $category_row; ?>" class="form-control">
+                                        <select name="category[<?php echo $category_row; ?>][image]" id="category-image-<?php echo $category_row; ?>" class="form-select">
                                             <?php if ($category['image']) { ?>
                                             <option value="1" selected="selected"><?php echo lang('Text.yes'); ?></option>
                                             <option value="0"><?php echo lang('Text.no'); ?></option>
@@ -113,7 +113,7 @@
                                     <h5 class="border-bottom pb-3 mb-3 mt-5"><?php echo lang('Text.sub_category'); ?></h5>
                                     <div class="mb-3">
                                         <label for="input-category-show-sub-categories-<?php echo $category_row; ?>" class="form-label"><?php echo lang('Entry.show'); ?></label>
-                                        <select name="category[<?php echo $category_row; ?>][show_sub_categories]" id="category-sub-category-show-<?php echo $category_row; ?>" class="form-control">
+                                        <select name="category[<?php echo $category_row; ?>][show_sub_categories]" id="category-sub-category-show-<?php echo $category_row; ?>" class="form-select">
                                             <?php if ($category['show_sub_categories']) { ?>
                                             <option value="1" selected="selected"><?php echo lang('Text.yes'); ?></option>
                                             <option value="0"><?php echo lang('Text.no'); ?></option>
@@ -129,7 +129,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="input-category-image-sub-categories-<?php echo $category_row; ?>" class="form-label"><?php echo lang('Entry.image'); ?></label>
-                                        <select name="category[<?php echo $category_row; ?>][image_sub_categories]" id="category-sub-category-image-<?php echo $category_row; ?>" class="form-control">
+                                        <select name="category[<?php echo $category_row; ?>][image_sub_categories]" id="category-sub-category-image-<?php echo $category_row; ?>" class="form-select">
                                             <?php if ($category['image_sub_categories']) { ?>
                                             <option value="1" selected="selected"><?php echo lang('Text.yes'); ?></option>
                                             <option value="0"><?php echo lang('Text.no'); ?></option>
@@ -164,7 +164,7 @@ $( "#button-category-add" ).on( "click", function() {
     html += '    </div>';
     html += '    <div class="mb-3">';
     html += '        <label for="input-category-image-' + category_row + '" class="form-label"><?php echo lang('Entry.image'); ?></label>';
-    html += '        <select name="category[' + category_row + '][image]" id="category-image-' + category_row + '" class="form-control">';
+    html += '        <select name="category[' + category_row + '][image]" id="category-image-' + category_row + '" class="form-select">';
     html += '            <option value="1"><?php echo lang('Text.yes'); ?></option>';
     html += '            <option value="0"><?php echo lang('Text.no'); ?></option>';
     html += '        </select>';
@@ -180,7 +180,7 @@ $( "#button-category-add" ).on( "click", function() {
     html += '    <h5 class="border-bottom pb-3 mb-3 mt-5"><?php echo lang('Text.sub_category'); ?></h5>';
     html += '    <div class="mb-3">';
     html += '        <label for="input-category-show-sub-categories-' + category_row + '" class="form-label"><?php echo lang('Entry.show'); ?></label>';
-    html += '        <select name="category[' + category_row + '][show_sub_categories]" id="category-sub-category-show-' + category_row + '" class="form-control">';
+    html += '        <select name="category[' + category_row + '][show_sub_categories]" id="category-sub-category-show-' + category_row + '" class="form-select">';
     html += '            <option value="1"><?php echo lang('Text.yes'); ?></option>';
     html += '            <option value="0"><?php echo lang('Text.no'); ?></option>';
     html += '        </select>';
@@ -191,7 +191,7 @@ $( "#button-category-add" ).on( "click", function() {
     html += '    </div>';
     html += '    <div class="mb-3">';
     html += '        <label for="input-category-image-sub-categories-' + category_row + '" class="form-label"><?php echo lang('Entry.image'); ?></label>';
-    html += '        <select name="category[' + category_row + '][image_sub_categories]" id="category-sub-category-image-' + category_row + '" class="form-control">';
+    html += '        <select name="category[' + category_row + '][image_sub_categories]" id="category-sub-category-image-' + category_row + '" class="form-select">';
     html += '            <option value="1"><?php echo lang('Text.yes'); ?></option>';
     html += '            <option value="0"><?php echo lang('Text.no'); ?></option>';
     html += '        </select>';

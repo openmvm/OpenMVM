@@ -57,7 +57,7 @@
                             <?php foreach ($zone_to_geo_zones as $zone_to_geo_zone) { ?>
                                 <tr id="zone-to-geo-zone-<?php echo $zone_to_geo_zone_row; ?>">
                                     <td>
-                                        <select name="zone_to_geo_zone[<?php echo $zone_to_geo_zone_row; ?>][country_id]" class="form-control" id="input-zone-to-geo-zone-country-<?php echo $zone_to_geo_zone_row; ?>" data-index="<?php echo $zone_to_geo_zone_row; ?>" data-zone-id="<?php echo $zone_to_geo_zone['zone_id']; ?>" disabled="disabled">
+                                        <select name="zone_to_geo_zone[<?php echo $zone_to_geo_zone_row; ?>][country_id]" class="form-select" id="input-zone-to-geo-zone-country-<?php echo $zone_to_geo_zone_row; ?>" data-index="<?php echo $zone_to_geo_zone_row; ?>" data-zone-id="<?php echo $zone_to_geo_zone['zone_id']; ?>" disabled="disabled">
                                             <?php foreach ($countries as $country) { ?>
                                                 <?php if ($country['country_id'] == $zone_to_geo_zone['country_id']) { ?>
                                                 <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
@@ -68,7 +68,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <select name="zone_to_geo_zone[<?php echo $zone_to_geo_zone_row; ?>][zone_id]" class="form-control" id="input-zone-to-geo-zone-zone-<?php echo $zone_to_geo_zone_row; ?>" disabled="disabled"><option value="0"><?php echo lang('Text.all_zones'); ?></option></select>
+                                        <select name="zone_to_geo_zone[<?php echo $zone_to_geo_zone_row; ?>][zone_id]" class="form-select" id="input-zone-to-geo-zone-zone-<?php echo $zone_to_geo_zone_row; ?>" disabled="disabled"><option value="0"><?php echo lang('Text.all_zones'); ?></option></select>
                                     </td>
                                     <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle" onclick="$('#zone-to-geo-zone-<?php echo $zone_to_geo_zone_row; ?>').remove();"></i></button></td>
                                 </tr>
@@ -95,13 +95,13 @@ var zone_to_geo_zone_row = '<?php echo $zone_to_geo_zone_row; ?>';
 $( "#button-add" ).on( "click", function() {
     html = '<tr id="zone-to-geo-zone-' + zone_to_geo_zone_row + '">';
     html += '    <td>';
-    html += '        <select name="zone_to_geo_zone[' + zone_to_geo_zone_row + '][country_id]" class="form-control" id="input-zone-to-geo-zone-country-' + zone_to_geo_zone_row + '" data-index="' + zone_to_geo_zone_row + '">';
+    html += '        <select name="zone_to_geo_zone[' + zone_to_geo_zone_row + '][country_id]" class="form-select" id="input-zone-to-geo-zone-country-' + zone_to_geo_zone_row + '" data-index="' + zone_to_geo_zone_row + '">';
     <?php foreach ($countries as $country) { ?>
     html += '            <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>';
     <?php } ?>
     html += '        </select>';
     html += '    </td>';
-    html += '    <td><select name="zone_to_geo_zone[' + zone_to_geo_zone_row + '][zone_id]" class="form-control" id="input-zone-to-geo-zone-zone-' + zone_to_geo_zone_row + '"><option value="0"><?php echo lang('Text.all_zones'); ?></option></select></td>';
+    html += '    <td><select name="zone_to_geo_zone[' + zone_to_geo_zone_row + '][zone_id]" class="form-select" id="input-zone-to-geo-zone-zone-' + zone_to_geo_zone_row + '"><option value="0"><?php echo lang('Text.all_zones'); ?></option></select></td>';
     html += '    <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle" onclick="$(\'#zone-to-geo-zone-' + zone_to_geo_zone_row + '\').remove();"></i></button></td>';
     html += '</tr>';
 

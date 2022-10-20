@@ -39,7 +39,7 @@
                     </div>
                     <div class="mb-3 required">
                         <label for="input-geo-zone" class="form-label"><?php echo lang('Entry.geo_zone'); ?></label>
-                        <select name="component_shipping_method_flat_rate_geo_zone_id" class="form-control" id="input-geo-zone">
+                        <select name="component_shipping_method_flat_rate_geo_zone_id" class="form-select" id="input-geo-zone">
                             <?php foreach ($geo_zones as $geo_zone) { ?>
                                 <?php if ($geo_zone['geo_zone_id'] == $component_shipping_method_flat_rate_geo_zone_id) { ?>
                                 <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
@@ -55,7 +55,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="input-status" class="form-label"><?php echo lang('Entry.status'); ?></label>
-                        <select name="component_shipping_method_flat_rate_status" id="input-status" class="form-control">
+                        <select name="component_shipping_method_flat_rate_status" id="input-status" class="form-select">
                             <?php if ($component_shipping_method_flat_rate_status) { ?>
                             <option value="0"><?php echo lang('Text.disabled'); ?></option>
                             <option value="1" selected="selected"><?php echo lang('Text.enabled'); ?></option>

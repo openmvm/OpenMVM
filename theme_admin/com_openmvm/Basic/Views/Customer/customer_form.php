@@ -62,7 +62,7 @@
                                         <fieldset>
                                             <div class="mb-3 required">
                                                 <label for="input-customer-group" class="form-label"><?php echo lang('Entry.customer_group'); ?></label>
-                                                <select name="customer_group_id" id="input-customer-group" class="form-control">
+                                                <select name="customer_group_id" id="input-customer-group" class="form-select">
                                                     <?php foreach ($customer_groups as $customer_group) { ?>
                                                         <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
                                                         <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
@@ -109,7 +109,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label for="input-status" class="form-label"><?php echo lang('Entry.status'); ?></label>
-                                                <select name="status" id="input-status" class="form-control">
+                                                <select name="status" id="input-status" class="form-select">
                                                     <?php if ($status) { ?>
                                                     <option value="0"><?php echo lang('Text.disabled'); ?></option>
                                                     <option value="1" selected="selected"><?php echo lang('Text.enabled'); ?></option>
@@ -152,7 +152,7 @@
                                             </div>
                                             <div class="mb-3 required">
                                                 <label for="input-country-<?php echo $customer_address_row; ?>" class="form-label"><?php echo lang('Entry.country'); ?></label>
-                                                <select name="customer_address[<?php echo $customer_address_row; ?>][country_id]" id="input-country-<?php echo $customer_address_row; ?>" class="form-control" onchange="country(this, '<?php echo $customer_address_row; ?>', '<?php echo $customer_address['zone_id']; ?>');">
+                                                <select name="customer_address[<?php echo $customer_address_row; ?>][country_id]" id="input-country-<?php echo $customer_address_row; ?>" class="form-select" onchange="country(this, '<?php echo $customer_address_row; ?>', '<?php echo $customer_address['zone_id']; ?>');">
                                                 <?php foreach ($countries as $country) { ?>
                                                     <?php if ($country['country_id'] == $customer_address['country_id']) { ?>
                                                     <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
@@ -165,7 +165,7 @@
                                             </div>
                                             <div class="mb-3 required">
                                                 <label for="input-zone-<?php echo $customer_address_row; ?>" class="form-label"><?php echo lang('Entry.zone'); ?></label>
-                                                <select name="customer_address[<?php echo $customer_address_row; ?>][zone_id]" id="input-zone-<?php echo $customer_address_row; ?>" class="form-control"></select>
+                                                <select name="customer_address[<?php echo $customer_address_row; ?>][zone_id]" id="input-zone-<?php echo $customer_address_row; ?>" class="form-select"></select>
                                                 <?php if (!empty(${'error_customer_address_' . $customer_address_row . '_zone_id'})) { ?><div class="text-danger small"><?php echo ${'error_customer_address_' . $customer_address_row . '_zone_id'}; ?></div><?php } ?>
                                             </div>
                                             <div class="mb-3 required">
@@ -218,7 +218,7 @@ function addAddress() {
     html += '    </div>';
     html += '    <div class="mb-3 required">';
     html += '        <label for="input-country-' + customer_address_row + '" class="form-label"><?php echo lang('Entry.country'); ?></label>';
-    html += '        <select name="customer_address[' + customer_address_row + '][country_id]" id="input-country-' + customer_address_row + '" class="form-control" onchange="country(this, \'' + customer_address_row + '\', \'0\');">';
+    html += '        <select name="customer_address[' + customer_address_row + '][country_id]" id="input-country-' + customer_address_row + '" class="form-select" onchange="country(this, \'' + customer_address_row + '\', \'0\');">';
     <?php foreach ($countries as $country) { ?>
     html += '            <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>';
     <?php } ?>
@@ -226,7 +226,7 @@ function addAddress() {
     html += '    </div>';
     html += '    <div class="mb-3 required">';
     html += '        <label for="input-zone-' + customer_address_row + '" class="form-label"><?php echo lang('Entry.zone'); ?></label>';
-    html += '        <select name="customer_address[' + customer_address_row + '][zone_id]" id="input-zone-' + customer_address_row + '" class="form-control">';
+    html += '        <select name="customer_address[' + customer_address_row + '][zone_id]" id="input-zone-' + customer_address_row + '" class="form-select">';
     html += '        </select>';
     html += '    </div>';
     html += '    <div class="mb-3 required">';
