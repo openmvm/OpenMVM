@@ -142,6 +142,7 @@ return [
     'plugin_widgets' => 'Plugin Widgets',
     'plugins' => 'Plugins',
     'price' => 'Price',
+    'product' => 'Product',
     'product_description' => 'Product Description',
     'product_details' => 'Product Details',
     'products' => 'Products',
