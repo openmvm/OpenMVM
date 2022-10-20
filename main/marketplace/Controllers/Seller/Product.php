@@ -136,6 +136,9 @@ class Product extends \App\Controllers\BaseController
 
         //$data['product_variants'] = file_get_contents($this->url->customerLink('marketplace/seller/product/get_product_variants', '', true));
 
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Header
         $header_params = array(
             'title' => lang('Heading.products', [], $this->language->getCurrentCode()),
@@ -368,6 +371,9 @@ class Product extends \App\Controllers\BaseController
         $data['product_variant'] = $this->url->customerLink('marketplace/seller/product/get_product_variants', ['product_id' => $product_id], true);
         $data['set_product_options'] = $this->url->customerLink('marketplace/seller/product/set_product_options', '', true);
 
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Header
         $scripts = [
             '<script src="' . base_url() . '/assets/plugins/tinymce_6.2.0/js/tinymce/tinymce.min.js" type="text/javascript"></script>',
@@ -541,6 +547,9 @@ class Product extends \App\Controllers\BaseController
         } else {
             $data['default_currency'] = [];
         }
+
+        // Libraries
+        $data['language_lib'] = $this->language;
 
         // Generate view
         $template_setting = [

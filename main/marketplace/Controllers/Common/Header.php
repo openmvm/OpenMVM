@@ -10,8 +10,9 @@ class Header extends \App\Controllers\BaseController
     public function __construct()
     {
         // Library
-        $this->customer= new \App\Libraries\Customer();
-        $this->image= new \App\Libraries\Image();
+        $this->customer = new \App\Libraries\Customer();
+        $this->image = new \App\Libraries\Image();
+        $this->language = new \App\Libraries\Language();
         $this->request = \Config\Services::request();
         $this->session = \Config\Services::session();
         $this->setting = new \App\Libraries\Setting();
@@ -178,6 +179,9 @@ class Header extends \App\Controllers\BaseController
         // Offcanvas Right
         $offcanvas_right_params = array();
         $data['offcanvas_right'] = $this->marketplace_offcanvas_right->index($offcanvas_right_params);
+
+        // Libraries
+        $data['language_lib'] = $this->language;
 
         // Generate view
         $template_setting = [

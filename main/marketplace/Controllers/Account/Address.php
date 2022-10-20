@@ -129,6 +129,9 @@ class Address extends \App\Controllers\BaseController
         $data['add'] = $this->url->customerLink('marketplace/account/address/add', '', true);
         $data['cancel'] = $this->url->customerLink('marketplace/account/address', '', true);
 
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Header
         $header_params = array(
             'title' => lang('Heading.my_address_book', [], $this->language->getCurrentCode()),
@@ -243,6 +246,9 @@ class Address extends \App\Controllers\BaseController
         $data['validation'] = $this->validation;
 
         $data['cancel'] = $this->url->customerLink('marketplace/account/address', '', true);
+
+        // Libraries
+        $data['language_lib'] = $this->language;
 
         // Header
         $header_params = array(

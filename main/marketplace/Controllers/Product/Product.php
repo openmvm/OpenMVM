@@ -44,6 +44,9 @@ class Product extends \App\Controllers\BaseController
             ];
         }
 
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Header
         $header_params = array(
             'title' => lang('Heading.products', [], $this->language->getCurrentCode()),
@@ -243,6 +246,9 @@ class Product extends \App\Controllers\BaseController
 
             $data['get_product_variant'] = $this->url->customerLink('marketplace/product/product/get_product_variant/');          
 
+            // Libraries
+            $data['language_lib'] = $this->language;
+
             // Header
             $scripts = [
                 '<script src="' . base_url() . '/assets/plugins/swiper-8.4.3/swiper-bundle.min.js" type="text/javascript"></script>',
@@ -273,7 +279,10 @@ class Product extends \App\Controllers\BaseController
             return $this->template->render($template_setting, $data);
         } else {
             $data['message'] = lang('Error.no_data_found', [], $this->language->getCurrentCode());
-    
+        
+            // Libraries
+            $data['language_lib'] = $this->language;
+
             // Header
             $header_params = array(
                 'title' => lang('Heading.not_found', [], $this->language->getCurrentCode()),
@@ -381,17 +390,17 @@ class Product extends \App\Controllers\BaseController
         if ($is_wishlist) {
             $json['is_wishlist'] = true;
 
-            $json['success'] = lang('Success.add_to_wishlist');
+            $json['success'] = lang('Success.add_to_wishlist', [], $this->language->getCurrentCode());
 
             if ($this->customer->getId()) {
                 $json['additional_message'] = '';
             } else {
-                $json['additional_message'] = lang('Text.login_wishlist');
+                $json['additional_message'] = lang('Text.login_wishlist', [], $this->language->getCurrentCode());
             }
         } else {
             $json['is_wishlist'] = false;
 
-            $json['success'] = lang('Success.remove_from_wishlist');
+            $json['success'] = lang('Success.remove_from_wishlist', [], $this->language->getCurrentCode());
             $json['additional_message'] = '';
         }
 

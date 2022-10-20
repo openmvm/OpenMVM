@@ -44,5 +44,5 @@
     }); 
     //--></script> 
 <?php } else { ?>
-<div class="alert alert-warning" role="alert"><?php echo lang('Error.payment_method_not_available'); ?></div>
+<div class="alert alert-warning" role="alert"><?php echo lang('Error.payment_method_not_available', [], $language_lib->getCurrentCode()); ?></div>
 <?php } ?>

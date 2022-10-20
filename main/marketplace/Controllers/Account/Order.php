@@ -165,7 +165,8 @@ class Order extends \App\Controllers\BaseController
 
         $data['cancel'] = $this->url->customerLink('marketplace/account/account', '', true);
 
-        $data['language'] = $this->language;
+        // Libraries
+        $data['language_lib'] = $this->language;
 
         // Header
         $header_params = array(
@@ -503,6 +504,9 @@ class Order extends \App\Controllers\BaseController
             $data['completed_order_status_id'] = $this->setting->get('setting_completed_order_status_id');
 
             $data['update_order_status'] = $this->url->customerLink('marketplace/account/order/update_order_status', '', true);
+
+            // Libraries
+            $data['language_lib'] = $this->language;
 
             // Header
             $header_params = array(

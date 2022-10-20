@@ -3,16 +3,16 @@
     <div id="content" class="content">
         <h1 class="border-bottom pb-3 mb-3"><?php echo $heading_title; ?></h1>
         <div class="clearfix mb-3">
-            <div class="float-start"><a href="<?php echo $cancel; ?>" class="btn btn-outline-secondary btn-sm"><i class="fas fa-long-arrow-alt-left fa-fw"></i> <?php echo lang('Button.cancel'); ?></a></div>
+            <div class="float-start"><a href="<?php echo $cancel; ?>" class="btn btn-outline-secondary btn-sm"><i class="fas fa-long-arrow-alt-left fa-fw"></i> <?php echo lang('Button.cancel', [], $language_lib->getCurrentCode()); ?></a></div>
         </div>
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th scope="col"><?php echo lang('Column.data'); ?></th>
-                        <th scope="col"><?php echo lang('Column.products'); ?></th>
-                        <th scope="col"><?php echo lang('Column.total'); ?></th>
-                        <th scope="col" class="text-end"><?php echo lang('Column.action'); ?></th>
+                        <th scope="col"><?php echo lang('Column.data', [], $language_lib->getCurrentCode()); ?></th>
+                        <th scope="col"><?php echo lang('Column.products', [], $language_lib->getCurrentCode()); ?></th>
+                        <th scope="col"><?php echo lang('Column.total', [], $language_lib->getCurrentCode()); ?></th>
+                        <th scope="col" class="text-end"><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,15 +23,15 @@
                                 <table class="mb-3">
                                     <tbody>
                                         <tr>
-                                            <td><strong><?php echo lang('Text.date_added'); ?></strong></td>
+                                            <td><strong><?php echo lang('Text.date_added', [], $language_lib->getCurrentCode()); ?></strong></td>
                                             <td><strong>:</strong> <?php echo $order['date_added']; ?></td>
                                         </tr>
                                         <tr>
-                                            <td><strong><?php echo lang('Text.order_id'); ?></strong></td>
+                                            <td><strong><?php echo lang('Text.order_id', [], $language_lib->getCurrentCode()); ?></strong></td>
                                             <td><strong>:</strong> <?php echo $order['order_id']; ?></td>
                                         </tr>
                                         <tr>
-                                            <td><strong><?php echo lang('Text.invoice'); ?></strong></td>
+                                            <td><strong><?php echo lang('Text.invoice', [], $language_lib->getCurrentCode()); ?></strong></td>
                                             <td><strong>:</strong> <?php echo $order['invoice']; ?></td>
                                         </tr>
                                     </tbody>
@@ -40,7 +40,7 @@
                                 <table class="mb-3">
                                     <thead>
                                         <tr>
-                                            <td colspan="2"><strong><?php echo lang('Column.order_status'); ?></strong></td>
+                                            <td colspan="2"><strong><?php echo lang('Column.order_status', [], $language_lib->getCurrentCode()); ?></strong></td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -57,14 +57,14 @@
                                 <table class="mb-3">
                                     <thead>
                                         <tr>
-                                            <td colspan="2"><strong><?php echo lang('Column.tracking_number'); ?></strong></td>
+                                            <td colspan="2"><strong><?php echo lang('Column.tracking_number', [], $language_lib->getCurrentCode()); ?></strong></td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php foreach ($order['seller'] as $seller) { ?>
                                         <tr>
                                             <td>- <?php echo $seller['store_name']; ?></td>
-                                            <td>: <?php if (!empty($seller['tracking_number'])) { ?><strong><?php echo $seller['tracking_number']; ?></strong><?php } else { ?><em><?php echo lang('Text.no_tracking_number'); ?></em><?php } ?></td>
+                                            <td>: <?php if (!empty($seller['tracking_number'])) { ?><strong><?php echo $seller['tracking_number']; ?></strong><?php } else { ?><em><?php echo lang('Text.no_tracking_number', [], $language_lib->getCurrentCode()); ?></em><?php } ?></td>
                                         </tr>
                                         <?php } ?>
                                     </tbody>
@@ -85,9 +85,9 @@
                                                         <div><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a> X <?php echo $product['quantity']; ?></div>
                                                         <?php if (!empty($product['option'])) { ?>
                                                         <div class="small">
-                                                            <div><?php echo lang('Text.options'); ?>:</div>
+                                                            <div><?php echo lang('Text.options', [], $language_lib->getCurrentCode()); ?>:</div>
                                                             <?php foreach ($product['option'] as $option) { ?>
-                                                            <div>- <?php echo $option['description'][$language->getCurrentId()]['name']; ?>: <?php echo $option['option_value']['description'][$language->getCurrentId()]['name']; ?></div>
+                                                            <div>- <?php echo $option['description'][$language_lib->getCurrentId()]['name']; ?>: <?php echo $option['option_value']['description'][$language_lib->getCurrentId()]['name']; ?></div>
                                                             <?php } ?>
                                                         </div>
                                                         <?php } ?>
@@ -106,7 +106,7 @@
                         <?php } ?>
                     <?php } else { ?>
                     <tr>
-                        <td colspan="4" class="text-center"><?php echo lang('Error.no_data_found'); ?></td>
+                        <td colspan="4" class="text-center"><?php echo lang('Error.no_data_found', [], $language_lib->getCurrentCode()); ?></td>
                     </tr>
                     <?php } ?>
                 </tbody>

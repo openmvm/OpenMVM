@@ -95,6 +95,9 @@ class Option extends \App\Controllers\BaseController
         $data['add'] = $this->url->customerLink('marketplace/seller/option/add', '', true);
         $data['cancel'] = $this->url->customerLink('marketplace/seller/dashboard', '', true);
 
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Header
         $header_params = array(
             'title' => lang('Heading.options', [], $this->language->getCurrentCode()),
@@ -184,6 +187,9 @@ class Option extends \App\Controllers\BaseController
         $data['languages'] = $this->model_localisation_language->getLanguages();
 
         $data['cancel'] = $this->url->customerLink('marketplace/seller/option', '', true);
+
+        // Libraries
+        $data['language_lib'] = $this->language;
 
         // Header
         $header_params = array(

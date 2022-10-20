@@ -130,6 +130,9 @@ class Geo_Zone extends \App\Controllers\BaseController
 
         $data['add'] = $this->url->customerLink('marketplace/seller/localisation/geo_zone/add', '', true);
         $data['cancel'] = $this->url->customerLink('marketplace/seller/dashboard', '', true);
+
+        // Libraries
+        $data['language_lib'] = $this->language;
 	
         // Header
         $header_params = array(
@@ -217,6 +220,9 @@ class Geo_Zone extends \App\Controllers\BaseController
         $data['validation'] = $this->validation;
         
         $data['cancel'] = $this->url->customerLink('marketplace/seller/localisation/geo_zone', '', true);
+
+        // Libraries
+        $data['language_lib'] = $this->language;
 
         // Header
         $header_params = array(

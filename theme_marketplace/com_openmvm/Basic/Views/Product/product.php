@@ -50,7 +50,7 @@
                                 <div class="mb-3">
                                     <h3><?php echo $heading_title; ?></h3>
                                     <div>
-                                        <button type="button" class="btn btn-outline-secondary btn-sm" id="button-favorite"><i class="fas fa-heart<?php if ($is_wishlist) { ?> text-danger<?php } ?> me-2"></i><?php echo lang('Button.favorite', [], 'en'); ?></button>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm" id="button-favorite"><i class="fas fa-heart<?php if ($is_wishlist) { ?> text-danger<?php } ?> me-2"></i><?php echo lang('Button.favorite', [], $language_lib->getCurrentCode()); ?></button>
                                     </div>
                                 </div>
                                 <div id="price" class="text-danger bg-light fs-1 px-3 mb-3">
@@ -84,10 +84,10 @@
                                     <input type="number" min="1" name="quantity" value="1" class="form-control" id="input-quantity" placeholder="Quantity" aria-label="Quantity" aria-describedby="input-quantity">
                                     <button class="btn btn-outline-secondary" type="button" id="button-quantity-plus"><i class="fas fa-plus fa-fw"></i></button>
                                 </div>
-                                <div class="mb-3"><?php echo lang('Text.stock', [], 'en'); ?>: <strong id="product-quantity"><?php if ($is_product_option) { ?>-<?php } else { ?><?php echo $quantity; ?><?php } ?></strong></div>
+                                <div class="mb-3"><?php echo lang('Text.stock', [], $language_lib->getCurrentCode()); ?>: <strong id="product-quantity"><?php if ($is_product_option) { ?>-<?php } else { ?><?php echo $quantity; ?><?php } ?></strong></div>
                                 <div class="buttons">
-                                    <div id="product-variant-error-message" class="text-danger<?php if (!$is_product_option) { ?> d-none<?php } ?>"><?php echo lang('Error.select_product_options', [], 'en'); ?></div>
-                                    <button type="button" class="btn btn-primary<?php if ($is_product_option) { ?> d-none<?php } ?>" id="button-cart"><i class="fas fa-cart-plus fa-fw"></i> <?php echo lang('Button.add_to_cart'); ?></button>
+                                    <div id="product-variant-error-message" class="text-danger<?php if (!$is_product_option) { ?> d-none<?php } ?>"><?php echo lang('Error.select_product_options', [], $language_lib->getCurrentCode()); ?></div>
+                                    <button type="button" class="btn btn-primary<?php if ($is_product_option) { ?> d-none<?php } ?>" id="button-cart"><i class="fas fa-cart-plus fa-fw"></i> <?php echo lang('Button.add_to_cart', [], $language_lib->getCurrentCode()); ?></button>
                                 </div>
                             </div>
                         </div>
@@ -105,7 +105,7 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <div>
-                        <h5 class="mb-4"><?php echo lang('Text.product_description'); ?></h5>
+                        <h5 class="mb-4"><?php echo lang('Text.product_description', [], $language_lib->getCurrentCode()); ?></h5>
                         <div><?php echo $description; ?></div>
                     </div>
                 </div>
@@ -178,8 +178,8 @@ $( "#button-cart" ).on( "click", function() {
                 html += '    <div id="liveToast" class="toast bg-danger" role="alert" aria-live="assertive" aria-atomic="true">';
                 html += '        <div class="toast-header">';
                 html += '            <i class="fas fa-times-circle text-danger me-1"></i>';
-                html += '            <strong class="text-danger me-auto"><?php echo lang('Text.error'); ?></strong>';
-                html += '            <small><?php echo lang('Text.add_to_cart'); ?></small>';
+                html += '            <strong class="text-danger me-auto"><?php echo lang('Text.error', [], $language_lib->getCurrentCode()); ?></strong>';
+                html += '            <small><?php echo lang('Text.add_to_cart', [], $language_lib->getCurrentCode()); ?></small>';
                 html += '            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>';
                 html += '        </div>';
                 html += '        <div class="toast-body text-light">';
@@ -202,8 +202,8 @@ $( "#button-cart" ).on( "click", function() {
                 html += '    <div id="liveToast" class="toast bg-success" role="alert" aria-live="assertive" aria-atomic="true">';
                 html += '        <div class="toast-header">';
                 html += '            <i class="fas fa-check-circle text-success me-1"></i>';
-                html += '            <strong class="text-success me-auto"><?php echo lang('Text.success'); ?></strong>';
-                html += '            <small><?php echo lang('Text.add_to_cart'); ?></small>';
+                html += '            <strong class="text-success me-auto"><?php echo lang('Text.success', [], $language_lib->getCurrentCode()); ?></strong>';
+                html += '            <small><?php echo lang('Text.add_to_cart', [], $language_lib->getCurrentCode()); ?></small>';
                 html += '            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>';
                 html += '        </div>';
                 html += '        <div class="toast-body text-light">';
@@ -309,8 +309,8 @@ $( "#button-favorite" ).on( "click", function() {
             html += '    <div id="liveToast" class="toast bg-success" role="alert" aria-live="assertive" aria-atomic="true">';
             html += '        <div class="toast-header">';
             html += '            <i class="fas fa-times-circle text-success me-1"></i>';
-            html += '            <strong class="text-success me-auto"><?php echo lang('Text.success'); ?></strong>';
-            html += '            <small><?php echo lang('Text.add_to_wishlist'); ?></small>';
+            html += '            <strong class="text-success me-auto"><?php echo lang('Text.success', [], $language_lib->getCurrentCode()); ?></strong>';
+            html += '            <small><?php echo lang('Text.add_to_wishlist', [], $language_lib->getCurrentCode()); ?></small>';
             html += '            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>';
             html += '        </div>';
             html += '        <div class="toast-body text-light">';

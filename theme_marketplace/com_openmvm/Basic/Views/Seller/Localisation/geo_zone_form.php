@@ -8,24 +8,24 @@
             <div class="card-body">
                 <fieldset>
                     <div class="mb-3 required">
-                        <label for="input-name" class="form-label"><?php echo lang('Entry.name'); ?></label>
-                        <input type="text" name="name" value="<?php echo $name; ?>" id="input-name" class="form-control" placeholder="<?php echo lang('Entry.name'); ?>">
+                        <label for="input-name" class="form-label"><?php echo lang('Entry.name', [], $language_lib->getCurrentCode()); ?></label>
+                        <input type="text" name="name" value="<?php echo $name; ?>" id="input-name" class="form-control" placeholder="<?php echo lang('Entry.name', [], $language_lib->getCurrentCode()); ?>">
                         <?php if (!empty($error_name)) { ?><div class="text-danger small"><?php echo $error_name; ?></div><?php } ?>
                     </div>
                     <div class="mb-3 required">
-                        <label for="input-description" class="form-label"><?php echo lang('Entry.description'); ?></label>
-                        <textarea rows="5" name="description" id="input-description" class="form-control" placeholder="<?php echo lang('Entry.description'); ?>"><?php echo $description; ?></textarea>
+                        <label for="input-description" class="form-label"><?php echo lang('Entry.description', [], $language_lib->getCurrentCode()); ?></label>
+                        <textarea rows="5" name="description" id="input-description" class="form-control" placeholder="<?php echo lang('Entry.description', [], $language_lib->getCurrentCode()); ?>"><?php echo $description; ?></textarea>
                     </div>
                 </fieldset>
                 <fieldset>
-                    <legend><?php echo lang('Text.geo_zones'); ?></legend>
+                    <legend><?php echo lang('Text.geo_zones', [], $language_lib->getCurrentCode()); ?></legend>
                     <div id="zone-to-geo-zones" class="table-responsive">
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col"><?php echo lang('Column.country'); ?></th>
-                                    <th scope="col"><?php echo lang('Column.zone'); ?></th>
-                                    <th scope="col" class="text-end"><?php echo lang('Column.action'); ?></th>
+                                    <th scope="col"><?php echo lang('Column.country', [], $language_lib->getCurrentCode()); ?></th>
+                                    <th scope="col"><?php echo lang('Column.zone', [], $language_lib->getCurrentCode()); ?></th>
+                                    <th scope="col" class="text-end"><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -33,7 +33,7 @@
                             <?php foreach ($seller_zone_to_geo_zones as $seller_zone_to_geo_zone) { ?>
                                 <tr id="zone-to-geo-zone-<?php echo $seller_zone_to_geo_zone_row; ?>">
                                     <td>
-                                        <select name="seller_zone_to_geo_zone[<?php echo $seller_zone_to_geo_zone_row; ?>][country_id]" class="form-control" id="input-zone-to-geo-zone-country-<?php echo $seller_zone_to_geo_zone_row; ?>" data-index="<?php echo $seller_zone_to_geo_zone_row; ?>" data-zone-id="<?php echo $seller_zone_to_geo_zone['zone_id']; ?>" disabled="disabled">
+                                        <select name="seller_zone_to_geo_zone[<?php echo $seller_zone_to_geo_zone_row; ?>][country_id]" class="form-select" id="input-zone-to-geo-zone-country-<?php echo $seller_zone_to_geo_zone_row; ?>" data-index="<?php echo $seller_zone_to_geo_zone_row; ?>" data-zone-id="<?php echo $seller_zone_to_geo_zone['zone_id']; ?>" disabled="disabled">
                                             <?php foreach ($countries as $country) { ?>
                                                 <?php if ($country['country_id'] == $seller_zone_to_geo_zone['country_id']) { ?>
                                                 <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
@@ -44,7 +44,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <select name="seller_zone_to_geo_zone[<?php echo $seller_zone_to_geo_zone_row; ?>][zone_id]" class="form-control" id="input-zone-to-geo-zone-zone-<?php echo $seller_zone_to_geo_zone_row; ?>" disabled="disabled"><option value="0"><?php echo lang('Text.all_zones'); ?></option></select>
+                                        <select name="seller_zone_to_geo_zone[<?php echo $seller_zone_to_geo_zone_row; ?>][zone_id]" class="form-select" id="input-zone-to-geo-zone-zone-<?php echo $seller_zone_to_geo_zone_row; ?>" disabled="disabled"><option value="0"><?php echo lang('Text.all_zones', [], $language_lib->getCurrentCode()); ?></option></select>
                                     </td>
                                     <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle" onclick="$('#zone-to-geo-zone-<?php echo $seller_zone_to_geo_zone_row; ?>').remove();"></i></button></td>
                                 </tr>
@@ -54,7 +54,7 @@
                             <tfoot>
                                 <tr>
                                     <td colspan="2"></td>
-                                    <td class="text-end"><button type="button" id="button-add" class="btn btn-primary"><i class="fas fa-plus-circle"></i> <?php echo lang('Button.add'); ?></button></td>
+                                    <td class="text-end"><button type="button" id="button-add" class="btn btn-primary"><i class="fas fa-plus-circle"></i> <?php echo lang('Button.add', [], $language_lib->getCurrentCode()); ?></button></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -71,13 +71,13 @@ var seller_zone_to_geo_zone_row = '<?php echo $seller_zone_to_geo_zone_row; ?>';
 $( "#button-add" ).on( "click", function() {
     html = '<tr id="zone-to-geo-zone-' + seller_zone_to_geo_zone_row + '">';
     html += '    <td>';
-    html += '        <select name="seller_zone_to_geo_zone[' + seller_zone_to_geo_zone_row + '][country_id]" class="form-control" id="input-zone-to-geo-zone-country-' + seller_zone_to_geo_zone_row + '" data-index="' + seller_zone_to_geo_zone_row + '">';
+    html += '        <select name="seller_zone_to_geo_zone[' + seller_zone_to_geo_zone_row + '][country_id]" class="form-select" id="input-zone-to-geo-zone-country-' + seller_zone_to_geo_zone_row + '" data-index="' + seller_zone_to_geo_zone_row + '">';
     <?php foreach ($countries as $country) { ?>
     html += '            <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>';
     <?php } ?>
     html += '        </select>';
     html += '    </td>';
-    html += '    <td><select name="seller_zone_to_geo_zone[' + seller_zone_to_geo_zone_row + '][zone_id]" class="form-control" id="input-zone-to-geo-zone-zone-' + seller_zone_to_geo_zone_row + '"><option value="0"><?php echo lang('Text.all_zones'); ?></option></select></td>';
+    html += '    <td><select name="seller_zone_to_geo_zone[' + seller_zone_to_geo_zone_row + '][zone_id]" class="form-select" id="input-zone-to-geo-zone-zone-' + seller_zone_to_geo_zone_row + '"><option value="0"><?php echo lang('Text.all_zones', [], $language_lib->getCurrentCode()); ?></option></select></td>';
     html += '    <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-minus-circle" onclick="$(\'#zone-to-geo-zone-' + seller_zone_to_geo_zone_row + '\').remove();"></i></button></td>';
     html += '</tr>';
 
@@ -104,7 +104,7 @@ $('#zone-to-geo-zones').on('change', 'select[name$=\'[country_id]\']', function(
                 //$('button[form=\'form-geo-zone\']').prop('disabled', false);
             },
             success: function(json) {
-                html = '<option value="0"><?php echo lang('Text.all_zones'); ?></option>';
+                html = '<option value="0"><?php echo lang('Text.all_zones', [], $language_lib->getCurrentCode()); ?></option>';
                 
                 if (json['zones'] && json['zones'] != '') { 
                     for (i = 0; i < json['zones'].length; i++) {

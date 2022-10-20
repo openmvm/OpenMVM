@@ -70,6 +70,9 @@ class Offcanvas_Left extends \App\Controllers\BaseController
             ];
         }
 
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Generate view
         $template_setting = [
             'location' => 'ThemeMarketplace',

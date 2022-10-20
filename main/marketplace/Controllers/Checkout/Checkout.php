@@ -54,6 +54,9 @@ class Checkout extends \App\Controllers\BaseController
             $data['checkout_confirm'] = $this->url->customerLink('marketplace/checkout/checkout/confirm', '', true);
         }
 
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Header
         $header_params = array(
             'title' => lang('Heading.checkout', [], $this->language->getCurrentCode()),
@@ -251,6 +254,9 @@ class Checkout extends \App\Controllers\BaseController
 
             $data['countries'] = $this->model_localisation_country->getCountries();
 
+            // Libraries
+            $data['language_lib'] = $this->language;
+
             // Generate view
             $template_setting = [
                 'location' => 'ThemeMarketplace',
@@ -374,6 +380,9 @@ class Checkout extends \App\Controllers\BaseController
             }
 
             $data['countries'] = $this->model_localisation_country->getCountries();
+
+            // Libraries
+            $data['language_lib'] = $this->language;
 
             // Generate view
             $template_setting = [
@@ -534,6 +543,9 @@ class Checkout extends \App\Controllers\BaseController
                 $data['checkout_confirm'] = $this->url->customerLink('marketplace/checkout/checkout/confirm', '', true);
             }
 
+            // Libraries
+            $data['language_lib'] = $this->language;
+
             // Generate view
             $template_setting = [
                 'location' => 'ThemeMarketplace',
@@ -648,6 +660,9 @@ class Checkout extends \App\Controllers\BaseController
                 // Checkout confirm
                 $data['checkout_confirm'] = $this->url->customerLink('marketplace/checkout/checkout/confirm', '', true);
             }
+
+            // Libraries
+            $data['language_lib'] = $this->language;
 
             // Generate view
             $template_setting = [
@@ -911,7 +926,8 @@ class Checkout extends \App\Controllers\BaseController
                 $data['checkout_confirm'] = $this->url->customerLink('marketplace/checkout/checkout/confirm', '', true);
             }
 
-            $data['language'] = $this->language;
+            // Libraries
+            $data['language_lib'] = $this->language;
 
             // Generate view
             $template_setting = [
@@ -1142,6 +1158,9 @@ class Checkout extends \App\Controllers\BaseController
                 $data['message'] = sprintf(lang('Text.checkout_selected_payment_method', [], $this->language->getCurrentCode()), lang('Text.' . strtolower($checkout_payment_method_code), [], $this->language->getCurrentCode()));
 
             }
+
+            // Libraries
+            $data['language_lib'] = $this->language;
 
             // Generate view
             $template_setting = [

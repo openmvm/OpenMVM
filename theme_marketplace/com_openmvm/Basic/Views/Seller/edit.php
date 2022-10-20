@@ -5,27 +5,27 @@
         <?php echo form_open($action, ['id' => 'form-seller']); ?>
         <fieldset>
             <div class="mb-3 required">
-                <label for="input-store-name" class="form-label"><?php echo lang('Entry.store_name'); ?></label>
-                <input type="text" name="store_name" value="<?php echo $store_name; ?>" id="input-store-name" class="form-control" placeholder="<?php echo lang('Entry.store_name'); ?>">
+                <label for="input-store-name" class="form-label"><?php echo lang('Entry.store_name', [], $language_lib->getCurrentCode()); ?></label>
+                <input type="text" name="store_name" value="<?php echo $store_name; ?>" id="input-store-name" class="form-control" placeholder="<?php echo lang('Entry.store_name', [], $language_lib->getCurrentCode()); ?>">
                 <?php if (!empty($error_store_name)) { ?><div class="text-danger small"><?php echo $error_store_name; ?></div><?php } ?>
             </div>
             <div class="mb-3 required">
-                <label for="input-store-description" class="form-label"><?php echo lang('Entry.store_description'); ?></label>
-                <textarea rows="10" name="store_description" id="input-store-description" class="form-control" placeholder="<?php echo lang('Entry.store_description'); ?>"><?php echo $store_description; ?></textarea>
+                <label for="input-store-description" class="form-label"><?php echo lang('Entry.store_description', [], $language_lib->getCurrentCode()); ?></label>
+                <textarea rows="10" name="store_description" id="input-store-description" class="form-control" placeholder="<?php echo lang('Entry.store_description', [], $language_lib->getCurrentCode()); ?>"><?php echo $store_description; ?></textarea>
                 <?php if (!empty($error_store_description)) { ?><div class="text-danger small"><?php echo $error_store_description; ?></div><?php } ?>
             </div>
             <div class="mb-3">
-                <label for="input-logo" class="form-label"><?php echo lang('Entry.logo'); ?></label>
+                <label for="input-logo" class="form-label"><?php echo lang('Entry.logo', [], $language_lib->getCurrentCode()); ?></label>
                 <div class="position-relative d-flex align-items-center border p-1" style="width: 110px; height: 110px;"><a href="javascript:void(0);" id="upload-logo" class="upload"><img src="<?php echo $logo_thumb; ?>" class="mx-auto d-block" /><input type="hidden" name="logo" value="<?php echo $logo; ?>" id="input-logo" class="form-control" /></a><span class="position-absolute bottom-0 start-0 progress-bar"></span></div>
             </div>
             <div class="mb-3">
-                <label for="input-cover" class="form-label"><?php echo lang('Entry.cover'); ?></label>
+                <label for="input-cover" class="form-label"><?php echo lang('Entry.cover', [], $language_lib->getCurrentCode()); ?></label>
                 <div class="position-relative d-flex align-items-center border p-1" style="width: 110px; height: 110px;"><a href="javascript:void(0);" id="upload-cover" class="upload"><img src="<?php echo $cover_thumb; ?>" class="mx-auto d-block" /><input type="hidden" name="cover" value="<?php echo $cover; ?>" id="input-cover" class="form-control" /></a><span class="position-absolute bottom-0 start-0 progress-bar"></span></div>
             </div>
         </fieldset>
         <div class="buttons clearfix">
             <div class="float-end">
-                <button type="button" class="btn btn-primary button-action" data-form="form-seller" data-form-action="<?php echo $action; ?>" data-icon="fa-file-pen" data-toast-heading-title-success="<?php echo lang('Text.success', [], 'en'); ?>" data-toast-heading-title-error="<?php echo lang('Text.error', [], 'en'); ?>" data-toast-heading-icon-success="fa-check-circle" data-toast-heading-icon-error="fa-triangle-exclamation" data-redirection="false"><i class="fas fa-file-pen fa-fw"></i> <?php echo lang('Button.edit', [], 'en'); ?></button>
+                <button type="button" class="btn btn-primary button-action" data-form="form-seller" data-form-action="<?php echo $action; ?>" data-icon="fa-file-pen" data-toast-heading-title-success="<?php echo lang('Text.success', [], $language_lib->getCurrentCode()); ?>" data-toast-heading-title-error="<?php echo lang('Text.error', [], $language_lib->getCurrentCode()); ?>" data-toast-heading-icon-success="fa-check-circle" data-toast-heading-icon-error="fa-triangle-exclamation" data-redirection="false"><i class="fas fa-file-pen fa-fw"></i> <?php echo lang('Button.edit', [], $language_lib->getCurrentCode()); ?></button>
             </div>
         </div>
         <?php echo form_close(); ?>

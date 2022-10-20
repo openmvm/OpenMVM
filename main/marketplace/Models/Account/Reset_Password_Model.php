@@ -71,6 +71,9 @@ class Reset_Password_Model extends Model
         $content['footer'] = sprintf(lang('Mail.reset_password_footer', [], $this->language->getCurrentCode()), $this->setting->get('setting_email'), $this->setting->get('setting_email'));
         $content['marketplace_name'] = $this->setting->get('setting_marketplace_name');
 
+        // Libraries
+        $content['language_lib'] = $this->language;
+
         $this->email->setMessage($this->template->render('ThemeMarketplace', 'com_openmvm', 'Basic', 'Mail\Account\reset_password', $content));
 
         $this->email->send();

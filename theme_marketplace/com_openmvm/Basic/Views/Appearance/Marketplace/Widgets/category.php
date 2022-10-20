@@ -11,7 +11,7 @@
 						<div class="card-body">
 							<h4 class="mb-3"><a href="<?php echo $cat['href']; ?>" class="link-dark text-decoration-none"><strong><?php echo $cat['name']; ?></strong></a></h4>
 							<div class="d-flex align-items-center"><a href="<?php echo $cat['href']; ?>"><img src="<?php echo $cat['image']; ?>" alt="<?php echo $cat['name']; ?>" title="<?php echo $cat['name']; ?>" class="img-fluid mx-auto d-block" /></a></div>
-							<div class="mt-3"><a href="<?php echo $cat['href']; ?>" title="<?php echo $cat['name']; ?>" class="text-decoration-none"><?php echo lang('Text.shop_now'); ?></a></div>
+							<div class="mt-3"><a href="<?php echo $cat['href']; ?>" title="<?php echo $cat['name']; ?>" class="text-decoration-none"><?php echo lang('Text.shop_now', [], $language_lib->getCurrentCode()); ?></a></div>
 						</div>
 					</div>
 				</div>

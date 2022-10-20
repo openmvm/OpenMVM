@@ -11,6 +11,7 @@ class Offcanvas_Right extends \App\Controllers\BaseController
     {
         // Library
         $this->customer= new \App\Libraries\Customer();
+        $this->language = new \App\Libraries\Language();
         $this->template = new \App\Libraries\Template();
         $this->url = new \App\Libraries\Url();
         $this->cart = new \App\Libraries\Cart();
@@ -23,6 +24,9 @@ class Offcanvas_Right extends \App\Controllers\BaseController
         $data['base'] = base_url();
 
         $data['logged_in'] = $this->customer->isLoggedIn();
+
+        // Libraries
+        $data['language_lib'] = $this->language;
 
         // Generate view
         $template_setting = [

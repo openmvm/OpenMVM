@@ -71,6 +71,9 @@ class Wishlist extends \App\Controllers\BaseController
             ];
         }
 
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Header
         $header_params = array(
             'title' => lang('Heading.my_wishlist', [], $this->language->getCurrentCode()),

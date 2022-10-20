@@ -37,10 +37,10 @@
             <div class="card-body">
                 <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" type="button" role="tab" aria-controls="data" aria-selected="true"><?php echo lang('Tab.data'); ?></button>
+                        <button class="nav-link active" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" type="button" role="tab" aria-controls="data" aria-selected="true"><?php echo lang('Tab.data', [], $language_lib->getCurrentCode()); ?></button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="widget-layouts-tab" data-bs-toggle="tab" data-bs-target="#widget-layouts" type="button" role="tab" aria-controls="widget-layouts" aria-selected="false"><?php echo lang('Tab.widget_layouts'); ?></button>
+                        <button class="nav-link" id="widget-layouts-tab" data-bs-toggle="tab" data-bs-target="#widget-layouts" type="button" role="tab" aria-controls="widget-layouts" aria-selected="false"><?php echo lang('Tab.widget_layouts', [], $language_lib->getCurrentCode()); ?></button>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
@@ -48,13 +48,13 @@
                     <div class="tab-pane fade" id="widget-layouts" role="tabpanel" aria-labelledby="widget-layouts-tab">
                         <!-- Header widgets -->
                         <fieldset class="mb-5">
-                            <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.header'); ?></legend>
+                            <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.header', [], $language_lib->getCurrentCode()); ?></legend>
                             <div id="header-widgets" class="table-responsive">
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th><?php echo lang('Column.widget'); ?></th>
-                                            <th class="text-end"><?php echo lang('Column.action'); ?></th>
+                                            <th><?php echo lang('Column.widget', [], $language_lib->getCurrentCode()); ?></th>
+                                            <th class="text-end"><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -100,7 +100,7 @@
                         <!-- Header widgets //-->
                         <!-- Content widgets -->
                         <fieldset class="mb-5">
-                            <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.content'); ?></legend> 
+                            <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.content', [], $language_lib->getCurrentCode()); ?></legend> 
                             <div id="layouts" class="d-flex align-items-start">
                                 <div class="nav flex-column nav-pills me-3 w-25" id="layout-tab" role="tablist" aria-orientation="vertical">
                                     <?php if ($layouts) { ?>
@@ -115,7 +115,7 @@
                                         <div class="tab-pane fade" id="layout-<?php echo $layout['layout_id']; ?>" role="tabpanel" aria-labelledby="layout-<?php echo $layout['layout_id']; ?>-tab">
                                             <h6 class="border-bottom pb-3 mb-3"><?php echo $layout['name']; ?></h6>
                                             <!-- Page top -->
-                                            <h5 class="mb-3"><?php echo lang('Text.page_top'); ?></h5>
+                                            <h5 class="mb-3"><?php echo lang('Text.page_top', [], $language_lib->getCurrentCode()); ?></h5>
                                             <div id="page-top-<?php echo $layout['layout_id']; ?>" class="row mb-3">
                                                 <div class="col-sm-12">
                                                     <div class="border">
@@ -123,8 +123,8 @@
                                                             <table class="table">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th><?php echo lang('Column.widget'); ?></th>
-                                                                        <th class="text-end"><?php echo lang('Column.action'); ?></th>
+                                                                        <th><?php echo lang('Column.widget', [], $language_lib->getCurrentCode()); ?></th>
+                                                                        <th class="text-end"><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -173,7 +173,7 @@
                                             <div id="page-content-<?php echo $layout['layout_id']; ?>" class="row mb-3">
                                                 <div class="col-sm-4">
                                                     <!-- Column left -->
-                                                    <h5 class="mb-3"><?php echo lang('Text.column_left'); ?></h5>
+                                                    <h5 class="mb-3"><?php echo lang('Text.column_left', [], $language_lib->getCurrentCode()); ?></h5>
                                                     <div class="row mb-3">
                                                         <div class="col-sm-12">
                                                             <div class="border">
@@ -181,8 +181,8 @@
                                                                     <table class="table">
                                                                         <thead>
                                                                             <tr>
-                                                                                <th><?php echo lang('Column.widget'); ?></th>
-                                                                                <th class="text-end"><?php echo lang('Column.action'); ?></th>
+                                                                                <th><?php echo lang('Column.widget', [], $language_lib->getCurrentCode()); ?></th>
+                                                                                <th class="text-end"><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -231,7 +231,7 @@
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <!-- Content top -->
-                                                    <h5 class="mb-3"><?php echo lang('Text.content_top'); ?></h5>
+                                                    <h5 class="mb-3"><?php echo lang('Text.content_top', [], $language_lib->getCurrentCode()); ?></h5>
                                                     <div class="row mb-3">
                                                         <div class="col-sm-12">
                                                             <div class="border">
@@ -239,8 +239,8 @@
                                                                     <table class="table">
                                                                         <thead>
                                                                             <tr>
-                                                                                <th><?php echo lang('Column.widget'); ?></th>
-                                                                                <th class="text-end"><?php echo lang('Column.action'); ?></th>
+                                                                                <th><?php echo lang('Column.widget', [], $language_lib->getCurrentCode()); ?></th>
+                                                                                <th class="text-end"><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -287,7 +287,7 @@
                                                     </div>
                                                     <!-- Content top //-->
                                                     <!-- Content bottom -->
-                                                    <h5 class="mb-3"><?php echo lang('Text.content_bottom'); ?></h5>
+                                                    <h5 class="mb-3"><?php echo lang('Text.content_bottom', [], $language_lib->getCurrentCode()); ?></h5>
                                                     <div class="row mb-3">
                                                         <div class="col-sm-12">
                                                             <div class="border">
@@ -295,8 +295,8 @@
                                                                     <table class="table">
                                                                         <thead>
                                                                             <tr>
-                                                                                <th><?php echo lang('Column.widget'); ?></th>
-                                                                                <th class="text-end"><?php echo lang('Column.action'); ?></th>
+                                                                                <th><?php echo lang('Column.widget', [], $language_lib->getCurrentCode()); ?></th>
+                                                                                <th class="text-end"><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -345,7 +345,7 @@
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <!-- Column right -->
-                                                    <h5 class="mb-3"><?php echo lang('Text.column_right'); ?></h5>
+                                                    <h5 class="mb-3"><?php echo lang('Text.column_right', [], $language_lib->getCurrentCode()); ?></h5>
                                                     <div class="row mb-3">
                                                         <div class="col-sm-12">
                                                             <div class="border">
@@ -353,8 +353,8 @@
                                                                     <table class="table">
                                                                         <thead>
                                                                             <tr>
-                                                                                <th><?php echo lang('Column.widget'); ?></th>
-                                                                                <th class="text-end"><?php echo lang('Column.action'); ?></th>
+                                                                                <th><?php echo lang('Column.widget', [], $language_lib->getCurrentCode()); ?></th>
+                                                                                <th class="text-end"><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -403,7 +403,7 @@
                                                 </div>
                                             </div>
                                             <!-- Page bottom -->
-                                            <h5 class="mb-3"><?php echo lang('Text.page_bottom'); ?></h5>
+                                            <h5 class="mb-3"><?php echo lang('Text.page_bottom', [], $language_lib->getCurrentCode()); ?></h5>
                                             <div id="page-bottom-<?php echo $layout['layout_id']; ?>" class="row mb-3">
                                                 <div class="col-sm-12">
                                                     <div class="border">
@@ -411,8 +411,8 @@
                                                             <table class="table">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th><?php echo lang('Column.widget'); ?></th>
-                                                                        <th class="text-end"><?php echo lang('Column.action'); ?></th>
+                                                                        <th><?php echo lang('Column.widget', [], $language_lib->getCurrentCode()); ?></th>
+                                                                        <th class="text-end"><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -467,17 +467,17 @@
                         <!-- Content widgets //-->
                         <!-- Footer widgets -->
                         <fieldset class="mb-5">
-                            <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.footer'); ?></legend> 
+                            <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.footer', [], $language_lib->getCurrentCode()); ?></legend> 
                             <div id="footer-columns" class="d-flex align-items-start">
                                 <div class="nav flex-column nav-pills me-3 w-25" id="footer-column-tab" role="tablist" aria-orientation="vertical">
                                     <?php $footer_column_row = 0; ?>
                                     <?php if ($footer_columns) { ?>
                                         <?php foreach ($footer_columns as $footer_column) { ?>
-                                        <button class="nav-link mb-2" id="footer-column-tab-<?php echo $footer_column_row; ?>" data-bs-toggle="pill" data-bs-target="#footer-column-<?php echo $footer_column_row; ?>" type="button" role="tab" aria-controls="footer-column-<?php echo $footer_column_row; ?>" aria-selected="false"><i class="fas fa-minus-circle fa-fw" onclick="$('#footer-column-tab-<?php echo $footer_column_row; ?>').remove(); $('#footer-column-<?php echo $footer_column_row; ?>').remove(); var triggerFirstTabEl = document.querySelector('#footer-columns #footer-column-tab button.nav-link:first-child'); new bootstrap.Tab(triggerFirstTabEl).show();"></i> <?php echo lang('Tab.column'); ?> <?php echo $footer_column_row; ?></button>
+                                        <button class="nav-link mb-2" id="footer-column-tab-<?php echo $footer_column_row; ?>" data-bs-toggle="pill" data-bs-target="#footer-column-<?php echo $footer_column_row; ?>" type="button" role="tab" aria-controls="footer-column-<?php echo $footer_column_row; ?>" aria-selected="false"><i class="fas fa-minus-circle fa-fw" onclick="$('#footer-column-tab-<?php echo $footer_column_row; ?>').remove(); $('#footer-column-<?php echo $footer_column_row; ?>').remove(); var triggerFirstTabEl = document.querySelector('#footer-columns #footer-column-tab button.nav-link:first-child'); new bootstrap.Tab(triggerFirstTabEl).show();"></i> <?php echo lang('Tab.column', [], $language_lib->getCurrentCode()); ?> <?php echo $footer_column_row; ?></button>
                                         <?php $footer_column_row++; ?>
                                         <?php } ?>
                                     <?php } ?>
-                                    <button type="button" id="button-footer-column-add" class="btn btn-secondary"><i class="fas fa-plus fa-fw"></i> <?php echo lang('button.add'); ?></button>
+                                    <button type="button" id="button-footer-column-add" class="btn btn-secondary"><i class="fas fa-plus fa-fw"></i> <?php echo lang('button.add', [], $language_lib->getCurrentCode()); ?></button>
                                 </div>
                                 <div class="tab-content w-100" id="footer-column-tab-content">
                                     <?php $footer_column_row = 0; ?>
@@ -485,9 +485,9 @@
                                     <?php if ($footer_columns) { ?>
                                         <?php foreach ($footer_columns as $footer_column) { ?>
                                         <div class="tab-pane fade" id="footer-column-<?php echo $footer_column_row; ?>" role="tabpanel" aria-labelledby="footer-column-tab-<?php echo $footer_column_row; ?>">
-                                            <h6 class="border-bottom pb-3 mb-3"><?php echo lang('Tab.column'); ?> <?php echo $footer_column_row; ?></h6>
+                                            <h6 class="border-bottom pb-3 mb-3"><?php echo lang('Tab.column', [], $language_lib->getCurrentCode()); ?> <?php echo $footer_column_row; ?></h6>
                                             <div class="mb-3">
-                                                <label for="input-footer-column-width-<?php echo $footer_column_row; ?>" class="form-label"><?php echo lang('Entry.column_width'); ?></label>
+                                                <label for="input-footer-column-width-<?php echo $footer_column_row; ?>" class="form-label"><?php echo lang('Entry.column_width', [], $language_lib->getCurrentCode()); ?></label>
                                                 <select name="theme_marketplace_com_openmvm_basic_footer_column[<?php echo $footer_column_row; ?>][column_width]" id="input-footer-column-width-<?php echo $footer_column_row; ?>" class="form-select">
                                                     <?php foreach ($column_widths as $column_width) { ?>
                                                         <?php if ($column_width == $footer_column['column_width']) { ?>
@@ -499,13 +499,13 @@
                                                 </select>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="input-footer-column-widget-<?php echo $footer_column_row; ?>" class="form-label"><?php echo lang('Entry.widgets'); ?></label>
+                                                <label for="input-footer-column-widget-<?php echo $footer_column_row; ?>" class="form-label"><?php echo lang('Entry.widgets', [], $language_lib->getCurrentCode()); ?></label>
                                                 <div id="footer-column-<?php echo $footer_column_row; ?>-widgets" class="table-responsive">
                                                     <table class="table">
                                                         <thead>
                                                             <tr>
-                                                                <th><?php echo lang('Column.widget'); ?></th>
-                                                                <th class="text-end"><?php echo lang('Column.action'); ?></th>
+                                                                <th><?php echo lang('Column.widget', [], $language_lib->getCurrentCode()); ?></th>
+                                                                <th class="text-end"><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -664,9 +664,9 @@ var footer_column_row = '<?php echo $footer_column_row; ?>';
 
 $( "#button-footer-column-add" ).on( "click", function() {
     html = '<div class="tab-pane fade" id="footer-column-' + footer_column_row + '" role="tabpanel" aria-labelledby="footer-column-tab-' + footer_column_row + '">';
-    html += '<h6 class="border-bottom pb-3 mb-3"><?php echo lang('Tab.column'); ?> ' + footer_column_row + '</h6>';
+    html += '<h6 class="border-bottom pb-3 mb-3"><?php echo lang('Tab.column', [], $language_lib->getCurrentCode()); ?> ' + footer_column_row + '</h6>';
     html += '    <div class="mb-3">';
-    html += '        <label for="input-footer-column-width-' + footer_column_row + '" class="form-label"><?php echo lang('Entry.column_width'); ?></label>';
+    html += '        <label for="input-footer-column-width-' + footer_column_row + '" class="form-label"><?php echo lang('Entry.column_width', [], $language_lib->getCurrentCode()); ?></label>';
     html += '        <select name="theme_marketplace_com_openmvm_basic_footer_column[' + footer_column_row + '][column_width]" id="footer-column-width-' + footer_column_row + '" class="form-select">';
     <?php foreach ($column_widths as $column_width) { ?>
         html += '        <option value="<?php echo $column_width; ?>"><?php echo $column_width; ?></option>';
@@ -674,13 +674,13 @@ $( "#button-footer-column-add" ).on( "click", function() {
     html += '        </select>';
     html += '    </div>';
     html += '    <div class="mb-3">';
-    html += '        <label for="input-footer-column-widget-' + footer_column_row + '" class="form-label"><?php echo lang('Entry.widgets'); ?></label>';
+    html += '        <label for="input-footer-column-widget-' + footer_column_row + '" class="form-label"><?php echo lang('Entry.widgets', [], $language_lib->getCurrentCode()); ?></label>';
     html += '        <div id="footer-column-' + footer_column_row + '-widgets" class="table-responsive">';
     html += '            <table class="table">';
     html += '                <thead>';
     html += '                    <tr>';
-    html += '                        <th><?php echo lang('Column.widget'); ?></th>';
-    html += '                        <th class="text-end"><?php echo lang('Column.action'); ?></th>';
+    html += '                        <th><?php echo lang('Column.widget', [], $language_lib->getCurrentCode()); ?></th>';
+    html += '                        <th class="text-end"><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>';
     html += '                    </tr>';
     html += '                </thead>';
     html += '                <tbody>';
@@ -697,7 +697,7 @@ $( "#button-footer-column-add" ).on( "click", function() {
 
     $('#footer-columns #footer-column-tab-content').append(html);
 
-    $('#footer-columns #footer-column-tab').find('#button-footer-column-add').before('<button class="nav-link mb-2" id="footer-column-tab-' + footer_column_row + '" data-bs-toggle="pill" data-bs-target="#footer-column-' + footer_column_row + '" type="button" role="tab" aria-controls="footer-column-' + footer_column_row + '" aria-selected="false"><i class="fas fa-minus-circle fa-fw" onclick="$(\'#footer-column-tab-' + footer_column_row + '\').remove(); $(\'#footer-column-' + footer_column_row + '\').remove(); var triggerFirstTabEl = document.querySelector(\'#footer-columns #footer-column-tab button.nav-link:first-child\'); new bootstrap.Tab(triggerFirstTabEl).show();"></i> <?php echo lang('Tab.column'); ?> ' + footer_column_row + '</button>');
+    $('#footer-columns #footer-column-tab').find('#button-footer-column-add').before('<button class="nav-link mb-2" id="footer-column-tab-' + footer_column_row + '" data-bs-toggle="pill" data-bs-target="#footer-column-' + footer_column_row + '" type="button" role="tab" aria-controls="footer-column-' + footer_column_row + '" aria-selected="false"><i class="fas fa-minus-circle fa-fw" onclick="$(\'#footer-column-tab-' + footer_column_row + '\').remove(); $(\'#footer-column-' + footer_column_row + '\').remove(); var triggerFirstTabEl = document.querySelector(\'#footer-columns #footer-column-tab button.nav-link:first-child\'); new bootstrap.Tab(triggerFirstTabEl).show();"></i> <?php echo lang('Tab.column', [], $language_lib->getCurrentCode()); ?> ' + footer_column_row + '</button>');
 
     var triggerFirstTabEl = document.querySelector('#footer-columns #footer-column-tab-' + footer_column_row + '');
     new bootstrap.Tab(triggerFirstTabEl).show();

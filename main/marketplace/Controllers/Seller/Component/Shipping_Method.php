@@ -81,6 +81,9 @@ class Shipping_Method extends \App\Controllers\BaseController
 
         $data['cancel'] = $this->url->customerLink('marketplace/seller/dashboard');
 	
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Header
         $header_params = array(
             'title' => lang('Heading.shipping_methods', [], $this->language->getCurrentCode()),

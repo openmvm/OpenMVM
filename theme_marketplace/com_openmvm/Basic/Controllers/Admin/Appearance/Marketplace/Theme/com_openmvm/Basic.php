@@ -200,6 +200,9 @@ class Basic extends \App\Controllers\BaseController
 
         $data['cancel'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/appearance/marketplace/theme');
 
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Header
         $header_params = array(
             'title' => lang('Heading.themes'),

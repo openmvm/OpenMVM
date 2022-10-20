@@ -41,6 +41,9 @@ class Bank_Transfer extends \App\Controllers\BaseController
             $data['confirm'] = $this->url->customerLink('marketplace/component/payment_method/bank_transfer/confirm', '', true);
         }
 
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Generate view
         $template_setting = [
             'location' => 'ThemeMarketplace',

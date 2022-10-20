@@ -106,6 +106,9 @@ class Weight_Based extends \App\Controllers\BaseController
 
         $data['customer_token'] = $this->customer->getToken();
 
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Header
         $header_params = array(
             'title' => lang('Heading.shipping_methods', [], $this->language->getCurrentCode()),

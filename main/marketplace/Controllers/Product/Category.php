@@ -42,6 +42,9 @@ class Category extends \App\Controllers\BaseController
             ];
         }
 
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Header
         $header_params = array(
             'title' => lang('Heading.categories', [], $this->language->getCurrentCode()),
@@ -151,6 +154,9 @@ class Category extends \App\Controllers\BaseController
                 ];
             }
 
+            // Libraries
+            $data['language_lib'] = $this->language;
+
             // Header
             $header_params = array(
                 'title' => $category_description['name'],
@@ -174,6 +180,9 @@ class Category extends \App\Controllers\BaseController
         } else {
             $data['message'] = lang('Error.no_data_found', [], $this->language->getCurrentCode());
     
+            // Libraries
+            $data['language_lib'] = $this->language;
+
             // Header
             $header_params = array(
                 'title' => lang('Heading.not_found', [], $this->language->getCurrentCode()),

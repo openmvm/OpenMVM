@@ -1,5 +1,5 @@
 <?php if (!empty($customer_addresses)) { ?>
-<select name="checkout_shipping_address" class="form-control">
+<select name="checkout_shipping_address" class="form-select">
     <?php foreach ($customer_addresses as $customer_address) { ?>
         <?php if ($customer_address['customer_address_id'] == $checkout_shipping_address_id) { ?>
         <option value="<?php echo $customer_address['customer_address_id']; ?>" selected="selected"><?php echo $customer_address['address']; ?></option>
@@ -11,7 +11,7 @@
 <div class="form-check my-3">
 	<input class="form-check-input" type="checkbox" value="1" id="check-checkout-shipping-address-add">
 	<label class="form-check-label" for="check-checkout-shipping-address-add">
-		<?php echo lang('Text.new_address'); ?>
+		<?php echo lang('Text.new_address', [], $language_lib->getCurrentCode()); ?>
 	</label>
 </div>
 <script type="text/javascript"><!--
@@ -59,7 +59,7 @@ $(document).ready(function() {
 });
 //--></script> 
 <?php } else { ?>
-<div class="alert alert-warning" role="alert"><?php echo lang('Error.shipping_address_not_found'); ?></div>
+<div class="alert alert-warning" role="alert"><?php echo lang('Error.shipping_address_not_found', [], $language_lib->getCurrentCode()); ?></div>
 <script type="text/javascript"><!--
 $(document).ready(function() {
 	$('#form-checkout-shipping-address-add').removeClass('d-none');
@@ -69,45 +69,45 @@ $(document).ready(function() {
 <div id="form-checkout-shipping-address-add" class="d-none">
 	<fieldset>
         <div class="mb-3 required">
-            <label for="input-checkout-shipping-address-firstname" class="form-label"><?php echo lang('Entry.firstname'); ?></label>
-            <input type="text" name="firstname" value="" id="input-checkout-shipping-address-firstname" class="form-control" placeholder="<?php echo lang('Entry.firstname'); ?>">
+            <label for="input-checkout-shipping-address-firstname" class="form-label"><?php echo lang('Entry.firstname', [], $language_lib->getCurrentCode()); ?></label>
+            <input type="text" name="firstname" value="" id="input-checkout-shipping-address-firstname" class="form-control" placeholder="<?php echo lang('Entry.firstname', [], $language_lib->getCurrentCode()); ?>">
         </div>
         <div class="mb-3 required">
-            <label for="input-checkout-shipping-address-lastname" class="form-label"><?php echo lang('Entry.lastname'); ?></label>
-            <input type="text" name="lastname" value="" id="input-checkout-shipping-address-lastname" class="form-control" placeholder="<?php echo lang('Entry.lastname'); ?>">
+            <label for="input-checkout-shipping-address-lastname" class="form-label"><?php echo lang('Entry.lastname', [], $language_lib->getCurrentCode()); ?></label>
+            <input type="text" name="lastname" value="" id="input-checkout-shipping-address-lastname" class="form-control" placeholder="<?php echo lang('Entry.lastname', [], $language_lib->getCurrentCode()); ?>">
         </div>
         <div class="mb-3 required">
-            <label for="input-checkout-shipping-address-address-1" class="form-label"><?php echo lang('Entry.address_1'); ?></label>
-            <textarea rows="5" name="address_1" id="input-checkout-shipping-address-address-1" class="form-control" placeholder="<?php echo lang('Entry.address_1'); ?>"></textarea>
+            <label for="input-checkout-shipping-address-address-1" class="form-label"><?php echo lang('Entry.address_1', [], $language_lib->getCurrentCode()); ?></label>
+            <textarea rows="5" name="address_1" id="input-checkout-shipping-address-address-1" class="form-control" placeholder="<?php echo lang('Entry.address_1', [], $language_lib->getCurrentCode()); ?>"></textarea>
         </div>
         <div class="mb-3">
-            <label for="input-checkout-shipping-address-address-2" class="form-label"><?php echo lang('Entry.address_2'); ?></label>
-            <textarea rows="5" name="address_2" id="input-checkout-shipping-address-address-2" class="form-control" placeholder="<?php echo lang('Entry.address_2'); ?>"></textarea>
+            <label for="input-checkout-shipping-address-address-2" class="form-label"><?php echo lang('Entry.address_2', [], $language_lib->getCurrentCode()); ?></label>
+            <textarea rows="5" name="address_2" id="input-checkout-shipping-address-address-2" class="form-control" placeholder="<?php echo lang('Entry.address_2', [], $language_lib->getCurrentCode()); ?>"></textarea>
         </div>
         <div class="mb-3 required">
-            <label for="input-checkout-shipping-address-city" class="form-label"><?php echo lang('Entry.city'); ?></label>
+            <label for="input-checkout-shipping-address-city" class="form-label"><?php echo lang('Entry.city', [], $language_lib->getCurrentCode()); ?></label>
             <input type="text" name="city" value="" id="input-checkout-shipping-address-city" class="form-control" placeholder="">
         </div>
         <div class="mb-3 required">
-            <label for="input-checkout-shipping-address-country" class="form-label"><?php echo lang('Entry.country'); ?></label>
-            <select name="country_id" id="input-checkout-shipping-address-country" class="form-control">
-                <option value=""><?php echo lang('Text.please_select'); ?></option>
+            <label for="input-checkout-shipping-address-country" class="form-label"><?php echo lang('Entry.country', [], $language_lib->getCurrentCode()); ?></label>
+            <select name="country_id" id="input-checkout-shipping-address-country" class="form-select">
+                <option value=""><?php echo lang('Text.please_select', [], $language_lib->getCurrentCode()); ?></option>
                 <?php foreach ($countries as $country) { ?>
                     <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
                 <?php } ?>
             </select>
         </div>
         <div class="mb-3 required">
-            <label for="input-checkout-shipping-address-zone" class="form-label"><?php echo lang('Entry.zone'); ?></label>
-            <select name="zone_id" id="input-checkout-shipping-address-zone" class="form-control"></select>
+            <label for="input-checkout-shipping-address-zone" class="form-label"><?php echo lang('Entry.zone', [], $language_lib->getCurrentCode()); ?></label>
+            <select name="zone_id" id="input-checkout-shipping-address-zone" class="form-select"></select>
         </div>
         <div class="mb-3 required">
-            <label for="input-checkout-shipping-address-telephone" class="form-label"><?php echo lang('Entry.telephone'); ?></label>
-            <input type="text" name="telephone" value="" id="input-checkout-shipping-address-telephone" class="form-control" placeholder="<?php echo lang('Entry.telephone'); ?>">
+            <label for="input-checkout-shipping-address-telephone" class="form-label"><?php echo lang('Entry.telephone', [], $language_lib->getCurrentCode()); ?></label>
+            <input type="text" name="telephone" value="" id="input-checkout-shipping-address-telephone" class="form-control" placeholder="<?php echo lang('Entry.telephone', [], $language_lib->getCurrentCode()); ?>">
         </div>
 	</fieldset>
 	<div class="buttons clearfix">
-		<div class="float-end"><button type="button" class="btn btn-primary" id="button-checkout-shipping-address-add"><i class="fas fa-plus-circle fa-fw"></i> <?php echo lang('Button.add'); ?></button></div>
+		<div class="float-end"><button type="button" class="btn btn-primary" id="button-checkout-shipping-address-add"><i class="fas fa-plus-circle fa-fw"></i> <?php echo lang('Button.add', [], $language_lib->getCurrentCode()); ?></button></div>
 	</div>
 </div>
 <script type="text/javascript"><!--
@@ -122,7 +122,7 @@ $('#form-checkout-shipping-address-add select[name=\'country_id\']').on('change'
 			$('select[name=\'country_id\']').prop('disabled', false);
 		},
 		success: function(json) {
-			html = '<option value=""><?php echo lang('Text.please_select'); ?></option>';
+			html = '<option value=""><?php echo lang('Text.please_select', [], $language_lib->getCurrentCode()); ?></option>';
 			
 			if (json['zones'] && json['zones'] != '') {
 				for (i = 0; i < json['zones'].length; i++) {
@@ -131,7 +131,7 @@ $('#form-checkout-shipping-address-add select[name=\'country_id\']').on('change'
 					html += '<option value="' + zone['zone_id'] + '">' + zone['name'] + '</option>';
 				}
 			} else {
-				html += '<option value="" selected="selected"><?php echo lang('Text.none'); ?></option>';
+				html += '<option value="" selected="selected"><?php echo lang('Text.none', [], $language_lib->getCurrentCode()); ?></option>';
 			}
 			
 			$('select[name=\'zone_id\']').html(html);

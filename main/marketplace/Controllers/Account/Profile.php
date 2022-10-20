@@ -58,6 +58,9 @@ class Profile extends \App\Controllers\BaseController
 
         $data['email'] = $customer_info['email'];
 
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Header
         $header_params = array(
             'title' => lang('Heading.edit_profile', [], $this->language->getCurrentCode()),

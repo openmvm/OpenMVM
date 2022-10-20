@@ -4,15 +4,15 @@
         <h1 class="border-bottom pb-3 mb-3"><?php echo $heading_title; ?></h1>
         <?php echo form_open($action, ['id' => 'form-geo-zone']); ?>
         <div class="card shadow list">
-            <div class="card-header clearfix"><h5 class="pt-1 float-start"><i class="fas fa-list fa-fw"></i> <?php echo lang('Heading.list'); ?></h5> <div class="float-end"><a href="<?php echo $add; ?>" class="btn btn-outline-primary btn-sm"><i class="fas fa-plus fa-fw"></i></a> <button type="button" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash-alt fa-fw" onclick="confirm('<?php echo lang('Text.are_you_sure'); ?>') ? $('#form-geo-zone').submit() : false;"></i></button> <a href="<?php echo $cancel; ?>" class="btn btn-outline-secondary btn-sm"><i class="fas fa-long-arrow-alt-left fa-fw"></i></a></div></div>
+            <div class="card-header clearfix"><h5 class="pt-1 float-start"><i class="fas fa-list fa-fw"></i> <?php echo lang('Heading.list', [], $language_lib->getCurrentCode()); ?></h5> <div class="float-end"><a href="<?php echo $add; ?>" class="btn btn-outline-primary btn-sm"><i class="fas fa-plus fa-fw"></i></a> <button type="button" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash-alt fa-fw" onclick="confirm('<?php echo lang('Text.are_you_sure', [], $language_lib->getCurrentCode()); ?>') ? $('#form-geo-zone').submit() : false;"></i></button> <a href="<?php echo $cancel; ?>" class="btn btn-outline-secondary btn-sm"><i class="fas fa-long-arrow-alt-left fa-fw"></i></a></div></div>
             <div class="card-body">
                 <table class="table">
-                    <caption><?php echo lang('Caption.list_of_geo_zones'); ?></caption>
+                    <caption><?php echo lang('Caption.list_of_geo_zones', [], $language_lib->getCurrentCode()); ?></caption>
                     <thead>
                         <tr>
                             <th scope="col"><input class="form-check-input" type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></th>
-                            <th scope="col"><?php echo lang('Column.name'); ?></th>
-                            <th scope="col" class="text-end"><?php echo lang('Column.action'); ?></th>
+                            <th scope="col"><?php echo lang('Column.name', [], $language_lib->getCurrentCode()); ?></th>
+                            <th scope="col" class="text-end"><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,7 +34,7 @@
                             <?php } ?>
                         <?php } else { ?>
                         <tr>
-                            <td colspan="3" class="text-muted text-center"><?php echo lang('Error.no_data_found'); ?></td>
+                            <td colspan="3" class="text-muted text-center"><?php echo lang('Error.no_data_found', [], $language_lib->getCurrentCode()); ?></td>
                         </tr>
                         <?php } ?>
                     </tbody>

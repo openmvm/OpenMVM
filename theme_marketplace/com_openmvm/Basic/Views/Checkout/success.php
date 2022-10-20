@@ -4,29 +4,29 @@
         <h1 class="border-bottom pb-3 mb-3"><?php echo $heading_title; ?></h1>
         <div class="card mb-5">
             <div class="card-body">
-                <h3 class="text-center"><?php echo lang('Success.order_add'); ?></h3>
-                <p class="text-center"><?php echo lang('Text.order_add_message'); ?></p>
-                <h5 class="text-center"><?php echo lang('Text.order_id'); ?>:&nbsp;&nbsp;<strong><?php echo $order_id; ?></strong></h5>
-                <h5 class="text-center"><?php echo lang('Text.invoice'); ?>:&nbsp;&nbsp;<strong><?php echo $invoice; ?></strong></h5>
-                <h5 class="text-center"><?php echo lang('Text.date_added'); ?>:&nbsp;&nbsp;<strong><?php echo $date_added; ?></strong></h5>
-                <h5 class="text-center"><?php echo lang('Text.payment_method'); ?>:&nbsp;&nbsp;<strong><?php echo $payment_method; ?></strong></h5>
-                <h5 class="text-center"><?php echo lang('Text.total_order_amount'); ?>:&nbsp;&nbsp;<strong><?php echo $total_order_amount; ?></strong></h5>
+                <h3 class="text-center"><?php echo lang('Success.order_add', [], $language_lib->getCurrentCode()); ?></h3>
+                <p class="text-center"><?php echo lang('Text.order_add_message', [], $language_lib->getCurrentCode()); ?></p>
+                <h5 class="text-center"><?php echo lang('Text.order_id', [], $language_lib->getCurrentCode()); ?>:&nbsp;&nbsp;<strong><?php echo $order_id; ?></strong></h5>
+                <h5 class="text-center"><?php echo lang('Text.invoice', [], $language_lib->getCurrentCode()); ?>:&nbsp;&nbsp;<strong><?php echo $invoice; ?></strong></h5>
+                <h5 class="text-center"><?php echo lang('Text.date_added', [], $language_lib->getCurrentCode()); ?>:&nbsp;&nbsp;<strong><?php echo $date_added; ?></strong></h5>
+                <h5 class="text-center"><?php echo lang('Text.payment_method', [], $language_lib->getCurrentCode()); ?>:&nbsp;&nbsp;<strong><?php echo $payment_method; ?></strong></h5>
+                <h5 class="text-center"><?php echo lang('Text.total_order_amount', [], $language_lib->getCurrentCode()); ?>:&nbsp;&nbsp;<strong><?php echo $total_order_amount; ?></strong></h5>
                 <?php if (!empty($payment_method_text)) { ?>
                 <div class="card border border-primary mt-3 mx-auto w-50">
                     <div class="card-body"><?php echo $payment_method_text; ?></div>
                 </div>
                 <?php } ?>
-                <p class="text-center mt-5"><?php echo lang('Text.order_add_message_2'); ?></p>
+                <p class="text-center mt-5"><?php echo lang('Text.order_add_message_2', [], $language_lib->getCurrentCode()); ?></p>
                 <p class="text-center"><?php echo $order_add_message_3; ?></p>
                 <?php if ($sellers) { ?>
-                <p class="text-center"><?php echo lang('Text.order_add_message_4'); ?></p>
+                <p class="text-center"><?php echo lang('Text.order_add_message_4', [], $language_lib->getCurrentCode()); ?></p>
                 <div class="text-center">
                     <?php foreach ($sellers as $seller) { ?>
                     <div>&middot; <a href="<?php echo $seller['href']; ?>"><?php echo $seller['store_name']; ?></a></div>
                     <?php } ?>
                 </div>
                 <?php } ?>
-                <h5 class="text-center mt-5"><?php echo lang('Text.order_add_message_5'); ?></h5>
+                <h5 class="text-center mt-5"><?php echo lang('Text.order_add_message_5', [], $language_lib->getCurrentCode()); ?></h5>
             </div>
         </div>
         <div class="d-none">
@@ -34,15 +34,15 @@
                 <div class="col-sm-6">
                     <table>
                         <tr>
-                            <td><?php echo lang('Text.order_id'); ?></td>
+                            <td><?php echo lang('Text.order_id', [], $language_lib->getCurrentCode()); ?></td>
                             <td>: <?php echo $order_id; ?></td>
                         </tr>
                         <tr>
-                            <td><?php echo lang('Text.invoice'); ?></td>
+                            <td><?php echo lang('Text.invoice', [], $language_lib->getCurrentCode()); ?></td>
                             <td>: <?php echo $invoice; ?></td>
                         </tr>
                         <tr>
-                            <td><?php echo lang('Text.date_added'); ?></td>
+                            <td><?php echo lang('Text.date_added', [], $language_lib->getCurrentCode()); ?></td>
                             <td>: <?php echo $date_added; ?></td>
                         </tr>
                     </table>
@@ -50,15 +50,15 @@
                 <div class="col-sm-6">
                     <table>
                         <tr>
-                            <td><?php echo lang('Text.name'); ?></td>
+                            <td><?php echo lang('Text.name', [], $language_lib->getCurrentCode()); ?></td>
                             <td>: <?php echo $name; ?></td>
                         </tr>
                         <tr>
-                            <td><?php echo lang('Text.telephone'); ?></td>
+                            <td><?php echo lang('Text.telephone', [], $language_lib->getCurrentCode()); ?></td>
                             <td>: <?php echo $telephone; ?></td>
                         </tr>
                         <tr>
-                            <td><?php echo lang('Text.email'); ?></td>
+                            <td><?php echo lang('Text.email', [], $language_lib->getCurrentCode()); ?></td>
                             <td>: <?php echo $email; ?></td>
                         </tr>
                     </table>
@@ -69,7 +69,7 @@
                     <table>
                         <thead>
                             <tr>
-                                <td><strong><?php echo lang('Column.total_order_amount'); ?></strong></td>
+                                <td><strong><?php echo lang('Column.total_order_amount', [], $language_lib->getCurrentCode()); ?></strong></td>
                             </tr>
                         </thead>
                         <tbody>
@@ -83,7 +83,7 @@
                     <table>
                         <thead>
                             <tr>
-                                <td colspan="2"><strong><?php echo lang('Column.order_status'); ?></strong></td>
+                                <td colspan="2"><strong><?php echo lang('Column.order_status', [], $language_lib->getCurrentCode()); ?></strong></td>
                             </tr>
                         </thead>
                         <?php if ($order_statuses) { ?>
@@ -104,7 +104,7 @@
                     <table>
                         <thead>
                             <tr>
-                                <td colspan="2"><strong><?php echo lang('Column.payment_address'); ?></strong></td>
+                                <td colspan="2"><strong><?php echo lang('Column.payment_address', [], $language_lib->getCurrentCode()); ?></strong></td>
                             </tr>
                         </thead>
                         <tbody>
@@ -118,7 +118,7 @@
                     <table>
                         <thead>
                             <tr>
-                                <td><strong><?php echo lang('Column.shipping_address'); ?></strong></td>
+                                <td><strong><?php echo lang('Column.shipping_address', [], $language_lib->getCurrentCode()); ?></strong></td>
                             </tr>
                         </thead>
                         <tbody>
@@ -134,7 +134,7 @@
                     <table>
                         <thead>
                             <tr>
-                                <td colspan="2"><strong><?php echo lang('Column.payment_method'); ?></strong></td>
+                                <td colspan="2"><strong><?php echo lang('Column.payment_method', [], $language_lib->getCurrentCode()); ?></strong></td>
                             </tr>
                         </thead>
                         <tbody>
@@ -148,7 +148,7 @@
                     <table>
                         <thead>
                             <tr>
-                                <td><strong><?php echo lang('Column.shipping_method'); ?></strong></td>
+                                <td><strong><?php echo lang('Column.shipping_method', [], $language_lib->getCurrentCode()); ?></strong></td>
                             </tr>
                         </thead>
                         <tbody>
@@ -171,7 +171,7 @@
                 </div>
             </div>
             <?php if ($sellers) { ?>
-            <h5 class="border-bottom pb-3 mb-3"><?php echo lang('Text.products'); ?></h5>
+            <h5 class="border-bottom pb-3 mb-3"><?php echo lang('Text.products', [], $language_lib->getCurrentCode()); ?></h5>
                 <?php foreach ($sellers as $seller) { ?>
                 <div class="border p-3 mb-5 bg-white">
                     <h6 class="border-bottom pb-3 mb-3"><strong><?php echo $seller['store_name']; ?></strong></h6>
@@ -179,10 +179,10 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <td class="w-50"><strong><?php echo lang('Column.products'); ?></strong></td>
-                                    <td><strong><?php echo lang('Column.quantity'); ?></strong></td>
-                                    <td><strong><?php echo lang('Column.price'); ?></strong></td>
-                                    <td class="text-end"><strong><?php echo lang('Column.sub_total'); ?></strong></td>
+                                    <td class="w-50"><strong><?php echo lang('Column.products', [], $language_lib->getCurrentCode()); ?></strong></td>
+                                    <td><strong><?php echo lang('Column.quantity', [], $language_lib->getCurrentCode()); ?></strong></td>
+                                    <td><strong><?php echo lang('Column.price', [], $language_lib->getCurrentCode()); ?></strong></td>
+                                    <td class="text-end"><strong><?php echo lang('Column.sub_total', [], $language_lib->getCurrentCode()); ?></strong></td>
                                 </tr>
                             </thead>
                             <?php if ($seller['product']) { ?>
@@ -213,14 +213,14 @@
                         </table>
                     </div>
                     <?php if ($seller['order_status']) { ?>
-                    <h6 class="border-bottom pb-3 mb-3"><?php echo lang('Text.order_status_histories'); ?></h6>
+                    <h6 class="border-bottom pb-3 mb-3"><?php echo lang('Text.order_status_histories', [], $language_lib->getCurrentCode()); ?></h6>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <td><strong><?php echo lang('Column.date_added'); ?></strong></td>
-                                    <td><strong><?php echo lang('Column.order_status'); ?></strong></td>
-                                    <td class="w-50"><strong><?php echo lang('Column.comment'); ?></strong></td>
+                                    <td><strong><?php echo lang('Column.date_added', [], $language_lib->getCurrentCode()); ?></strong></td>
+                                    <td><strong><?php echo lang('Column.order_status', [], $language_lib->getCurrentCode()); ?></strong></td>
+                                    <td class="w-50"><strong><?php echo lang('Column.comment', [], $language_lib->getCurrentCode()); ?></strong></td>
                                 </tr>
                             </thead>
                             <tbody>

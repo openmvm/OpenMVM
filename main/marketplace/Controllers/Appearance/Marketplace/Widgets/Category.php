@@ -92,6 +92,9 @@ class Category extends \App\Controllers\BaseController
 
             $data['widget'] = $widget++;
 
+            // Libraries
+            $data['language_lib'] = $this->language;
+
             // Generate view
             $template_setting = [
                 'location' => 'ThemeMarketplace',

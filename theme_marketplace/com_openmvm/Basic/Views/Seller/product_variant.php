@@ -7,11 +7,11 @@
 			<thead>
 				<tr>
 					<th>#</th>
-					<th class="text-nowrap"><?php echo lang('Column.product_variant', [], 'en'); ?></th>
-					<th><?php echo lang('Column.sku', [], 'en'); ?></th>
-					<th><?php echo lang('Column.quantity', [], 'en'); ?></th>
-					<th><?php echo lang('Column.price', [], 'en'); ?></th>
-					<th><?php echo lang('Column.weight', [], 'en'); ?></th>
+					<th class="text-nowrap"><?php echo lang('Column.product_variant', [], $language_lib->getCurrentCode()); ?></th>
+					<th><?php echo lang('Column.sku', [], $language_lib->getCurrentCode()); ?></th>
+					<th><?php echo lang('Column.quantity', [], $language_lib->getCurrentCode()); ?></th>
+					<th><?php echo lang('Column.price', [], $language_lib->getCurrentCode()); ?></th>
+					<th><?php echo lang('Column.weight', [], $language_lib->getCurrentCode()); ?></th>
 				</tr>
 			</thead>
 			<tbody>

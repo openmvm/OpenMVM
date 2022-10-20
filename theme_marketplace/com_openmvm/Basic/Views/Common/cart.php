@@ -1,16 +1,16 @@
 <?php if (!empty($sellers)) { ?>
     <?php foreach ($sellers as $seller) { ?>
     <h5 class="border-bottom pb-3"><?php echo $seller['store_name']; ?></h5>
-    <div class="text-end small"><strong><?php echo lang('Text.weight'); ?>:</strong> <?php echo $seller['weight']; ?></div>
+    <div class="text-end small"><strong><?php echo lang('Text.weight', [], $language_lib->getCurrentCode()); ?>:</strong> <?php echo $seller['weight']; ?></div>
         <?php if ($seller['product']) { ?>
             <div class="table-responsive mb-3">
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th class="text-nowrap" scope="col"><?php echo lang('Column.image'); ?></th>
-                            <th class="text-nowrap" scope="col"><?php echo lang('Column.product'); ?></th>
-                            <th class="text-nowrap text-end" scope="col"><?php echo lang('Column.qty'); ?></th>
-                            <th class="text-nowrap text-end" scope="col"><?php echo lang('Column.sub_total'); ?></th>
+                            <th class="text-nowrap" scope="col"><?php echo lang('Column.image', [], $language_lib->getCurrentCode()); ?></th>
+                            <th class="text-nowrap" scope="col"><?php echo lang('Column.product', [], $language_lib->getCurrentCode()); ?></th>
+                            <th class="text-nowrap text-end" scope="col"><?php echo lang('Column.qty', [], $language_lib->getCurrentCode()); ?></th>
+                            <th class="text-nowrap text-end" scope="col"><?php echo lang('Column.sub_total', [], $language_lib->getCurrentCode()); ?></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -21,14 +21,14 @@
                                 <div><?php echo $product['name']; ?></div>
                                 <?php if (!empty($product['option'])) { ?>
                                 <div class="small">
-                                    <div><?php echo lang('Text.options'); ?>:</div>
+                                    <div><?php echo lang('Text.options', [], $language_lib->getCurrentCode()); ?>:</div>
                                     <?php foreach ($product['option'] as $option) { ?>
-                                    <div>- <?php echo $option['description'][$language->getCurrentId()]['name']; ?>: <?php echo $option['option_value']['description'][$language->getCurrentId()]['name']; ?></div>
+                                    <div>- <?php echo $option['description'][$language_lib->getCurrentId()]['name']; ?>: <?php echo $option['option_value']['description'][$language_lib->getCurrentId()]['name']; ?></div>
                                     <?php } ?>
                                 </div>
                                 <?php } ?>
                                 <div class="text-muted my-3"><?php echo $product['quantity']; ?> X <?php echo $product['price']; ?></div>
-                                <div><a href="javascript:void(0);" class="link-danger text-decoration-none"><i class="fas fa-trash-alt fa-fw"></i> <?php echo lang('Button.remove'); ?></a></div>
+                                <div><a href="javascript:void(0);" class="link-danger text-decoration-none"><i class="fas fa-trash-alt fa-fw"></i> <?php echo lang('Button.remove', [], $language_lib->getCurrentCode()); ?></a></div>
                             </td>
                             <td class="text-end small"><?php echo $product['quantity']; ?></td>
                             <td class="text-end small"><?php echo $product['total']; ?></td>
@@ -38,14 +38,14 @@
                 </table>
             </div>
         <?php } ?>
-    <div class="d-grid gap-2 mb-5"><a href="<?php echo $seller['checkout']; ?>" class="btn btn-primary"><?php echo lang('button.checkout'); ?></a></div>
+    <div class="d-grid gap-2 mb-5"><a href="<?php echo $seller['checkout']; ?>" class="btn btn-primary"><i class="fas fa-cash-register me-2"></i><?php echo lang('button.checkout', [], $language_lib->getCurrentCode()); ?></a></div>
     <?php } ?>
     <div class="row">
         <div class="col-sm-6">
-            <div class="d-grid gap-2"><a href="<?php echo $shopping_cart; ?>" class="btn btn-danger"><?php echo lang('Button.shopping_cart'); ?></a></div>
+            <div class="d-grid gap-2"><a href="<?php echo $shopping_cart; ?>" class="btn btn-danger"><i class="fas fa-shopping-cart me-2"></i><?php echo lang('Button.shopping_cart', [], $language_lib->getCurrentCode()); ?></a></div>
         </div>
         <div class="col-sm-6">
-            <div class="d-grid gap-2"><a href="<?php echo $checkout; ?>" class="btn btn-success"><?php echo lang('Button.checkout_all'); ?></a></div>
+            <div class="d-grid gap-2"><a href="<?php echo $checkout; ?>" class="btn btn-success"><i class="fas fa-cash-register me-2"></i><?php echo lang('Button.checkout_all', [], $language_lib->getCurrentCode()); ?></a></div>
         </div>
     </div>
 <script type="text/javascript"><!--
@@ -62,5 +62,5 @@ $(document).ready(function() {
 });
 //--></script> 
 <?php } else { ?>
-<div><?php echo lang('Text.cart_empty'); ?></div>
+<div><?php echo lang('Text.cart_empty', [], $language_lib->getCurrentCode()); ?></div>
 <?php } ?>

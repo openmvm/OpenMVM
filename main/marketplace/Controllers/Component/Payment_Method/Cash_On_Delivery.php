@@ -40,6 +40,9 @@ class Cash_On_Delivery extends \App\Controllers\BaseController
             $data['confirm'] = $this->url->customerLink('marketplace/component/payment_method/cash_on_delivery/confirm', '', true);
         }
 
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Generate view
         $template_setting = [
             'location' => 'ThemeMarketplace',

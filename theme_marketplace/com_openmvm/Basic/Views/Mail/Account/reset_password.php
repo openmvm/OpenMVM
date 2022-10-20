@@ -14,8 +14,8 @@
 <body class="bg-light">
 	<p><?php echo $greeting; ?></p>
 	<p><?php echo $header; ?></p>
-	<p style="text-align: center;"><a href="<?php echo $link; ?>"><?php echo lang('Button.reset_password'); ?></a></p>
+	<p style="text-align: center;"><a href="<?php echo $link; ?>"><?php echo lang('Button.reset_password', [], $language_lib->getCurrentCode()); ?></a></p>
 	<p><?php echo $footer; ?></p>
-	<p><?php echo lang('Mail.reset_password_thank_you'); ?><br /><?php echo sprintf(lang('Mail.reset_password_thank_you_from'), $marketplace_name); ?></p>
+	<p><?php echo lang('Mail.reset_password_thank_you', [], $language_lib->getCurrentCode()); ?><br /><?php echo sprintf(lang('Mail.reset_password_thank_you_from', [], $language_lib->getCurrentCode()), $marketplace_name); ?></p>
 </body>
 </html>

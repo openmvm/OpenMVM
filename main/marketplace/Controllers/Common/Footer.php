@@ -28,6 +28,9 @@ class Footer extends \App\Controllers\BaseController
         // Widget
         $data['marketplace_common_widget'] = $this->marketplace_common_widget;
 
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Generate view
         $template_setting = [
             'location' => 'ThemeMarketplace',

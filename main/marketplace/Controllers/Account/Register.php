@@ -47,6 +47,9 @@ class Register extends \App\Controllers\BaseController
         // Widget
         $data['marketplace_common_widget'] = $this->marketplace_common_widget;
 
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Header
         $header_params = array(
             'title' => lang('Heading.register', [], $this->language->getCurrentCode()),

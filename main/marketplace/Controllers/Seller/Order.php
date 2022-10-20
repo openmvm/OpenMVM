@@ -153,6 +153,9 @@ class Order extends \App\Controllers\BaseController
         $data['shipped_order_status_id'] = $this->setting->get('setting_shipped_order_status_id');
         $data['delivered_order_status_id'] = $this->setting->get('setting_delivered_order_status_id');
 
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Header
         $header_params = array(
             'title' => lang('Heading.my_orders', [], $this->language->getCurrentCode()),
@@ -411,7 +414,8 @@ class Order extends \App\Controllers\BaseController
                 $data['tracking_number_add'] = $this->url->customerLink('marketplace/seller/order/add_tracking_number', '', true);
             }
 
-            $data['language'] = $this->language;
+            // Libraries
+            $data['language_lib'] = $this->language;
 
             // Header
             $header_params = array(
@@ -435,7 +439,10 @@ class Order extends \App\Controllers\BaseController
             return $this->template->render($template_setting, $data);
         } else {
             $data['message'] = lang('Error.no_data_found', [], $this->language->getCurrentCode());
-    
+        
+            // Libraries
+            $data['language_lib'] = $this->language;
+
             // Header
             $header_params = array(
                 'title' => lang('Heading.not_found', [], $this->language->getCurrentCode()),

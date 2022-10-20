@@ -31,6 +31,9 @@ class Seller extends \App\Controllers\BaseController
 
         $data['heading_title'] = lang('Heading.sellers', [], $this->language->getCurrentCode());
 
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Header
         $header_params = array(
             'title' => lang('Heading.sellers', [], $this->language->getCurrentCode()),
@@ -100,14 +103,31 @@ class Seller extends \App\Controllers\BaseController
                     $thumb = $this->image->resize('no_image.png', 256, 256, true);
                 }
 
+                // Get product variant min max prices
+                if (!empty($product['product_option'])) {
+                    $product_variant_price = $this->model_product_product->getProductVariantMinMaxPrices($product['product_id']);
+
+                    $min_price = $this->currency->format($product_variant_price['min_price'], $this->currency->getCurrentCode());
+                    $max_price = $this->currency->format($product_variant_price['max_price'], $this->currency->getCurrentCode());
+                } else {
+                    $min_price = null;
+                    $max_price = null;
+                }
+
                 $data['products'][] = [
                     'product_id' => $product['product_id'],
                     'name' => $product['name'],
                     'thumb' => $thumb,
                     'price' => $this->currency->format($product['price'], $this->currency->getCurrentCode()),
+                    'product_option' => $product['product_option'],
+                    'min_price' => $min_price,
+                    'max_price' => $max_price,
                     'href' => $this->url->customerLink('marketplace/product/product/get/' . $product['slug'] . '-p' . $product['product_id']),
                 ];
             }
+
+            // Libraries
+            $data['language_lib'] = $this->language;
 
             // Header
             $header_params = array(
@@ -131,7 +151,10 @@ class Seller extends \App\Controllers\BaseController
             return $this->template->render($template_setting, $data);
         } else {
             $data['message'] = lang('Error.no_data_found', [], $this->language->getCurrentCode());
-    
+        
+            // Libraries
+            $data['language_lib'] = $this->language;
+
             // Header
             $header_params = array(
                 'title' => lang('Heading.not_found', [], $this->language->getCurrentCode()),

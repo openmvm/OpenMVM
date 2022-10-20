@@ -11,15 +11,21 @@
                         <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" class="card-img-top" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
                         <div class="card-body">
                             <a href="<?php echo $product['href']; ?>" class="card-title" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>"><?php echo $product['name']; ?></a>
-                            <div class="my-3"><?php echo $product['price']; ?></div>
-                            <a href="<?php echo $product['href']; ?>" class="btn btn-primary"><?php echo lang('Button.details'); ?></a>
+                            <div class="my-3">
+                                <?php if (!empty($product['product_option'])) { ?>
+                                <div><?php echo $product['min_price']; ?> - <?php echo $product['max_price']; ?></div>
+                                <?php } else { ?>
+                                <div><?php echo $product['price']; ?></div>
+                                <?php } ?>
+                            </div>
+                            <a href="<?php echo $product['href']; ?>" class="btn btn-primary"><?php echo lang('Button.details', [], $language_lib->getCurrentCode()); ?></a>
                         </div>
                     </div>                
                 </div>
                 <?php } ?>
             </div>
             <?php } else { ?>
-            <div class="text-secondary text-center my-5"><?php echo lang('Error.no_data_found'); ?></div>
+            <div class="text-secondary text-center my-5"><?php echo lang('Error.no_data_found', [], $language_lib->getCurrentCode()); ?></div>
             <?php } ?>
         </div>
     </div>

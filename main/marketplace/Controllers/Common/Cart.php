@@ -72,7 +72,8 @@ class Cart extends \App\Controllers\BaseController
         $data['shopping_cart'] = $this->url->customerLink('marketplace/checkout/cart', '', true);
         $data['checkout'] = $this->url->customerLink('marketplace/checkout/checkout', '', true);
 
-        $data['language'] = $this->language;
+        // Libraries
+        $data['language_lib'] = $this->language;
 
         // Generate view
         $template_setting = [

@@ -4,41 +4,41 @@
         <h1 class="border-bottom pb-3 mb-3"><?php echo $heading_title; ?></h1>
         <?php echo form_open($action, ['id' => 'form-shipping-method']); ?>
         <div class="card shadow list">
-            <div class="card-header clearfix"><h5 class="pt-1 float-start"><i class="fas fa-edit fa-fw"></i> <?php echo lang('Heading.edit'); ?></h5> <div class="float-end"><button type="submit" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="<?php echo lang('Button.save'); ?>"><i class="fas fa-save fa-fw"></i></button> <a href="<?php echo $cancel; ?>" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="<?php echo lang('Button.cancel'); ?>"><i class="fas fa-long-arrow-alt-left fa-fw"></i></a></div></div>
+            <div class="card-header clearfix"><h5 class="pt-1 float-start"><i class="fas fa-edit fa-fw"></i> <?php echo lang('Heading.edit', [], $language_lib->getCurrentCode()); ?></h5> <div class="float-end"><button type="submit" class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="<?php echo lang('Button.save', [], $language_lib->getCurrentCode()); ?>"><i class="fas fa-save fa-fw"></i></button> <a href="<?php echo $cancel; ?>" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="<?php echo lang('Button.cancel', [], $language_lib->getCurrentCode()); ?>"><i class="fas fa-long-arrow-alt-left fa-fw"></i></a></div></div>
             <div class="card-body">
                 <fieldset>
                     <div class="mb-3">
-                        <label for="input-status" class="form-label"><?php echo lang('Entry.status'); ?></label>
-                        <select name="status" id="input-status" class="form-control">
+                        <label for="input-status" class="form-label"><?php echo lang('Entry.status', [], $language_lib->getCurrentCode()); ?></label>
+                        <select name="status" id="input-status" class="form-select">
                             <?php if ($status) { ?>
-                            <option value="0"><?php echo lang('Text.disabled'); ?></option>
-                            <option value="1" selected="selected"><?php echo lang('Text.enabled'); ?></option>
+                            <option value="0"><?php echo lang('Text.disabled', [], $language_lib->getCurrentCode()); ?></option>
+                            <option value="1" selected="selected"><?php echo lang('Text.enabled', [], $language_lib->getCurrentCode()); ?></option>
                             <?php } else { ?>
-                            <option value="0" selected="selected"><?php echo lang('Text.disabled'); ?></option>
-                            <option value="1"><?php echo lang('Text.enabled'); ?></option>
+                            <option value="0" selected="selected"><?php echo lang('Text.disabled', [], $language_lib->getCurrentCode()); ?></option>
+                            <option value="1"><?php echo lang('Text.enabled', [], $language_lib->getCurrentCode()); ?></option>
                             <?php } ?>
                         </select>
                     </div>
-                    <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.rates'); ?></legend>
+                    <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.rates', [], $language_lib->getCurrentCode()); ?></legend>
                     <div id="rates" class="d-flex align-items-start">
                         <div class="nav flex-column nav-pills me-3 w-25" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                             <?php $rate_row = 1; ?>
                             <?php foreach ($rates as $rate) { ?>
-                            <button class="nav-link mb-2" id="v-pills-<?php echo $rate_row; ?>-tab" data-bs-toggle="pill" data-bs-target="#v-pills-<?php echo $rate_row; ?>" type="button" role="tab" aria-controls="v-pills-<?php echo $rate_row; ?>" aria-selected="false"><?php echo lang('Tab.rate'); ?> <?php echo $rate_row; ?></button>
+                            <button class="nav-link mb-2" id="v-pills-<?php echo $rate_row; ?>-tab" data-bs-toggle="pill" data-bs-target="#v-pills-<?php echo $rate_row; ?>" type="button" role="tab" aria-controls="v-pills-<?php echo $rate_row; ?>" aria-selected="false"><?php echo lang('Tab.rate', [], $language_lib->getCurrentCode()); ?> <?php echo $rate_row; ?></button>
                             <?php $rate_row++; ?>
                             <?php } ?>
-                            <button class="btn btn-secondary" id="button-add-rate" type="button"><i class="fas fa-plus-circle fa-fw"></i>&nbsp;<?php echo lang('Button.add'); ?>&nbsp;<?php echo lang('Button.rate'); ?></button>
+                            <button class="btn btn-secondary" id="button-add-rate" type="button"><i class="fas fa-plus-circle fa-fw"></i>&nbsp;<?php echo lang('Button.add', [], $language_lib->getCurrentCode()); ?>&nbsp;<?php echo lang('Button.rate', [], $language_lib->getCurrentCode()); ?></button>
                         </div>
                         <div class="tab-content w-100" id="v-pills-tabContent">
                             <?php $rate_row = 1; ?>
                             <?php $weight_row = 1; ?>
                             <?php foreach ($rates as $rate) { ?>
                             <div class="tab-pane fade" id="v-pills-<?php echo $rate_row; ?>" role="tabpanel" aria-labelledby="v-pills-<?php echo $rate_row; ?>-tab">
-                                <h5 class="border-bottom pb-3 mb-3"><?php echo lang('Tab.rate'); ?> <?php echo $rate_row; ?></h5>
+                                <h5 class="border-bottom pb-3 mb-3"><?php echo lang('Tab.rate', [], $language_lib->getCurrentCode()); ?> <?php echo $rate_row; ?></h5>
                                 <fieldset>
                                 <div class="mb-3 required">
-                                    <label for="input-rate-country-<?php echo $rate_row; ?>" class="form-label"><?php echo lang('Entry.country'); ?></label>
-                                    <select name="rate[<?php echo $rate_row; ?>][country_id]" class="form-control" id="input-rate-country-<?php echo $rate_row; ?>" data-index="<?php echo $rate_row; ?>" data-zone-id="<?php echo $rate['zone_id']; ?>" disabled="disabled">
+                                    <label for="input-rate-country-<?php echo $rate_row; ?>" class="form-label"><?php echo lang('Entry.country', [], $language_lib->getCurrentCode()); ?></label>
+                                    <select name="rate[<?php echo $rate_row; ?>][country_id]" class="form-select" id="input-rate-country-<?php echo $rate_row; ?>" data-index="<?php echo $rate_row; ?>" data-zone-id="<?php echo $rate['zone_id']; ?>" disabled="disabled">
                                         <?php foreach ($countries as $country) { ?>
                                             <?php if ($country['country_id'] == $rate['country_id']) { ?>
                                             <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
@@ -49,25 +49,25 @@
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="input-rate-zone-<?php echo $rate_row; ?>" class="form-label"><?php echo lang('Entry.zone'); ?></label>
-                                    <select name="rate[<?php echo $rate_row; ?>][zone_id]" class="form-control" id="input-rate-zone-<?php echo $rate_row; ?>"><option value="0"><?php echo lang('Text.all_zones'); ?></option></select>
+                                    <label for="input-rate-zone-<?php echo $rate_row; ?>" class="form-label"><?php echo lang('Entry.zone', [], $language_lib->getCurrentCode()); ?></label>
+                                    <select name="rate[<?php echo $rate_row; ?>][zone_id]" class="form-select" id="input-rate-zone-<?php echo $rate_row; ?>"><option value="0"><?php echo lang('Text.all_zones', [], $language_lib->getCurrentCode()); ?></option></select>
                                 </div>
-                                <legend class="lead border-bottom pb-2"><?php echo lang('Text.rates'); ?></legend>
+                                <legend class="lead border-bottom pb-2"><?php echo lang('Text.rates', [], $language_lib->getCurrentCode()); ?></legend>
                                 <div id="weights-<?php echo $rate_row; ?>" class="table-responsive">
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th><?php echo lang('Column.weight'); ?></th>
-                                                <th><?php echo lang('Column.rate'); ?></th>
-                                                <th class="text-end"><?php echo lang('Column.action'); ?></th>
+                                                <th><?php echo lang('Column.weight', [], $language_lib->getCurrentCode()); ?></th>
+                                                <th><?php echo lang('Column.rate', [], $language_lib->getCurrentCode()); ?></th>
+                                                <th class="text-end"><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php if ($rate['weight']) { ?>
                                                 <?php foreach ($rate['weight'] as $weight) { ?>
                                                 <tr id="weight-<?php echo $rate_row; ?>-<?php echo $weight_row; ?>">
-                                                    <td><input type="number" step="any" min="0" name="rate[<?php echo $rate_row; ?>][weight][<?php echo $weight_row; ?>][weight]" value="<?php echo $weight['weight']; ?>" id="input-weight-weigth<?php echo $rate_row; ?>-<?php echo $weight_row; ?>" class="form-control" placeholder="<?php echo lang('Entry.weight'); ?>" /></td>
-                                                    <td><input type="number" step="any" min="0" name="rate[<?php echo $rate_row; ?>][weight][<?php echo $weight_row; ?>][rate]" value="<?php echo $weight['rate']; ?>" id="input-weight-rate<?php echo $rate_row; ?>-<?php echo $weight_row; ?>" class="form-control" placeholder="<?php echo lang('Entry.rate'); ?>" /></td>
+                                                    <td><input type="number" step="any" min="0" name="rate[<?php echo $rate_row; ?>][weight][<?php echo $weight_row; ?>][weight]" value="<?php echo $weight['weight']; ?>" id="input-weight-weigth<?php echo $rate_row; ?>-<?php echo $weight_row; ?>" class="form-control" placeholder="<?php echo lang('Entry.weight', [], $language_lib->getCurrentCode()); ?>" /></td>
+                                                    <td><input type="number" step="any" min="0" name="rate[<?php echo $rate_row; ?>][weight][<?php echo $weight_row; ?>][rate]" value="<?php echo $weight['rate']; ?>" id="input-weight-rate<?php echo $rate_row; ?>-<?php echo $weight_row; ?>" class="form-control" placeholder="<?php echo lang('Entry.rate', [], $language_lib->getCurrentCode()); ?>" /></td>
                                                     <td class="text-end"><button type="button" class="btn btn-danger btn-sm" onclick="$('#weight-<?php echo $rate_row; ?>-<?php echo $weight_row; ?>').remove();"><i class="fas fa-minus-circle fa-fw"></i></button></td>
                                                 </tr>
                                                 <?php $weight_row++; ?>
@@ -99,28 +99,28 @@ var rate_row = '<?php echo $rate_row; ?>';
 
 $( "#button-add-rate" ).on( "click", function() {
     html = '<div class="tab-pane fade" id="v-pills-' + rate_row + '" role="tabpanel" aria-labelledby="v-pills-' + rate_row + '-tab">';
-    html += '    <h5 class="border-bottom pb-3 mb-3"><?php echo lang('Tab.rate'); ?> ' + rate_row + '</h5>';
+    html += '    <h5 class="border-bottom pb-3 mb-3"><?php echo lang('Tab.rate', [], $language_lib->getCurrentCode()); ?> ' + rate_row + '</h5>';
     html += '    <fieldset>';
     html += '    <div class="mb-3 required">';
-    html += '        <label for="input-rate-country-' + rate_row + '" class="form-label"><?php echo lang('Entry.country'); ?></label>';
-    html += '        <select name="rate[' + rate_row + '][country_id]" class="form-control" id="input-rate-country-' + rate_row + '" data-index="' + rate_row + '">';
+    html += '        <label for="input-rate-country-' + rate_row + '" class="form-label"><?php echo lang('Entry.country', [], $language_lib->getCurrentCode()); ?></label>';
+    html += '        <select name="rate[' + rate_row + '][country_id]" class="form-select" id="input-rate-country-' + rate_row + '" data-index="' + rate_row + '">';
     <?php foreach ($countries as $country) { ?>
     html += '            <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>';
     <?php } ?>
     html += '        </select>';
     html += '    </div>';
     html += '    <div class="mb-3">';
-    html += '        <label for="input-rate-zone-' + rate_row + '" class="form-label"><?php echo lang('Entry.zone'); ?></label>';
-    html += '        <select name="rate[' + rate_row + '][zone_id]" class="form-control" id="input-rate-zone-' + rate_row + '"><option value="0"><?php echo lang('Text.all_zones'); ?></option></select>';
+    html += '        <label for="input-rate-zone-' + rate_row + '" class="form-label"><?php echo lang('Entry.zone', [], $language_lib->getCurrentCode()); ?></label>';
+    html += '        <select name="rate[' + rate_row + '][zone_id]" class="form-select" id="input-rate-zone-' + rate_row + '"><option value="0"><?php echo lang('Text.all_zones', [], $language_lib->getCurrentCode()); ?></option></select>';
     html += '    </div>';
-    html += '    <legend class="lead border-bottom pb-2"><?php echo lang('Text.rates'); ?></legend>';
+    html += '    <legend class="lead border-bottom pb-2"><?php echo lang('Text.rates', [], $language_lib->getCurrentCode()); ?></legend>';
     html += '    <div id="weights-' + rate_row + '" class="table-responsive">';
     html += '        <table class="table">';
     html += '            <thead>';
     html += '                <tr>';
-    html += '                    <th><?php echo lang('Column.weight'); ?></th>';
-    html += '                    <th><?php echo lang('Column.rate'); ?></th>';
-    html += '                    <th class="text-end"><?php echo lang('Column.action'); ?></th>';
+    html += '                    <th><?php echo lang('Column.weight', [], $language_lib->getCurrentCode()); ?></th>';
+    html += '                    <th><?php echo lang('Column.rate', [], $language_lib->getCurrentCode()); ?></th>';
+    html += '                    <th class="text-end"><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>';
     html += '                </tr>';
     html += '            </thead>';
     html += '            <tbody>';
@@ -138,7 +138,7 @@ $( "#button-add-rate" ).on( "click", function() {
 
     $('#rates #v-pills-tabContent').append(html);
 
-    $('#rates #v-pills-tab').find('#button-add-rate').before('<button class="nav-link mb-2" id="v-pills-' + rate_row + '-tab" data-bs-toggle="pill" data-bs-target="#v-pills-' + rate_row + '" type="button" role="tab" aria-controls="v-pills-' + rate_row + '" aria-selected="false"><i class="fas fa-minus-circle fa-fw" onclick="$(\'#v-pills-' + rate_row + '-tab\').remove(); $(\'#v-pills-' + rate_row + '\').remove(); var triggerFirstTabEl = document.querySelector(\'#rates #v-pills-tab button:first-child\'); new bootstrap.Tab(triggerFirstTabEl).show();"></i> <?php echo lang('Tab.rate'); ?> ' + rate_row + '</button>');
+    $('#rates #v-pills-tab').find('#button-add-rate').before('<button class="nav-link mb-2" id="v-pills-' + rate_row + '-tab" data-bs-toggle="pill" data-bs-target="#v-pills-' + rate_row + '" type="button" role="tab" aria-controls="v-pills-' + rate_row + '" aria-selected="false"><i class="fas fa-minus-circle fa-fw" onclick="$(\'#v-pills-' + rate_row + '-tab\').remove(); $(\'#v-pills-' + rate_row + '\').remove(); var triggerFirstTabEl = document.querySelector(\'#rates #v-pills-tab button:first-child\'); new bootstrap.Tab(triggerFirstTabEl).show();"></i> <?php echo lang('Tab.rate', [], $language_lib->getCurrentCode()); ?> ' + rate_row + '</button>');
 
     var triggerFirstTabEl = document.querySelector('#rates #v-pills-' + rate_row + '-tab');
     new bootstrap.Tab(triggerFirstTabEl).show();
@@ -166,7 +166,7 @@ $('#rates').on('change', 'select[name$=\'[country_id]\']', function() {
                 //$('button[form=\'form-geo-zone\']').prop('disabled', false);
             },
             success: function(json) {
-                html = '<option value="0"><?php echo lang('Text.all_zones'); ?></option>';
+                html = '<option value="0"><?php echo lang('Text.all_zones', [], $language_lib->getCurrentCode()); ?></option>';
                 
                 if (json['zones'] && json['zones'] != '') { 
                     for (i = 0; i < json['zones'].length; i++) {
@@ -202,8 +202,8 @@ var weight_row = '<?php echo $weight_row; ?>';
 
 function addWeight(rate_row) {
     html = '<tr id="weight-' + rate_row + '-' + weight_row + '">';
-    html += '    <td><input type="number" step="any" min="0" name="rate[' + rate_row + '][weight][' + weight_row + '][weight]" id="input-weight-weigth' + rate_row + '-' + weight_row + '" class="form-control" placeholder="<?php echo lang('Entry.weight'); ?>" /></td>';
-    html += '    <td><input type="number" step="any" min="0" name="rate[' + rate_row + '][weight][' + weight_row + '][rate]" id="input-weight-rate' + rate_row + '-' + weight_row + '" class="form-control" placeholder="<?php echo lang('Entry.rate'); ?>" /></td>';
+    html += '    <td><input type="number" step="any" min="0" name="rate[' + rate_row + '][weight][' + weight_row + '][weight]" id="input-weight-weigth' + rate_row + '-' + weight_row + '" class="form-control" placeholder="<?php echo lang('Entry.weight', [], $language_lib->getCurrentCode()); ?>" /></td>';
+    html += '    <td><input type="number" step="any" min="0" name="rate[' + rate_row + '][weight][' + weight_row + '][rate]" id="input-weight-rate' + rate_row + '-' + weight_row + '" class="form-control" placeholder="<?php echo lang('Entry.rate', [], $language_lib->getCurrentCode()); ?>" /></td>';
     html += '    <td class="text-end"><button type="button" class="btn btn-danger btn-sm" onclick="$(\'#weight-' + rate_row + '-' + weight_row + '\').remove();"><i class="fas fa-minus-circle fa-fw"></i></button></td>';
     html += '</tr>';
 

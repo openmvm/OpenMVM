@@ -53,6 +53,9 @@ class Wallet extends \App\Controllers\BaseController
             ];
         }
 
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Header
         $header_params = array(
             'title' => lang('Heading.my_wallet', [], $this->language->getCurrentCode()),

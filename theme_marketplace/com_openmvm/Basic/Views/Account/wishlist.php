@@ -19,14 +19,14 @@
                             <div><?php echo $product['price']; ?></div>
                             <?php } ?>
                         </div>
-                        <a href="<?php echo $product['href']; ?>" class="btn btn-primary"><?php echo lang('Button.details'); ?></a>
+                        <a href="<?php echo $product['href']; ?>" class="btn btn-primary"><?php echo lang('Button.details', [], $language_lib->getCurrentCode()); ?></a>
                     </div>
                 </div>
             </div>
             <?php } ?>
         </div>
         <?php } else { ?>
-        <div class="text-secondary text-center my-5"><?php echo lang('Error.no_data_found'); ?></div>
+        <div class="text-secondary text-center my-5"><?php echo lang('Error.no_data_found', [], $language_lib->getCurrentCode()); ?></div>
         <?php } ?>
     </div>
 </div>

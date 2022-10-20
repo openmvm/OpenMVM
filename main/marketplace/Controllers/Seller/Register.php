@@ -58,6 +58,9 @@ class Register extends \App\Controllers\BaseController
 
         $data['cover_thumb'] = $this->image->resize('no_image.png', 100, 100, true);
 
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Header
         $header_params = array(
             'title' => lang('Heading.register', [], $this->language->getCurrentCode()),

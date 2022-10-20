@@ -82,6 +82,9 @@ class Edit extends \App\Controllers\BaseController
 
         $data['upload'] = $this->url->customerLink('marketplace/tool/upload', [], true);
 
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Header
         $header_params = array(
             'title' => lang('Heading.seller_edit', [], $this->language->getCurrentCode()),

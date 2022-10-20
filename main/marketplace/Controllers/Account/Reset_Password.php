@@ -71,6 +71,9 @@ class Reset_Password extends \App\Controllers\BaseController
 
         $data['reset_password_instruction'] = sprintf(lang('Text.reset_password_instruction', [], $this->language->getCurrentCode()), $this->setting->get('setting_marketplace_name'), $this->setting->get('setting_marketplace_name'));
 
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Header
         $header_params = array(
             'title' => lang('Heading.reset_password', [], $this->language->getCurrentCode()),
@@ -172,6 +175,9 @@ class Reset_Password extends \App\Controllers\BaseController
         }
 
         $data['reset_password_confirm_instruction'] = lang('Text.reset_password_confirm_instruction', [], $this->language->getCurrentCode());
+
+        // Libraries
+        $data['language_lib'] = $this->language;
 
         // Header
         $header_params = array(

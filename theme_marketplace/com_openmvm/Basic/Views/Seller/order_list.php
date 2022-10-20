@@ -3,16 +3,16 @@
     <div id="content" class="content">
         <h1 class="border-bottom pb-3 mb-3"><?php echo $heading_title; ?></h1>
         <div class="clearfix mb-3">
-            <div class="float-start"><a href="<?php echo $cancel; ?>" class="btn btn-outline-secondary btn-sm"><i class="fas fa-long-arrow-alt-left fa-fw"></i> <?php echo lang('Button.cancel'); ?></a></div>
+            <div class="float-start"><a href="<?php echo $cancel; ?>" class="btn btn-outline-secondary btn-sm"><i class="fas fa-long-arrow-alt-left fa-fw"></i> <?php echo lang('Button.cancel', [], $language_lib->getCurrentCode()); ?></a></div>
         </div>
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th scope="col"><?php echo lang('Column.data'); ?></th>
-                        <th scope="col"><?php echo lang('Column.products'); ?></th>
-                        <th scope="col"><?php echo lang('Column.total'); ?></th>
-                        <th scope="col" class="text-end"><?php echo lang('Column.action'); ?></th>
+                        <th scope="col"><?php echo lang('Column.data', [], $language_lib->getCurrentCode()); ?></th>
+                        <th scope="col"><?php echo lang('Column.products', [], $language_lib->getCurrentCode()); ?></th>
+                        <th scope="col"><?php echo lang('Column.total', [], $language_lib->getCurrentCode()); ?></th>
+                        <th scope="col" class="text-end"><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,19 +23,19 @@
                                 <table class="mb-3">
                                     <tbody>
                                         <tr>
-                                            <td><strong><?php echo lang('Text.date_added'); ?></strong></td>
+                                            <td><strong><?php echo lang('Text.date_added', [], $language_lib->getCurrentCode()); ?></strong></td>
                                             <td><strong>:</strong> <?php echo $order['date_added']; ?></td>
                                         </tr>
                                         <tr>
-                                            <td><strong><?php echo lang('Text.order_id'); ?></strong></td>
+                                            <td><strong><?php echo lang('Text.order_id', [], $language_lib->getCurrentCode()); ?></strong></td>
                                             <td><strong>:</strong> <?php echo $order['order_id']; ?></td>
                                         </tr>
                                         <tr>
-                                            <td><strong><?php echo lang('Text.invoice'); ?></strong></td>
+                                            <td><strong><?php echo lang('Text.invoice', [], $language_lib->getCurrentCode()); ?></strong></td>
                                             <td><strong>:</strong> <?php echo $order['invoice']; ?></td>
                                         </tr>
                                         <tr>
-                                            <td><strong><?php echo lang('Text.order_status'); ?></strong></td>
+                                            <td><strong><?php echo lang('Text.order_status', [], $language_lib->getCurrentCode()); ?></strong></td>
                                             <td><strong>:</strong> <?php echo $order['order_status']['name']; ?></td>
                                         </tr>
                                     </tbody>
@@ -52,9 +52,9 @@
                                                 <div><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a> X <?php echo $product['quantity']; ?></div>
                                                 <?php if (!empty($product['option'])) { ?>
                                                 <div class="small">
-                                                    <div><?php echo lang('Text.options'); ?>:</div>
+                                                    <div><?php echo lang('Text.options', [], $language_lib->getCurrentCode()); ?>:</div>
                                                     <?php foreach ($product['option'] as $option) { ?>
-                                                    <div>- <?php echo $option['description'][$language->getCurrentId()]['name']; ?>: <?php echo $option['option_value']['description'][$language->getCurrentId()]['name']; ?></div>
+                                                    <div>- <?php echo $option['description'][$language_lib->getCurrentId()]['name']; ?>: <?php echo $option['option_value']['description'][$language_lib->getCurrentId()]['name']; ?></div>
                                                     <?php } ?>
                                                 </div>
                                                 <?php } ?>
@@ -68,15 +68,15 @@
                             <td><?php echo $order['total']; ?></td>
                             <td class="text-end">
                                 <div class="d-grid">
-                                    <a href="<?php echo $order['info']; ?>" class="btn btn-outline-info btn-sm mb-2"><i class="fas fa-eye fa-fw"></i> <?php echo lang('Button.show_order', [], 'en'); ?></a>
+                                    <a href="<?php echo $order['info']; ?>" class="btn btn-outline-info btn-sm mb-2"><i class="fas fa-eye fa-fw"></i> <?php echo lang('Button.show_order', [], $language_lib->getCurrentCode()); ?></a>
                                     <?php if (!in_array($order['order_status']['order_status_id'], $non_acceptable_order_statuses)) { ?>
-                                    <button type="button" class="btn btn-outline-success btn-sm mb-2" onclick="updateOrderStatus(this, '<?php echo $order['order_id']; ?>', '<?php echo $accepted_order_status_id; ?>');"><i class="fas fa-check fa-fw"></i> <?php echo lang('Button.accept_order', [], 'en'); ?></button>
+                                    <button type="button" class="btn btn-outline-success btn-sm mb-2" onclick="updateOrderStatus(this, '<?php echo $order['order_id']; ?>', '<?php echo $accepted_order_status_id; ?>');"><i class="fas fa-check fa-fw"></i> <?php echo lang('Button.accept_order', [], $language_lib->getCurrentCode()); ?></button>
                                     <?php } ?>
                                     <?php if (!in_array($order['order_status']['order_status_id'], $non_rejectable_order_statuses)) { ?>
-                                    <button type="button" class="btn btn-outline-danger btn-sm mb-2" onclick="updateOrderStatus(this, '<?php echo $order['order_id']; ?>', '<?php echo $rejected_order_status_id; ?>');"><i class="fas fa-times fa-fw"></i> <?php echo lang('Button.reject_order', [], 'en'); ?></button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm mb-2" onclick="updateOrderStatus(this, '<?php echo $order['order_id']; ?>', '<?php echo $rejected_order_status_id; ?>');"><i class="fas fa-times fa-fw"></i> <?php echo lang('Button.reject_order', [], $language_lib->getCurrentCode()); ?></button>
                                     <?php } ?>
                                     <?php if ($order['order_status']['order_status_id'] == $shipped_order_status_id) { ?>
-                                    <button type="button" class="btn btn-outline-warning btn-sm mb-2" onclick="updateOrderStatus(this, '<?php echo $order['order_id']; ?>', '<?php echo $delivered_order_status_id; ?>');"><i class="fas fa-truck-ramp-box fa-fw"></i> <?php echo lang('Button.mark_as_delivered', [], 'en'); ?></button>
+                                    <button type="button" class="btn btn-outline-warning btn-sm mb-2" onclick="updateOrderStatus(this, '<?php echo $order['order_id']; ?>', '<?php echo $delivered_order_status_id; ?>');"><i class="fas fa-truck-ramp-box fa-fw"></i> <?php echo lang('Button.mark_as_delivered', [], $language_lib->getCurrentCode()); ?></button>
                                     <?php } ?>
                                 </div>
                             </td>
@@ -84,7 +84,7 @@
                         <?php } ?>
                     <?php } else { ?>
                     <tr>
-                        <td colspan="4" class="text-center"><?php echo lang('Error.no_data_found'); ?></td>
+                        <td colspan="4" class="text-center"><?php echo lang('Error.no_data_found', [], $language_lib->getCurrentCode()); ?></td>
                     </tr>
                     <?php } ?>
                 </tbody>

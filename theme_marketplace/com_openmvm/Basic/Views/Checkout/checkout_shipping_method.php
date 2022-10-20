@@ -25,7 +25,7 @@
                     </div>
                 <?php } ?>
             <?php } else { ?>
-            <div class="alert alert-warning" role="alert"><?php echo lang('Error.shipping_method_not_available'); ?></div>
+            <div class="alert alert-warning" role="alert"><?php echo lang('Error.shipping_method_not_available', [], $language_lib->getCurrentCode()); ?></div>
             <?php } ?>
         </div>
         <script type="text/javascript"><!--

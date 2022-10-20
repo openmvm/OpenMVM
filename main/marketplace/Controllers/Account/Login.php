@@ -46,6 +46,9 @@ class Login extends \App\Controllers\BaseController
         $data['reset_password'] = $this->url->customerLink('marketplace/account/reset_password');
         $data['register'] = $this->url->customerLink('marketplace/account/register');
 
+        // Libraries
+        $data['language_lib'] = $this->language;
+
         // Header
         $header_params = array(
             'title' => lang('Heading.login', [], $this->language->getCurrentCode()),
