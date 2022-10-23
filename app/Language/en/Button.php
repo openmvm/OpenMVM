@@ -30,6 +30,8 @@ return [
     'marketplace' => 'Marketplace',
     'option_add' => 'Add Option',
     'option_apply' => 'Apply Options',
+    'product_review_add' => 'Add Product Review',
+    'product_review_edit' => 'Edit Product Review',
     'production' => 'Production',
     'rate' => 'Rate',
     'register' => 'Register',
