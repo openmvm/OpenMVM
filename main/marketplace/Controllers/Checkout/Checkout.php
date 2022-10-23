@@ -252,6 +252,8 @@ class Checkout extends \App\Controllers\BaseController
                 $data['checkout_confirm'] = $this->url->customerLink('marketplace/checkout/checkout/confirm', '', true);
             }
 
+            $data['add_address'] = $this->url->customerLink('marketplace/checkout/checkout/add_address', '', true);
+
             $data['countries'] = $this->model_localisation_country->getCountries();
 
             // Libraries
@@ -378,6 +380,8 @@ class Checkout extends \App\Controllers\BaseController
                 // Checkout confirm
                 $data['checkout_confirm'] = $this->url->customerLink('marketplace/checkout/checkout/confirm', '', true);
             }
+
+            $data['add_address'] = $this->url->customerLink('marketplace/checkout/checkout/add_address', '', true);
 
             $data['countries'] = $this->model_localisation_country->getCountries();
 

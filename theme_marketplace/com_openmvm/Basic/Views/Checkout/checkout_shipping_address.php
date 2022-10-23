@@ -147,7 +147,7 @@ $('#form-checkout-shipping-address-add select[name=\'country_id\']').trigger('ch
 <script type="text/javascript"><!--
 $('#form-checkout-shipping-address-add #button-checkout-shipping-address-add').on('click', function() {
 	$.ajax({
-		url: '<?php echo base_url(); ?>' + '/marketplace/checkout/checkout/add_address?type=shipping_address',
+		url: '<?php echo $add_address; ?>' + '&type=shipping_address',
 		type: 'post',
 		data: $('#form-checkout-shipping-address-add input[type=\'text\'], #form-checkout-shipping-address-add input[type=\'hidden\'], #form-checkout-shipping-address-add input[type=\'radio\']:checked, #form-checkout-shipping-address-add input[type=\'checkbox\']:checked, #form-checkout-shipping-address-add select, #form-checkout-shipping-address-add textarea'),
 		dataType: 'json',
