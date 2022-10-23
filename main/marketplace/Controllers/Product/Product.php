@@ -10,9 +10,11 @@ class Product extends \App\Controllers\BaseController
     public function __construct()
     {
         // Model
+        $this->model_customer_customer = new \Main\Marketplace\Models\Customer\Customer_Model();
         $this->model_product_category = new \Main\Marketplace\Models\Product\Category_Model();
         $this->model_product_option = new \Main\Marketplace\Models\Product\Option_Model();
         $this->model_product_product = new \Main\Marketplace\Models\Product\Product_Model();
+        $this->model_product_product_review = new \Main\Marketplace\Models\Product\Product_Review_Model();
         $this->model_seller_seller = new \Main\Marketplace\Models\Seller\Seller_Model();
     }
 
@@ -244,7 +246,63 @@ class Product extends \App\Controllers\BaseController
             $data['min_price'] = $this->currency->format($product_variant_price['min_price'], $this->currency->getCurrentCode());
             $data['max_price'] = $this->currency->format($product_variant_price['max_price'], $this->currency->getCurrentCode());
 
-            $data['get_product_variant'] = $this->url->customerLink('marketplace/product/product/get_product_variant/');          
+            $data['get_product_variant'] = $this->url->customerLink('marketplace/product/product/get_product_variant/');    
+
+            // Get product reviews
+            $data['product_reviews'] = [];
+
+            $product_reviews = $this->model_product_product_review->getProductReviews($product_info['product_id']);  
+
+            foreach ($product_reviews as $product_review) {
+                // Get customer info
+                $customer_info = $this->model_customer_customer->getCustomer($product_review['customer_id']);
+
+                if ($customer_info) {
+                    // Get order product info
+                    $order_product_info = $this->model_product_product->getOrderProduct($product_review['customer_id'], $product_review['order_product_id']);
+
+                    if ($order_product_info) {
+                        $product_option_data = $order_product_info['option'];
+                    } else {
+                        $product_option_data = [];
+                    }
+
+                    $data['product_reviews'][] = [
+                        'product_review_id' => $product_review['product_review_id'],
+                        'order_product_id' => $product_review['order_product_id'],
+                        'order_id' => $product_review['order_id'],
+                        'product_id' => $product_review['product_id'],
+                        'seller_id' => $product_review['seller_id'],
+                        'customer_id' => $product_review['customer_id'],
+                        'customer' => $customer_info['firstname'],
+                        'rating' => $product_review['rating'],
+                        'title' => $product_review['title'],
+                        'review' => $product_review['review'],
+                        'product_options' => $product_option_data,
+                        'date_added' => date(lang('Common.date_format', [], $this->language->getCurrentCode()), strtotime($product_review['date_added'])),
+                        'date_modified' => date(lang('Common.date_format', [], $this->language->getCurrentCode()), strtotime($product_review['date_modified'])),
+                        'status' => $product_review['status'],
+                    ];
+                }
+            }   
+
+            $average_product_review_rating = $this->model_product_product_review->getAverageProductReviewRating($product_info['product_id']);
+
+            $data['average_product_review_rating'] = number_format($average_product_review_rating, 1, lang('Common.decimal_point', [], $this->language->getCurrentCode()), lang('Common.thousand_point', [], $this->language->getCurrentCode()));
+
+            $data['total_product_reviews'] = $this->model_product_product_review->getTotalProductReviews($product_info['product_id']);
+
+            $data['total_product_reviews_rating_5'] = $this->model_product_product_review->getTotalProductReviewsByRating($product_info['product_id'], 5);
+            $data['total_product_reviews_rating_4'] = $this->model_product_product_review->getTotalProductReviewsByRating($product_info['product_id'], 4);
+            $data['total_product_reviews_rating_3'] = $this->model_product_product_review->getTotalProductReviewsByRating($product_info['product_id'], 3);
+            $data['total_product_reviews_rating_2'] = $this->model_product_product_review->getTotalProductReviewsByRating($product_info['product_id'], 2);
+            $data['total_product_reviews_rating_1'] = $this->model_product_product_review->getTotalProductReviewsByRating($product_info['product_id'], 1);
+
+            $data['percentage_product_reviews_rating_5'] = ($data['total_product_reviews_rating_5']/$data['total_product_reviews']) * 100;
+            $data['percentage_product_reviews_rating_4'] = ($data['total_product_reviews_rating_4']/$data['total_product_reviews']) * 100;
+            $data['percentage_product_reviews_rating_3'] = ($data['total_product_reviews_rating_3']/$data['total_product_reviews']) * 100;
+            $data['percentage_product_reviews_rating_2'] = ($data['total_product_reviews_rating_2']/$data['total_product_reviews']) * 100;
+            $data['percentage_product_reviews_rating_1'] = ($data['total_product_reviews_rating_1']/$data['total_product_reviews']) * 100;
 
             // Libraries
             $data['language_lib'] = $this->language;

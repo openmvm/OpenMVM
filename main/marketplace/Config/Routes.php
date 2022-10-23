@@ -53,6 +53,16 @@ $routes->group('/', function ($routes) {
             });
             // Reset password
             $routes->match(['get', 'post'], 'reset_password', '\Main\Marketplace\Controllers\Account\Reset_Password::index');
+            // Product Review
+            $routes->group('product_review', function ($routes) {
+                $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Account\Product_Review::index');
+                $routes->match(['get', 'post'], 'add/(:num)', '\Main\Marketplace\Controllers\Account\Product_Review::add');
+                $routes->match(['get', 'post'], 'edit/(:num)', '\Main\Marketplace\Controllers\Account\Product_Review::edit');
+                $routes->group('save', function ($routes) {
+                    $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Account\Product_Review::save');
+                    $routes->match(['get', 'post'], '(:num)', '\Main\Marketplace\Controllers\Account\Product_Review::save');
+                });
+            });
             // Wallet
             $routes->match(['get', 'post'], 'wallet', '\Main\Marketplace\Controllers\Account\Wallet::index');
             // Wishlist

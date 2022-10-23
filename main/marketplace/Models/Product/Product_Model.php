@@ -383,4 +383,34 @@ class Product_Model extends Model
 
         return $product_variant;
     }
+
+    public function getOrderProduct($customer_id, $order_product_id)
+    {
+        $order_product_builder = $this->db->table('order_product op');
+        $order_product_builder->join('order o', 'op.order_id = o.order_id', 'left');
+        
+        $order_product_builder->where('o.customer_id', $customer_id);
+        $order_product_builder->where('op.order_product_id', $order_product_id);
+
+        $order_product_query = $order_product_builder->get();
+
+        $order_product = [];
+
+        if ($row = $order_product_query->getRow()) {
+            $order_product = [
+                'order_product_id' => $row->order_product_id,
+                'order_id' => $row->order_id,
+                'seller_id' => $row->seller_id,
+                'product_id' => $row->product_id,
+                'name' => $row->name,
+                'quantity' => $row->quantity,
+                'price' => $row->price,
+                'option' => json_decode($row->option, true),
+                'option_ids' => $row->option_ids,
+                'total' => $row->total,
+            ];
+        }
+
+        return $order_product;
+    }
 }

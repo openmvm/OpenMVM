@@ -19,6 +19,7 @@ class Order_Model extends Model
         $this->db = \Config\Database::connect();
 
         // Libraries
+        $this->customer = new \App\Libraries\Customer();
         $this->setting = new \App\Libraries\Setting();
     }
 
@@ -185,6 +186,36 @@ class Order_Model extends Model
         return $order_products;
     }
 
+    public function getOrderProduct($customer_id, $order_product_id)
+    {
+        $order_product_builder = $this->db->table('order_product op');
+        $order_product_builder->join('order o', 'op.order_id = o.order_id', 'left');
+        
+        $order_product_builder->where('o.customer_id', $customer_id);
+        $order_product_builder->where('op.order_product_id', $order_product_id);
+
+        $order_product_query = $order_product_builder->get();
+
+        $order_product = [];
+
+        if ($row = $order_product_query->getRow()) {
+            $order_product = [
+                'order_product_id' => $row->order_product_id,
+                'order_id' => $row->order_id,
+                'seller_id' => $row->seller_id,
+                'product_id' => $row->product_id,
+                'name' => $row->name,
+                'quantity' => $row->quantity,
+                'price' => $row->price,
+                'option' => $row->option,
+                'option_ids' => $row->option_ids,
+                'total' => $row->total,
+            ];
+        }
+
+        return $order_product;
+    }
+
     public function getOrderShipping($order_id, $seller_id)
     {
         $order_shipping_builder = $this->db->table('order_shipping');
@@ -317,6 +348,38 @@ class Order_Model extends Model
         }
 
         return $order_status_history;
+    }
+
+    public function getOrderProductsByOrderStatusId($order_status_id)
+    {
+        $builder = $this->db->table('order_product op');
+        $builder->join('order o', 'op.order_id = o.order_id', 'left');
+        $builder->join('order_status_history osh', '(op.order_id = osh.order_id) AND (op.seller_id = osh.seller_id)', 'left');
+
+        $builder->where('o.customer_id', $this->customer->getId());
+        $builder->where('osh.order_status_id', $order_status_id);
+
+        $order_product_query = $builder->get();
+
+        $order_products = [];
+
+        foreach ($order_product_query->getResult() as $result) {
+            $order_products[] = [
+                'order_product_id' => $result->order_product_id,
+                'order_id' => $result->order_id,
+                'seller_id' => $result->seller_id,
+                'product_id' => $result->product_id,
+                'name' => $result->name,
+                'quantity' => $result->quantity,
+                'price' => $result->price,
+                'option' => json_decode($result->option, true),
+                'option_ids' => $result->option_ids,
+                'total' => $result->total,
+                'date_added' => $result->date_added,
+            ];
+        }
+
+        return $order_products;
     }
 
 }

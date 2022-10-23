@@ -108,6 +108,7 @@ class Header extends \App\Controllers\BaseController
         $data['my_account'] = $this->url->customerLink('marketplace/account/account', '', true);
         $data['my_wishlist'] = $this->url->customerLink('marketplace/account/wishlist', '', true);
         $data['my_orders'] = $this->url->customerLink('marketplace/account/order', '', true);
+        $data['my_reviews'] = $this->url->customerLink('marketplace/account/product_review', '', true);
         $data['edit_profile'] = $this->url->customerLink('marketplace/account/profile', '', true);
         $data['my_address_book'] = $this->url->customerLink('marketplace/account/address', '', true);
         $data['my_wallet'] = $this->url->customerLink('marketplace/account/wallet', '', true);
