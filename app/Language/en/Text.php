@@ -112,6 +112,7 @@ return [
     'new_tab' => 'New Tab',
     'no' => 'No',
     'no_errors' => 'No errors!',
+    'no_reviews' => 'No reviews!',
     'no_tracking_number' => 'No tracking number.',
     'no_transactions' => 'No Transactions!',
     'none' => '--- None ---',
