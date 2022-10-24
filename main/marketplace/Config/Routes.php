@@ -154,6 +154,7 @@ $routes->group('/', function ($routes) {
                 $routes->match(['get', 'post'], 'get/(:any)', '\Main\Marketplace\Controllers\Product\Product::get/$1');
                 $routes->match(['get', 'post'], 'get_product_variant', '\Main\Marketplace\Controllers\Product\Product::get_product_variant');
                 $routes->match(['get', 'post'], 'add_to_wishlist', '\Main\Marketplace\Controllers\Product\Product::add_to_wishlist');
+                $routes->match(['get', 'post'], 'get_product_reviews', '\Main\Marketplace\Controllers\Product\Product::get_product_reviews');
             });
             // Search
             $routes->match(['get', 'post'], 'search', '\Main\Marketplace\Controllers\Product\Search::index');

@@ -249,42 +249,7 @@ class Product extends \App\Controllers\BaseController
             $data['get_product_variant'] = $this->url->customerLink('marketplace/product/product/get_product_variant/');    
 
             // Get product reviews
-            $data['product_reviews'] = [];
-
-            $product_reviews = $this->model_product_product_review->getProductReviews($product_info['product_id']);  
-
-            foreach ($product_reviews as $product_review) {
-                // Get customer info
-                $customer_info = $this->model_customer_customer->getCustomer($product_review['customer_id']);
-
-                if ($customer_info) {
-                    // Get order product info
-                    $order_product_info = $this->model_product_product->getOrderProduct($product_review['customer_id'], $product_review['order_product_id']);
-
-                    if ($order_product_info) {
-                        $product_option_data = $order_product_info['option'];
-                    } else {
-                        $product_option_data = [];
-                    }
-
-                    $data['product_reviews'][] = [
-                        'product_review_id' => $product_review['product_review_id'],
-                        'order_product_id' => $product_review['order_product_id'],
-                        'order_id' => $product_review['order_id'],
-                        'product_id' => $product_review['product_id'],
-                        'seller_id' => $product_review['seller_id'],
-                        'customer_id' => $product_review['customer_id'],
-                        'customer' => $customer_info['firstname'],
-                        'rating' => $product_review['rating'],
-                        'title' => $product_review['title'],
-                        'review' => $product_review['review'],
-                        'product_options' => $product_option_data,
-                        'date_added' => date(lang('Common.date_format', [], $this->language->getCurrentCode()), strtotime($product_review['date_added'])),
-                        'date_modified' => date(lang('Common.date_format', [], $this->language->getCurrentCode()), strtotime($product_review['date_modified'])),
-                        'status' => $product_review['status'],
-                    ];
-                }
-            }   
+            $data['get_product_reviews'] = $this->url->customerLink('marketplace/product/product/get_product_reviews/'); 
 
             $average_product_review_rating = $this->model_product_product_review->getAverageProductReviewRating($product_info['product_id']);
 
@@ -463,5 +428,77 @@ class Product extends \App\Controllers\BaseController
         }
 
         return $this->response->setJSON($json);
+    }
+
+    public function get_product_reviews()
+    {
+        // Get product reviews
+        $data['product_reviews'] = [];
+
+        if (!empty($this->request->getGet('product_id'))) {
+            if (!empty($this->request->getGet('rating'))) {
+                $rating = $this->request->getGet('rating');
+            } else {
+                $rating = false;
+            }
+
+            $product_reviews = $this->model_product_product_review->getProductReviews($this->request->getGet('product_id'), $rating);  
+
+            foreach ($product_reviews as $product_review) {
+                // Get customer info
+                $customer_info = $this->model_customer_customer->getCustomer($product_review['customer_id']);
+
+                if ($customer_info) {
+                    // Get order product info
+                    $order_product_info = $this->model_product_product->getOrderProduct($product_review['customer_id'], $product_review['order_product_id']);
+
+                    if ($order_product_info) {
+                        $product_option_data = $order_product_info['option'];
+                    } else {
+                        $product_option_data = [];
+                    }
+
+                    $data['product_reviews'][] = [
+                        'product_review_id' => $product_review['product_review_id'],
+                        'order_product_id' => $product_review['order_product_id'],
+                        'order_id' => $product_review['order_id'],
+                        'product_id' => $product_review['product_id'],
+                        'seller_id' => $product_review['seller_id'],
+                        'customer_id' => $product_review['customer_id'],
+                        'customer' => $customer_info['firstname'],
+                        'rating' => $product_review['rating'],
+                        'title' => $product_review['title'],
+                        'review' => $product_review['review'],
+                        'product_options' => $product_option_data,
+                        'date_added' => date(lang('Common.date_format', [], $this->language->getCurrentCode()), strtotime($product_review['date_added'])),
+                        'date_modified' => date(lang('Common.date_format', [], $this->language->getCurrentCode()), strtotime($product_review['date_modified'])),
+                        'status' => $product_review['status'],
+                    ];
+                }
+            }   
+        }
+
+        // Libraries
+        $data['language_lib'] = $this->language;
+
+        // Header
+        $header_params = array(
+            'title' => lang('Heading.customer_reviews', [], $this->language->getCurrentCode()),
+        );
+        $data['header'] = $this->marketplace_header->index($header_params);
+        // Footer
+        $footer_params = array();
+        $data['footer'] = $this->marketplace_footer->index($footer_params);
+
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeMarketplace',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Product\product_review',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 }

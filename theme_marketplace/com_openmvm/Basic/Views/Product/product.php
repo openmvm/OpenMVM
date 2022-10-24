@@ -112,7 +112,7 @@
             </div>
             <div class="card mb-3">
                 <div class="card-body">
-                    <div>
+                    <div id="customer-review">
                         <h5 class="mb-4"><?php echo lang('Text.customer_reviews', [], $language_lib->getCurrentCode()); ?></h5>
                         <div class="row">
                             <div class="col-sm-4">
@@ -128,92 +128,72 @@
                                     </div>
                                     <div class="d-inline-block fs-4"><?php echo lang('Text.rating_out_of', ['rating' => $average_product_review_rating, 'max_rating' => 5], $language_lib->getCurrentCode()); ?></div>
                                 </div>
-                                <div class="mb-2"><?php echo $total_product_reviews; ?> <?php echo strtolower(lang('Text.product_reviews', [], $language_lib->getCurrentCode())); ?></div>
+                                <div class="mb-2"><a href="javascript:void(0);" class="link-warning text-decoration-none" onclick="getProductReviews('<?php echo $product_id; ?>', 0);"><?php echo $total_product_reviews; ?> <?php echo strtolower(lang('Text.product_reviews', [], $language_lib->getCurrentCode())); ?></a></div>
                                 <div>
                                     <table class="table table-borderless p-0">
                                         <tbody>
                                             <tr>
-                                                <td class="ps-0" style="width: 15%;">5 <?php echo lang('Text.star', [], $language_lib->getCurrentCode()); ?></td>
+                                                <td class="ps-0" style="width: 15%;"><a href="javascript:void(0);" class="link-dark text-decoration-none" onclick="getProductReviews('<?php echo $product_id; ?>', 5);">5 <?php echo lang('Text.star', [], $language_lib->getCurrentCode()); ?></a></td>
                                                 <td>
-                                                    <div class="progress" style="height: 24px;">
-                                                        <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $percentage_product_reviews_rating_5; ?>%; height: 24px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><?php echo $percentage_product_reviews_rating_5; ?>%</div>
-                                                    </div>                            
+                                                    <a href="javascript:void(0);" class="link-dark text-decoration-none" onclick="getProductReviews('<?php echo $product_id; ?>', 5);">
+                                                        <div class="progress" style="height: 24px;">
+                                                            <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $percentage_product_reviews_rating_5; ?>%; height: 24px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><?php echo $percentage_product_reviews_rating_5; ?>%</div>
+                                                        </div> 
+                                                    </a>                           
                                                 </td>
-                                                <td class="text-start pe-0" style="width: 15%;"><?php echo $total_product_reviews_rating_5; ?></td>
+                                                <td class="text-start pe-0" style="width: 15%;"><a href="javascript:void(0);" class="link-dark text-decoration-none" onclick="getProductReviews('<?php echo $product_id; ?>', 5);"><?php echo $total_product_reviews_rating_5; ?></a></td>
                                             </tr>
                                             <tr>
-                                                <td class="ps-0" style="width: 15%;">4 <?php echo lang('Text.star', [], $language_lib->getCurrentCode()); ?></td>
+                                                <td class="ps-0" style="width: 15%;"><a href="javascript:void(0);" class="link-dark text-decoration-none" onclick="getProductReviews('<?php echo $product_id; ?>', 4);">4 <?php echo lang('Text.star', [], $language_lib->getCurrentCode()); ?></a></td>
                                                 <td>
-                                                    <div class="progress" style="height: 24px;">
-                                                        <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $percentage_product_reviews_rating_4; ?>%; height: 24px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><?php echo $percentage_product_reviews_rating_4; ?>%</div>
-                                                    </div>                            
+                                                    <a href="javascript:void(0);" class="link-dark text-decoration-none" onclick="getProductReviews('<?php echo $product_id; ?>', 4);">
+                                                        <div class="progress" style="height: 24px;">
+                                                            <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $percentage_product_reviews_rating_4; ?>%; height: 24px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><?php echo $percentage_product_reviews_rating_4; ?>%</div>
+                                                        </div>     
+                                                    </a>                       
                                                 </td>
-                                                <td class="text-start pe-0" style="width: 15%;"><?php echo $total_product_reviews_rating_4; ?></td>
+                                                <td class="text-start pe-0" style="width: 15%;"><a href="javascript:void(0);" class="link-dark text-decoration-none" onclick="getProductReviews('<?php echo $product_id; ?>', 4);"><?php echo $total_product_reviews_rating_4; ?></a></td>
                                             </tr>
                                             <tr>
-                                                <td class="ps-0" style="width: 15%;">3 <?php echo lang('Text.star', [], $language_lib->getCurrentCode()); ?></td>
+                                                <td class="ps-0" style="width: 15%;"><a href="javascript:void(0);" class="link-dark text-decoration-none" onclick="getProductReviews('<?php echo $product_id; ?>', 3);">3 <?php echo lang('Text.star', [], $language_lib->getCurrentCode()); ?></a></td>
                                                 <td>
-                                                    <div class="progress" style="height: 24px;">
-                                                        <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $percentage_product_reviews_rating_3; ?>%; height: 24px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><?php echo $percentage_product_reviews_rating_3; ?>%</div>
-                                                    </div>                            
+                                                    <a href="javascript:void(0);" class="link-dark text-decoration-none" onclick="getProductReviews('<?php echo $product_id; ?>', 3);">
+                                                        <div class="progress" style="height: 24px;">
+                                                            <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $percentage_product_reviews_rating_3; ?>%; height: 24px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><?php echo $percentage_product_reviews_rating_3; ?>%</div>
+                                                        </div>
+                                                    </a>                            
                                                 </td>
-                                                <td class="text-start pe-0" style="width: 15%;"><?php echo $total_product_reviews_rating_3; ?></td>
+                                                <td class="text-start pe-0" style="width: 15%;"><a href="javascript:void(0);" class="link-dark text-decoration-none" onclick="getProductReviews('<?php echo $product_id; ?>', 3);"><?php echo $total_product_reviews_rating_3; ?></a></td>
                                             </tr>
                                             <tr>
-                                                <td class="ps-0" style="width: 15%;">2 <?php echo lang('Text.star', [], $language_lib->getCurrentCode()); ?></td>
+                                                <td class="ps-0" style="width: 15%;"><a href="javascript:void(0);" class="link-dark text-decoration-none" onclick="getProductReviews('<?php echo $product_id; ?>', 2);">2 <?php echo lang('Text.star', [], $language_lib->getCurrentCode()); ?></a></td>
                                                 <td>
-                                                    <div class="progress" style="height: 24px;">
-                                                        <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $percentage_product_reviews_rating_2; ?>%; height: 24px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><?php echo $percentage_product_reviews_rating_2; ?>%</div>
-                                                    </div>                            
+                                                    <a href="javascript:void(0);" class="link-dark text-decoration-none" onclick="getProductReviews('<?php echo $product_id; ?>', 2);">
+                                                        <div class="progress" style="height: 24px;">
+                                                            <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $percentage_product_reviews_rating_2; ?>%; height: 24px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><?php echo $percentage_product_reviews_rating_2; ?>%</div>
+                                                        </div>  
+                                                    </a>                          
                                                 </td>
-                                                <td class="text-start pe-0" style="width: 15%;"><?php echo $total_product_reviews_rating_2; ?></td>
+                                                <td class="text-start pe-0" style="width: 15%;"><a href="javascript:void(0);" class="link-dark text-decoration-none" onclick="getProductReviews('<?php echo $product_id; ?>', 2);"><?php echo $total_product_reviews_rating_2; ?></a></td>
                                             </tr>
                                             <tr>
-                                                <td class="ps-0" style="width: 15%;">1 <?php echo lang('Text.star', [], $language_lib->getCurrentCode()); ?></td>
+                                                <td class="ps-0" style="width: 15%;"><a href="javascript:void(0);" class="link-dark text-decoration-none" onclick="getProductReviews('<?php echo $product_id; ?>', 1);">1 <?php echo lang('Text.star', [], $language_lib->getCurrentCode()); ?></a></td>
                                                 <td>
-                                                    <div class="progress" style="height: 24px;">
-                                                        <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $percentage_product_reviews_rating_1; ?>%; height: 24px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><?php echo $percentage_product_reviews_rating_1; ?>%</div>
-                                                    </div>                            
+                                                    <a href="javascript:void(0);" class="link-dark text-decoration-none" onclick="getProductReviews('<?php echo $product_id; ?>', 1);">
+                                                        <div class="progress" style="height: 24px;">
+                                                            <div class="progress-bar bg-warning" role="progressbar" style="width: <?php echo $percentage_product_reviews_rating_1; ?>%; height: 24px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"><?php echo $percentage_product_reviews_rating_1; ?>%</div>
+                                                        </div> 
+                                                    </a>                           
                                                 </td>
-                                                <td class="text-start pe-0" style="width: 15%;"><?php echo $total_product_reviews_rating_1; ?></td>
+                                                <td class="text-start pe-0" style="width: 15%;"><a href="javascript:void(0);" class="link-dark text-decoration-none" onclick="getProductReviews('<?php echo $product_id; ?>', 1);"><?php echo $total_product_reviews_rating_1; ?></a></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                             <div class="col-sm-8">
-                                <?php if (!empty($product_reviews)) { ?>
-                                    <?php foreach ($product_reviews as $product_review) { ?>
-                                    <div class="border-bottom pb-3 mb-3">
-                                        <div><?php echo $product_review['customer']; ?></div>
-                                        <div>
-                                            <div class="d-inline-block me-3">
-                                                <?php for ($i = 1; $i <= 5; $i++) { ?>
-                                                    <?php if ($i <= $product_review['rating']) { ?>
-                                                    <i class="fas fa-star text-danger"></i>
-                                                    <?php } else { ?>
-                                                    <i class="far fa-star text-danger"></i>
-                                                    <?php } ?>
-                                                <?php } ?>
-                                            </div>
-                                            <div class="d-inline-block"><strong><?php echo $product_review['title']; ?></strong></div>
-                                        </div>
-                                        <div class="text-secondary small"><?php echo lang('Text.reviewed_on'); ?> <?php echo $product_review['date_modified']; ?></div>
-                                        <?php if (!empty($product_review['product_options'])) { ?>
-                                        <div class="hstack gap-2 text-secondary small">
-                                            <?php $total_product_review_product_options = count($product_review['product_options']); ?>
-                                            <?php foreach ($product_review['product_options'] as $key => $value) { ?>
-                                            <div><?php echo $value['description'][$language_lib->getCurrentId()]['name']; ?>: <?php echo $value['option_value']['description'][$language_lib->getCurrentId()]['name']; ?></div>
-                                                <?php if ($key <= ($total_product_review_product_options - 2)) { ?><div class="vr"></div><?php } ?>
-                                            <?php } ?>
-                                        </div>
-                                        <?php } ?>
-                                        <div class="mt-3"><?php echo $product_review['review']; ?></div>
-                                    </div>
-                                    <?php } ?>
-                                <?php } else { ?>
-                                <div class="text-secondary"><?php echo lang('Text.no_reviews', [], $language_lib->getCurrentCode()); ?></div>
-                                <?php } ?>
+                                <div id="customer-review-list">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -443,4 +423,12 @@ $( "#button-favorite" ).on( "click", function() {
     });
 });
 //--></script>
+<script type="text/javascript"><!--
+getProductReviews('<?php echo $product_id; ?>', 0);
+
+function getProductReviews(product_id, rating) {
+    $('#customer-review-list').html('<i class="fas fa-spinner fa-spin"></i>');
+    $('#customer-review-list').load('<?php echo $get_product_reviews; ?>?product_id=' + product_id + '&rating=' + rating);
+}
+//--></script> 
 <?php echo $footer; ?>

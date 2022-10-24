@@ -25,12 +25,16 @@ class Product_Review_Model extends Model
         $this->template = new \App\Libraries\Template();
     }
 
-    public function getProductReviews($product_id)
+    public function getProductReviews($product_id, $rating = false)
     {
         $product_review_builder = $this->db->table('product_review');
         
         $product_review_builder->where('product_id', $product_id);
         $product_review_builder->where('status', 1);
+
+        if ($rating) {
+            $product_review_builder->where('rating', $rating);
+        }
 
         $product_review_query = $product_review_builder->get();
 
