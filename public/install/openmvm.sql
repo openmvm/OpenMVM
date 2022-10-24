@@ -843,6 +843,27 @@ CREATE TABLE `product_option_value` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `product_review`
+--
+
+CREATE TABLE `product_review` (
+  `product_review_id` int(11) NOT NULL,
+  `order_product_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `seller_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `rating` tinyint(1) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `review` text NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL,
+  `status` tinyint(1) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `product_to_category`
 --
 
@@ -1241,6 +1262,21 @@ INSERT INTO `widget_install` (`widget_install_id`, `location`, `author`, `widget
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `wishlist`
+--
+
+CREATE TABLE `wishlist` (
+  `wishlist_id` int(11) NOT NULL,
+  `key` varchar(255) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `zone`
 --
 
@@ -1519,6 +1555,7 @@ ALTER TABLE `product`
 --
 ALTER TABLE `product_description`
   ADD PRIMARY KEY (`product_description_id`);
+ALTER TABLE `product_description` ADD FULLTEXT KEY `name` (`name`);
 
 --
 -- Indexes for table `product_image`
@@ -1537,6 +1574,13 @@ ALTER TABLE `product_option`
 --
 ALTER TABLE `product_option_value`
   ADD PRIMARY KEY (`product_option_value_id`);
+
+--
+-- Indexes for table `product_review`
+--
+ALTER TABLE `product_review`
+  ADD PRIMARY KEY (`product_review_id`),
+  ADD UNIQUE KEY `order_product_id` (`order_product_id`);
 
 --
 -- Indexes for table `product_to_category`
@@ -1627,6 +1671,12 @@ ALTER TABLE `widget`
 --
 ALTER TABLE `widget_install`
   ADD PRIMARY KEY (`widget_install_id`);
+
+--
+-- Indexes for table `wishlist`
+--
+ALTER TABLE `wishlist`
+  ADD PRIMARY KEY (`wishlist_id`);
 
 --
 -- Indexes for table `zone`
@@ -1867,6 +1917,12 @@ ALTER TABLE `product_option_value`
   MODIFY `product_option_value_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `product_review`
+--
+ALTER TABLE `product_review`
+  MODIFY `product_review_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `product_variant`
 --
 ALTER TABLE `product_variant`
@@ -1949,6 +2005,12 @@ ALTER TABLE `widget`
 --
 ALTER TABLE `widget_install`
   MODIFY `widget_install_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `wishlist`
+--
+ALTER TABLE `wishlist`
+  MODIFY `wishlist_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `zone`
