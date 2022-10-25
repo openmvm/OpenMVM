@@ -48,6 +48,7 @@ class Product_Model extends Model
             'weight_class_id' => $data['weight_class_id'],
             'sku' => $data['sku'],
             'date_added' => now(),
+            'date_modified' => now(),
             'status' => $data['status'],
         ];
         
