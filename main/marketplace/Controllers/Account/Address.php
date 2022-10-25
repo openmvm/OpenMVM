@@ -9,6 +9,7 @@ class Address extends \App\Controllers\BaseController
      */
     public function __construct()
     {
+        // Models
         $this->model_customer_customer = new \Main\Marketplace\Models\Customer\Customer_Model();
         $this->model_customer_customer_address = new \Main\Marketplace\Models\Customer\Customer_Address_Model();
         $this->model_localisation_country = new \Main\Marketplace\Models\Localisation\Country_Model();
