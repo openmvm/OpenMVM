@@ -118,6 +118,7 @@ class Header extends \App\Controllers\BaseController
         $data['seller_product'] = $this->url->customerLink('marketplace/seller/product', '', true);
         $data['seller_option'] = $this->url->customerLink('marketplace/seller/option', '', true);
         $data['seller_order'] = $this->url->customerLink('marketplace/seller/order', '', true);
+        $data['seller_product_question'] = $this->url->customerLink('marketplace/seller/product_question', '', true);
         $data['seller_shipping_method'] = $this->url->customerLink('marketplace/seller/component/shipping_method', '', true);
         $data['seller_geo_zone'] = $this->url->customerLink('marketplace/seller/localisation/geo_zone', '', true);
 

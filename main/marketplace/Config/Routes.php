@@ -154,6 +154,8 @@ $routes->group('/', function ($routes) {
                 $routes->match(['get', 'post'], 'get/(:any)', '\Main\Marketplace\Controllers\Product\Product::get/$1');
                 $routes->match(['get', 'post'], 'get_product_variant', '\Main\Marketplace\Controllers\Product\Product::get_product_variant');
                 $routes->match(['get', 'post'], 'add_to_wishlist', '\Main\Marketplace\Controllers\Product\Product::add_to_wishlist');
+                $routes->match(['get', 'post'], 'add_product_question', '\Main\Marketplace\Controllers\Product\Product::add_product_question', ['filter' => 'marketplace_auth']);
+                $routes->match(['get', 'post'], 'get_product_questions', '\Main\Marketplace\Controllers\Product\Product::get_product_questions');
                 $routes->match(['get', 'post'], 'get_product_reviews', '\Main\Marketplace\Controllers\Product\Product::get_product_reviews');
             });
             // Search
@@ -245,6 +247,15 @@ $routes->group('/', function ($routes) {
                 $routes->group('save', function ($routes) {
                     $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Product::save', ['filter' => 'marketplace_auth']);
                     $routes->match(['get', 'post'], '(:num)', '\Main\Marketplace\Controllers\Seller\Product::save', ['filter' => 'marketplace_auth']);
+                });
+            });
+            // Product Question
+            $routes->group('product_question', function ($routes) {
+                $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Product_Question::index');
+                $routes->match(['get', 'post'], 'edit/(:num)', '\Main\Marketplace\Controllers\Seller\Product_Question::edit', ['filter' => 'marketplace_auth']);
+                $routes->group('save', function ($routes) {
+                    $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Product_Question::save', ['filter' => 'marketplace_auth']);
+                    $routes->match(['get', 'post'], '(:num)', '\Main\Marketplace\Controllers\Seller\Product_Question::save', ['filter' => 'marketplace_auth']);
                 });
             });
             // Register

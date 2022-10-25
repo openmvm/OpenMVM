@@ -112,6 +112,34 @@
             </div>
             <div class="card mb-3">
                 <div class="card-body">
+                    <div id="customer-question">
+                        <div class="clearfix">
+                            <h5 class="float-start"><?php echo lang('Text.customer_questions_and_answers', [], $language_lib->getCurrentCode()); ?></h5>
+                            <?php if ($logged_in) { ?>
+                            <a data-bs-toggle="collapse" href="#form-question" role="button" aria-expanded="false" aria-controls="form-question" id="button-question-open" class="link-secondary text-decoration-none float-end"><?php echo lang('Button.ask_a_question', [], $language_lib->getCurrentCode()); ?><i class="fas fa-caret-down ms-2"></i></a>
+                            <a data-bs-toggle="collapse" href="#form-question" role="button" aria-expanded="false" aria-controls="form-question" id="button-question-close" class="link-secondary text-decoration-none float-end d-none"><?php echo lang('Button.close', [], $language_lib->getCurrentCode()); ?><i class="fas fa-xmark ms-2"></i></a>
+                            <?php } ?>
+                        </div>
+                        <?php if ($logged_in) { ?>
+                        <div mt-2>
+                            <?php echo form_open($add_product_question, ['id' => 'form-question', 'class' => 'collapse']); ?>
+                                <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" id="input-product-id" />
+                                <div class="mb-2"><input type="text" name="question" value="" id="input-question" class="form-control" placeholder="<?php echo lang('Entry.type_your_question_here', [], $language_lib->getCurrentCode()); ?>" /></div>
+                                <div class="clearfix">
+                                    <div class="float-start">
+                                        <button type="button" class="btn btn-sm btn-outline-success button-action" data-form="form-question" data-form-action="<?php echo $add_product_question; ?>" data-icon="fa-paper-plane" data-toast-heading-title-success="<?php echo lang('Text.success', [], $language_lib->getCurrentCode()); ?>" data-toast-heading-title-error="<?php echo lang('Text.error', [], $language_lib->getCurrentCode()); ?>" data-toast-heading-icon-success="fa-check-circle" data-toast-heading-icon-error="fa-triangle-exclamation" data-redirection="false" data-form-reset="true" data-form-reset-ignore="#input-product-id"><i class="fas fa-paper-plane fa-fw"></i><span class="d-none d-md-inline-block ms-1"><?php echo lang('Button.submit', [], $language_lib->getCurrentCode()); ?></span></button>
+                                    </div>
+                                </div>
+                            <?php echo form_close(); ?>
+                        </div>
+                        <?php } ?>
+                        <div id="customer-question-list" class="mt-4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-body">
                     <div id="customer-review">
                         <h5 class="mb-4"><?php echo lang('Text.customer_reviews', [], $language_lib->getCurrentCode()); ?></h5>
                         <div class="row">
@@ -424,11 +452,30 @@ $( "#button-favorite" ).on( "click", function() {
 });
 //--></script>
 <script type="text/javascript"><!--
+getProductQuestions('<?php echo $product_id; ?>');
+
+function getProductQuestions(product_id) {
+    $('#customer-question-list').html('<i class="fas fa-spinner fa-spin"></i>');
+    $('#customer-question-list').load('<?php echo $get_product_questions; ?>?product_id=' + product_id);
+}
+//--></script> 
+<script type="text/javascript"><!--
 getProductReviews('<?php echo $product_id; ?>', 0);
 
 function getProductReviews(product_id, rating) {
     $('#customer-review-list').html('<i class="fas fa-spinner fa-spin"></i>');
     $('#customer-review-list').load('<?php echo $get_product_reviews; ?>?product_id=' + product_id + '&rating=' + rating);
 }
+//--></script> 
+<script type="text/javascript"><!--
+$('#button-question-open').on('click', function() {
+    $('#button-question-open').addClass('d-none');
+    $('#button-question-close').removeClass('d-none');
+});
+
+$('#button-question-close').on('click', function() {
+    $('#button-question-close').addClass('d-none');
+    $('#button-question-open').removeClass('d-none');
+});
 //--></script> 
 <?php echo $footer; ?>

@@ -14,6 +14,7 @@ class Product extends \App\Controllers\BaseController
         $this->model_product_category = new \Main\Marketplace\Models\Product\Category_Model();
         $this->model_product_option = new \Main\Marketplace\Models\Product\Option_Model();
         $this->model_product_product = new \Main\Marketplace\Models\Product\Product_Model();
+        $this->model_product_product_question = new \Main\Marketplace\Models\Product\Product_Question_Model();
         $this->model_product_product_review = new \Main\Marketplace\Models\Product\Product_Review_Model();
         $this->model_seller_seller = new \Main\Marketplace\Models\Seller\Seller_Model();
     }
@@ -248,6 +249,12 @@ class Product extends \App\Controllers\BaseController
 
             $data['get_product_variant'] = $this->url->customerLink('marketplace/product/product/get_product_variant/');    
 
+            // Add product questioin
+            $data['add_product_question'] = $this->url->customerLink('marketplace/product/product/add_product_question', '', true);
+
+            // Get product questions & answers
+            $data['get_product_questions'] = $this->url->customerLink('marketplace/product/product/get_product_questions/'); 
+
             // Get product reviews
             $data['get_product_reviews'] = $this->url->customerLink('marketplace/product/product/get_product_reviews/'); 
 
@@ -268,6 +275,8 @@ class Product extends \App\Controllers\BaseController
             $data['percentage_product_reviews_rating_3'] = ($data['total_product_reviews_rating_3']/$data['total_product_reviews']) * 100;
             $data['percentage_product_reviews_rating_2'] = ($data['total_product_reviews_rating_2']/$data['total_product_reviews']) * 100;
             $data['percentage_product_reviews_rating_1'] = ($data['total_product_reviews_rating_1']/$data['total_product_reviews']) * 100;
+
+            $data['logged_in'] = $this->customer->isLoggedIn();
 
             // Libraries
             $data['language_lib'] = $this->language;
@@ -430,6 +439,78 @@ class Product extends \App\Controllers\BaseController
         return $this->response->setJSON($json);
     }
 
+    public function add_product_question()
+    {
+        $json = [];
+
+        if ($this->request->getMethod() == 'post') {
+            $json_data = $this->request->getJSON(true);
+
+            $this->validation->setRule('question', lang('Entry.question', [], $this->language->getCurrentCode()), 'required');
+
+            if ($this->validation->withRequest($this->request)->run($json_data)) {
+                // Query
+                $query = $this->model_product_product_question->addProductQuestion($this->customer->getId(), $json_data);
+
+                $json['success']['toast'] = lang('Success.question_add', [], $this->language->getCurrentCode());
+
+                // Get product description
+                $product_description = $this->model_product_product->getProductDescription($json_data['product_id']);
+
+                $json['redirect'] = $this->url->customerLink('marketplace/product/product/get/' . $product_description['slug']);
+            } else {
+                // Errors
+                $json['error']['toast'] = lang('Error.form', [], $this->language->getCurrentCode());
+
+                if ($this->validation->hasError('question')) {
+                    $json['error']['question'] = $this->validation->getError('question');
+                }
+           }
+        }
+
+        return $this->response->setJSON($json);
+    }
+
+    public function get_product_questions()
+    {
+        // Get product questions
+        $data['product_questions'] = [];
+
+        if (!empty($this->request->getGet('product_id'))) {
+            $product_questions = $this->model_product_product_question->getProductQuestions($this->request->getGet('product_id'));  
+
+            foreach ($product_questions as $product_question) {
+                // Get customer info
+                $customer_info = $this->model_customer_customer->getCustomer($product_question['customer_id']);
+
+                if ($customer_info) {
+                    $data['product_questions'][] = [
+                        'product_question_id' => $product_question['product_question_id'],
+                        'product_id' => $product_question['product_id'],
+                        'customer_id' => $product_question['customer_id'],
+                        'question' => $product_question['question'],
+                        'date_added' => date(lang('Common.date_format', [], $this->language->getCurrentCode()), strtotime($product_question['date_added'])),
+                        'status' => $product_question['status'],
+                    ];
+                }
+            }   
+        }
+
+        // Libraries
+        $data['language_lib'] = $this->language;
+
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeMarketplace',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Product\product_question',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
+    }
+
     public function get_product_reviews()
     {
         // Get product reviews
@@ -480,15 +561,6 @@ class Product extends \App\Controllers\BaseController
 
         // Libraries
         $data['language_lib'] = $this->language;
-
-        // Header
-        $header_params = array(
-            'title' => lang('Heading.customer_reviews', [], $this->language->getCurrentCode()),
-        );
-        $data['header'] = $this->marketplace_header->index($header_params);
-        // Footer
-        $footer_params = array();
-        $data['footer'] = $this->marketplace_footer->index($footer_params);
 
         // Generate view
         $template_setting = [
