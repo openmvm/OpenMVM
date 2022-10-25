@@ -56,6 +56,7 @@ $( document ).ready(function() {
         var dataToastHeadingIconSuccess = $(node).attr('data-toast-heading-icon-success');
         var dataToastHeadingIconError = $(node).attr('data-toast-heading-icon-error');
         var dataRedirection = $(node).attr('data-redirection');
+        var dataFormReset = $(node).attr('data-form-reset');
 
         var userData = $('#' + dataForm).serializeJSON();
 
@@ -123,6 +124,10 @@ $( document ).ready(function() {
                         html += '        </div>'; 
                         html += '    </div>'; 
                         html += '</div>'; 
+                    }
+
+                    if (typeof dataFormReset !== 'undefined' && dataFormReset !== false) {
+                        $('#' + dataForm)[0].reset();
                     }
                 }
 
