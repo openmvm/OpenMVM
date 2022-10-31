@@ -23,6 +23,9 @@
 	<li>Reset password</li>
 	<li>Product options / variants</li>
 	<li>Wallet</li>
+	<li>Wishlist / favorite</li>
+	<li>Product ratings and reviews</li>
+	<li>Customer questions and answers</li>
 </ul>
 
 <h4>Administrator (back-end) features:</h4>
