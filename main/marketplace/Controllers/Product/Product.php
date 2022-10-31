@@ -477,6 +477,10 @@ class Product extends \App\Controllers\BaseController
         $data['product_questions'] = [];
 
         if (!empty($this->request->getGet('product_id'))) {
+            // Get product info
+            $product_info = $this->model_product_product->getProduct($this->request->getGet('product_id'));
+
+            // Get product questions
             $product_questions = $this->model_product_product_question->getProductQuestions($this->request->getGet('product_id'));  
 
             foreach ($product_questions as $product_question) {
@@ -548,13 +552,13 @@ class Product extends \App\Controllers\BaseController
                     }
                 }
             }   
+
+            // Vote product question
+            $data['vote_product_question'] = $this->url->customerLink('marketplace/product/product/vote_product_question', ['product_id' => $product_info['product_id']], true); 
+
+            // Get product question answers
+            $data['get_product_question_answers'] = $this->url->customerLink('marketplace/product/product/get_product_question_answers'); 
         }
-
-        // Vote product question
-        $data['vote_product_question'] = $this->url->customerLink('marketplace/product/product/vote_product_question', ['product_id' => $product_info['product_id']], true); 
-
-        // Get product question answers
-        $data['get_product_question_answers'] = $this->url->customerLink('marketplace/product/product/get_product_question_answers'); 
 
         // Libraries
         $data['language_lib'] = $this->language;

@@ -20,8 +20,8 @@
                 <span id="customer-question-answer-<?php echo $value['product_question_answer_id']; ?>-vote-text" class="text-secondary small me-3"><?php echo lang('Text.do_you_find_this_helpful', [], $language_lib->getCurrentCode()); ?></span>
                 <?php } ?>
                 <button type="button" class="btn btn-outline-secondary btn-sm me-2" id="button-customer-question-answer-<?php echo $value['product_question_answer_id']; ?>-vote-1" onclick="voteCustomerQuestionAnswer('<?php echo $value['product_question_answer_id']; ?>', '1');"><?php echo lang('Button.yes', [], $language_lib->getCurrentCode()); ?></button> <button type="button" class="btn btn-outline-secondary btn-sm" id="button-customer-question-answer-<?php echo $value['product_question_answer_id']; ?>-vote-0" onclick="voteCustomerQuestionAnswer('<?php echo $value['product_question_answer_id']; ?>', '0');"><?php echo lang('Button.no', [], $language_lib->getCurrentCode()); ?></button>
-                <span class="mx-3">&middot;</span>
-                <a role="button" class="link-danger text-decoration-none small"><?php echo lang('Button.report_abuse', [], $language_lib->getCurrentCode()); ?></a>
+                <span class="mx-3 d-none">&middot;</span>
+                <a role="button" class="link-danger text-decoration-none small d-none"><?php echo lang('Button.report_abuse', [], $language_lib->getCurrentCode()); ?></a>
             </div>
         </div>
     </div>

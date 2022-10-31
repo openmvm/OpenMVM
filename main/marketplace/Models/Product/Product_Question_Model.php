@@ -138,13 +138,13 @@ class Product_Question_Model extends Model
 
         $product_question_answer_builder->groupBy('pqa.product_question_answer_id');
 
-        if ($data['sort'] !== null) {
+        if (isset($data['sort'])) {
             $sort = $data['sort'];
         } else {
             $sort = 'date_added';
         }
 
-        if ($data['order']) {
+        if (isset($data['order'])) {
             $order = $data['order'];
         } else {
             $order = 'DESC';
@@ -152,7 +152,7 @@ class Product_Question_Model extends Model
 
         $product_question_answer_builder->orderBy($sort, $order);
 
-        if ($data['start'] !== null || $data['limit'] !== null) {
+        if (isset($data['start']) || isset($data['limit'])) {
             if ($data['start'] < 0) {
                 $data['start'] = 0;
             }
@@ -192,13 +192,13 @@ class Product_Question_Model extends Model
         $product_question_answer_builder->where('product_question_id', $product_question_id);
         $product_question_answer_builder->where('status', 1);
 
-        if ($data['sort'] !== null) {
+        if (isset($data['sort'])) {
             $sort = $data['sort'];
         } else {
             $sort = 'date_added';
         }
 
-        if ($data['order']) {
+        if (isset($data['order'])) {
             $order = $data['order'];
         } else {
             $order = 'DESC';
@@ -206,7 +206,7 @@ class Product_Question_Model extends Model
 
         $product_question_answer_builder->orderBy($sort, $order);
 
-        if ($data['start'] !== null || $data['limit'] !== null) {
+        if (isset($data['start']) || isset($data['limit'])) {
             if ($data['start'] < 0) {
                 $data['start'] = 0;
             }

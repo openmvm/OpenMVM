@@ -6,10 +6,10 @@
                 <tr>
                     <td rowspan="2" class="px-2" style="width: 100px;">
                         <div class="border-end">
-                            <div role="button" class="text-secondary text-center small" onclick="voteProductQuestion('<?php echo $product_question['product_question_id']; ?>', 1)"><i class="fas fa-caret-up fa-2x"></i></div>
+                            <div role="button" class="text-secondary text-center small" onclick="voteProductQuestion('<?php echo $product_question['product_question_id']; ?>', 1, '<?php echo $product_question['sum_vote']; ?>')"><i class="fas fa-caret-up fa-2x"></i></div>
                             <div class="text-center small"><strong id="product-question-vote-<?php echo $product_question['product_question_id']; ?>"><?php echo $product_question['sum_vote']; ?></strong></div>
                             <div class="text-center small"><?php echo lang('Text.votes', [], $language_lib->getCurrentCode()); ?></div>
-                            <div role="button" class="text-secondary text-center small" onclick="voteProductQuestion('<?php echo $product_question['product_question_id']; ?>', -1)"><i class="fas fa-caret-down fa-2x"></i></div>
+                            <div role="button" class="text-secondary text-center small" onclick="voteProductQuestion('<?php echo $product_question['product_question_id']; ?>', -1, '<?php echo $product_question['sum_vote']; ?>')"><i class="fas fa-caret-down fa-2x"></i></div>
                         </div>
                     </td>
                     <td style="width: 100px;"><strong><?php echo lang('Text.question', [], $language_lib->getCurrentCode()); ?>:</strong></td>
@@ -46,7 +46,7 @@
     </table>
 </div>
 <script type="text/javascript"><!--
-function voteProductQuestion(product_question_id, vote) {
+function voteProductQuestion(product_question_id, vote, current_total_vote) {
     $.ajax({
         url: '<?php echo $vote_product_question; ?>',
         type: 'post',
@@ -68,7 +68,9 @@ function voteProductQuestion(product_question_id, vote) {
             $('#product-question-vote-' + product_question_id).html(json['sum_vote']);
         },
         error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            alert(xhr.responseText);
+
+            $('#product-question-vote-' + product_question_id).html(current_total_vote);
         }
     });
 }
