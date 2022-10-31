@@ -15,13 +15,22 @@ class Marketplace_Auth_Filter implements FilterInterface
     {
         // Libraries
         $this->customer = new \App\Libraries\Customer();
+        $this->language = new \App\Libraries\Language();
         $this->request = service('request');
+        $this->session = session();
     }
 
     public function before(RequestInterface $request, $arguments = null)
     {
         if (!$this->customer->isLoggedIn() || !$this->customer->verifyToken($this->request->getGet('customer_token'))) {
-            return redirect()->to(base_url('marketplace/account/login'));
+            if ($this->request->isAjax()) {
+                $response = service('response');
+                $response->setBody(lang('Error.please_login', [], $this->language->getCurrentCode()));
+                $response->setStatusCode(401);
+                return $response;
+            } else {
+                return redirect()->to(base_url('marketplace/account/login'));
+            }
         }
     }
 
