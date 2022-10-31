@@ -17,6 +17,8 @@ return [
     'countries' => 'Countries',
     'currencies' => 'Currencies',
     'customer_groups' => 'Customer Groups',
+    'customer_questions' => 'Customer Questions',
+    'customer_questions_and_answers' => 'Customer Questions & Answers',
     'customers' => 'Customers',
     'dashboard' => 'Dashboard',
     'demo_manager' => 'Demo Manager',

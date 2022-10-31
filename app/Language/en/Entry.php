@@ -4,6 +4,7 @@
 return [
     'accepted_order_status' => 'Accepted Order Status',
     'access' => 'Access',
+    'add_a_written_answer' => 'Add a written answer',
     'additional_images' => 'Additional Images',
     'address_1' => 'Address 1',
     'address_2' => 'Address 2',
@@ -13,6 +14,7 @@ return [
     'admin_weight_class' => 'Admin Weight Class',
     'administrator_group' => 'Administrator Group',
     'amount' => 'Amount',
+    'answer' => 'Answer',
     'avatar' => 'Avatar',
     'background_color' => 'Background Color',
     'cache_status' => 'Cache Status',
@@ -108,6 +110,7 @@ return [
     'text' => 'Text',
     'title' => 'Title',
     'tracking_number' => 'Tracking Number',
+    'type_your_answer_here' => 'Type your answer here...',
     'type_your_question_here' => 'Type your question here...',
     'unit' => 'Unit',
     'url' => 'URL',
