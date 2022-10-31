@@ -843,6 +843,67 @@ CREATE TABLE `product_option_value` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `product_question`
+--
+
+CREATE TABLE `product_question` (
+  `product_question_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `question` varchar(255) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `status` tinyint(1) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_question_answer`
+--
+
+CREATE TABLE `product_question_answer` (
+  `product_question_answer_id` int(11) NOT NULL,
+  `product_question_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `seller_id` int(11) NOT NULL,
+  `answer` text NOT NULL,
+  `date_added` datetime NOT NULL,
+  `status` tinyint(1) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_question_answer_vote`
+--
+
+CREATE TABLE `product_question_answer_vote` (
+  `product_question_answer_vote_id` int(11) NOT NULL,
+  `product_question_answer_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `vote` tinyint(1) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_question_vote`
+--
+
+CREATE TABLE `product_question_vote` (
+  `product_question_vote_id` int(11) NOT NULL,
+  `product_question_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `vote` tinyint(1) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `product_review`
 --
 
@@ -1576,6 +1637,30 @@ ALTER TABLE `product_option_value`
   ADD PRIMARY KEY (`product_option_value_id`);
 
 --
+-- Indexes for table `product_question`
+--
+ALTER TABLE `product_question`
+  ADD PRIMARY KEY (`product_question_id`);
+
+--
+-- Indexes for table `product_question_answer`
+--
+ALTER TABLE `product_question_answer`
+  ADD PRIMARY KEY (`product_question_answer_id`);
+
+--
+-- Indexes for table `product_question_answer_vote`
+--
+ALTER TABLE `product_question_answer_vote`
+  ADD PRIMARY KEY (`product_question_answer_vote_id`);
+
+--
+-- Indexes for table `product_question_vote`
+--
+ALTER TABLE `product_question_vote`
+  ADD PRIMARY KEY (`product_question_vote_id`);
+
+--
 -- Indexes for table `product_review`
 --
 ALTER TABLE `product_review`
@@ -1915,6 +2000,30 @@ ALTER TABLE `product_option`
 --
 ALTER TABLE `product_option_value`
   MODIFY `product_option_value_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `product_question`
+--
+ALTER TABLE `product_question`
+  MODIFY `product_question_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `product_question_answer`
+--
+ALTER TABLE `product_question_answer`
+  MODIFY `product_question_answer_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `product_question_answer_vote`
+--
+ALTER TABLE `product_question_answer_vote`
+  MODIFY `product_question_answer_vote_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `product_question_vote`
+--
+ALTER TABLE `product_question_vote`
+  MODIFY `product_question_vote_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `product_review`
