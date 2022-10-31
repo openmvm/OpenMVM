@@ -481,20 +481,80 @@ class Product extends \App\Controllers\BaseController
 
             foreach ($product_questions as $product_question) {
                 // Get customer info
-                $customer_info = $this->model_customer_customer->getCustomer($product_question['customer_id']);
+                $question_customer_info = $this->model_customer_customer->getCustomer($product_question['customer_id']);
 
-                if ($customer_info) {
-                    $data['product_questions'][] = [
-                        'product_question_id' => $product_question['product_question_id'],
-                        'product_id' => $product_question['product_id'],
-                        'customer_id' => $product_question['customer_id'],
-                        'question' => $product_question['question'],
-                        'date_added' => date(lang('Common.date_format', [], $this->language->getCurrentCode()), strtotime($product_question['date_added'])),
-                        'status' => $product_question['status'],
-                    ];
+                if ($question_customer_info) {
+                    // Get total product question answer
+                    $product_question_answer_data = [];
+                    
+                    $product_question_answer_total = $this->model_product_product_question->getTotalProductQuestionAnswers($product_question['product_question_id']);
+
+                    if ($product_question_answer_total > 0) {
+                        // Get product question answers
+                        $filter_data = [
+                            'start' => 0,
+                            'limit' => 1,
+                        ];
+
+                        $product_question_answers = $this->model_product_product_question->getProductQuestionAnswers($product_question['product_question_id'], $filter_data);
+
+                        foreach ($product_question_answers as $product_question_answer) {
+                            $seller_data = [];
+                            
+                            // Get customer info
+                            $answer_customer_info = $this->model_customer_customer->getCustomer($product_question_answer['customer_id']);
+
+                            if ($answer_customer_info) {
+                                // Get seller info
+                                $seller_info = $this->model_seller_seller->getSeller($product_question_answer['seller_id']);
+
+                                if ($seller_info) {
+                                    $seller_data = [
+                                        'seller_id' => $seller_info['seller_id'],
+                                        'store_name' => $seller_info['store_name'],
+                                    ];
+                                }
+
+                                $product_question_answer_data[] = [
+                                    'product_question_answer_id' => $product_question_answer['product_question_answer_id'],
+                                    'product_question_id' => $product_question_answer['product_question_id'],
+                                    'product_id' => $product_question_answer['product_id'],
+                                    'customer_id' => $product_question_answer['customer_id'],
+                                    'customer' => $answer_customer_info,
+                                    'seller_id' => $product_question_answer['seller_id'],
+                                    'seller' => $seller_data,
+                                    'answer' => nl2br($product_question_answer['answer']),
+                                    'date_added' => date(lang('Common.date_format', [], $this->language->getCurrentCode()), strtotime($product_question_answer['date_added'])),
+                                    'status' => $product_question_answer['status'],
+                                ];
+                            }
+                        }
+
+                        // Get sum product question votes
+                        $sum_product_question_vote = $this->model_product_product_question->getSumProductQuestionVotes($product_question['product_question_id']);
+
+                        $data['product_questions'][] = [
+                            'product_question_id' => $product_question['product_question_id'],
+                            'product_id' => $product_question['product_id'],
+                            'customer_id' => $product_question['customer_id'],
+                            'question' => $product_question['question'],
+                            'sum_vote' => $sum_product_question_vote,
+                            'answer' => $product_question_answer_data,
+                            'total_answer' => $product_question_answer_total,
+                            'date_added' => date(lang('Common.date_format', [], $this->language->getCurrentCode()), strtotime($product_question['date_added'])),
+                            'status' => $product_question['status'],
+                            'href' => $this->url->customerLink('marketplace/product/customer_question/get/' . $product_question['product_question_id']),
+                        ];
+                    }
                 }
             }   
         }
+
+        // Vote product question
+        $data['vote_product_question'] = $this->url->customerLink('marketplace/product/product/vote_product_question', ['product_id' => $product_info['product_id']], true); 
+
+        // Get product question answers
+        $data['get_product_question_answers'] = $this->url->customerLink('marketplace/product/product/get_product_question_answers'); 
 
         // Libraries
         $data['language_lib'] = $this->language;
@@ -509,6 +569,90 @@ class Product extends \App\Controllers\BaseController
             'override' => false,
         ];
         return $this->template->render($template_setting, $data);
+    }
+
+    public function get_product_question_answers()
+    {
+        $json = [];
+
+        if (!empty($this->request->getPost('product_question_id'))) {
+            if (!empty($this->request->getPost('page'))) {
+                $page = $this->request->getPost('page');
+            } else {
+                $page = 1;
+            }
+
+            if (!empty($this->request->getPost('limit'))) {
+                $limit = $this->request->getPost('limit');
+            } else {
+                $limit = 3;
+            }
+
+            // Get product question answers
+            $json['product_question_answers'] = [];
+
+            $filter_data = [
+                'start' => (($page - 1) * $limit) + 1,
+                'limit' => $limit
+            ];
+
+            $product_question_answers = $this->model_product_product_question->getProductQuestionAnswers($this->request->getPost('product_question_id'), $filter_data);  
+
+            foreach ($product_question_answers as $product_question_answer) {
+                // Get customer info
+                $question_answer_customer_info = $this->model_customer_customer->getCustomer($product_question_answer['customer_id']);
+
+                if ($question_answer_customer_info) {
+                    $question_answer_customer_data = [
+                        'customer_id' => $question_answer_customer_info['customer_id'],
+                        'firstname' => $question_answer_customer_info['firstname'],
+                    ];
+                } else {
+                    $question_answer_customer_data = [];
+                }
+
+                // Get seller info
+                $seller_info = $this->model_seller_seller->getSeller($product_question_answer['seller_id']);
+
+                if ($seller_info) {
+                    $seller_data = [
+                        'seller_id' => $seller_info['seller_id'],
+                        'store_name' => $seller_info['store_name'],
+                    ];
+                } else {
+                    $seller_data = [];
+                }
+
+                $json['product_question_answers'][] = [
+                    'product_question_answer_id' => $product_question_answer['product_question_answer_id'],
+                    'product_question_id' => $product_question_answer['product_question_id'],
+                    'customer_id' => $product_question_answer['customer_id'],
+                    'customer' => $question_answer_customer_data,
+                    'seller_id' => $product_question_answer['seller_id'],
+                    'seller' => $seller_data,
+                    'answer' => nl2br($product_question_answer['answer']),
+                    'date_added' => date(lang('Common.date_format', [], $this->language->getCurrentCode()), strtotime($product_question_answer['date_added'])),
+                    'vote' => $this->url->customerLink('marketplace/product/product/vote_product_question_answer', ['product_question_id' => $this->request->getGet('product_question_id')], true),
+                ];
+
+                $json['page'] = $page + 1;
+            }   
+
+            $total_product_question_answers = $this->model_product_product_question->getTotalProductQuestionAnswers($this->request->getPost('product_question_id'));
+
+            $total_next = (($total_product_question_answers - ($page * $limit)) - 1);
+
+            if ($total_next > 0) {
+                $json['next_page_total_product_question_answers'] = $total_next;  
+            } else {
+                $json['next_page_total_product_question_answers'] = 0;  
+            }
+
+            // Libraries
+            $json['language_lib'] = $this->language;
+        }
+
+        return $this->response->setJSON($json);
     }
 
     public function get_product_reviews()
@@ -572,5 +716,24 @@ class Product extends \App\Controllers\BaseController
             'override' => false,
         ];
         return $this->template->render($template_setting, $data);
+    }
+
+    public function vote_product_question()
+    {
+        $json = [];
+
+        if (!empty($this->request->getPost('product_question_id')) && !empty($this->request->getPost('vote'))) {
+            if ($this->session->has('error_login')) {
+                $json['error'] = lang('Error.must_login', [], $this->language->getCurrentCode());
+            } else {
+                // Edit product question vote
+                $query = $this->model_product_product_question->editProductQuestionVote($this->request->getPost('product_question_id'), $this->request->getPost('vote'));
+            }
+
+            // Sum product question vote
+            $json['sum_vote'] = $this->model_product_product_question->getSumProductQuestionVotes($this->request->getPost('product_question_id'));
+        }
+
+        return $this->response->setJSON($json);
     }
 }

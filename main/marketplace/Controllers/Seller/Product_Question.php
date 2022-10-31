@@ -10,8 +10,10 @@ class Product_Question extends \App\Controllers\BaseController
     public function __construct()
     {
         // Models
+        $this->model_customer_customer = new \Main\Marketplace\Models\Customer\Customer_Model();
         $this->model_seller_product = new \Main\Marketplace\Models\Seller\Product_Model();
         $this->model_seller_product_question = new \Main\Marketplace\Models\Seller\Product_Question_Model();
+        $this->model_seller_seller = new \Main\Marketplace\Models\Seller\Seller_Model();
     }
 
     public function index()
@@ -129,7 +131,40 @@ class Product_Question extends \App\Controllers\BaseController
             'active' => true,
         );
         
-        $product_question_info = $this->model_seller_product_question->getProductQuestion($this->customer->getId(), $this->uri->getSegment($this->uri->getTotalSegments()));
+        $product_question_info = $this->model_seller_product_question->getProductQuestion($this->uri->getSegment($this->uri->getTotalSegments()));
+
+        if ($product_question_info) {
+            $data['product_question_id'] = $product_question_info['product_question_id'];
+        } else {
+            $data['product_question_id'] = 0;
+        }
+
+        if ($product_question_info) {
+            $data['product_id'] = $product_question_info['product_id'];
+        } else {
+            $data['product_id'] = 0;
+        }
+
+        if ($product_question_info) {
+            $data['customer_id'] = $product_question_info['customer_id'];
+        } else {
+            $data['customer_id'] = 0;
+        }
+
+        if ($product_question_info) {
+            $data['question'] = $product_question_info['question'];
+        } else {
+            $data['question'] = '';
+        }
+
+        if ($product_question_info) {
+            $data['date_added'] = date(lang('Common.date_format', [], $this->language->getCurrentCode()), strtotime($product_question_info['date_added']));
+        } else {
+            $data['date_added'] = '';
+        }
+
+        $data['add_product_question_answer'] = $this->url->customerLink('marketplace/seller/product_question/add_product_question_answer', '', true);
+        $data['get_product_question_answers'] = $this->url->customerLink('marketplace/seller/product_question/get_product_question_answers', ['product_question_id' => $data['product_question_id']], true);
 
         $data['language_lib'] = $this->language;
 
@@ -149,6 +184,86 @@ class Product_Question extends \App\Controllers\BaseController
             'author' => 'com_openmvm',
             'theme' => 'Basic',
             'view' => 'Seller\product_question_form',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
+    }
+
+    public function add_product_question_answer()
+    {
+        $json = [];
+
+        if ($this->request->getMethod() == 'post') {
+            $json_data = $this->request->getJSON(true);
+
+            $this->validation->setRule('answer', lang('Entry.answer', [], $this->language->getCurrentCode()), 'required');
+
+            if ($this->validation->withRequest($this->request)->run($json_data)) {
+                // Query
+                $query = $this->model_seller_product_question->addProductQuestionAnswer($this->request->getGet('product_question_id'), $json_data);
+
+                $json['success']['toast'] = lang('Success.product_question_answer_add', [], $this->language->getCurrentCode());
+            } else {
+                // Errors
+                $json['error']['toast'] = lang('Error.form', [], $this->language->getCurrentCode());
+
+                if ($this->validation->hasError('answer')) {
+                    $json['error']['answer'] = $this->validation->getError('answer');
+                }
+            }
+        }
+
+        return $this->response->setJSON($json);
+    }
+
+    public function get_product_question_answers()
+    {
+        // Get product question answers
+        $data['product_question_answers'] = [];
+
+        if (!empty($this->request->getGet('product_question_id'))) {
+            $product_question_answers = $this->model_seller_product_question->getProductQuestionAnswers($this->request->getGet('product_question_id'));  
+
+            foreach ($product_question_answers as $product_question_answer) {
+                // Get customer info
+                $customer_info = $this->model_customer_customer->getCustomer($product_question_answer['customer_id']);
+
+                if ($customer_info) {
+                    if (!empty($product_question_answer['seller_id'])) {
+                        // Get seller info
+                        $seller_info = $this->model_seller_seller->getSeller($product_question_answer['seller_id']);
+
+                        $seller_data = $seller_info;
+                    } else {
+                        $seller_data = [];
+                    }
+
+                    $data['product_question_answers'][] = [
+                        'product_question_answer_id' => $product_question_answer['product_question_answer_id'],
+                        'product_question_id' => $product_question_answer['product_question_id'],
+                        'product_id' => $product_question_answer['product_id'],
+                        'customer_id' => $product_question_answer['customer_id'],
+                        'customer' => $customer_info,
+                        'seller_id' => $product_question_answer['seller_id'],
+                        'seller' => $seller_data,
+                        'answer' => nl2br($product_question_answer['answer']),
+                        'date_added' => date(lang('Common.date_format', [], $this->language->getCurrentCode()), strtotime($product_question_answer['date_added'])),
+                        'status' => $product_question_answer['status'],
+                    ];
+                }
+            }   
+        }
+
+        // Libraries
+        $data['language_lib'] = $this->language;
+
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeMarketplace',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Seller\product_question_answer',
             'permission' => false,
             'override' => false,
         ];

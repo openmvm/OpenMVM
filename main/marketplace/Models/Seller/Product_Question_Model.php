@@ -55,6 +55,7 @@ class Product_Question_Model extends Model
     public function getProductQuestion($product_question_id)
     {
         $product_question_builder = $this->db->table('product_question pq');
+        $product_question_builder->select('pq.product_question_id, pq.product_id, pq.customer_id, pq.question, pq.date_added, pq.status');
         $product_question_builder->join('product p', 'pq.product_id = p.product_id', 'left');
         
         $product_question_builder->where('pq.product_question_id', $product_question_id);
@@ -78,6 +79,28 @@ class Product_Question_Model extends Model
         return $product_question;
     }
 
+    public function addProductQuestionAnswer($product_question_id, $data = [])
+    {
+        // Insert
+        $product_question_answer_insert_builder = $this->db->table('product_question_answer');
+
+        $product_question_answer_insert_data = [
+            'product_question_id' => $product_question_id,
+            'product_id' => $data['product_id'],
+            'customer_id' => $this->customer->getId(),
+            'seller_id' => $this->customer->getSellerId(),
+            'answer' => $data['answer'],
+            'date_added' => new Time('now'),
+            'status' => 1,
+        ];
+        
+        $product_question_answer_insert_builder->insert($product_question_answer_insert_data);
+
+        $product_question_answer_id = $this->db->insertID();
+
+        return $product_question_answer_id;
+    }
+
     public function getProductQuestionAnswers($product_question_id)
     {
         $product_question_answer_builder = $this->db->table('product_question_answer');
@@ -95,6 +118,7 @@ class Product_Question_Model extends Model
                 'product_question_id' => $result->product_question_id,
                 'product_id' => $result->product_id,
                 'customer_id' => $result->customer_id,
+                'seller_id' => $result->seller_id,
                 'answer' => $result->answer,
                 'date_added' => $result->date_added,
                 'status' => $result->status,

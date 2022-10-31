@@ -148,6 +148,14 @@ $routes->group('/', function ($routes) {
                 $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Product\Category::index');
                 $routes->match(['get', 'post'], 'get/(:any)', '\Main\Marketplace\Controllers\Product\Category::get/$1');
             });
+            // Customer question
+            $routes->group('customer_question', function ($routes) {
+                $routes->match(['get', 'post'], '(:num)', '\Main\Marketplace\Controllers\Product\Customer_Question::index');
+                $routes->match(['get', 'post'], 'get/(:any)', '\Main\Marketplace\Controllers\Product\Customer_Question::get/$1');
+                $routes->match(['get', 'post'], 'add_customer_question_answer', '\Main\Marketplace\Controllers\Product\Customer_Question::add_customer_question_answer');
+                $routes->match(['get', 'post'], 'get_customer_question_answers', '\Main\Marketplace\Controllers\Product\Customer_Question::get_customer_question_answers');
+                $routes->match(['get', 'post'], 'vote_customer_question_answer', '\Main\Marketplace\Controllers\Product\Customer_Question::vote_customer_question_answer', ['filter' => 'marketplace_auth']);
+            });
             // Product
             $routes->group('product', function ($routes) {
                 $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Product\Product::index');
@@ -156,6 +164,9 @@ $routes->group('/', function ($routes) {
                 $routes->match(['get', 'post'], 'add_to_wishlist', '\Main\Marketplace\Controllers\Product\Product::add_to_wishlist');
                 $routes->match(['get', 'post'], 'add_product_question', '\Main\Marketplace\Controllers\Product\Product::add_product_question', ['filter' => 'marketplace_auth']);
                 $routes->match(['get', 'post'], 'get_product_questions', '\Main\Marketplace\Controllers\Product\Product::get_product_questions');
+                $routes->match(['get', 'post'], 'vote_product_question', '\Main\Marketplace\Controllers\Product\Product::vote_product_question', ['filter' => 'marketplace_auth']);
+                $routes->match(['get', 'post'], 'get_product_question_answers', '\Main\Marketplace\Controllers\Product\Product::get_product_question_answers');
+                $routes->match(['get', 'post'], 'vote_product_question_answer', '\Main\Marketplace\Controllers\Product\Product::vote_product_question_answer', ['filter' => 'marketplace_auth']);
                 $routes->match(['get', 'post'], 'get_product_reviews', '\Main\Marketplace\Controllers\Product\Product::get_product_reviews');
             });
             // Search
@@ -253,6 +264,8 @@ $routes->group('/', function ($routes) {
             $routes->group('product_question', function ($routes) {
                 $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Product_Question::index');
                 $routes->match(['get', 'post'], 'edit/(:num)', '\Main\Marketplace\Controllers\Seller\Product_Question::edit', ['filter' => 'marketplace_auth']);
+                $routes->match(['get', 'post'], 'add_product_question_answer', '\Main\Marketplace\Controllers\Seller\Product_Question::add_product_question_answer', ['filter' => 'marketplace_auth']);
+                $routes->match(['get', 'post'], 'get_product_question_answers', '\Main\Marketplace\Controllers\Seller\Product_Question::get_product_question_answers', ['filter' => 'marketplace_auth']);
                 $routes->group('save', function ($routes) {
                     $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Product_Question::save', ['filter' => 'marketplace_auth']);
                     $routes->match(['get', 'post'], '(:num)', '\Main\Marketplace\Controllers\Seller\Product_Question::save', ['filter' => 'marketplace_auth']);
