@@ -255,6 +255,7 @@ $routes->group('/', function ($routes) {
                 $routes->match(['get', 'post'], 'delete', '\Main\Marketplace\Controllers\Seller\Product::delete', ['filter' => 'marketplace_auth']);
                 $routes->match(['get', 'post'], 'set_product_options', '\Main\Marketplace\Controllers\Seller\Product::set_product_options');
                 $routes->match(['get', 'post'], 'get_product_variants', '\Main\Marketplace\Controllers\Seller\Product::get_product_variants');
+                $routes->match(['get', 'post'], 'product_download_upload', '\Main\Marketplace\Controllers\Seller\Product::product_download_upload');
                 $routes->group('save', function ($routes) {
                     $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Product::save', ['filter' => 'marketplace_auth']);
                     $routes->match(['get', 'post'], '(:num)', '\Main\Marketplace\Controllers\Seller\Product::save', ['filter' => 'marketplace_auth']);

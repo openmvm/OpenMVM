@@ -98,6 +98,17 @@
                             <label for="input-quantity" class="form-label"><?php echo lang('Entry.quantity', [], $language_lib->getCurrentCode()); ?></label>
                             <input type="number" min="0" name="quantity" value="<?php echo $quantity; ?>" class="form-control" id="input-quantity" placeholder="<?php echo lang('Entry.quantity', [], $language_lib->getCurrentCode()); ?>" aria-label="<?php echo lang('Entry.quantity', [], $language_lib->getCurrentCode()); ?>" />
                         </div>
+                        <div class="mb-3">
+                            <div class="form-label"><?php echo lang('Entry.requires_shipping', [], $language_lib->getCurrentCode()); ?></div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="requires_shipping" id="input-requires-shipping-yes" value="1"<?php if ($requires_shipping == 1) { ?> checked<?php } ?>>
+                                <label class="form-check-label" for="input-requires-shipping-yes"><?php echo lang('Text.yes', [], $language_lib->getCurrentCode()); ?></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="requires_shipping" id="input-requires-shipping-no" value="0"<?php if ($requires_shipping == 0) { ?> checked<?php } ?>>
+                                <label class="form-check-label" for="input-requires-shipping-no"><?php echo lang('Text.no', [], $language_lib->getCurrentCode()); ?></label>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="mb-3">
@@ -170,6 +181,51 @@
                             <?php } ?>
                             <div role="button" id="button-upload-additional-image" class="float-start border p-1" onclick="addAdditionalImage();"><div class="d-flex justify-content-center align-items-center text-center bg-light" style="width: 100px; height: 100px;"><i class="fas fa-plus-circle fa-2x text-secondary"></i></div></div>
                         </div>
+                    </div>
+                    <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.downloads', [], $language_lib->getCurrentCode()); ?></legend>
+                    <div class="table-responsive">
+                        <table id="product-downloads" class="table table-stripped table-hover">
+                            <thead>
+                                <tr>
+                                    <th><?php echo lang('Column.name', [], $language_lib->getCurrentCode()); ?></th>
+                                    <th><?php echo lang('Column.filename', [], $language_lib->getCurrentCode()); ?></th>
+                                    <th><?php echo lang('Column.mask', [], $language_lib->getCurrentCode()); ?></th>
+                                    <th class="text-end"><?php echo lang('Column.upload', [], $language_lib->getCurrentCode()); ?></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $product_download_row = 0; ?>
+                                <?php if (!empty($product_downloads)) { ?>
+                                    <?php foreach ($product_downloads as $product_download) { ?>
+                                    <tr id="row-product-download-<?php echo $product_download_row; ?>">
+                                        <td class="align-middle">
+                                            <?php foreach ($languages as $language) { ?>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="input-group-product-download-<?php echo $product_download_row; ?>-<?php echo $language['language_id']; ?>"><img src="<?php echo base_url('assets/flags/' . $language['code'] . '.png'); ?>" /></span>
+                                                <input type="text" name="product_download[<?php echo $product_download_row; ?>][description][<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($product_download['description'][$language['language_id']]['name']) ? $product_download['description'][$language['language_id']]['name'] : ''; ?>" class="form-control" placeholder="<?php echo lang('Entry.name', [], $language_lib->getCurrentCode()); ?>" aria-label="<?php echo lang('Entry.name', [], $language_lib->getCurrentCode()); ?>" aria-describedby="input-group-product-download-<?php echo $product_download_row; ?>-<?php echo $language['language_id']; ?>">
+                                            </div>
+                                            <?php } ?>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div>
+                                                <input type="text" name="product_download[<?php echo $product_download_row; ?>][filename]" value="<?php echo $product_download['filename']; ?>" class="form-control" id="input-product-download-filename-<?php echo $product_download_row; ?>" placeholder="<?php echo lang('Entry.filename', [], $language_lib->getCurrentCode()); ?>" readonly>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <div>
+                                                <input type="text" name="product_download[<?php echo $product_download_row; ?>][mask]" value="<?php echo $product_download['mask']; ?>" class="form-control" id="input-product-download-mask-<?php echo $product_download_row; ?>" placeholder="<?php echo lang('Entry.mask', [], $language_lib->getCurrentCode()); ?>" readonly>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle text-end"><div class="d-grid"><button type="button" id="button-product-download-upload-<?php echo $product_download_row; ?>" class="btn btn-primary product-download-upload"><i class="fas fa-upload me-2"></i><?php echo lang('Button.upload', [], $language_lib->getCurrentCode()); ?></button><span class="progress-bar mt-2"></span></div></td>
+                                    </tr>
+                                    <?php $product_download_row++; ?>
+                                    <?php } ?>
+                                <?php } ?>
+                                <tr id="row-product-download-add">
+                                    <td colspan="4" class="text-end"><button type="button" id="button-product-download-add" class="btn btn-primary" onclick="addProductDownload();"><i class="fas fa-circle-plus me-2"></i><?php echo lang('Button.add', [], $language_lib->getCurrentCode()); ?></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </fieldset>
             </div>
@@ -450,5 +506,108 @@ function setProductOptions() {
         }
     });
 }
+//--></script>
+<script type="text/javascript"><!--
+var product_download_row = '<?php echo $product_download_row; ?>';
+
+function addProductDownload() {
+    html = '<tr id="row-product-download-' + product_download_row + '">';
+    html += '   <td class="align-middle">';
+    <?php foreach ($languages as $language) { ?>
+    html += '       <div class="input-group mb-3">';
+    html += '           <span class="input-group-text" id="input-group-product-download-' + product_download_row + '-<?php echo $language['language_id']; ?>"><img src="<?php echo base_url('assets/flags/' . $language['code'] . '.png'); ?>" /></span>';
+    html += '           <input type="text" name="product_download[' + product_download_row + '][description][<?php echo $language['language_id']; ?>][name]" value="" class="form-control" placeholder="<?php echo lang('Entry.name', [], $language_lib->getCurrentCode()); ?>" aria-label="<?php echo lang('Entry.name', [], $language_lib->getCurrentCode()); ?>" aria-describedby="input-group-product-download-' + product_download_row + '-<?php echo $language['language_id']; ?>">';
+    html += '   </div>';
+    <?php } ?>
+    html += '   </td>';
+    html += '   <td class="align-middle">';
+    html += '       <div>';
+    html += '           <input type="text" name="product_download[' + product_download_row + '][filename]" value="" class="form-control" id="input-product-download-filename-' + product_download_row + '" placeholder="<?php echo lang('Entry.filename', [], $language_lib->getCurrentCode()); ?>" readonly>';
+    html += '       </div>';
+    html += '   </td>';
+    html += '   <td class="align-middle">';
+    html += '       <div>';
+    html += '           <input type="text" name="product_download[' + product_download_row + '][mask]" value="" class="form-control" id="input-product-download-mask-' + product_download_row + '" placeholder="<?php echo lang('Entry.mask', [], $language_lib->getCurrentCode()); ?>" readonly>';
+    html += '       </div>';
+    html += '   </td>';
+    html += '   <td class="align-middle text-end"><div class="d-grid"><button type="button" id="button-product-download-upload-' + product_download_row + '" class="btn btn-primary product-download-upload"><i class="fas fa-upload me-2"></i><?php echo lang('Button.upload', [], $language_lib->getCurrentCode()); ?></button><span class="progress-bar mt-2"></span></div></td>';
+    html += '</tr>';
+
+    $('#row-product-download-add').before(html);
+
+    product_download_row++;
+}
+//--></script>
+<script type="text/javascript"><!--
+$('body').on('click', '.product-download-upload', function() {
+    var node = this;
+
+    $('#form-product-download-upload').remove();
+
+    $('body').prepend('<form enctype="multipart/form-data" id="form-product-download-upload" style="display: none;"><input type="file" name="file" /></form>');
+
+    $('#form-product-download-upload input[name=\'file\']').trigger('click');
+
+    if (typeof timer != 'undefined') {
+        clearInterval(timer);
+    }
+
+    timer = setInterval(function() {
+        if ($('#form-product-download-upload input[name=\'file\']').val() != '') {
+            clearInterval(timer);
+
+            $.ajax({
+                xhr: function() {
+                    var xhr = new window.XMLHttpRequest();
+                    $(node).parent().find('span.progress-bar').removeAttr( 'style' );
+
+                    xhr.upload.addEventListener("progress", function(evt) {
+                          if (evt.lengthComputable) {
+                                var percentComplete = evt.loaded / evt.total;
+                                percentComplete = parseInt(percentComplete * 100);
+                                $(node).parent().find('span.progress-bar').css('width', percentComplete + '%');
+                                console.log(percentComplete);
+
+                                if (percentComplete === 100) {
+
+                                }
+
+                          }
+                    }, false);
+
+                    return xhr;
+                },
+                url: '<?php echo $product_download_upload; ?>',
+                type: 'post',
+                dataType: 'json',
+                data: new FormData($('#form-product-download-upload')[0]),
+                cache: false,
+                contentType: false,
+                processData: false,
+                beforeSend: function() {
+                    $(node).button('loading');
+                },
+                complete: function() {
+                    $(node).button('reset');
+                },
+                success: function(json) {
+                    if (json['error']) {
+                        alert(JSON.stringify(json['error']));
+                    }
+
+                    if (json['success']) {
+                        $(node).parent().parent().parent().find('input[name $= "[filename]"]').val(json['filename']);
+                        $(node).parent().parent().parent().find('input[name $= "[mask]"]').val(json['mask']);
+
+                        alert(JSON.stringify(json['success']));
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                }
+            });
+        }
+    }, 500);
+});
 //--></script>
 <?php echo $footer; ?>

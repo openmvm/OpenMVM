@@ -3,6 +3,7 @@
 namespace Main\Marketplace\Models\Seller;
 
 use CodeIgniter\Model;
+use CodeIgniter\I18n\Time;
 
 class Product_Model extends Model
 {
@@ -44,11 +45,12 @@ class Product_Model extends Model
             'product_option' => $product_option,
             'price' => (float)$data['price'],
             'quantity' => $data['quantity'],
+            'requires_shipping' => $data['requires_shipping'],
             'weight' => $data['weight'],
             'weight_class_id' => $data['weight_class_id'],
             'sku' => $data['sku'],
-            'date_added' => now(),
-            'date_modified' => now(),
+            'date_added' => new Time('now'),
+            'date_modified' => new Time('now'),
             'status' => $data['status'],
         ];
         
@@ -195,6 +197,43 @@ class Product_Model extends Model
 
         }
 
+        // Product downloads
+        if (!empty($data['product_download'])) {
+            foreach ($data['product_download'] as $product_download) {
+                $product_download_insert_builder = $this->db->table('product_download');
+
+                $product_download_insert_data = [
+                    'product_id' => $product_id,
+                    'seller_id' => $this->customer->getSellerId(),
+                    'customer_id' => $this->customer->getId(),
+                    'filename' => $product_download['filename'],
+                    'mask' => $product_download['mask'],
+                    'date_added' => new Time('now'),
+                ];
+                
+                $product_download_insert_builder->insert($product_download_insert_data);
+
+                $product_download_id = $this->db->insertID();
+
+                if (!empty($product_download['description'])) {
+                    foreach ($product_download['description'] as $language_id => $value) {
+                        $product_download_description_insert_builder = $this->db->table('product_download_description');
+
+                        $product_download_description_insert_data = [
+                            'product_download_id' => $product_download_id,
+                            'product_id' => $product_id,
+                            'seller_id' => $this->customer->getSellerId(),
+                            'customer_id' => $this->customer->getId(),
+                            'language_id' => $language_id,
+                            'name' => $value['name'],
+                        ];
+                        
+                        $product_download_description_insert_builder->insert($product_download_description_insert_data);
+                    }
+                }
+            }
+        }
+
         return $product_id;
     }
 
@@ -213,10 +252,11 @@ class Product_Model extends Model
             'product_option' => $product_option,
             'price' => (float)$data['price'],
             'quantity' => $data['quantity'],
+            'requires_shipping' => $data['requires_shipping'],
             'weight' => $data['weight'],
             'weight_class_id' => $data['weight_class_id'],
             'sku' => $data['sku'],
-            'date_modified' => now(),
+            'date_modified' => new Time('now'),
             'status' => $data['status'],
         ];
 
@@ -424,6 +464,59 @@ class Product_Model extends Model
 
         }
 
+        // Product downloads
+        // Delete product download
+        $builder = $this->db->table('product_download');
+
+        $builder->where('product_id', $product_id);
+        $builder->where('seller_id', $this->customer->getSellerId());
+        $builder->where('customer_id', $this->customer->getId());
+        $builder->delete();
+
+        // Delete product download description
+        $builder = $this->db->table('product_download_description');
+
+        $builder->where('product_id', $product_id);
+        $builder->where('seller_id', $this->customer->getSellerId());
+        $builder->where('customer_id', $this->customer->getId());
+        $builder->delete();
+
+        if (!empty($data['product_download'])) {
+            foreach ($data['product_download'] as $product_download) {
+                $product_download_insert_builder = $this->db->table('product_download');
+
+                $product_download_insert_data = [
+                    'product_id' => $product_id,
+                    'seller_id' => $this->customer->getSellerId(),
+                    'customer_id' => $this->customer->getId(),
+                    'filename' => $product_download['filename'],
+                    'mask' => $product_download['mask'],
+                    'date_added' => new Time('now'),
+                ];
+                
+                $product_download_insert_builder->insert($product_download_insert_data);
+
+                $product_download_id = $this->db->insertID();
+
+                if (!empty($product_download['description'])) {
+                    foreach ($product_download['description'] as $language_id => $value) {
+                        $product_download_description_insert_builder = $this->db->table('product_download_description');
+
+                        $product_download_description_insert_data = [
+                            'product_download_id' => $product_download_id,
+                            'product_id' => $product_id,
+                            'seller_id' => $this->customer->getSellerId(),
+                            'customer_id' => $this->customer->getId(),
+                            'language_id' => $language_id,
+                            'name' => $value['name'],
+                        ];
+                        
+                        $product_download_description_insert_builder->insert($product_download_description_insert_data);
+                    }
+                }
+            }
+        }
+
         return $product_id;
     }
 
@@ -469,6 +562,7 @@ class Product_Model extends Model
                 'product_option' => $result->product_option,
                 'price' => $result->price,
                 'quantity' => $result->quantity,
+                'requires_shipping' => $result->requires_shipping,
                 'weight' => $result->weight,
                 'weight_class_id' => $result->weight_class_id,
                 'main_image' => $result->main_image,
@@ -503,6 +597,7 @@ class Product_Model extends Model
                 'product_option' => $row->product_option,
                 'price' => $row->price,
                 'quantity' => $row->quantity,
+                'requires_shipping' => $row->requires_shipping,
                 'weight' => $row->weight,
                 'weight_class_id' => $row->weight_class_id,
                 'main_image' => $row->main_image,
@@ -801,5 +896,72 @@ class Product_Model extends Model
         }
 
         return $product_images;
+    }
+
+    public function getProductDownloads($product_id)
+    {
+        $product_download_builder = $this->db->table('product_download');
+
+        $product_download_builder->where('product_id', $product_id);
+        $product_download_builder->where('seller_id', $this->customer->getSellerId());
+        $product_download_builder->where('customer_id', $this->customer->getId());
+
+        $product_download_query = $product_download_builder->get();
+
+        $product_downloads = [];
+
+        foreach ($product_download_query->getResult() as $product_download_result) {
+            $product_download_description_builder = $this->db->table('product_download_description');
+
+            $product_download_description_builder->where('product_download_id',$product_download_result->product_download_id);
+
+            $product_download_description_query = $product_download_description_builder->get();
+
+            $product_download_descriptions = [];
+
+            foreach ($product_download_description_query->getResult() as $product_download_description_result) {
+                $product_download_descriptions[$product_download_description_result->language_id] = [
+                    'product_download_description_id' => $product_download_description_result->product_download_description_id,
+                    'product_download_id' => $product_download_description_result->product_download_id,
+                    'language_id' => $product_download_description_result->language_id,
+                    'name' => $product_download_description_result->name,
+                ];
+            }
+
+            $product_downloads[] = [
+                'product_download_id' => $product_download_result->product_download_id,
+                'product_id' => $product_download_result->product_id,
+                'seller_id' => $product_download_result->seller_id,
+                'customer_id' => $product_download_result->customer_id,
+                'filename' => $product_download_result->filename,
+                'mask' => $product_download_result->mask,
+                'date_added' => $product_download_result->date_added,
+                'description' => $product_download_descriptions,
+            ];
+        }
+
+        return $product_downloads;
+    }
+
+    public function getProductDownloadDescriprions($product_download_id)
+    {
+        $builder = $this->db->table('product_download_description');
+
+        $builder->where('product_download_id', $product_download_id);
+
+        $product_download_description_query = $builder->get();
+
+        $product_download_descriptions = [];
+
+        foreach ($product_download_description_query->getResult() as $result) {
+            $product_download_descriptions[$result->language_id] = [
+                'product_download_description_id' => $result->product_download_description_id,
+                'product_download_id' => $result->product_download_id,
+                'language_id' => $result->language_id,
+                'name' => $result->name,
+            ];
+        }
+
+        return $product_download_descriptions;
     }
 }

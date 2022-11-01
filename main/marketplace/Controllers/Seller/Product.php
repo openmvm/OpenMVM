@@ -118,6 +118,7 @@ class Product extends \App\Controllers\BaseController
                 'min_price' => $min_price,
                 'max_price' => $max_price,
                 'quantity' => $product['quantity'],
+                'requires_shipping' => $product['requires_shipping'],
                 'min_quantity' => $min_quantity,
                 'max_quantity' => $max_quantity,
                 'status' => $product['status'] ? lang('Text.enabled', [], $this->language->getCurrentCode()) : lang('Text.disabled', [], $this->language->getCurrentCode()),
@@ -250,6 +251,12 @@ class Product extends \App\Controllers\BaseController
         }
 
         if ($product_info) {
+            $data['requires_shipping'] = $product_info['requires_shipping'];
+        } else {
+            $data['requires_shipping'] = 1;
+        }
+
+        if ($product_info) {
             $data['weight'] = $product_info['weight'];
         } else {
             $data['weight'] = 0;
@@ -321,6 +328,29 @@ class Product extends \App\Controllers\BaseController
             $data['additional_images'] = [];
         }
 
+        // Product downloads
+        if ($product_info) {
+            $data['product_downloads'] = [];
+
+            $product_downloads = $this->model_seller_product->getProductDownloads($product_info['product_id']);
+
+            foreach ($product_downloads as $product_download) {
+                $data['product_downloads'][] = [
+                    'product_download_id' => $product_download['product_download_id'],
+                    'product_id' => $product_download['product_id'],
+                    'seller_id' => $product_download['seller_id'],
+                    'customer_id' => $product_download['customer_id'],
+                    'filename' => $product_download['filename'],
+                    'mask' => $product_download['mask'],
+                    'date_added' => $product_download['date_added'],
+                    'description' => $product_download['description'],
+                ];
+            }
+
+        } else {
+            $data['product_downloads'] = [];
+        }
+
         $data['categories'] = [];
 
         $categories = $this->model_product_category->getCategories();
@@ -370,6 +400,7 @@ class Product extends \App\Controllers\BaseController
         $data['option_autocomplete'] = $this->url->customerLink('marketplace/seller/option/autocomplete', '', true);
         $data['product_variant'] = $this->url->customerLink('marketplace/seller/product/get_product_variants', ['product_id' => $product_id], true);
         $data['set_product_options'] = $this->url->customerLink('marketplace/seller/product/set_product_options', '', true);
+        $data['product_download_upload'] = $this->url->customerLink('marketplace/seller/product/product_download_upload', '', true);
 
         // Libraries
         $data['language_lib'] = $this->language;
@@ -601,6 +632,33 @@ class Product extends \App\Controllers\BaseController
                 $json['error']['toast'] = lang('Error.product_delete');
             }
         }
+
+        return $this->response->setJSON($json);
+    }
+
+    public function product_download_upload()
+    {
+        $json = [];
+
+        $file = $this->request->getFile('file');
+
+        $dir = 'customer/' . $this->customer->getId();
+
+        $mask = $file->getRandomName();
+
+        if (!is_dir(WRITEPATH . 'uploads/' . $dir)) {
+            mkdir(WRITEPATH . 'uploads/' . $dir, 0755, true);
+            file_put_contents(WRITEPATH . 'uploads/' . $dir . '/' . 'index.html', '');
+        }
+
+        if (! $file->hasMoved()) {
+            $filepath = WRITEPATH . 'uploads/' . $file->store($dir, $mask);
+        }
+
+        $json['filename'] = $file->getClientName();
+        $json['mask'] = $mask;
+
+        $json['success'] = true;
 
         return $this->response->setJSON($json);
     }

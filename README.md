@@ -26,6 +26,7 @@
 	<li>Wishlist / favorite</li>
 	<li>Product ratings and reviews</li>
 	<li>Customer questions and answers</li>
+	<li>[In Progress] Digital products and downloads</li>
 </ul>
 
 <h4>Administrator (back-end) features:</h4>
