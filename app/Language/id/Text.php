@@ -64,6 +64,7 @@ return [
     'demo_manager_upload_warning' => 'Warning: Installing demo data will delete your current data!',
     'disabled' => 'Disabled',
     'do_you_find_this_helpful' => 'Do you find this helpful?',
+    'downloads' => 'Downloads',
     'edit' => 'Edit',
     'edit_profile' => 'Edit Profile',
     'email' => 'Email',
