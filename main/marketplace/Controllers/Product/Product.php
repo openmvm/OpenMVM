@@ -270,11 +270,19 @@ class Product extends \App\Controllers\BaseController
             $data['total_product_reviews_rating_2'] = $this->model_product_product_review->getTotalProductReviewsByRating($product_info['product_id'], 2);
             $data['total_product_reviews_rating_1'] = $this->model_product_product_review->getTotalProductReviewsByRating($product_info['product_id'], 1);
 
-            $data['percentage_product_reviews_rating_5'] = ($data['total_product_reviews_rating_5']/$data['total_product_reviews']) * 100;
-            $data['percentage_product_reviews_rating_4'] = ($data['total_product_reviews_rating_4']/$data['total_product_reviews']) * 100;
-            $data['percentage_product_reviews_rating_3'] = ($data['total_product_reviews_rating_3']/$data['total_product_reviews']) * 100;
-            $data['percentage_product_reviews_rating_2'] = ($data['total_product_reviews_rating_2']/$data['total_product_reviews']) * 100;
-            $data['percentage_product_reviews_rating_1'] = ($data['total_product_reviews_rating_1']/$data['total_product_reviews']) * 100;
+            if ($data['total_product_reviews'] > 0) {
+                $data['percentage_product_reviews_rating_5'] = ($data['total_product_reviews_rating_5']/$data['total_product_reviews']) * 100;
+                $data['percentage_product_reviews_rating_4'] = ($data['total_product_reviews_rating_4']/$data['total_product_reviews']) * 100;
+                $data['percentage_product_reviews_rating_3'] = ($data['total_product_reviews_rating_3']/$data['total_product_reviews']) * 100;
+                $data['percentage_product_reviews_rating_2'] = ($data['total_product_reviews_rating_2']/$data['total_product_reviews']) * 100;
+                $data['percentage_product_reviews_rating_1'] = ($data['total_product_reviews_rating_1']/$data['total_product_reviews']) * 100;
+            } else {
+                $data['percentage_product_reviews_rating_5'] = 0;
+                $data['percentage_product_reviews_rating_4'] = 0;
+                $data['percentage_product_reviews_rating_3'] = 0;
+                $data['percentage_product_reviews_rating_2'] = 0;
+                $data['percentage_product_reviews_rating_1'] = 0;
+            }
 
             $data['logged_in'] = $this->customer->isLoggedIn();
 
