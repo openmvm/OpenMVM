@@ -121,6 +121,7 @@ return [
     'no' => 'No',
     'no_errors' => 'No errors!',
     'no_reviews' => 'No reviews!',
+    'no_shipping_method_required' => 'No shipping method required!',
     'no_tracking_number' => 'No tracking number.',
     'no_transactions' => 'No Transactions!',
     'none' => '--- None ---',
