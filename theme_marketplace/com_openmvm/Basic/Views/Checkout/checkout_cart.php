@@ -57,7 +57,7 @@
     <h5 class="border-bottom border-3 pb-3 mb-3"><?php echo lang('Heading.payment_address', [], $language_lib->getCurrentCode()); ?></h5>
     <div class="mb-3"><?php echo $payment_address; ?></div>
     <?php } ?>
-    <?php if (!empty($shipping_address)) { ?>
+    <?php if (!empty($shipping_address) && $has_shipping) { ?>
     <h5 class="border-bottom border-3 pb-3 mb-3"><?php echo lang('Heading.shipping_address', [], $language_lib->getCurrentCode()); ?></h5>
     <div class="mb-3"><?php echo $shipping_address; ?></div>
     <?php } ?>

@@ -108,9 +108,11 @@ class Order extends \App\Controllers\BaseController
                 $order_shipping_info = $this->model_account_order->getOrderShipping($order['order_id'], $seller_info['seller_id']);
 
                 if ($order_shipping_info) {
+                    $shipping_method = $order_shipping_info['text'];
                     $tracking_number = $order_shipping_info['tracking_number'];
                 } else {
-                    $tracking_number = '';
+                    $shipping_method = false;
+                    $tracking_number = false;
                 }
 
                 $order_seller_data[] = [
@@ -118,9 +120,9 @@ class Order extends \App\Controllers\BaseController
                     'store_name' => $seller_info['store_name'],
                     'store_description' => $seller_info['store_description'],
                     'product' => $order_product_data,
+                    'shipping_method' => $shipping_method,
                     'tracking_number' => $tracking_number,
                 ];
-
             }
 
             // Order statuses

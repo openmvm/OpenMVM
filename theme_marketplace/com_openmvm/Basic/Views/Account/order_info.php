@@ -122,6 +122,7 @@
                 </table>
             </div>
             <div class="col-sm-6">
+                <?php if ($shipping_methods) { ?>
                 <table>
                     <thead>
                         <tr>
@@ -134,6 +135,7 @@
                         </tr>
                     </tbody>
                 </table>
+                <?php } ?>
             </div>
         </div>
         <div class="row mb-5">
@@ -152,6 +154,7 @@
                 </table>
             </div>
             <div class="col-sm-6">
+                <?php if ($shipping_methods) { ?>
                 <table>
                     <thead>
                         <tr>
@@ -161,25 +164,25 @@
                     <tbody>
                         <tr>
                             <td>
-                                <?php if ($shipping_methods) { ?>
-                                    <table>
-                                        <?php foreach ($shipping_methods as $shipping_method) { ?>
-                                        <tr>
-                                            <td><strong>- <?php echo $shipping_method['seller']; ?></strong></td>
-                                            <td><strong>:</strong> <?php echo $shipping_method['shipping_method']; ?></td>
-                                        </tr>
-                                        <?php } ?>
-                                    </table>
-                                <?php } ?>
+                                <table>
+                                    <?php foreach ($shipping_methods as $shipping_method) { ?>
+                                    <tr>
+                                        <td><strong>- <?php echo $shipping_method['seller']; ?></strong></td>
+                                        <td><strong>:</strong> <?php echo $shipping_method['shipping_method']; ?></td>
+                                    </tr>
+                                    <?php } ?>
+                                </table>
                             </td>
                         </tr>
                     </tbody>
+                    <?php } ?>
                 </table>
             </div>
         </div>
         <div class="row mb-5">
             <div class="col-sm-6"></div>
             <div class="col-sm-6">
+                <?php if ($shipping_methods) { ?>
                 <table>
                     <thead>
                         <tr>
@@ -203,6 +206,7 @@
                         </tr>
                     </tbody>
                 </table>
+                <?php } ?>
             </div>
         </div>
         <?php if ($sellers) { ?>

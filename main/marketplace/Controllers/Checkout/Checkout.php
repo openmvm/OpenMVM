@@ -343,6 +343,31 @@ class Checkout extends \App\Controllers\BaseController
                 $data['checkout_shipping_address_id'] = 0;
             }
 
+            // Get cart sellers
+            if (!empty($this->request->getGet('seller_id'))) {
+                $seller_info = $this->model_seller_seller->getSeller($this->request->getGet('seller_id'));
+
+                if ($seller_info) {
+                    $sellers = [$seller_info];
+                } else {
+                    $sellers = [];
+                }
+            } else {
+                $sellers = $this->cart->getSellers();
+            }
+
+            $has_shipping = false;
+
+            foreach ($sellers as $seller) {
+                if ($this->cart->hasShipping($seller['seller_id'])) {
+                    $has_shipping = true;
+
+                    break;
+                }
+            }
+
+            $data['has_shipping'] = $has_shipping;
+
             if (!empty($this->request->getGet('seller_id'))) {
                 // Checkout payment
                 $data['checkout_payment_address'] = $this->url->customerLink('marketplace/checkout/checkout/payment_address', ['seller_id' => $this->request->getGet('seller_id')], true);
@@ -496,6 +521,7 @@ class Checkout extends \App\Controllers\BaseController
                     'seller_id' => $seller['seller_id'],
                     'store_name' => $seller['store_name'],
                     'shipping_method' => $shipping_method_data,
+                    'has_shipping' => $this->cart->hasShipping($seller['seller_id']),
                 ];
             }
 
@@ -508,6 +534,19 @@ class Checkout extends \App\Controllers\BaseController
                     $data['checkout_shipping_method_' . $seller['seller_id']]['code'] = '';
                 }
             }
+
+            // Check if cart has shipping
+            $has_shipping = false;
+
+            foreach ($sellers as $seller) {
+                if ($this->cart->hasShipping($seller['seller_id'])) {
+                    $has_shipping = true;
+
+                    break;
+                }
+            }
+
+            $data['has_shipping'] = $has_shipping;
 
             if (!empty($this->request->getGet('seller_id'))) {
                 // Checkout payment
@@ -892,6 +931,31 @@ class Checkout extends \App\Controllers\BaseController
                 }
             }
 
+            // Get cart sellers
+            if (!empty($this->request->getGet('seller_id'))) {
+                $seller_info = $this->model_seller_seller->getSeller($this->request->getGet('seller_id'));
+
+                if ($seller_info) {
+                    $sellers = [$seller_info];
+                } else {
+                    $sellers = [];
+                }
+            } else {
+                $sellers = $this->cart->getSellers();
+            }
+
+            $has_shipping = false;
+
+            foreach ($sellers as $seller) {
+                if ($this->cart->hasShipping($seller['seller_id'])) {
+                    $has_shipping = true;
+
+                    break;
+                }
+            }
+
+            $data['has_shipping'] = $has_shipping;
+
             if (!empty($this->request->getGet('seller_id'))) {
                 // Checkout payment
                 $data['checkout_payment_address'] = $this->url->customerLink('marketplace/checkout/checkout/payment_address', ['seller_id' => $this->request->getGet('seller_id')], true);
@@ -998,6 +1062,31 @@ class Checkout extends \App\Controllers\BaseController
                 }
             }
 
+            // Get cart sellers
+            if (!empty($this->request->getGet('seller_id'))) {
+                $seller_info = $this->model_seller_seller->getSeller($this->request->getGet('seller_id'));
+
+                if ($seller_info) {
+                    $sellers = [$seller_info];
+                } else {
+                    $sellers = [];
+                }
+            } else {
+                $sellers = $this->cart->getSellers();
+            }
+
+            $has_shipping = false;
+
+            foreach ($sellers as $seller) {
+                if ($this->cart->hasShipping($seller['seller_id'])) {
+                    $has_shipping = true;
+
+                    break;
+                }
+            }
+
+            $data['has_shipping'] = $has_shipping;
+
             // Check checkout shipping address
             if (!$this->session->has('checkout_shipping_address_id')) {
                 $data['errors'][] = lang('Error.checkout_shipping_address', [], $this->language->getCurrentCode());
@@ -1045,11 +1134,16 @@ class Checkout extends \App\Controllers\BaseController
 
             foreach ($sellers as $seller) {
                 // Check checkout shipping method for each seller
-                if (!$this->session->has('checkout_shipping_method_' . $seller['seller_id'])) {
-                    $data['errors'][] = sprintf(lang('Error.checkout_shipping_method', [], $this->language->getCurrentCode()), $seller['store_name']);
+                if ($this->cart->hasShipping($seller['seller_id'])) {
+                    if (!$this->session->has('checkout_shipping_method_' . $seller['seller_id'])) {
+                        $data['errors'][] = sprintf(lang('Error.checkout_shipping_method', [], $this->language->getCurrentCode()), $seller['store_name']);
+                    } else {
+                        // Checkout shipping method
+                        $order_data['checkout_shipping_method'][$seller['seller_id']] = $this->session->get('checkout_shipping_method_' . $seller['seller_id']);
+                    }
                 } else {
                     // Checkout shipping method
-                    $order_data['checkout_shipping_method'][$seller['seller_id']] = $this->session->get('checkout_shipping_method_' . $seller['seller_id']);
+                    $order_data['checkout_shipping_method'][$seller['seller_id']] = false;
                 }
             }
 

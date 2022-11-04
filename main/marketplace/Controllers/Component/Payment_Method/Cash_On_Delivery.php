@@ -26,6 +26,7 @@ class Cash_On_Delivery extends \App\Controllers\BaseController
         $this->model_customer_customer_address = new \Main\Marketplace\Models\Customer\Customer_Address_Model();
         $this->model_localisation_country = new \Main\Marketplace\Models\Localisation\Country_Model();
         $this->model_localisation_zone = new \Main\Marketplace\Models\Localisation\Zone_Model();
+        $this->model_localisation_language = new \Main\Marketplace\Models\Localisation\Language_Model();
         $this->model_checkout_order = new \Main\Marketplace\Models\Checkout\Order_Model();
         $this->model_seller_seller = new \Main\Marketplace\Models\Seller\Seller_Model();
     }

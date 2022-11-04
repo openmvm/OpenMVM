@@ -101,22 +101,25 @@ class Order_Model extends Model
                 $order_product_insert_builder->insert($order_product_insert_data);
             }
         }
+        file_put_contents(WRITEPATH . 'temp/openmvm.log', json_encode($data['checkout_shipping_method']));
 
         // Order shipping method
-        if ($data['checkout_shipping_method']) {
+        if (!empty($data['checkout_shipping_method'])) {
             foreach ($data['checkout_shipping_method'] as $key => $value) {
-                // Add order shipping
-                $order_shipping_insert_builder = $this->db->table('order_shipping');
+                if (!empty($data['checkout_shipping_method'][$key])) {
+                    // Add order shipping
+                    $order_shipping_insert_builder = $this->db->table('order_shipping');
 
-                $order_shipping_insert_data = [
-                    'order_id' => $order_id,
-                    'seller_id' => $key,
-                    'code' => $value['code'],
-                    'text' => $value['text'],
-                    'cost' => $value['cost'],
-                ];
-        
-                $order_shipping_insert_builder->insert($order_shipping_insert_data);
+                    $order_shipping_insert_data = [
+                        'order_id' => $order_id,
+                        'seller_id' => $key,
+                        'code' => $value['code'],
+                        'text' => $value['text'],
+                        'cost' => $value['cost'],
+                    ];
+            
+                    $order_shipping_insert_builder->insert($order_shipping_insert_data);
+                }
             }
         }
 
@@ -225,18 +228,20 @@ class Order_Model extends Model
 
         if ($data['checkout_shipping_method']) {
             foreach ($data['checkout_shipping_method'] as $key => $value) {
-                // Add order shipping
-                $order_shipping_insert_builder = $this->db->table('order_shipping');
+                if ($data['checkout_shipping_method'][$key]) {
+                    // Add order shipping
+                    $order_shipping_insert_builder = $this->db->table('order_shipping');
 
-                $order_shipping_insert_data = [
-                    'order_id' => $order_id,
-                    'seller_id' => $key,
-                    'code' => $value['code'],
-                    'text' => $value['text'],
-                    'cost' => $value['cost'],
-                ];
-        
-                $order_shipping_insert_builder->insert($order_shipping_insert_data);
+                    $order_shipping_insert_data = [
+                        'order_id' => $order_id,
+                        'seller_id' => $key,
+                        'code' => $value['code'],
+                        'text' => $value['text'],
+                        'cost' => $value['cost'],
+                    ];
+            
+                    $order_shipping_insert_builder->insert($order_shipping_insert_data);
+                }
             }
         }
 

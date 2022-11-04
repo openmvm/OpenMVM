@@ -168,6 +168,23 @@ class Cart {
     }
 
     /**
+     * Check if the cart has shipping.
+     *
+     */
+    public function hasShipping($seller_id)
+    {
+        $products = $this->getProducts($seller_id);
+
+        foreach ($products as $product) {
+            if ($product['requires_shipping']) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Cart get weight.
      *
      */
@@ -178,7 +195,9 @@ class Cart {
         $products = $this->getProducts($seller_id);
 
         foreach ($products as $product) {
-            $weight += $this->weight->convert($product['weight'], $product['weight_class_id'], $this->setting->get('setting_marketplace_weight_class_id')) * $product['quantity'];
+            if ($product['requires_shipping']) {
+                $weight += $this->weight->convert($product['weight'], $product['weight_class_id'], $this->setting->get('setting_marketplace_weight_class_id')) * $product['quantity'];
+            }
         }
 
         return $weight;
@@ -386,6 +405,7 @@ class Cart {
                     'weight_class_id' => $product->weight_class_id,
                     'main_image' => $product->main_image,
                     'quantity' => $result->quantity,
+                    'requires_shipping' => $product->requires_shipping,
                     'total' => $price * $result->quantity,
                     'date_added' => $result->date_added,
                     'option' => $option_data,

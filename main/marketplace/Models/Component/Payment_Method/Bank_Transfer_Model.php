@@ -14,7 +14,25 @@ class Bank_Transfer_Model extends Model
         $this->db = \Config\Database::connect();
 
         // Libraries
+        $this->request = \Config\Services::request();
+        $this->session = \Config\Services::session();
+        $this->language = new \App\Libraries\Language();
         $this->setting = new \App\Libraries\Setting();
+        $this->template = new \App\Libraries\Template();
+        $this->customer = new \App\Libraries\Customer();
+        $this->cart = new \App\Libraries\Cart();
+        $this->currency = new \App\Libraries\Currency();
+        $this->url = new \App\Libraries\Url();
+        $this->weight = new \App\Libraries\Weight();
+
+        // Models
+        $this->model_customer_customer = new \Main\Marketplace\Models\Customer\Customer_Model();
+        $this->model_customer_customer_address = new \Main\Marketplace\Models\Customer\Customer_Address_Model();
+        $this->model_localisation_country = new \Main\Marketplace\Models\Localisation\Country_Model();
+        $this->model_localisation_zone = new \Main\Marketplace\Models\Localisation\Zone_Model();
+        $this->model_localisation_language = new \Main\Marketplace\Models\Localisation\Language_Model();
+        $this->model_checkout_order = new \Main\Marketplace\Models\Checkout\Order_Model();
+        $this->model_seller_seller = new \Main\Marketplace\Models\Seller\Seller_Model();
     }
 
     public function method($customer_address_id = 0)

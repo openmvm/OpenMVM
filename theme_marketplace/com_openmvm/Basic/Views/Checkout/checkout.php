@@ -6,9 +6,7 @@
             <div class="col-sm-7">
                 <h3 class="border-bottom border-3 pb-3 mb-3"><?php echo lang('Heading.payment_address', [], $language_lib->getCurrentCode()); ?></h3>
                 <div id="checkout-payment-address" class="mb-3"><i class="fas fa-spinner fa-spin"></i></div>
-                <h3 class="border-bottom border-3 pb-3 mb-3"><?php echo lang('Heading.shipping_address', [], $language_lib->getCurrentCode()); ?></h3>
                 <div id="checkout-shipping-address" class="mb-3"><i class="fas fa-spinner fa-spin"></i></div>
-                <h3 class="border-bottom border-3 pb-3 mb-3"><?php echo lang('Heading.shipping_method', [], $language_lib->getCurrentCode()); ?></h3>
                 <div id="checkout-shipping-method" class="mb-3"><i class="fas fa-spinner fa-spin"></i></div>
                 <h3 class="border-bottom border-3 pb-3 mb-3"><?php echo lang('Heading.payment_method', [], $language_lib->getCurrentCode()); ?></h3>
                 <div id="checkout-payment-method" class="mb-3"><i class="fas fa-spinner fa-spin"></i></div>

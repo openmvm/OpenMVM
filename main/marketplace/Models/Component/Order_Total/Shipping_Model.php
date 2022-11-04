@@ -14,13 +14,14 @@ class Shipping_Model extends Model
         $this->db = \Config\Database::connect();
 
         // Libraries
+        $this->cart = new \App\Libraries\Cart();
         $this->session = \Config\Services::session();
         $this->setting = new \App\Libraries\Setting();
     }
 
     public function getTotal($order_total, $seller_id)
     {
-        if ($this->session->has('checkout_shipping_method_' . $seller_id)) {
+        if ($this->session->has('checkout_shipping_method_' . $seller_id) && $this->cart->hasShipping($seller_id)) {
             $checkout_shipping_method = $this->session->get('checkout_shipping_method_' . $seller_id);
             
             $cost = $checkout_shipping_method['cost'];

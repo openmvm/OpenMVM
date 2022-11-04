@@ -62,10 +62,17 @@
                                     </thead>
                                     <tbody>
                                         <?php foreach ($order['seller'] as $seller) { ?>
-                                        <tr>
-                                            <td>- <?php echo $seller['store_name']; ?></td>
-                                            <td>: <?php if (!empty($seller['tracking_number'])) { ?><strong><?php echo $seller['tracking_number']; ?></strong><?php } else { ?><em><?php echo lang('Text.no_tracking_number', [], $language_lib->getCurrentCode()); ?></em><?php } ?></td>
-                                        </tr>
+                                            <?php if ($seller['shipping_method']) { ?>
+                                            <tr>
+                                                <td>- <?php echo $seller['store_name']; ?></td>
+                                                <td>: <?php if (!empty($seller['tracking_number'])) { ?><strong><?php echo $seller['tracking_number']; ?></strong><?php } else { ?><em><?php echo lang('Text.no_tracking_number', [], $language_lib->getCurrentCode()); ?></em><?php } ?></td>
+                                            </tr>
+                                            <?php } else { ?>
+                                            <tr>
+                                                <td>- <?php echo $seller['store_name']; ?></td>
+                                                <td>: <?php echo lang('Text.no_shipping_method_required', [], $language_lib->getCurrentCode()); ?></td>
+                                            </tr>
+                                            <?php } ?>
                                         <?php } ?>
                                     </tbody>
                                 </table>

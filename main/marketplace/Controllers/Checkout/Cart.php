@@ -64,6 +64,7 @@ class Cart extends \App\Controllers\BaseController
                 'seller_id' => $seller['seller_id'],
                 'store_name' => $seller['store_name'],
                 'product' => $product_data,
+                'shipping_required' => $this->cart->hasShipping($seller['seller_id']),
                 'checkout' => $this->url->customerLink('marketplace/checkout/checkout', ['seller_id' => $seller['seller_id']], true),
             ];
         }
