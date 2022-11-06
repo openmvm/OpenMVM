@@ -14,6 +14,7 @@ class Checkout extends \App\Controllers\BaseController
         $this->model_localisation_country = new \Main\Marketplace\Models\Localisation\Country_Model();
         $this->model_localisation_zone = new \Main\Marketplace\Models\Localisation\Zone_Model();
         $this->model_component_component = new \Main\Marketplace\Models\Component\Component_Model();
+        $this->model_product_product = new \Main\Marketplace\Models\Product\Product_Model();
         $this->model_seller_seller = new \Main\Marketplace\Models\Seller\Seller_Model();
         $this->model_checkout_order = new \Main\Marketplace\Models\Checkout\Order_Model();
     }
@@ -732,6 +733,55 @@ class Checkout extends \App\Controllers\BaseController
         return $this->response->setJSON($json);
     }
 
+    public function update_quantity()
+    {
+        $json = [];
+
+        if ($this->customer->getId()) {
+            $customer_id = $this->customer->getId();
+        } else {
+            $customer_id = 0;
+        }
+
+        if (!empty($this->request->getPost('product_id'))) {
+            $product_id = $this->request->getPost('product_id');
+        } else {
+            $product_id = 0;
+        }
+
+        // Get product info
+        $product_info = $this->model_product_product->getProduct($product_id);
+
+        if ($product_info) {
+            $seller_id = $product_info['seller_id'];
+        } else {
+            $seller_id = 0;
+        }
+
+        if (!empty($this->request->getPost('quantity'))) {
+            $quantity = $this->request->getPost('quantity');
+        } else {
+            $quantity = 1;
+        }
+
+        if (!empty($this->request->getPost('product_variant'))) {
+            $options = json_decode($this->request->getPost('product_variant'), true);
+        } else {
+            $options = '';
+        }
+
+        $this->cart->add($customer_id, $seller_id, $product_id, $quantity, $options);
+
+        // Remove shipping method session
+        if ($this->session->has('checkout_shipping_method_' . $seller_id)) {
+            $this->session->remove('checkout_shipping_method_' . $seller_id);
+        }
+
+        $json['message'] = $options;
+
+        return $this->response->setJSON($json);
+    }
+
     public function cart()
     {
         if ($this->customer->isLoggedIn()) {
@@ -774,6 +824,7 @@ class Checkout extends \App\Controllers\BaseController
                         'quantity' => $product['quantity'],
                         'total' => $this->currency->format($product['total'], $this->currency->getCurrentCode()),
                         'option' => $product['option'],
+                        'product_variant' => $product['option_ids'],
                         'href' => $this->url->customerLink('marketplace/product/product/get/' . $product['slug'] . '-p' . $product['product_id']),
                     ];
                 }
@@ -972,6 +1023,9 @@ class Checkout extends \App\Controllers\BaseController
                 // Checkout cart
                 $data['checkout_cart'] = $this->url->customerLink('marketplace/checkout/checkout/cart', ['seller_id' => $this->request->getGet('seller_id')], true);
 
+                // Checkout cart update quantity
+                $data['checkout_cart_update_quantity'] = $this->url->customerLink('marketplace/checkout/checkout/update_quantity', ['seller_id' => $this->request->getGet('seller_id')], true);
+
                 // Checkout confirm
                 $data['checkout_confirm'] = $this->url->customerLink('marketplace/checkout/checkout/confirm', ['seller_id' => $this->request->getGet('seller_id')], true);
             } else {
@@ -989,6 +1043,9 @@ class Checkout extends \App\Controllers\BaseController
 
                 // Checkout cart
                 $data['checkout_cart'] = $this->url->customerLink('marketplace/checkout/checkout/cart', '', true);
+
+                // Checkout cart update quantity
+                $data['checkout_cart_update_quantity'] = $this->url->customerLink('marketplace/checkout/checkout/update_quantity', '', true);
 
                 // Checkout confirm
                 $data['checkout_confirm'] = $this->url->customerLink('marketplace/checkout/checkout/confirm', '', true);

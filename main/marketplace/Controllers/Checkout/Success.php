@@ -32,7 +32,7 @@ class Success extends \App\Controllers\BaseController
 
         // Remove cart
         foreach ($order_sellers as $seller_id) {
-            $this->cart->remove($this->customer->getId(), $seller_id, $this->cart->getKey());
+            $this->cart->clear($this->customer->getId(), $seller_id, $this->cart->getKey());
         }
 
         // Remove checkout session data

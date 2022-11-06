@@ -28,7 +28,7 @@
                                 </div>
                                 <?php } ?>
                                 <div class="text-muted my-3"><?php echo $product['quantity']; ?> X <?php echo $product['price']; ?></div>
-                                <div><a href="javascript:void(0);" class="link-danger text-decoration-none"><i class="fas fa-trash-alt fa-fw"></i> <?php echo lang('Button.remove', [], $language_lib->getCurrentCode()); ?></a></div>
+                                <div><a role="button" class="link-danger text-decoration-none" onclick="cartRemove(this, '<?php echo $product['product_id']; ?>', '<?php echo htmlentities($product['product_variant']); ?>');"><i class="fas fa-trash-alt fa-fw"></i> <?php echo lang('Button.remove', [], $language_lib->getCurrentCode()); ?></a></div>
                             </td>
                             <td class="text-end small"><?php echo $product['quantity']; ?></td>
                             <td class="text-end small"><?php echo $product['total']; ?></td>
@@ -48,19 +48,23 @@
             <div class="d-grid gap-2"><a href="<?php echo $checkout; ?>" class="btn btn-success"><i class="fas fa-cash-register me-2"></i><?php echo lang('Button.checkout_all', [], $language_lib->getCurrentCode()); ?></a></div>
         </div>
     </div>
+<?php } else { ?>
+<div><?php echo lang('Text.cart_empty', [], $language_lib->getCurrentCode()); ?></div>
+<?php } ?>
 <script type="text/javascript"><!--
 $(document).ready(function() {
     $('#offcanvas-right-icon-total-products').remove();
 
     var total_products = '<?php echo $total_products; ?>';
 
-    html = '<span id="offcanvas-right-icon-total-products" class="position-absolute top-25 start-75 translate-middle badge rounded-pill bg-danger small">';
-    html += '    <small>' + total_products + '</small>';
-    html += '</span>';
-    
-    $('#icon-offcanvas-right').append(html);
+    if (total_products > 0) {
+        html = '<span id="offcanvas-right-icon-total-products" class="position-absolute top-25 start-75 translate-middle badge rounded-pill bg-danger small">';
+        html += '    <small>' + total_products + '</small>';
+        html += '</span>';
+        
+        $('#icon-offcanvas-right').append(html);
+    } else {
+        $('#offcanvas-right-icon-total-products').remove();
+    }
 });
 //--></script> 
-<?php } else { ?>
-<div><?php echo lang('Text.cart_empty', [], $language_lib->getCurrentCode()); ?></div>
-<?php } ?>

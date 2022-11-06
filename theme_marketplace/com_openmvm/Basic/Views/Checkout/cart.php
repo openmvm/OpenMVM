@@ -34,7 +34,7 @@
                                         </div>
                                         <?php } ?>
                                         <div class="text-muted my-3"><?php echo $product['quantity']; ?> X <?php echo $product['price']; ?></div>
-                                        <div class="mt-3"><a href="javascript:void(0);" class="link-danger text-decoration-none"><i class="fas fa-trash-alt fa-fw"></i> <?php echo lang('Button.remove', [], $language_lib->getCurrentCode()); ?></a></div>
+                                        <div class="mt-3"><?php echo form_open($product['remove_cart'], ['id' => 'form-cart-remove-' . $product['cart_id'] . '']); ?><input type="hidden" name="product_variant" value="<?php echo $product['product_variant']; ?>" /><?php echo form_close(); ?><button type="button" class="btn btn-sm btn-danger button-action" data-form="form-cart-remove-<?php echo $product['cart_id']; ?>" data-form-action="<?php echo $product['remove_cart']; ?>" data-icon="fa-fa-trash-alt" data-toast-heading-title-success="<?php echo lang('Text.success', [], $language_lib->getCurrentCode()); ?>" data-toast-heading-title-error="<?php echo lang('Text.error', [], $language_lib->getCurrentCode()); ?>" data-toast-heading-icon-success="fa-check-circle" data-toast-heading-icon-error="fa-triangle-exclamation" data-redirection="true"><i class="fas fa-trash-alt fa-fw"></i><span class="d-none d-md-inline-block ms-1"><?php echo lang('Button.remove', [], $language_lib->getCurrentCode()); ?></span></button></div>
                                     </td>
                                     <td class="text-end small"><?php echo $product['quantity']; ?></td>
                                     <td class="text-end small"><?php echo $product['total']; ?></td>

@@ -32,7 +32,7 @@
                             <div class="text-muted my-3"><?php echo $product['quantity']; ?> X <?php echo $product['price']; ?></div>
                             <div class="mt-3"><a href="#" class="link-danger text-decoration-none"><i class="fas fa-trash-alt fa-fw"></i> <?php echo lang('Button.remove', [], $language_lib->getCurrentCode()); ?></a></div>
                         </td>
-                        <td class="text-end small"><?php echo $product['quantity']; ?></td>
+                        <td class="text-end small"><span role="button" class="link-secondary me-1" onclick="subtractQuantity(this, '<?php echo $product['product_id']; ?>', '<?php echo htmlentities($product['product_variant']); ?>');"><i class="fas fa-circle-minus"></i></span><span class="d-inline-block text-center" style="width: 36px;"><?php echo $product['quantity']; ?></span><span role="button" class="link-secondary ms-1" onclick="addQuantity(this, '<?php echo $product['product_id']; ?>', '<?php echo htmlentities($product['product_variant']); ?>');"><i class="fas fa-circle-plus"></i></span></td>
                         <td class="text-end small"><?php echo $product['total']; ?></td>
                     </tr>
                     <?php } ?>
@@ -70,4 +70,57 @@ $(document).ready(function() {
     $( '#checkout-confirm' ).html( '<i class="fas fa-spinner fa-spin"></i>' );
     $( '#checkout-confirm' ).load( '<?php echo $checkout_confirm; ?>' );
 });
+//--></script> 
+<script type="text/javascript"><!--
+function addQuantity(event, product_id, product_variant) {
+    $.ajax({
+        url: '<?php echo $checkout_cart_update_quantity; ?>',
+        type: 'post',
+        dataType: 'json',
+        data: {
+            product_id: product_id,
+            quantity: 1,
+            product_variant: product_variant
+        },
+        beforeSend: function() {
+            $(event).find('i').removeClass('fa-circle-plus').addClass('fa-spinner fa-spin');
+        },
+        complete: function() {
+            $(event).find('i').removeClass('fa-spinner fa-spin').addClass('fa-circle-plus');
+        },
+        success: function(json) {
+            $( '#checkout-cart' ).load( '<?php echo $checkout_cart; ?>' );
+            $( '#checkout-shipping-method' ).load( '<?php echo $checkout_shipping_method; ?>' );
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+}
+
+function subtractQuantity(event, product_id, product_variant) {
+    $.ajax({
+        url: '<?php echo $checkout_cart_update_quantity; ?>',
+        type: 'post',
+        dataType: 'json',
+        data: {
+            product_id: product_id,
+            quantity: -1,
+            product_variant: product_variant
+        },
+        beforeSend: function() {
+            $(event).find('i').removeClass('fa-circle-minus').addClass('fa-spinner fa-spin');
+        },
+        complete: function() {
+            $(event).find('i').removeClass('fa-spinner fa-spin').addClass('fa-circle-minus');
+        },
+        success: function(json) {
+            $( '#checkout-cart' ).load( '<?php echo $checkout_cart; ?>' );
+            $( '#checkout-shipping-method' ).load( '<?php echo $checkout_shipping_method; ?>' );
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+}
 //--></script> 

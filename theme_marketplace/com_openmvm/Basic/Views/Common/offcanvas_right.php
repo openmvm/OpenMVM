@@ -9,3 +9,28 @@
 <script type="text/javascript"><!--
 $( '#offcanvas-cart' ).load( '<?php echo base_url('marketplace/common/cart'); ?>' );
 //--></script> 
+<script type="text/javascript"><!--
+function cartRemove(event, product_id, product_variant) {
+    const userData = {};
+    userData['product_variant'] = product_variant;
+
+    $.ajax({
+        url: '<?php echo $cart_remove_url; ?>' + '?product_id=' + product_id,
+        type: 'post',
+        data: JSON.stringify(userData),
+        dataType: 'json',
+        beforeSend: function() {
+            $(event).find('i').removeClass('fa-trash-alt').addClass('fa-spinner fa-spin');
+        },
+        complete: function() {
+            
+        },
+        success: function(json) {
+            $( '#offcanvas-cart' ).load( '<?php echo base_url('marketplace/common/cart'); ?>' );
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+}
+//--></script> 

@@ -104,7 +104,23 @@ class Cart {
      * Cart remove.
      *
      */
-    public function remove($customer_id, $seller_id, $key)
+    public function remove($customer_id, $seller_id, $product_id, $option, $key)
+    {
+        $cart_builder = $this->db->table('cart');
+
+        $cart_builder->where('customer_id', $customer_id);
+        $cart_builder->where('seller_id', $seller_id);
+        $cart_builder->where('product_id', $product_id);
+        $cart_builder->where('option', $option);
+        $cart_builder->where('key', $key);
+        $cart_builder->delete();
+    }
+
+    /**
+     * Cart clear.
+     *
+     */
+    public function clear($customer_id, $seller_id, $key)
     {
         $cart_builder = $this->db->table('cart');
 
@@ -165,6 +181,17 @@ class Cart {
             
             $cart_insert_builder->insert($cart_insert_data);
         }
+
+        // Remove cart item if quantity below 1
+        $cart_delete_builder = $this->db->table('cart');
+        
+        $cart_delete_builder->where('customer_id', $customer_id);
+        $cart_delete_builder->where('seller_id', $seller_id);
+        $cart_delete_builder->where('product_id', $product_id);
+        $cart_delete_builder->where('quantity <', 1);
+        $cart_delete_builder->where('option', json_encode($options));
+        $cart_delete_builder->where('key', $this->getKey());
+        $cart_delete_builder->delete();
     }
 
     /**
@@ -395,7 +422,11 @@ class Cart {
                     'cart_id' => $result->cart_id,
                     'customer_id' => $result->customer_id,
                     'seller_id' => $result->seller_id,
+                    'key' => $result->key,
                     'product_id' => $result->product_id,
+                    'quantity' => $result->quantity,
+                    'option_ids' => $result->option,
+                    'date_added' => $result->date_added,
                     'name' => $product->name,
                     'description' => $product->description,
                     'slug' => $product->slug,
@@ -404,12 +435,9 @@ class Cart {
                     'weight' => $weight,
                     'weight_class_id' => $product->weight_class_id,
                     'main_image' => $product->main_image,
-                    'quantity' => $result->quantity,
                     'requires_shipping' => $product->requires_shipping,
                     'total' => $price * $result->quantity,
-                    'date_added' => $result->date_added,
                     'option' => $option_data,
-                    'option_ids' => $result->option,
                 ];
             }
         }

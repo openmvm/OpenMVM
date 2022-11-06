@@ -48,7 +48,14 @@ class Cart extends \App\Controllers\BaseController
                     $thumb = $this->image->resize('no_image.png', 64, 64, true);
                 }
 
+                $product_variant = $product['option_ids'];
+
+                if (is_array($product_variant)) {
+                    asort($product_variant);
+                }
+
                 $product_data[] = [
+                    'cart_id' => $product['cart_id'],
                     'product_id' => $product['product_id'],
                     'name' => $product['name'],
                     'thumb' => $thumb,
@@ -56,7 +63,9 @@ class Cart extends \App\Controllers\BaseController
                     'quantity' => $product['quantity'],
                     'total' => $this->currency->format($product['total'], $this->currency->getCurrentCode()),
                     'option' => $product['option'],
+                    'product_variant' => htmlentities($product_variant),
                     'href' => $this->url->customerLink('marketplace/product/product/get/' . $product['slug'] . '-p' . $product['product_id']),
+                    'remove_cart' => $this->url->customerLink('marketplace/checkout/cart/remove?product_id=' . $product['product_id']),
                 ];
             }
 
@@ -131,6 +140,49 @@ class Cart extends \App\Controllers\BaseController
             $this->cart->add($customer_id, $product_info['seller_id'], $product_info['product_id'], $this->request->getPost('quantity'), $this->request->getPost('product_variant'));
 
             $json['success'] = lang('Success.add_to_cart', [], $this->language->getCurrentCode());
+        }
+
+        return $this->response->setJSON($json);
+    }
+
+    public function remove()
+    {
+        $json = [];
+
+        if ($this->request->getMethod() == 'post') {
+            $json_data = $this->request->getJSON(true);
+
+            // Get customer id
+            if ($this->customer->isLoggedin()) {
+                $customer_id = $this->customer->getId();
+            } else {
+                $customer_id = 0;
+            }
+
+            // Get product info
+            if (!empty($this->request->getGet('product_id'))) {
+                $product_id = $this->request->getGet('product_id');
+            } else {
+                $product_id = 0;
+            }
+
+            $product_info = $this->model_product_product->getProduct($product_id);
+
+            // If product not found
+            if (!$product_info) {
+                $json['error']['product-variant'] = lang('Error.product_not_found', [], $this->language->getCurrentCode());
+            }
+
+            if (empty($json['error'])) {
+                file_put_contents(WRITEPATH . 'temp/openmvm.log', json_encode($json_data));
+                $this->cart->remove($customer_id, $product_info['seller_id'], $product_info['product_id'], $json_data['product_variant'], $this->cart->getKey());
+
+                $json['success']['toast'] = lang('Success.cart_remove', [], $this->language->getCurrentCode());
+                $json['redirect'] = $this->url->customerLink('marketplace/checkout/cart');
+            } else {
+                // Errors
+                $json['error']['toast'] = lang('Error.form', [], $this->language->getCurrentCode());
+            }
         }
 
         return $this->response->setJSON($json);

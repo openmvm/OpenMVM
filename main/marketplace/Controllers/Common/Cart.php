@@ -52,6 +52,7 @@ class Cart extends \App\Controllers\BaseController
                     'quantity' => $product['quantity'],
                     'total' => $this->currency->format($product['total'], $this->currency->getCurrentCode()),
                     'option' => $product['option'],
+                    'product_variant' => $product['option_ids'],
                     'href' => $this->url->customerLink('marketplace/product/product/get/' . $product['slug'] . '-p' . $product['product_id']),
                 ];
             }

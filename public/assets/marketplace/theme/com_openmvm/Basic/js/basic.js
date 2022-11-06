@@ -10,6 +10,40 @@ function getURLParam(key) {
     }
 }
 
+/* Cart */
+var base = $('base').attr('href');
+
+var cart = {
+    'add': function(product_id, quantity, product_variant) {
+    },
+    'update': function() {
+    },
+    'remove': function(product_id, product_variant) {
+        $.ajax({
+            url: base + '/marketplace/checkout/cart/remove?product_id=' + product_id,
+            type: 'post',
+            dataType: 'json',
+            data: {
+                product_variant: product_variant
+            },
+            beforeSend: function() {
+                
+            },
+            complete: function() {
+                
+            },
+            success: function(json) {
+                window.location.href = window.location.href;
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    },
+    'clear': function() {
+    }
+}
+
 $( document ).ready(function() {
     var base = $('base').attr('href');
 
@@ -39,7 +73,7 @@ $( document ).ready(function() {
             window.location.href = base + '/marketplace/product/search?keyword=' + keyword;
         }
 	});
-	
+
     /* From actions */
     $('body').on('click', '.button-action', function() {
         if (typeof(tinyMCE) !== "undefined") {
@@ -65,6 +99,7 @@ $( document ).ready(function() {
             type: 'post',
             dataType: 'json',
             data: JSON.stringify(userData),
+            cache: false,
             beforeSend: function() {
                 $(node).find('i').removeClass(dataIcon).addClass('fa-spinner fa-spin');
 

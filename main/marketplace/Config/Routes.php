@@ -74,6 +74,9 @@ $routes->group('/', function ($routes) {
             $routes->group('cart', function ($routes) {
                 $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Checkout\Cart::index');
                 $routes->match(['get', 'post'], 'add', '\Main\Marketplace\Controllers\Checkout\Cart::add');
+                $routes->match(['get', 'post'], 'update', '\Main\Marketplace\Controllers\Checkout\Cart::update');
+                $routes->match(['get', 'post'], 'remove', '\Main\Marketplace\Controllers\Checkout\Cart::remove');
+                $routes->match(['get', 'post'], 'clear', '\Main\Marketplace\Controllers\Checkout\Cart::clear');
             });
             // Checkout
             $routes->group('checkout', function ($routes) {
@@ -87,6 +90,7 @@ $routes->group('/', function ($routes) {
                 $routes->match(['get', 'post'], 'set_shipping_method', '\Main\Marketplace\Controllers\Checkout\Checkout::set_shipping_method', ['filter' => 'marketplace_auth']);
                 $routes->match(['get', 'post'], 'payment_method', '\Main\Marketplace\Controllers\Checkout\Checkout::payment_method', ['filter' => 'marketplace_auth']);
                 $routes->match(['get', 'post'], 'set_payment_method', '\Main\Marketplace\Controllers\Checkout\Checkout::set_payment_method', ['filter' => 'marketplace_auth']);
+                $routes->match(['get', 'post'], 'update_quantity', '\Main\Marketplace\Controllers\Checkout\Checkout::update_quantity', ['filter' => 'marketplace_auth']);
                 $routes->match(['get', 'post'], 'cart', '\Main\Marketplace\Controllers\Checkout\Checkout::cart', ['filter' => 'marketplace_auth']);
                 $routes->match(['get', 'post'], 'confirm', '\Main\Marketplace\Controllers\Checkout\Checkout::confirm', ['filter' => 'marketplace_auth']);
             });
