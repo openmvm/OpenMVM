@@ -44,6 +44,14 @@ class Column_Left extends \App\Controllers\BaseController
             'children' => [],
         ];
 
+        $marketplace[] = [
+            'id' => 'menu-marketplace-order',
+            'icon' => 'fas fa-dot-circle fa-fw',
+            'text' => lang('Menu.orders'),
+            'href' => $this->url->administratorLink(env('app.adminUrlSegment') . '/marketplace/order'),
+            'children' => [],
+        ];
+
         $data['menus'][] = [
             'id' => 'menu-marketplace',
             'icon' => 'fas fa-store fa-fw',

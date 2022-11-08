@@ -336,6 +336,7 @@ $routes->group('/', function ($routes) {
                     $routes->match(['get', 'post'], '/', '\Main\Admin\Controllers\Localisation\Order_Status::save', ['filter' => 'admin_auth']);
                     $routes->match(['get', 'post'], '(:num)', '\Main\Admin\Controllers\Localisation\Order_Status::save', ['filter' => 'admin_auth']);
                 });
+                $routes->match(['get', 'post'], 'get_order_status', '\Main\Admin\Controllers\Localisation\Order_Status::get_order_status', ['filter' => 'admin_auth']);
             });
             // Weight class
             $routes->group('weight_class', function ($routes) {
@@ -374,6 +375,20 @@ $routes->group('/', function ($routes) {
                     $routes->match(['get', 'post'], '(:num)', '\Main\Admin\Controllers\Marketplace\Category::save', ['filter' => 'admin_auth']);
                 });
                 $routes->match(['get', 'post'], 'autocomplete', '\Main\Admin\Controllers\Marketplace\Category::autocomplete', ['filter' => 'admin_auth']);
+            });
+            // Order
+            $routes->group('order', function ($routes) {
+                $routes->match(['get', 'post'], '/', '\Main\Admin\Controllers\Marketplace\Order::index', ['filter' => 'admin_auth']);
+                $routes->match(['get', 'post'], 'add', '\Main\Admin\Controllers\Marketplace\Order::add', ['filter' => 'admin_auth']);
+                $routes->match(['get', 'post'], 'edit/(:num)', '\Main\Admin\Controllers\Marketplace\Order::edit', ['filter' => 'admin_auth']);
+                $routes->match(['get', 'post'], 'delete', '\Main\Admin\Controllers\Marketplace\Order::delete', ['filter' => 'admin_auth']);
+                $routes->group('save', function ($routes) {
+                    $routes->match(['get', 'post'], '/', '\Main\Admin\Controllers\Marketplace\Order::save', ['filter' => 'admin_auth']);
+                    $routes->match(['get', 'post'], '(:num)', '\Main\Admin\Controllers\Marketplace\Order::save', ['filter' => 'admin_auth']);
+                });
+                $routes->match(['get', 'post'], 'info/(:num)', '\Main\Admin\Controllers\Marketplace\Order::info', ['filter' => 'admin_auth']);
+                $routes->match(['get', 'post'], 'update_order_status_history', '\Main\Admin\Controllers\Marketplace\Order::update_order_status_history', ['filter' => 'admin_auth']);
+                $routes->match(['get', 'post'], 'order_status_history', '\Main\Admin\Controllers\Marketplace\Order::order_status_history', ['filter' => 'admin_auth']);
             });
         });
 

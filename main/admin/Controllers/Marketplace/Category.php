@@ -234,7 +234,7 @@ class Category extends \App\Controllers\BaseController
 
                     $json['redirect'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/marketplace/category');
                 } else {
-                    $json['error']['toast'] = lang('Error.country_delete');
+                    $json['error']['toast'] = lang('Error.category_delete');
                 }                
             }
         }
