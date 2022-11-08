@@ -498,8 +498,6 @@ class Order extends \App\Controllers\BaseController
 
             $data['order_add_message_3'] = stripslashes(sprintf(lang('Text.order_add_message_3', [], $this->language->getCurrentCode()), $this->url->customerLink('marketplace/account/order', '', true)));
 
-            $data['language'] = $this->language;
-
             $data['non_cancelable_order_statuses'] = $this->setting->get('setting_non_cancelable_order_statuses');
             $data['delivered_order_status_id'] = $this->setting->get('setting_delivered_order_status_id');
             $data['canceled_order_status_id'] = $this->setting->get('setting_canceled_order_status_id');
