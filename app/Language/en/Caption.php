@@ -19,6 +19,7 @@ return [
     'list_of_options' => 'List of options',
     'list_of_order_statuses' => 'List of order statuses',
     'list_of_order_totals' => 'List of order totals',
+    'list_of_orders' => 'List of orders',
     'list_of_pages' => 'List of pages',
     'list_of_payment_methods' => 'List of payment methods',
     'list_of_products' => 'List of products',

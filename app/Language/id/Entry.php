@@ -25,6 +25,7 @@ return [
     'code' => 'Code',
     'column' => 'Column',
     'column_width' => 'Column Width',
+    'comment' => 'Comment',
     'completed_order_status' => 'Completed Order Status',
     'completed_order_statuses' => 'Completed Order Statuses',
     'content' => 'Content',

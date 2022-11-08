@@ -15,6 +15,7 @@ return [
     'date' => 'Date',
     'date_added' => 'Date Added',
     'description' => 'Description',
+    'download_name' => 'Download Name',
     'email' => 'Email',
     'file' => 'File',
     'filename' => 'Filename',

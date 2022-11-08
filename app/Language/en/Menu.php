@@ -30,6 +30,7 @@ return [
     'marketplace' => 'Marketplace',
     'order_statuses' => 'Order Statuses',
     'order_totals' => 'Order Totals',
+    'orders' => 'Orders',
     'pages' => 'Pages',
     'payment_methods' => 'Payment Methods',
     'performance' => 'Performance',
