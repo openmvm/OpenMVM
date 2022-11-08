@@ -85,6 +85,7 @@
                             <li><a class="dropdown-item small" href="<?php echo $my_account; ?>"><?php echo lang('Text.my_account', [], $language_lib->getCurrentCode()); ?></a></li>
                             <li><a class="dropdown-item small" href="<?php echo $my_wishlist; ?>"><?php echo lang('Text.my_wishlist', [], $language_lib->getCurrentCode()); ?></a></li>
                             <li><a class="dropdown-item small" href="<?php echo $my_orders; ?>"><?php echo lang('Text.my_orders', [], $language_lib->getCurrentCode()); ?></a></li>
+                            <li><a class="dropdown-item small" href="<?php echo $my_downloads; ?>"><?php echo lang('Text.my_downloads', [], $language_lib->getCurrentCode()); ?></a></li>
                             <li><a class="dropdown-item small" href="<?php echo $my_reviews; ?>"><?php echo lang('Text.my_reviews', [], $language_lib->getCurrentCode()); ?></a></li>
                             <li><a class="dropdown-item small" href="<?php echo $edit_profile; ?>"><?php echo lang('Text.edit_profile', [], $language_lib->getCurrentCode()); ?></a></li>
                             <li><a class="dropdown-item small" href="<?php echo $my_address_book; ?>"><?php echo lang('Text.my_address_book', [], $language_lib->getCurrentCode()); ?></a></li>

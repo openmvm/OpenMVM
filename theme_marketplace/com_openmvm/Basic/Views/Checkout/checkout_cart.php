@@ -91,6 +91,7 @@ function addQuantity(event, product_id, product_variant) {
         success: function(json) {
             $( '#checkout-cart' ).load( '<?php echo $checkout_cart; ?>' );
             $( '#checkout-shipping-method' ).load( '<?php echo $checkout_shipping_method; ?>' );
+            $( '#offcanvas-cart' ).load( '<?php echo base_url('marketplace/common/cart'); ?>' );
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -117,6 +118,7 @@ function subtractQuantity(event, product_id, product_variant) {
         success: function(json) {
             $( '#checkout-cart' ).load( '<?php echo $checkout_cart; ?>' );
             $( '#checkout-shipping-method' ).load( '<?php echo $checkout_shipping_method; ?>' );
+            $( '#offcanvas-cart' ).load( '<?php echo base_url('marketplace/common/cart'); ?>' );
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

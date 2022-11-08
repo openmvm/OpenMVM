@@ -25,6 +25,11 @@ $routes->group('/', function ($routes) {
                     $routes->match(['get', 'post'], '(:num)', '\Main\Marketplace\Controllers\Account\Address::save', ['filter' => 'marketplace_auth']);
                 });
             });
+            // Product download
+            $routes->group('product_download', function ($routes) {
+                $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Account\Product_Download::index', ['filter' => 'marketplace_auth']);
+                $routes->match(['get', 'post'], 'get/(:num)', '\Main\Marketplace\Controllers\Account\Product_Download::get/$1', ['filter' => 'marketplace_auth']);
+            });
             // Login
             $routes->group('login', function ($routes) {
                 $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Account\Login::index');
