@@ -18,6 +18,7 @@
 <?php } ?>
 <script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-3.6.1.min.js" type="text/javascript"></script>
 <script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-ui-1.13.2/jquery-ui.min.js" type="text/javascript"></script>
+<script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-serializejson/jquery.serializejson.min.js" type="text/javascript"></script>
 <script src="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
 <script src="<?php echo $base; ?>/assets/plugins/swipenav/js/jquery-swipe-nav-plugin.js" type="text/javascript"></script>
 <script src="<?php echo $base; ?>/assets/admin/theme/com_openmvm/basic/js/basic.js" type="text/javascript"></script>
