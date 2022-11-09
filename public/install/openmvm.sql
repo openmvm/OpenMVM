@@ -765,6 +765,7 @@ CREATE TABLE `product` (
   `product_option` tinyint(1) NOT NULL,
   `price` decimal(15,8) NOT NULL,
   `quantity` int(11) NOT NULL,
+  `requires_shipping` tinyint(1) NOT NULL DEFAULT 1,
   `weight` decimal(15,8) NOT NULL,
   `weight_class_id` int(11) NOT NULL,
   `main_image` varchar(255) NOT NULL,
@@ -791,6 +792,38 @@ CREATE TABLE `product_description` (
   `meta_description` text NOT NULL,
   `meta_keywords` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `product_download`
+--
+
+CREATE TABLE `product_download` (
+  `product_download_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `seller_id` int(11) NOT NULL,
+  `filename` varchar(255) NOT NULL,
+  `mask` varchar(255) NOT NULL,
+  `date_added` datetime NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `product_download_description`
+--
+
+CREATE TABLE `product_download_description` (
+  `product_download_description_id` int(11) NOT NULL,
+  `product_download_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `seller_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -1619,6 +1652,18 @@ ALTER TABLE `product_description`
 ALTER TABLE `product_description` ADD FULLTEXT KEY `name` (`name`);
 
 --
+-- Indeks untuk tabel `product_download`
+--
+ALTER TABLE `product_download`
+  ADD PRIMARY KEY (`product_download_id`);
+
+--
+-- Indeks untuk tabel `product_download_description`
+--
+ALTER TABLE `product_download_description`
+  ADD PRIMARY KEY (`product_download_description_id`);
+
+--
 -- Indexes for table `product_image`
 --
 ALTER TABLE `product_image`
@@ -1982,6 +2027,18 @@ ALTER TABLE `product`
 --
 ALTER TABLE `product_description`
   MODIFY `product_description_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `product_download`
+--
+ALTER TABLE `product_download`
+  MODIFY `product_download_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `product_download_description`
+--
+ALTER TABLE `product_download_description`
+  MODIFY `product_download_description_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `product_image`
