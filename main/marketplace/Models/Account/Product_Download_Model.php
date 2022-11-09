@@ -33,9 +33,10 @@ class Product_Download_Model extends Model
         $product_download_builder->join('product p', 'pd.product_id = p.product_id', 'left');
         $product_download_builder->join('order_product op', 'pd.product_id = op.product_id', 'left');
         $product_download_builder->join('order o', 'op.order_id = o.order_id', 'left');
+        $product_download_builder->join('order_status_history osh', 'o.order_id = osh.order_id', 'left');
 
         $product_download_builder->where('o.customer_id', $customer_id);
-        $product_download_builder->where('o.order_status_id', $this->setting->get('setting_completed_order_status_id'));
+        $product_download_builder->where('osh.order_status_id', $this->setting->get('setting_completed_order_status_id'));
         $product_download_builder->where('pdd.language_id', $this->language->getCurrentId());
 
         $product_download_builder->orderBy('o.date_added', 'DESC');
