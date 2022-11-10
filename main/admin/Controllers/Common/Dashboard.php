@@ -21,16 +21,6 @@ class Dashboard extends \App\Controllers\BaseController
 
         $data['heading_title'] = lang('Heading.dashboard');
 
-        // Test Zip Library
-        $test = false;
-
-        if ($test) {
-            $file = ROOTPATH . '/writable/uploads/jquery-ui-1.13.2.zip';
-            $destination = ROOTPATH . '/writable/temp/';
-
-            $this->zip->extractTo($file, $destination, true);
-        }
-
         // Header
         $header_params = array(
             'title' => lang('Heading.dashboard'),
