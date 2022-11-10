@@ -184,6 +184,7 @@ return [
     'seller' => 'Seller',
     'seller_dashboard' => 'Seller Dashboard',
     'seller_edit' => 'Edit Seller Info',
+    'seller_menu' => 'Seller Menu',
     'seller_product' => 'Seller Products',
     'sellers' => 'Sellers',
     'settings' => 'Settings',
