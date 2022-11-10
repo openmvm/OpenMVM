@@ -58,24 +58,24 @@
                     <?php echo $language; ?>
                     <?php echo $currency; ?>
                     <?php if ($logged_in) { ?>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><span class="small"><?php if ($logged_in) { ?><?php echo lang('Text.seller', [], $language_lib->getCurrentCode()); ?><?php } ?></a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <?php if ($is_seller) { ?>
-                            <li><h6 class="dropdown-header"><?php echo lang('Text.seller', [], $language_lib->getCurrentCode()); ?></h6></li>
-                            <li><a class="dropdown-item small" href="<?php echo $seller_dashboard; ?>"><?php echo lang('Text.seller_dashboard', [], $language_lib->getCurrentCode()); ?></a></li>
-                            <li><a class="dropdown-item small" href="<?php echo $seller_edit; ?>"><?php echo lang('Text.seller_edit', [], $language_lib->getCurrentCode()); ?></a></li>
-                            <li><a class="dropdown-item small" href="<?php echo $seller_product; ?>"><?php echo lang('Text.products', [], $language_lib->getCurrentCode()); ?></a></li>
-                            <li><a class="dropdown-item small" href="<?php echo $seller_option; ?>"><?php echo lang('Text.options', [], $language_lib->getCurrentCode()); ?></a></li>
-                            <li><a class="dropdown-item small" href="<?php echo $seller_order; ?>"><?php echo lang('Text.orders', [], $language_lib->getCurrentCode()); ?></a></li>
-                            <li><a class="dropdown-item small" href="<?php echo $seller_product_question; ?>"><?php echo lang('Text.questions', [], $language_lib->getCurrentCode()); ?></a></li>
-                            <li><a class="dropdown-item small" href="<?php echo $seller_geo_zone; ?>"><?php echo lang('Text.geo_zones', [], $language_lib->getCurrentCode()); ?></a></li>
-                            <li><a class="dropdown-item small" href="<?php echo $seller_shipping_method; ?>"><?php echo lang('Text.shipping_methods', [], $language_lib->getCurrentCode()); ?></a></li>
-                            <?php } else { ?>
-                            <li><a class="dropdown-item small" href="<?php echo $seller_register; ?>"><?php echo lang('Text.become_a_seller', [], $language_lib->getCurrentCode()); ?></a></li>
-                            <?php } ?>
-                        </ul>
-                    </li>
+                        <?php if ($is_seller) { ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><span class="small"><?php if ($logged_in) { ?><?php echo lang('Text.seller_menu', [], $language_lib->getCurrentCode()); ?><?php } ?></a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li><h6 class="dropdown-header"><?php echo lang('Text.seller', [], $language_lib->getCurrentCode()); ?></h6></li>
+                                <li><a class="dropdown-item small" href="<?php echo $seller_dashboard; ?>"><?php echo lang('Text.seller_dashboard', [], $language_lib->getCurrentCode()); ?></a></li>
+                                <li><a class="dropdown-item small" href="<?php echo $seller_edit; ?>"><?php echo lang('Text.seller_edit', [], $language_lib->getCurrentCode()); ?></a></li>
+                                <li><a class="dropdown-item small" href="<?php echo $seller_product; ?>"><?php echo lang('Text.products', [], $language_lib->getCurrentCode()); ?></a></li>
+                                <li><a class="dropdown-item small" href="<?php echo $seller_option; ?>"><?php echo lang('Text.options', [], $language_lib->getCurrentCode()); ?></a></li>
+                                <li><a class="dropdown-item small" href="<?php echo $seller_order; ?>"><?php echo lang('Text.orders', [], $language_lib->getCurrentCode()); ?></a></li>
+                                <li><a class="dropdown-item small" href="<?php echo $seller_product_question; ?>"><?php echo lang('Text.questions', [], $language_lib->getCurrentCode()); ?></a></li>
+                                <li><a class="dropdown-item small" href="<?php echo $seller_geo_zone; ?>"><?php echo lang('Text.geo_zones', [], $language_lib->getCurrentCode()); ?></a></li>
+                                <li><a class="dropdown-item small" href="<?php echo $seller_shipping_method; ?>"><?php echo lang('Text.shipping_methods', [], $language_lib->getCurrentCode()); ?></a></li>
+                            </ul>
+                        </li>
+                        <?php } else { ?>
+                        <li class="nav-item text-nowrap"><a class="nav-link link-danger small" href="<?php echo $seller_register; ?>"><?php echo lang('Text.become_a_seller', [], $language_lib->getCurrentCode()); ?></a></li>
+                        <?php } ?>
                     <?php } ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><span class="small"><?php if ($logged_in) { ?><?php echo sprintf(lang('Text.hello_customer', [], $language_lib->getCurrentCode()), $firstname); ?><?php } else { ?><?php echo lang('Text.my_account'); ?><?php } ?></a>
