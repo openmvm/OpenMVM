@@ -26,7 +26,7 @@
 	<li>Wishlist / favorite</li>
 	<li>Product ratings and reviews</li>
 	<li>Customer questions and answers</li>
-	<li>[In Progress] Digital products and downloads</li>
+	<li>Digital products and downloads</li>
 </ul>
 
 <h4>Administrator (back-end) features:</h4>
@@ -60,6 +60,7 @@
 	<li>Demo manager</li>
 	<li>Enable / disable view caching</li>
 	<li>Enable / disable development mode</li>
+	<li>Update order status history</li>
 </ul>
 
 <h3>How to Install:</h3>
