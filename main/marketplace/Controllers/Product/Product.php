@@ -488,6 +488,12 @@ class Product extends \App\Controllers\BaseController
             // Get product info
             $product_info = $this->model_product_product->getProduct($this->request->getGet('product_id'));
 
+            if ($product_info) {
+                $product_seller_id = $product_info['seller_id'];
+            } else {
+                $product_seller_id = 0;
+            }
+
             // Get product questions
             $product_questions = $this->model_product_product_question->getProductQuestions($this->request->getGet('product_id'));  
 
@@ -548,6 +554,7 @@ class Product extends \App\Controllers\BaseController
                         $data['product_questions'][] = [
                             'product_question_id' => $product_question['product_question_id'],
                             'product_id' => $product_question['product_id'],
+                            'product_seller_id' => $product_seller_id,
                             'customer_id' => $product_question['customer_id'],
                             'question' => $product_question['question'],
                             'sum_vote' => $sum_product_question_vote,
@@ -565,7 +572,7 @@ class Product extends \App\Controllers\BaseController
             $data['vote_product_question'] = $this->url->customerLink('marketplace/product/product/vote_product_question', ['product_id' => $product_info['product_id']], true); 
 
             // Get product question answers
-            $data['get_product_question_answers'] = $this->url->customerLink('marketplace/product/product/get_product_question_answers'); 
+            $data['get_product_question_answers'] = $this->url->customerLink('marketplace/product/product/get_product_question_answers', ['product_id' => $product_info['product_id']]); 
         }
 
         // Libraries
@@ -588,6 +595,12 @@ class Product extends \App\Controllers\BaseController
         $json = [];
 
         if (!empty($this->request->getPost('product_question_id'))) {
+            if (!empty($this->request->getGet('product_id'))) {
+                $product_id = $this->request->getGet('product_id');
+            } else {
+                $product_id = 0;
+            }
+
             if (!empty($this->request->getPost('page'))) {
                 $page = $this->request->getPost('page');
             } else {
@@ -659,6 +672,17 @@ class Product extends \App\Controllers\BaseController
             } else {
                 $json['next_page_total_product_question_answers'] = 0;  
             }
+
+            // Get product info
+            $product_info = $this->model_product_product->getProduct($product_id);
+
+            if ($product_info) {
+                $product_seller_id = $product_info['seller_id'];
+            } else {
+                $product_seller_id = 0;
+            }
+
+            $json['product_seller_id'] = $product_seller_id;
 
             // Libraries
             $json['language_lib'] = $this->language;

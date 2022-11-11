@@ -50,6 +50,7 @@ class Customer_Question extends \App\Controllers\BaseController
 
             $data['product_name'] = $product_name;
             $data['product_url'] = $this->url->customerLink('marketplace/product/product/get/' . $product_info['slug']);
+            $data['product_seller_id'] = $product_info['seller_id'];
 
             // Product image
             if (is_file(ROOTPATH . 'public/assets/images/' . $product_info['main_image'])) {
@@ -149,7 +150,7 @@ class Customer_Question extends \App\Controllers\BaseController
             $data['vote_customer_question'] = $this->url->customerLink('marketplace/product/product/vote_product_question', ['product_id' => $product_info['product_id']], true); 
 
             // Get customer question answers
-            $data['get_customer_question_answers'] = $this->url->customerLink('marketplace/product/product/get_product_question_answers'); 
+            $data['get_customer_question_answers'] = $this->url->customerLink('marketplace/product/product/get_product_question_answers', ['product_id' => $product_info['product_id']]); 
 
             // Header
             $header_params = array(
@@ -322,7 +323,7 @@ class Customer_Question extends \App\Controllers\BaseController
             $data['add_customer_question_answer'] = $this->url->customerLink('marketplace/product/customer_question/add_customer_question_answer', ['product_question_id' => $product_question_info['product_question_id']], true); 
 
             // Get customer question answers
-            $data['get_customer_question_answers'] = $this->url->customerLink('marketplace/product/customer_question/get_customer_question_answers', ['product_question_id' => $product_question_info['product_question_id']]); 
+            $data['get_customer_question_answers'] = $this->url->customerLink('marketplace/product/customer_question/get_customer_question_answers', ['product_id' => $product_info['product_id'], 'product_question_id' => $product_question_info['product_question_id']]); 
 
             // Header
             $header_params = array(

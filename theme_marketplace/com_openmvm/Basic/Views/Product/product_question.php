@@ -24,7 +24,7 @@
                                 <div><?php echo $product_question_answer['answer']; ?></div>
                                 <div class="text-secondary">
                                     <?php echo lang('Text.by', [], $language_lib->getCurrentCode()); ?> 
-                                    <?php if (!empty($product_question_answer['seller_id'])) { ?>
+                                    <?php if (!empty($product_question_answer['seller_id']) && $product_question['product_seller_id'] == $product_question_answer['seller_id']) { ?>
                                         <?php echo $product_question_answer['seller']['store_name']; ?> &middot; <?php echo lang('Text.seller', [], $language_lib->getCurrentCode()); ?>
                                     <?php } else { ?>
                                         <?php echo $product_question_answer['customer']['firstname']; ?> &middot; <?php echo lang('Text.customer', [], $language_lib->getCurrentCode()); ?>
@@ -109,7 +109,7 @@ function getProductQuestionAnswers(product_question_id) {
                     html += '    <div>' + product_question_answer['answer'] + '</div>';
                     html += '    <div class="text-secondary">';
                     html += '        <?php echo lang('Text.by', [], $language_lib->getCurrentCode()); ?>'; 
-                            if (product_question_answer['seller_id'] !== 0) {
+                            if (product_question_answer['seller_id'] !== 0 && json['product_seller_id'] == product_question_answer['seller_id']) {
                     html += '        ' + product_question_answer['seller']['store_name'] + ' &middot; <?php echo lang('Text.seller', [], $language_lib->getCurrentCode()); ?>';
                             } else {
                     html += '        ' + product_question_answer['customer']['firstname'] + ' &middot; <?php echo lang('Text.customer', [], $language_lib->getCurrentCode()); ?>';
