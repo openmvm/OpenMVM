@@ -27,6 +27,9 @@
 	<li>Product ratings and reviews</li>
 	<li>Customer questions and answers</li>
 	<li>Digital products and downloads</li>
+	<li>[In Progress] Minimum purchase</li>
+	<li>[In Progress] Product specials</li>
+	<li>[In Progress] Quantity discounts</li>
 </ul>
 
 <h4>Administrator (back-end) features:</h4>
