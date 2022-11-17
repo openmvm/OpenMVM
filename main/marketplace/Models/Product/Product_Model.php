@@ -3,6 +3,7 @@
 namespace Main\Marketplace\Models\Product;
 
 use CodeIgniter\Model;
+use CodeIgniter\I18n\Time;
 
 class Product_Model extends Model
 {
@@ -45,6 +46,8 @@ class Product_Model extends Model
 
         $builder->select("p.product_id");
 
+        $builder->select("(SELECT price FROM " . $this->db->getPrefix() . "product_special ps WHERE ps.product_id = p.product_id AND (ps.date_start < '" . new Time('now') . "' AND ps.date_end > '" . new Time('now') . "') ORDER BY ps.priority ASC, ps.price ASC LIMIT 1) AS special");
+
         $builder->join('product_description pd', 'p.product_id = pd.product_id', 'left');
 
         $builder->where('pd.language_id', $this->language->getCurrentId());
@@ -82,7 +85,7 @@ class Product_Model extends Model
     {
         $builder = $this->db->table('product p');
 
-        $builder->distinct("*, pd.name AS name");
+        $builder->select("*, pd.name AS name, (SELECT price FROM " . $this->db->getPrefix() . "product_special ps WHERE ps.product_id = p.product_id AND (ps.date_start < '" . new Time('now') . "' AND ps.date_end > '" . new Time('now') . "') ORDER BY ps.priority ASC, ps.price ASC LIMIT 1) AS special");
         
         $builder->join('product_description pd', 'p.product_id = pd.product_id', 'left');
 
@@ -101,8 +104,11 @@ class Product_Model extends Model
                 'customer_id' => $row->customer_id,
                 'category_id_path' => $row->category_id_path,
                 'product_option' => $row->product_option,
+                'product_variant_special' => $row->product_variant_special,
                 'price' => $row->price,
+                'special' => $row->special,
                 'quantity' => $row->quantity,
+                'minimum_purchase' => $row->minimum_purchase,
                 'weight' => $row->quantity,
                 'weight_class_id' => $row->weight_class_id,
                 'main_image' => $row->main_image,
@@ -375,6 +381,7 @@ class Product_Model extends Model
                 'customer_id' => $product_variant_row->customer_id,
                 'sku' => $product_variant_row->sku,
                 'quantity' => $product_variant_row->quantity,
+                'minimum_purchase' => $product_variant_row->minimum_purchase,
                 'price' => $product_variant_row->price,
                 'weight' => $product_variant_row->weight,
                 'weight_class_id' => $product_variant_row->weight_class_id,
@@ -382,6 +389,46 @@ class Product_Model extends Model
         }
 
         return $product_variant;
+    }
+
+    public function getProductVariantSpecialMinMaxPrices($product_id)
+    {
+        $product_variant_builder = $this->db->table('product_variant');
+
+        $product_variant_builder->where('product_id', $product_id);
+
+        $product_variant_query = $product_variant_builder->get();
+
+        $product_variant_specials = [];
+
+        foreach ($product_variant_query->getResult() as $product_variant) {
+            // Get product variant special
+            $product_variant_special_builder = $this->db->table('product_variant_special');
+
+            $product_variant_special_builder->where('product_id', $product_id);
+            $product_variant_special_builder->where('options', $product_variant->options);
+
+            $product_variant_special_query = $product_variant_special_builder->get();
+
+            if ($product_variant_special_row = $product_variant_special_query->getRow()) {
+                $price = $product_variant_special_row->price;
+            } else {
+                $price = $product_variant->price;
+            }
+
+            $product_variant_specials[] = $price;
+        }
+
+        if (!empty($product_variant_specials)) {
+            $product_variant_special_prices = [
+                'min_price' => min($product_variant_specials),
+                'max_price' => max($product_variant_specials),
+            ];
+
+            return $product_variant_special_prices;
+        } else {
+            return false;
+        }
     }
 
     public function getOrderProduct($customer_id, $order_product_id)

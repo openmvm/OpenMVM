@@ -38,13 +38,21 @@ class Product_Model extends Model
             $product_option = 0;
         }
 
+        if (!empty($data['is_product_variant_special'])) {
+            $product_variant_special = 1;
+        } else {
+            $product_variant_special = 0;
+        }
+
         $product_insert_data = [
             'seller_id' => $this->customer->getSellerId(),
             'customer_id' => $this->customer->getId(),
             'category_id_path' => $data['category_id_path'],
             'product_option' => $product_option,
+            'product_variant_special' => $product_variant_special,
             'price' => (float)$data['price'],
             'quantity' => $data['quantity'],
+            'minimum_purchase' => $data['minimum_purchase'],
             'requires_shipping' => $data['requires_shipping'],
             'weight' => $data['weight'],
             'weight_class_id' => $data['weight_class_id'],
@@ -185,6 +193,7 @@ class Product_Model extends Model
                     'options' => json_encode($option_data),
                     'sku' => $product_variant['sku'],
                     'quantity' => $product_variant['quantity'],
+                    'minimum_purchase' => $product_variant['minimum_purchase'],
                     'price' => $product_variant['price'],
                     'weight' => $product_variant['weight'],
                     'weight_class_id' => $product_variant['weight_class_id'],
@@ -195,6 +204,57 @@ class Product_Model extends Model
                 $product_variant_id = $this->db->insertID();
             }
 
+        }
+
+        // Product variant special
+        if (!empty($data['product_variant_special'])) {
+            foreach ($data['product_variant_special'] as $product_variant_special) {
+                // Insert product variant
+                $option_data = [];
+
+                if (!empty($product_variant_special['option'])) {
+                    foreach ($product_variant_special['option'] as $key => $value) {
+                        $product_variant_special_option_data[$key] = $value;
+                    }
+
+                    asort($product_variant_special_option_data);
+                }
+
+                if (!empty($product_variant_special['special'])) {
+                    foreach ($product_variant_special['special'] as $special) {
+                        // Get product variant info
+                        $product_variant_builder = $this->db->table('product_variant');
+                        
+                        $product_variant_builder->where('seller_id', $this->customer->getSellerId());
+                        $product_variant_builder->where('customer_id', $this->customer->getId());
+                        $product_variant_builder->where('product_id', $product_id);
+                        $product_variant_builder->where('options', json_encode($product_variant_special_option_data));
+
+                        $product_variant_query = $product_variant_builder->get();
+
+                        if ($product_variant_row = $product_variant_query->getRow()) {
+                            $product_variant_special_insert_builder = $this->db->table('product_variant_special');
+
+                            $product_variant_special_insert_data = [
+                                'product_variant_id' => $product_variant_row->product_variant_id,
+                                'options' => json_encode($product_variant_special_option_data),
+                                'product_id' => $product_id,
+                                'seller_id' => $this->customer->getSellerId(),
+                                'customer_id' => $this->customer->getId(),
+                                'options' => json_encode($product_variant_special_option_data),
+                                'priority' => $special['priority'],
+                                'price' => $special['price'],
+                                'date_start' => $special['date_start'],
+                                'date_end' => $special['date_end'],
+                                'timezone' => $special['timezone'],
+                            ];
+                            
+                            $product_variant_special_insert_builder->insert($product_variant_special_insert_data);
+                        }
+                    }
+                }
+
+            }
         }
 
         // Product downloads
@@ -234,6 +294,28 @@ class Product_Model extends Model
             }
         }
 
+        // Product specials
+        if (!empty($data['product_special'])) {
+            foreach ($data['product_special'] as $product_special) {
+                $product_special_insert_builder = $this->db->table('product_special');
+
+                $product_special_insert_data = [
+                    'product_id' => $product_id,
+                    'seller_id' => $this->customer->getSellerId(),
+                    'customer_id' => $this->customer->getId(),
+                    'priority' => $product_special['priority'],
+                    'price' => $product_special['price'],
+                    'date_start' => $product_special['date_start'],
+                    'date_end' => $product_special['date_end'],
+                    'timezone' => $product_special['timezone'],
+                ];
+                
+                $product_special_insert_builder->insert($product_special_insert_data);
+
+                $product_special_id = $this->db->insertID();
+            }
+        }
+
         return $product_id;
     }
 
@@ -247,11 +329,19 @@ class Product_Model extends Model
             $product_option = 0;
         }
 
+        if (!empty($data['is_product_variant_special'])) {
+            $product_variant_special = 1;
+        } else {
+            $product_variant_special = 0;
+        }
+
         $product_update_data = [
             'category_id_path' => $data['category_id_path'],
             'product_option' => $product_option,
+            'product_variant_special' => $product_variant_special,
             'price' => (float)$data['price'],
             'quantity' => $data['quantity'],
+            'minimum_purchase' => $data['minimum_purchase'],
             'requires_shipping' => $data['requires_shipping'],
             'weight' => $data['weight'],
             'weight_class_id' => $data['weight_class_id'],
@@ -452,6 +542,7 @@ class Product_Model extends Model
                     'options' => json_encode($option_data),
                     'sku' => $product_variant['sku'],
                     'quantity' => $product_variant['quantity'],
+                    'minimum_purchase' => $product_variant['minimum_purchase'],
                     'price' => $product_variant['price'],
                     'weight' => $product_variant['weight'],
                     'weight_class_id' => $product_variant['weight_class_id'],
@@ -462,6 +553,65 @@ class Product_Model extends Model
                 $product_variant_id = $this->db->insertID();
             }
 
+        }
+
+        // Product variant special
+        // Delete product variant
+        $builder = $this->db->table('product_variant_special');
+
+        $builder->where('product_id', $product_id);
+        $builder->where('seller_id', $this->customer->getSellerId());
+        $builder->where('customer_id', $this->customer->getId());
+        $builder->delete();
+
+        if (!empty($data['product_variant_special'])) {
+            foreach ($data['product_variant_special'] as $product_variant_special) {
+                // Insert product variant
+                $option_data = [];
+
+                if (!empty($product_variant_special['option'])) {
+                    foreach ($product_variant_special['option'] as $key => $value) {
+                        $product_variant_special_option_data[$key] = $value;
+                    }
+
+                    asort($product_variant_special_option_data);
+                }
+
+                if (!empty($product_variant_special['special'])) {
+                    foreach ($product_variant_special['special'] as $special) {
+                        // Get product variant info
+                        $product_variant_builder = $this->db->table('product_variant');
+                        
+                        $product_variant_builder->where('seller_id', $this->customer->getSellerId());
+                        $product_variant_builder->where('customer_id', $this->customer->getId());
+                        $product_variant_builder->where('product_id', $product_id);
+                        $product_variant_builder->where('options', json_encode($product_variant_special_option_data));
+
+                        $product_variant_query = $product_variant_builder->get();
+
+                        if ($product_variant_row = $product_variant_query->getRow()) {
+                            $product_variant_special_insert_builder = $this->db->table('product_variant_special');
+
+                            $product_variant_special_insert_data = [
+                                'product_variant_id' => $product_variant_row->product_variant_id,
+                                'options' => json_encode($product_variant_special_option_data),
+                                'product_id' => $product_id,
+                                'seller_id' => $this->customer->getSellerId(),
+                                'customer_id' => $this->customer->getId(),
+                                'options' => json_encode($product_variant_special_option_data),
+                                'priority' => $special['priority'],
+                                'price' => $special['price'],
+                                'date_start' => $special['date_start'],
+                                'date_end' => $special['date_end'],
+                                'timezone' => $special['timezone'],
+                            ];
+                            
+                            $product_variant_special_insert_builder->insert($product_variant_special_insert_data);
+                        }
+                    }
+                }
+
+            }
         }
 
         // Product downloads
@@ -517,6 +667,36 @@ class Product_Model extends Model
             }
         }
 
+        // Product specials
+        // Delete product special
+        $builder = $this->db->table('product_special');
+
+        $builder->where('product_id', $product_id);
+        $builder->where('seller_id', $this->customer->getSellerId());
+        $builder->where('customer_id', $this->customer->getId());
+        $builder->delete();
+
+        if (!empty($data['product_special'])) {
+            foreach ($data['product_special'] as $product_special) {
+                $product_special_insert_builder = $this->db->table('product_special');
+
+                $product_special_insert_data = [
+                    'product_id' => $product_id,
+                    'seller_id' => $this->customer->getSellerId(),
+                    'customer_id' => $this->customer->getId(),
+                    'priority' => $product_special['priority'],
+                    'price' => $product_special['price'],
+                    'date_start' => $product_special['date_start'],
+                    'date_end' => $product_special['date_end'],
+                    'timezone' => $product_special['timezone'],
+                ];
+                
+                $product_special_insert_builder->insert($product_special_insert_data);
+
+                $product_special_id = $this->db->insertID();
+            }
+        }
+
         return $product_id;
     }
 
@@ -560,8 +740,10 @@ class Product_Model extends Model
                 'seller_id' => $result->seller_id,
                 'customer_id' => $result->customer_id,
                 'product_option' => $result->product_option,
+                'product_variant_special' => $result->product_variant_special,
                 'price' => $result->price,
                 'quantity' => $result->quantity,
+                'minimum_purchase' => $result->minimum_purchase,
                 'requires_shipping' => $result->requires_shipping,
                 'weight' => $result->weight,
                 'weight_class_id' => $result->weight_class_id,
@@ -595,8 +777,10 @@ class Product_Model extends Model
                 'customer_id' => $row->customer_id,
                 'category_id_path' => $row->category_id_path,
                 'product_option' => $row->product_option,
+                'product_variant_special' => $row->product_variant_special,
                 'price' => $row->price,
                 'quantity' => $row->quantity,
+                'minimum_purchase' => $row->minimum_purchase,
                 'requires_shipping' => $row->requires_shipping,
                 'weight' => $row->weight,
                 'weight_class_id' => $row->weight_class_id,
@@ -817,6 +1001,7 @@ class Product_Model extends Model
                 'customer_id' => $row->customer_id,
                 'sku' => $row->sku,
                 'quantity' => $row->quantity,
+                'minimum_purchase' => $row->minimum_purchase,
                 'price' => $row->price,
                 'weight' => $row->weight,
                 'weight_class_id' => $row->weight_class_id,
@@ -872,6 +1057,49 @@ class Product_Model extends Model
         }
 
         return $product_variant;
+    }
+
+    public function getProductvariantSpecials($product_id, $options)
+    {
+        $product_variant_special_builder = $this->db->table('product_variant_special');
+
+        $product_variant_special_builder->where('product_id', $product_id);
+        $product_variant_special_builder->where('seller_id', $this->customer->getSellerId());
+        $product_variant_special_builder->where('customer_id', $this->customer->getId());
+
+        $product_variant_special_builder->orderBy('priority', 'ASC');
+
+        $option_values = [];
+
+        foreach ($options as $option) {
+            $option_values[$option['option_id']] = $option['option_value_id'];
+        }
+
+        asort($option_values);
+
+        $product_variant_special_builder->where('options', json_encode($option_values));
+
+        $product_variant_special_query = $product_variant_special_builder->get();
+
+        $product_variant_specials = [];
+
+        foreach ($product_variant_special_query->getResult() as $result) {
+            $product_variant_specials[] = [
+                'product_variant_special_id' => $result->product_variant_special_id,
+                'product_variant_id' => $result->product_variant_id,
+                'options' => $result->options,
+                'product_id' => $result->product_id,
+                'seller_id' => $result->seller_id,
+                'customer_id' => $result->customer_id,
+                'priority' => $result->priority,
+                'price' => $result->price,
+                'date_start' => $result->date_start,
+                'date_end' => $result->date_end,
+                'timezone' => $result->timezone,
+            ];
+        }
+
+        return $product_variant_specials;
     }
 
     public function getProductImages($product_id)
@@ -963,5 +1191,36 @@ class Product_Model extends Model
         }
 
         return $product_download_descriptions;
+    }
+
+    public function getProductSpecials($product_id)
+    {
+        $product_special_builder = $this->db->table('product_special');
+
+        $product_special_builder->where('product_id', $product_id);
+        $product_special_builder->where('seller_id', $this->customer->getSellerId());
+        $product_special_builder->where('customer_id', $this->customer->getId());
+
+        $product_special_builder->orderBy('priority', 'ASC');
+
+        $product_special_query = $product_special_builder->get();
+
+        $product_specials = [];
+
+        foreach ($product_special_query->getResult() as $product_special_result) {
+            $product_specials[] = [
+                'product_special_id' => $product_special_result->product_special_id,
+                'product_id' => $product_special_result->product_id,
+                'seller_id' => $product_special_result->seller_id,
+                'customer_id' => $product_special_result->customer_id,
+                'priority' => $product_special_result->priority,
+                'price' => $product_special_result->price,
+                'date_start' => $product_special_result->date_start,
+                'date_end' => $product_special_result->date_end,
+                'timezone' => $product_special_result->timezone,
+            ];
+        }
+
+        return $product_specials;
     }
 }

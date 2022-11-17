@@ -251,6 +251,12 @@ class Product extends \App\Controllers\BaseController
         }
 
         if ($product_info) {
+            $data['minimum_purchase'] = $product_info['minimum_purchase'];
+        } else {
+            $data['minimum_purchase'] = 1;
+        }
+
+        if ($product_info) {
             $data['requires_shipping'] = $product_info['requires_shipping'];
         } else {
             $data['requires_shipping'] = 1;
@@ -351,6 +357,8 @@ class Product extends \App\Controllers\BaseController
             $data['product_downloads'] = [];
         }
 
+
+        // Categories
         $data['categories'] = [];
 
         $categories = $this->model_product_category->getCategories();
@@ -360,6 +368,30 @@ class Product extends \App\Controllers\BaseController
                 'category_id_path' => $category['category_id_path'],
                 'category_path' => $category['category_path'],
             ];
+        }
+
+        // Product specials
+        if ($product_info) {
+            $data['product_specials'] = [];
+
+            $product_specials = $this->model_seller_product->getProductSpecials($product_info['product_id']);
+
+            foreach ($product_specials as $product_special) {
+                $data['product_specials'][] = [
+                    'product_special_id' => $product_special['product_special_id'],
+                    'product_id' => $product_special['product_id'],
+                    'seller_id' => $product_special['seller_id'],
+                    'customer_id' => $product_special['customer_id'],
+                    'priority' => $product_special['priority'],
+                    'price' => $product_special['price'],
+                    'date_start' => $product_special['date_start'],
+                    'date_end' => $product_special['date_end'],
+                    'timezone' => $product_special['timezone'],
+                ];
+            }
+
+        } else {
+            $data['product_specials'] = [];
         }
 
         if ($product_info) {
@@ -394,12 +426,15 @@ class Product extends \App\Controllers\BaseController
         $data['languages'] = $this->model_localisation_language->getLanguages();
         $data['weight_classes'] = $this->model_localisation_weight_class->getWeightClasses();
 
+        $data['timezones'] = $this->timezone->getList();
+
         $data['upload'] = $this->url->customerLink('marketplace/tool/upload', '', true);
         $data['cancel'] = $this->url->customerLink('marketplace/seller/product', '', true);
         $data['get_option'] = $this->url->customerLink('marketplace/seller/option/get_option', '', true);
         $data['option_autocomplete'] = $this->url->customerLink('marketplace/seller/option/autocomplete', '', true);
         $data['product_variant'] = $this->url->customerLink('marketplace/seller/product/get_product_variants', ['product_id' => $product_id], true);
         $data['set_product_options'] = $this->url->customerLink('marketplace/seller/product/set_product_options', '', true);
+        $data['product_variant_special'] = $this->url->customerLink('marketplace/seller/product/get_product_variant_specials', ['product_id' => $product_id], true);
         $data['product_download_upload'] = $this->url->customerLink('marketplace/seller/product/product_download_upload', '', true);
 
         // Libraries
@@ -466,7 +501,7 @@ class Product extends \App\Controllers\BaseController
         $data['result'] = $this->session->get('product_options');
 
         $product_variants = [];
-        $product_variant_key = 1;
+        $product_variant_key = 0;
         $selected_option_data_1 = [];
 
         $product_variant_ids = $this->product_variants($product_variant_data);
@@ -513,6 +548,7 @@ class Product extends \App\Controllers\BaseController
                         if ($product_variant['option'] === $selected_option_data_1) {
                             $sku = $product_variant['sku'];
                             $quantity = $product_variant['quantity'];
+                            $minimum_purchase = $product_variant['minimum_purchase'];
                             $price = $product_variant['price'];
                             $weight = $product_variant['weight'];
                             $weight_class_id = $product_variant['weight_class_id'];
@@ -521,6 +557,7 @@ class Product extends \App\Controllers\BaseController
                         } else {
                             $sku = '';
                             $quantity = 0;
+                            $minimum_purchase = 1;
                             $price = 0;
                             $weight = 0;
                             $weight_class_id = '';
@@ -530,12 +567,14 @@ class Product extends \App\Controllers\BaseController
             } elseif ($product_variant_info) {
                 $sku = $product_variant_info['sku'];
                 $quantity = $product_variant_info['quantity'];
+                $minimum_purchase = $product_variant_info['minimum_purchase'];
                 $price = $product_variant_info['price'];
                 $weight = $product_variant_info['weight'];
                 $weight_class_id = $product_variant_info['weight_class_id'];
             } else {
                 $sku = '';
                 $quantity = 0;
+                $minimum_purchase = 1;
                 $price = 0;
                 $weight = 0;
                 $weight_class_id = '';
@@ -545,6 +584,7 @@ class Product extends \App\Controllers\BaseController
                 'key' => $product_variant_key,
                 'sku' => $sku,
                 'quantity' => $quantity,
+                'minimum_purchase' => $minimum_purchase,
                 'price' => $price,
                 'weight' => $weight,
                 'weight_class_id' => $weight_class_id,
@@ -612,6 +652,131 @@ class Product extends \App\Controllers\BaseController
         }
 
         return $result;
+    }
+
+    public function get_product_variant_specials()
+    {
+        $data = [];
+
+        $product_variant_data = [];
+
+        // Get product variant info
+        if (!empty($this->request->getGet('product_id'))) {
+            $product_id = $this->request->getGet('product_id');
+        } else {
+            $product_id = 0;
+        }
+
+        $product_info = $this->model_seller_product->getProduct($product_id);
+
+        if ($product_info) {
+            $product_variant_special = $product_info['product_variant_special'];
+        } else {
+            $product_variant_special = 0;
+        }
+
+        $data['is_product_variant_special'] = $product_variant_special;
+
+        $product_options = $this->session->get('product_options');
+
+        if (!empty($product_options['product_option'])) {
+            foreach ($product_options['product_option'] as $product_option) {
+                if (!empty($product_option['option_value'])) {
+                    $product_variant_data[$product_option['option_id']] = $product_option['option_value'];
+                }
+            }
+        }
+
+        $product_variants = [];
+        $product_variant_key = 0;
+        $selected_option_data_1 = [];
+
+        $product_variant_ids = $this->product_variants($product_variant_data);
+
+        foreach ($product_variant_ids as $product_variant_id) {
+            $option_data = [];
+
+            foreach ($product_variant_id as $key => $value) {
+                // Get option info
+                $option_info = $this->model_seller_option->getOption($key);
+
+                if (!empty($option_info)) {
+                    // Get option value info
+                    $option_value_info = $this->model_seller_option->getOptionValue($key, $value);
+
+                    if (!empty($option_value_info)) {
+                        $option_data[] = [
+                            'option' => $option_info['name'],
+                            'option_id' => $option_info['option_id'],
+                            'option_value' => $option_value_info['name'],
+                            'option_value_id' => $option_value_info['option_value_id'],
+                        ];
+                    }
+
+                    $selected_option_data_1[$option_info['option_id']] = $option_value_info['option_value_id'];
+
+                    asort($selected_option_data_1);
+                }
+            }
+
+            $product_variant_specials = $this->model_seller_product->getProductVariantSpecials($product_id, $option_data);
+
+            if ($product_variant_specials) {
+                $product_variant_special_data = $product_variant_specials;
+            } else {
+                $product_variant_special_data = [];
+            }
+
+            $product_variants[] = [
+                'key' => $product_variant_key,
+                'product_variant_id' => $product_variant_id,
+                'variant' => $option_data,
+                'product_variant_specials' => $product_variant_special_data,
+            ];
+
+            $product_variant_key++;
+        }
+
+        $data['placeholder'] = $this->image->resize('no_image.png', 32, 32, true);
+
+        $data['product_variants'] = $product_variants;
+        $data['selected_1'] = $selected_option_data_1;
+        $data['weight_classes'] = $this->model_localisation_weight_class->getWeightClasses();
+
+        $data['timezones'] = $this->timezone->getList();
+
+        // Get currency info
+        $currency_info = $this->model_localisation_currency->getCurrency($this->currency->getDefaultId());
+
+        if ($currency_info) {
+            $data['default_currency'] = [
+                'currency_id' => $currency_info['currency_id'],
+                'name' => $currency_info['name'],
+                'code' => $currency_info['code'],
+                'symbol_left' => $currency_info['symbol_left'],
+                'symbol_right' => $currency_info['symbol_right'],
+                'decimal_place' => $currency_info['decimal_place'],
+                'value' => $currency_info['value'],
+                'sort_order' => $currency_info['sort_order'],
+                'status' => $currency_info['status'],
+            ];
+        } else {
+            $data['default_currency'] = [];
+        }
+
+        // Libraries
+        $data['language_lib'] = $this->language;
+
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeMarketplace',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Seller\product_variant_special',
+            'permission' => false,
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
     }
 
     public function delete()

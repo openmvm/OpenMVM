@@ -175,6 +175,13 @@ class Product extends \App\Controllers\BaseController
             }
 
             $data['price'] = $this->currency->format($product_info['price'], $this->currency->getCurrentCode());  
+
+            if (!is_null($product_info['special']) && $product_info['special'] >= 0) {
+                $data['special'] = $this->currency->format($product_info['special'], $this->currency->getCurrentCode());
+            } else {
+                $data['special'] = false;
+            }
+
             $data['quantity'] = $product_info['quantity'];
 
             // Seller
@@ -242,10 +249,17 @@ class Product extends \App\Controllers\BaseController
             array_multisort($sort_order, SORT_ASC, $data['product_options']);
 
             // Product variants min max prices
-            $product_variant_price = $this->model_product_product->getProductVariantminMaxPrices($product_info['product_id']);
+            $product_variant_price = $this->model_product_product->getProductVariantMinMaxPrices($product_info['product_id']);
 
             $data['min_price'] = $this->currency->format($product_variant_price['min_price'], $this->currency->getCurrentCode());
             $data['max_price'] = $this->currency->format($product_variant_price['max_price'], $this->currency->getCurrentCode());
+
+            // Product variant specials min max prices
+            $data['is_product_variant_special'] = $product_info['product_variant_special'];
+
+            $product_variant_special_price = $this->model_product_product->getProductVariantSpecialMinMaxPrices($product_info['product_id']);
+            $data['special_min_price'] = $this->currency->format($product_variant_special_price['min_price'], $this->currency->getCurrentCode());
+            $data['special_max_price'] = $this->currency->format($product_variant_special_price['max_price'], $this->currency->getCurrentCode());
 
             $data['get_product_variant'] = $this->url->customerLink('marketplace/product/product/get_product_variant/');    
 
@@ -397,6 +411,7 @@ class Product extends \App\Controllers\BaseController
                     'customer_id' => $product_variant_info['customer_id'],
                     'sku' => $product_variant_info['sku'],
                     'quantity' => $product_variant_info['quantity'],
+                    'minimum_purchase' => $product_variant_info['minimum_purchase'],
                     'price' => $this->currency->format($product_variant_info['price'], $this->currency->getCurrentCode()),
                     'weight' => $product_variant_info['weight'],
                     'weight_class_id' => $product_variant_info['weight_class_id'],

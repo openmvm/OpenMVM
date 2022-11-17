@@ -99,15 +99,8 @@
                             <input type="number" min="0" name="quantity" value="<?php echo $quantity; ?>" class="form-control" id="input-quantity" placeholder="<?php echo lang('Entry.quantity', [], $language_lib->getCurrentCode()); ?>" aria-label="<?php echo lang('Entry.quantity', [], $language_lib->getCurrentCode()); ?>" />
                         </div>
                         <div class="mb-3">
-                            <div class="form-label"><?php echo lang('Entry.requires_shipping', [], $language_lib->getCurrentCode()); ?></div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="requires_shipping" id="input-requires-shipping-yes" value="1"<?php if ($requires_shipping == 1) { ?> checked<?php } ?>>
-                                <label class="form-check-label" for="input-requires-shipping-yes"><?php echo lang('Text.yes', [], $language_lib->getCurrentCode()); ?></label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="requires_shipping" id="input-requires-shipping-no" value="0"<?php if ($requires_shipping == 0) { ?> checked<?php } ?>>
-                                <label class="form-check-label" for="input-requires-shipping-no"><?php echo lang('Text.no', [], $language_lib->getCurrentCode()); ?></label>
-                            </div>
+                            <label for="input-minimum-purchase" class="form-label"><?php echo lang('Entry.minimum_purchase', [], $language_lib->getCurrentCode()); ?></label>
+                            <input type="number" min="1" name="minimum_purchase" value="<?php echo $minimum_purchase; ?>" class="form-control" id="input-minimum-purchase" placeholder="<?php echo lang('Entry.minimum_purchase', [], $language_lib->getCurrentCode()); ?>" aria-label="<?php echo lang('Entry.minimum_purchase', [], $language_lib->getCurrentCode()); ?>" />
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
@@ -130,6 +123,52 @@
                                     </select>
                                 </div>
                             </div>
+                        </div>
+                        <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.specials', [], $language_lib->getCurrentCode()); ?></legend>
+                        <div id="product-specials" class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th><?php echo lang('Column.priority', [], $language_lib->getCurrentCode()); ?></th>
+                                        <th><?php echo lang('Column.price', [], $language_lib->getCurrentCode()); ?></th>
+                                        <th><?php echo lang('Column.date_start', [], $language_lib->getCurrentCode()); ?></th>
+                                        <th><?php echo lang('Column.date_end', [], $language_lib->getCurrentCode()); ?></th>
+                                        <th><?php echo lang('Column.timezone', [], $language_lib->getCurrentCode()); ?></th>
+                                        <th><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $product_special_row = 0; ?>
+                                    <?php if (!empty($product_specials)) { ?>
+                                        <?php foreach ($product_specials as $product_special) { ?>
+                                        <tr id="product-special-<?php echo $product_special_row; ?>">
+                                            <td><input type="number" name="product_special[<?php echo $product_special_row; ?>][priority]" value="<?php echo $product_special['priority']; ?>" placeholder="<?php echo lang('Entry.priority', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-special-<?php echo $product_special_row; ?>-priority" /></td>
+                                            <td><input type="number" name="product_special[<?php echo $product_special_row; ?>][price]" value="<?php echo $product_special['price']; ?>" placeholder="<?php echo lang('Entry.price', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-special-<?php echo $product_special_row; ?>-price" /></td>
+                                            <td><input type="datetime-local" name="product_special[<?php echo $product_special_row; ?>][date_start]" value="<?php echo $product_special['date_start']; ?>" placeholder="<?php echo lang('Entry.date_start', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-special-<?php echo $product_special_row; ?>-date-start" /></td>
+                                            <td><input type="datetime-local" name="product_special[<?php echo $product_special_row; ?>][date_end]" value="<?php echo $product_special['date_end']; ?>" placeholder="<?php echo lang('Entry.date_end', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-special-<?php echo $product_special_row; ?>-date-end" /></td>
+                                            <td>
+                                                <select name="product_special[<?php echo $product_special_row; ?>][timezone]" class="form-select" id="input-product-special-<?php echo $product_special_row; ?>-timezone">
+                                                    <?php foreach ($timezones as $timezone) { ?>
+                                                        <?php if ($timezone['timezone'] == $product_special['timezone']) { ?>
+                                                        <option value="<?php echo $timezone['timezone']; ?>" selected><?php echo $timezone['timezone']; ?> (UTC<?php echo $timezone['offset']; ?>)</option>'
+                                                        <?php } else { ?>
+                                                        <option value="<?php echo $timezone['timezone']; ?>"><?php echo $timezone['timezone']; ?> (UTC<?php echo $timezone['offset']; ?>)</option>'
+                                                        <?php } ?>
+                                                    <?php } ?>
+                                                </select>
+                                            </td>
+                                            <td class="text-end align-middle"><button type="button" class="btn btn-danger btn-sm" onclick="removeProductSpecial('<?php echo $product_special_row; ?>');"><i class="fas fa-trash-alt"></i></button></td>
+                                        </tr>
+                                        <?php $product_special_row++; ?>
+                                        <?php } ?>
+                                    <?php } ?>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="6" class="text-end"><button type="button" class="btn btn-primary btn-sm" onclick="addProductSpecial();"><i class="fas fa-plus"></i></button></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
                     <div id="product-options" class="<?php if (empty($is_product_variant)) { ?>d-none <?php } ?>mb-3">
@@ -163,6 +202,19 @@
                         <?php } ?>
                         <div class="d-grid mb-3"><button type="button" class="btn btn-outline-primary" id="button-option-add" onclick="addProductOption();"><i class="fas fa-plus-circle"></i> <?php echo lang('Button.option_add', [], $language_lib->getCurrentCode()); ?></button></div>
                         <div id="product-variants"></div>
+                        <div id="product-variant-specials"></div>
+                    </div>
+                    <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.shipping', [], $language_lib->getCurrentCode()); ?></legend>
+                    <div class="mb-3">
+                        <div class="form-label"><?php echo lang('Entry.requires_shipping', [], $language_lib->getCurrentCode()); ?></div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="requires_shipping" id="input-requires-shipping-yes" value="1"<?php if ($requires_shipping == 1) { ?> checked<?php } ?>>
+                            <label class="form-check-label" for="input-requires-shipping-yes"><?php echo lang('Text.yes', [], $language_lib->getCurrentCode()); ?></label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="requires_shipping" id="input-requires-shipping-no" value="0"<?php if ($requires_shipping == 0) { ?> checked<?php } ?>>
+                            <label class="form-check-label" for="input-requires-shipping-no"><?php echo lang('Text.no', [], $language_lib->getCurrentCode()); ?></label>
+                        </div>
                     </div>
                     <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.images', [], $language_lib->getCurrentCode()); ?></legend>
                     <div class="mb-3">
@@ -342,6 +394,35 @@ function addAdditionalImage() {
 }
 //--></script>
 <script type="text/javascript"><!--
+var product_special_row = '<?php echo $product_special_row; ?>';
+
+function addProductSpecial() {
+    html = '<tr id="product-special-' + product_special_row + '">';
+    html += '    <td><input type="number" name="product_special[' + product_special_row + '][priority]" value="" placeholder="<?php echo lang('Entry.priority', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-special-' + product_special_row + '-priority" /></td>';
+    html += '    <td><input type="number" name="product_special[' + product_special_row + '][price]" value="" placeholder="<?php echo lang('Entry.price', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-special-' + product_special_row + '-price" /></td>';
+    html += '    <td><input type="datetime-local" name="product_special[' + product_special_row + '][date_start]" value="" placeholder="<?php echo lang('Entry.date_start', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-special-' + product_special_row + '-date-start" /></td>';
+    html += '    <td><input type="datetime-local" name="product_special[' + product_special_row + '][date_end]" value="" placeholder="<?php echo lang('Entry.date_end', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-special-' + product_special_row + '-date-end" /></td>';
+    html += '    <td>';
+    html += '        <select name="product_special[' + product_special_row + '][timezone]" class="form-select" id="input-product-special-' + product_special_row + '-timezone">';
+    <?php foreach ($timezones as $timezone) { ?>
+    html += '            <option value="<?php echo $timezone['timezone']; ?>"><?php echo $timezone['timezone']; ?> (UTC<?php echo $timezone['offset']; ?>)</option>'
+    <?php } ?>
+    html += '        </select>';
+    html += '    </td>';
+    html += '    <td class="text-end align-middle"><button type="button" class="btn btn-danger btn-sm" onclick="removeProductSpecial(\'' + product_special_row + '\');"><i class="fas fa-trash-alt"></i></button></td>';
+    html += '</tr>';
+
+    $('#product-specials tbody').append(html);
+
+    product_special_row++;
+}
+//--></script>
+<script type="text/javascript"><!--
+function removeProductSpecial(product_special_row) {
+    $('#product-special-' + product_special_row).remove();
+}
+//--></script>
+<script type="text/javascript"><!--
 var product_option_row = '<?php echo $product_option_row; ?>';
 
 function addProductOption() {
@@ -497,7 +578,7 @@ function setProductOptions() {
             //$('select[name=\'setting_country_id\']').prop('disabled', false);
         },
         success: function(json) {
-            // Refresh checkout cart
+            // Refresh product variants
             $( '#product-variants' ).html( '<div class="text-center text-secondary"><i class="fas fa-spinner fa-spin fa-2x"></i></div>' );
             $( '#product-variants' ).load( '<?php echo $product_variant; ?>' );
         },
@@ -506,6 +587,11 @@ function setProductOptions() {
         }
     });
 }
+//--></script>
+<script type="text/javascript"><!--
+// Refresh product variant specials
+$( '#product-variant-specials' ).html( '<div class="text-center text-secondary"><i class="fas fa-spinner fa-spin fa-2x"></i></div>' );
+$( '#product-variant-specials' ).load( '<?php echo $product_variant_special; ?>' );
 //--></script>
 <script type="text/javascript"><!--
 var product_download_row = '<?php echo $product_download_row; ?>';

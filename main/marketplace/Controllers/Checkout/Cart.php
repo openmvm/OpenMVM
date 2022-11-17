@@ -131,9 +131,51 @@ class Cart extends \App\Controllers\BaseController
             $json['error'] = lang('Error.product_not_found', [], $this->language->getCurrentCode());
         }
 
+        // Check if added product is already in the cart
+        $cart_product = $this->cart->getProduct($customer_id, $product_info['seller_id'], $product_info['product_id'], $this->request->getPost('product_variant'));
+
+        if (!empty($cart_product)) {
+            $product_quantity_in_cart = $cart_product['quantity'];
+        } else {
+            $product_quantity_in_cart = 0;
+        }
+
+        // If quantity is below minimum purchase
+        if (empty($this->request->getPost('product_variant'))) {
+            $minimum_quantity_added_to_cart = (int)$product_info['minimum_purchase'] - (int)$product_quantity_in_cart;
+
+            if ($this->request->getPost('quantity') < $minimum_quantity_added_to_cart) {
+                $json['error'] = lang('Error.product_minimum_purchase', ['minimum_purchase' => $product_info['minimum_purchase']], $this->language->getCurrentCode());
+            }
+        }
+
+        // Get product variant
+        if (!empty($this->request->getPost('product_variant'))) {
+            if (is_array($this->request->getPost('product_variant'))) {
+                $product_variants = $this->request->getPost('product_variant');
+                asort($product_variants);
+            }
+
+            $product_variant_info = $this->model_product_product->getProductVariantByOptions($product_id, json_encode($product_variants));
+
+            if ($product_variant_info) {
+                $product_variant_minimum_purchase = $product_variant_info['minimum_purchase'];
+            } else {
+                $product_variant_minimum_purchase = 1;
+            }
+
+            $minimum_quantity_added_to_cart = (int)$product_variant_minimum_purchase - (int)$product_quantity_in_cart;
+
+            if ($this->request->getPost('quantity') < $minimum_quantity_added_to_cart) {
+                $json['error'] = lang('Error.product_minimum_purchase', ['minimum_purchase' => $product_variant_minimum_purchase], $this->language->getCurrentCode());
+                //$json['error'] = json_encode($product_variant_minimum_purchase);
+            }
+        }
+
         // If customer is the seller of this product
         if ($this->customer->getSellerId() == $product_info['seller_id']) {
             $json['error'] = lang('Error.customer_is_seller', [], $this->language->getCurrentCode());
+            //$json['error'] = json_encode($this->request->getPost('product_variant'));
         }
 
         if (empty($json['error'])) {
