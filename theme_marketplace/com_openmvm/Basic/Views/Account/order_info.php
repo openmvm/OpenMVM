@@ -235,7 +235,7 @@
                                     <div class="small">
                                         <div><?php echo lang('Text.options', [], $language_lib->getCurrentCode()); ?>:</div>
                                         <?php foreach ($product['option'] as $option) { ?>
-                                        <div>- <?php echo $option['description'][$language->getCurrentId()]['name']; ?>: <?php echo $option['option_value']['description'][$language->getCurrentId()]['name']; ?></div>
+                                        <div>- <?php echo $option['description'][$language_lib->getCurrentId()]['name']; ?>: <?php echo $option['option_value']['description'][$language_lib->getCurrentId()]['name']; ?></div>
                                         <?php } ?>
                                     </div>
                                     <?php } ?>
