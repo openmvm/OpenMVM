@@ -114,11 +114,19 @@ class Seller extends \App\Controllers\BaseController
                     $max_price = null;
                 }
 
+                // Special
+                if (!is_null($product['special']) && $product['special'] >= 0) {
+                    $special = $this->currency->format($product['special'], $this->currency->getCurrentCode());
+                } else {
+                    $special = false;
+                }
+
                 $data['products'][] = [
                     'product_id' => $product['product_id'],
                     'name' => $product['name'],
                     'thumb' => $thumb,
                     'price' => $this->currency->format($product['price'], $this->currency->getCurrentCode()),
+                    'special' => $special,
                     'product_option' => $product['product_option'],
                     'min_price' => $min_price,
                     'max_price' => $max_price,

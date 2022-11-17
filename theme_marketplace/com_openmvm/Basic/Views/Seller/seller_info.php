@@ -16,7 +16,7 @@
                                 <?php if (!empty($product['product_option'])) { ?>
                                 <div><?php echo $product['min_price']; ?> - <?php echo $product['max_price']; ?></div>
                                 <?php } else { ?>
-                                <div><?php echo $product['price']; ?></div>
+                                <div><?php if ($product['special']) { ?><s class="text-secondary me-2"><?php echo $product['price']; ?></s><?php echo $product['special']; ?><?php } else { ?><?php echo $product['price']; ?><?php } ?></div>
                                 <?php } ?>
                             </div>
                             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>

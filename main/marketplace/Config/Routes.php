@@ -69,7 +69,7 @@ $routes->group('/', function ($routes) {
                 });
             });
             // Wallet
-            $routes->match(['get', 'post'], 'wallet', '\Main\Marketplace\Controllers\Account\Wallet::index');
+            $routes->match(['get', 'post'], 'wallet', '\Main\Marketplace\Controllers\Account\Wallet::index', ['filter' => 'marketplace_auth']);
             // Wishlist
             $routes->match(['get', 'post'], 'wishlist', '\Main\Marketplace\Controllers\Account\Wishlist::index', ['filter' => 'marketplace_auth']);
         });
@@ -187,7 +187,7 @@ $routes->group('/', function ($routes) {
             $routes->group('component', function ($routes) {
                 // Shipping method
                 $routes->group('shipping_method', function ($routes) {
-                    $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Component\Shipping_Method::index');
+                    $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Component\Shipping_Method::index', ['filter' => 'marketplace_auth']);
                     $routes->match(['get', 'post'], 'add', '\Main\Marketplace\Controllers\Seller\Component\Shipping_Method::add', ['filter' => 'marketplace_auth']);
                     $routes->match(['get', 'post'], 'edit/(:num)', '\Main\Marketplace\Controllers\Seller\Component\Shipping_Method::edit', ['filter' => 'marketplace_auth']);
                     $routes->match(['get', 'post'], 'delete', '\Main\Marketplace\Controllers\Seller\Component\Shipping_Method::delete', ['filter' => 'marketplace_auth']);
@@ -238,7 +238,7 @@ $routes->group('/', function ($routes) {
             });
             // Option
             $routes->group('option', function ($routes) {
-                $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Option::index');
+                $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Option::index', ['filter' => 'marketplace_auth']);
                 $routes->match(['get', 'post'], 'add', '\Main\Marketplace\Controllers\Seller\Option::add', ['filter' => 'marketplace_auth']);
                 $routes->match(['get', 'post'], 'edit/(:num)', '\Main\Marketplace\Controllers\Seller\Option::edit', ['filter' => 'marketplace_auth']);
                 $routes->match(['get', 'post'], 'delete', '\Main\Marketplace\Controllers\Seller\Option::delete', ['filter' => 'marketplace_auth']);
@@ -258,13 +258,14 @@ $routes->group('/', function ($routes) {
             });
             // Product
             $routes->group('product', function ($routes) {
-                $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Product::index');
+                $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Product::index', ['filter' => 'marketplace_auth']);
                 $routes->match(['get', 'post'], 'add', '\Main\Marketplace\Controllers\Seller\Product::add', ['filter' => 'marketplace_auth']);
                 $routes->match(['get', 'post'], 'edit/(:num)', '\Main\Marketplace\Controllers\Seller\Product::edit', ['filter' => 'marketplace_auth']);
                 $routes->match(['get', 'post'], 'delete', '\Main\Marketplace\Controllers\Seller\Product::delete', ['filter' => 'marketplace_auth']);
-                $routes->match(['get', 'post'], 'set_product_options', '\Main\Marketplace\Controllers\Seller\Product::set_product_options');
-                $routes->match(['get', 'post'], 'get_product_variants', '\Main\Marketplace\Controllers\Seller\Product::get_product_variants');
-                $routes->match(['get', 'post'], 'product_download_upload', '\Main\Marketplace\Controllers\Seller\Product::product_download_upload');
+                $routes->match(['get', 'post'], 'set_product_options', '\Main\Marketplace\Controllers\Seller\Product::set_product_options', ['filter' => 'marketplace_auth']);
+                $routes->match(['get', 'post'], 'get_product_variants', '\Main\Marketplace\Controllers\Seller\Product::get_product_variants', ['filter' => 'marketplace_auth']);
+                $routes->match(['get', 'post'], 'get_product_variant_specials', '\Main\Marketplace\Controllers\Seller\Product::get_product_variant_specials', ['filter' => 'marketplace_auth']);
+                $routes->match(['get', 'post'], 'product_download_upload', '\Main\Marketplace\Controllers\Seller\Product::product_download_upload', ['filter' => 'marketplace_auth']);
                 $routes->group('save', function ($routes) {
                     $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Product::save', ['filter' => 'marketplace_auth']);
                     $routes->match(['get', 'post'], '(:num)', '\Main\Marketplace\Controllers\Seller\Product::save', ['filter' => 'marketplace_auth']);
@@ -272,7 +273,7 @@ $routes->group('/', function ($routes) {
             });
             // Product Question
             $routes->group('product_question', function ($routes) {
-                $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Product_Question::index');
+                $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Product_Question::index', ['filter' => 'marketplace_auth']);
                 $routes->match(['get', 'post'], 'edit/(:num)', '\Main\Marketplace\Controllers\Seller\Product_Question::edit', ['filter' => 'marketplace_auth']);
                 $routes->match(['get', 'post'], 'add_product_question_answer', '\Main\Marketplace\Controllers\Seller\Product_Question::add_product_question_answer', ['filter' => 'marketplace_auth']);
                 $routes->match(['get', 'post'], 'get_product_question_answers', '\Main\Marketplace\Controllers\Seller\Product_Question::get_product_question_answers', ['filter' => 'marketplace_auth']);

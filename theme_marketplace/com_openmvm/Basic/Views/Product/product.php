@@ -55,9 +55,16 @@
                                 </div>
                                 <div id="price" class="text-danger bg-light fs-1 px-3 mb-3">
                                     <?php if ($is_product_option) { ?>
-                                    <div id="product-variant-price"><?php echo $min_price; ?> - <?php echo $max_price; ?></div>
+                                        <?php if ($is_product_variant_special) { ?>
+                                        <div id="product-variant-price">
+                                            <div class="text-secondary fs-3"><s><?php echo $min_price; ?></s> - <s><?php echo $max_price; ?></s></div>
+                                            <div><?php echo $special_min_price; ?> - <?php echo $special_max_price; ?></div>
+                                        </div>
+                                        <?php } else { ?>
+                                        <div id="product-variant-price"><?php echo $min_price; ?> - <?php echo $max_price; ?></div>
+                                        <?php } ?>
                                     <?php } else { ?>
-                                    <div id="product-price"><?php echo $price; ?></div>
+                                    <div id="product-price"><?php if ($special) { ?><s class="text-secondary me-2"><?php echo $price; ?></s><?php echo $special; ?><?php } else { ?><?php echo $price; ?><?php } ?></div>
                                     <?php } ?>
                                 </div>
                                 <?php if ($is_product_option) { ?>
@@ -290,8 +297,10 @@ $( "#button-cart" ).on( "click", function() {
 			$('#button-cart i').removeClass('fa-spinner fa-spin').addClass('fa-cart-plus');
 		},
 		success: function(json) {
+            $('.toast-container').remove();
+            
             if (json['error']) {
-                html = '<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11;">';
+                html = '<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11;">';
                 html += '    <div id="liveToast" class="toast bg-danger" role="alert" aria-live="assertive" aria-atomic="true">';
                 html += '        <div class="toast-header">';
                 html += '            <i class="fas fa-times-circle text-danger me-1"></i>';
@@ -315,7 +324,7 @@ $( "#button-cart" ).on( "click", function() {
             if (json['success']) {
                 $( '#offcanvas-cart' ).load( '<?php echo base_url('marketplace/common/cart'); ?>' );
 
-                html = '<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999;">';
+                html = '<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 9999;">';
                 html += '    <div id="liveToast" class="toast bg-success" role="alert" aria-live="assertive" aria-atomic="true">';
                 html += '        <div class="toast-header">';
                 html += '            <i class="fas fa-check-circle text-success me-1"></i>';

@@ -15,7 +15,7 @@
                                 <?php if (!empty($product['product_option'])) { ?>
                                 <div><?php echo $product['min_price']; ?> - <?php echo $product['max_price']; ?></div>
                                 <?php } else { ?>
-                                <div><?php echo $product['price']; ?></div>
+                                <div><?php if ($product['special']) { ?><s class="text-secondary me-2"><?php echo $product['price']; ?></s><?php echo $product['special']; ?><?php } else { ?><?php echo $product['price']; ?><?php } ?></div>
                                 <?php } ?>
                             </div>
                             <a href="<?php echo $product['href']; ?>" class="btn btn-primary"><?php echo lang('Button.details', [], $language_lib->getCurrentCode()); ?></a>
