@@ -63,6 +63,7 @@ abstract class BaseController extends Controller
         $this->setting = new \App\Libraries\Setting();
         $this->template = new \App\Libraries\Template();
         $this->text = new \App\Libraries\Text();
+        $this->timezone = new \App\Libraries\Timezone();
         $this->uri = new \CodeIgniter\HTTP\URI(current_url());
         $this->url = new \App\Libraries\Url();
         $this->validation =  \Config\Services::validation();
