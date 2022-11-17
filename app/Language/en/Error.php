@@ -19,6 +19,7 @@ return [
     'payment_address_not_found' => 'Payment address not found! Please add an address.',
     'payment_method_not_available' => 'No available payment methods!',
     'please_login' => 'Please login!',
+    'product_minimum_purchase' => 'This product has a minimum purchase quantity of {minimum_purchase}',
     'product_not_found' => 'Product not found!',
     'reset_password_confirm' => 'Reset password failed! Please contact us for assistance.',
     'select_product_options' => 'Please select product options to purchase this product!',
