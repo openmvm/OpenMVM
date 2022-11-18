@@ -89,6 +89,30 @@ function addQuantity(event, product_id, product_variant) {
             $(event).find('i').removeClass('fa-spinner fa-spin').addClass('fa-circle-plus');
         },
         success: function(json) {
+            $('.toast-container').remove();
+            
+            if (json['error']) {
+                html = '<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11;">';
+                html += '    <div id="liveToast" class="toast bg-danger" role="alert" aria-live="assertive" aria-atomic="true">';
+                html += '        <div class="toast-header">';
+                html += '            <i class="fas fa-times-circle text-danger me-1"></i>';
+                html += '            <strong class="text-danger me-auto"><?php echo lang('Text.error', [], $language_lib->getCurrentCode()); ?></strong>';
+                html += '            <small><?php echo lang('Text.add_to_cart', [], $language_lib->getCurrentCode()); ?></small>';
+                html += '            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>';
+                html += '        </div>';
+                html += '        <div class="toast-body text-light">';
+                html +=              json['error'];
+                html += '        </div>';
+                html += '    </div>';
+                html += '</div>';
+
+                $('body').append(html);
+
+                var toastLiveExample = document.getElementById('liveToast');
+                var toast = new bootstrap.Toast(toastLiveExample);
+                toast.show();
+            }
+            
             $( '#checkout-cart' ).load( '<?php echo $checkout_cart; ?>' );
             $( '#checkout-shipping-method' ).load( '<?php echo $checkout_shipping_method; ?>' );
             $( '#offcanvas-cart' ).load( '<?php echo base_url('marketplace/common/cart'); ?>' );
@@ -116,6 +140,30 @@ function subtractQuantity(event, product_id, product_variant) {
             $(event).find('i').removeClass('fa-spinner fa-spin').addClass('fa-circle-minus');
         },
         success: function(json) {
+            $('.toast-container').remove();
+            
+            if (json['error']) {
+                html = '<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11;">';
+                html += '    <div id="liveToast" class="toast bg-danger" role="alert" aria-live="assertive" aria-atomic="true">';
+                html += '        <div class="toast-header">';
+                html += '            <i class="fas fa-times-circle text-danger me-1"></i>';
+                html += '            <strong class="text-danger me-auto"><?php echo lang('Text.error', [], $language_lib->getCurrentCode()); ?></strong>';
+                html += '            <small><?php echo lang('Text.add_to_cart', [], $language_lib->getCurrentCode()); ?></small>';
+                html += '            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>';
+                html += '        </div>';
+                html += '        <div class="toast-body text-light">';
+                html +=              json['error'];
+                html += '        </div>';
+                html += '    </div>';
+                html += '</div>';
+
+                $('body').append(html);
+
+                var toastLiveExample = document.getElementById('liveToast');
+                var toast = new bootstrap.Toast(toastLiveExample);
+                toast.show();
+            }
+            
             $( '#checkout-cart' ).load( '<?php echo $checkout_cart; ?>' );
             $( '#checkout-shipping-method' ).load( '<?php echo $checkout_shipping_method; ?>' );
             $( '#offcanvas-cart' ).load( '<?php echo base_url('marketplace/common/cart'); ?>' );

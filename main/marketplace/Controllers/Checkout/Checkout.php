@@ -770,15 +770,59 @@ class Checkout extends \App\Controllers\BaseController
             $options = '';
         }
 
-        $this->cart->add($customer_id, $seller_id, $product_id, $quantity, $options);
+        // Check if the minimum purchase quantity
+        if (!empty($options)) {
+            if (is_array($options)) {
+                $option_data = $options;
 
-        // Remove shipping method session
-        if ($this->session->has('checkout_shipping_method_' . $seller_id)) {
-            $this->session->remove('checkout_shipping_method_' . $seller_id);
+                asort($option_data);
+            }
+                
+            // Get product variant info
+            $product_variant_info = $this->model_product_product->getProductVariantByOptions($product_id, json_encode($option_data));
+
+            if (!empty($product_variant_info)) {
+                $minimum_purchase = $product_variant_info['minimum_purchase'];
+            } else {
+                $minimum_purchase = 1;
+            }
+        } else {
+            if ($product_info) {
+                $minimum_purchase = $product_info['minimum_purchase'];
+            } else {
+                $minimum_purchase = 1;
+            }
         }
 
-        $json['message'] = $options;
+        // Check product quantity in the cart
+        if (is_array($options)) {
+            $option_data = $options;
 
+            asort($option_data);
+        }
+            
+        $cart_product = $this->cart->getProduct($customer_id, $seller_id, $product_id, $option_data);
+
+        if (!empty($cart_product)) {
+            $product_quantity_in_cart = $cart_product['quantity'];
+        } else {
+            $product_quantity_in_cart = 0;
+        }
+
+        if (($product_quantity_in_cart + $quantity) >= $minimum_purchase) {
+            $this->cart->add($customer_id, $seller_id, $product_id, $quantity, $options);
+
+            // Remove shipping method session
+            if ($this->session->has('checkout_shipping_method_' . $seller_id)) {
+                $this->session->remove('checkout_shipping_method_' . $seller_id);
+            }
+
+            $json['message'] = $options;
+
+        } else {
+            $json['error'] = lang('Error.product_minimum_purchase', ['minimum_purchase' => $minimum_purchase], $this->language->getCurrentCode());
+        }
+file_put_contents(WRITEPATH . 'temp/openmvm.log', isset($json['error']) ? $json['error'] : 'empty!');
         return $this->response->setJSON($json);
     }
 
