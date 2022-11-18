@@ -404,6 +404,15 @@ class Product extends \App\Controllers\BaseController
             $product_variant_info = $this->model_product_product->getProductVariantByOptions($product_id, $options);
 
             if ($product_variant_info) {
+                // Get product variant special info
+                $product_variant_special_info = $this->model_product_product->getProductVariantSpecialByOptions($product_id, $options);
+
+                if (!empty($product_variant_special_info)) {
+                    $special = $this->currency->format($product_variant_special_info['price'], $this->currency->getCurrentCode());
+                } else {
+                    $special = false;
+                }
+
                 $json['product_variant'] = [
                     'product_variant_id' => $product_variant_info['product_variant_id'],
                     'product_id' => $product_variant_info['product_id'],
@@ -413,6 +422,7 @@ class Product extends \App\Controllers\BaseController
                     'quantity' => $product_variant_info['quantity'],
                     'minimum_purchase' => $product_variant_info['minimum_purchase'],
                     'price' => $this->currency->format($product_variant_info['price'], $this->currency->getCurrentCode()),
+                    'special' => $special,
                     'weight' => $product_variant_info['weight'],
                     'weight_class_id' => $product_variant_info['weight_class_id'],
                 ];

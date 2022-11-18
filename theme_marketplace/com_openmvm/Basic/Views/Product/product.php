@@ -253,7 +253,14 @@ function getProductVariant() {
         },
         success: function(json) {
             if (json['product_variant'].length !== 0) {
-                $('#product-variant-price').html(json['product_variant']['price']);
+                if (json['product_variant']['special']) {
+                    html = '<div class="text-secondary fs-3"><s>' + json['product_variant']['price'] + '</s></div>';
+                    html += '<div>' + json['product_variant']['special'] + '</div>';
+                } else {
+                    html = json['product_variant']['price'];
+                }
+
+                $('#product-variant-price').html(html);
                 $('#product-quantity').html();
                 $('#product-quantity').html(json['product_variant']['quantity']);
 

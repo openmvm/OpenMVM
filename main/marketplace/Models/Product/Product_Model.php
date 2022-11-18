@@ -391,6 +391,43 @@ class Product_Model extends Model
         return $product_variant;
     }
 
+    public function getProductVariantSpecialByOptions($product_id, $options)
+    {
+        $product_variant_special_builder = $this->db->table('product_variant_special');
+
+        $product_variant_special_builder->where('product_id', $product_id);
+        $product_variant_special_builder->where('options', $options);
+        $product_variant_special_builder->where('date_start < ', new Time('now'));
+        $product_variant_special_builder->where('date_end > ', new Time('now'));
+
+        $product_variant_special_builder->orderBy('priority', 'ASC');
+        $product_variant_special_builder->orderBy('price', 'ASC');
+
+        $product_variant_special_builder->limit(1);
+
+        $product_variant_special_query = $product_variant_special_builder->get();
+
+        $product_variant_special = [];
+
+        if ($product_variant_special_row = $product_variant_special_query->getRow()) {
+            $product_variant_special = [
+                'product_variant_special_id' => $product_variant_special_row->product_variant_special_id,
+                'product_variant_id' => $product_variant_special_row->product_variant_id,
+                'options' => $product_variant_special_row->options,
+                'product_id' => $product_variant_special_row->product_id,
+                'seller_id' => $product_variant_special_row->seller_id,
+                'customer_id' => $product_variant_special_row->customer_id,
+                'priority' => $product_variant_special_row->priority,
+                'price' => $product_variant_special_row->price,
+                'date_start' => $product_variant_special_row->date_start,
+                'date_end' => $product_variant_special_row->date_end,
+                'timezone' => $product_variant_special_row->timezone,
+            ];
+        }
+
+        return $product_variant_special;
+    }
+
     public function getProductVariantSpecialMinMaxPrices($product_id)
     {
         $product_variant_builder = $this->db->table('product_variant');
@@ -407,6 +444,13 @@ class Product_Model extends Model
 
             $product_variant_special_builder->where('product_id', $product_id);
             $product_variant_special_builder->where('options', $product_variant->options);
+            $product_variant_special_builder->where('date_start < ', new Time('now'));
+            $product_variant_special_builder->where('date_end > ', new Time('now'));
+
+            $product_variant_special_builder->orderBy('priority', 'ASC');
+            $product_variant_special_builder->orderBy('price', 'ASC');
+
+            $product_variant_special_builder->limit(1);
 
             $product_variant_special_query = $product_variant_special_builder->get();
 

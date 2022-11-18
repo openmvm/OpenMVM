@@ -72,6 +72,17 @@ class Search extends \App\Controllers\BaseController
                 $special = false;
             }
 
+            // Get product variant special min max prices
+            if (!empty($product['product_option'])) {
+                $product_variant_special_price = $this->model_product_product->getProductVariantSpecialMinMaxPrices($product['product_id']);
+
+                $special_min_price = $this->currency->format($product_variant_special_price['min_price'], $this->currency->getCurrentCode());
+                $special_max_price = $this->currency->format($product_variant_price['max_price'], $this->currency->getCurrentCode());
+            } else {
+                $special_min_price = null;
+                $special_max_price = null;
+            }
+
             $data['products'][] = [
                 'product_id' => $product['product_id'],
                 'name' => $product['name'],
@@ -79,8 +90,11 @@ class Search extends \App\Controllers\BaseController
                 'price' => $this->currency->format($product['price'], $this->currency->getCurrentCode()),
                 'special' => $special,
                 'product_option' => $product['product_option'],
+                'product_variant_special' => $product['product_variant_special'],
                 'min_price' => $min_price,
                 'max_price' => $max_price,
+                'special_min_price' => $special_min_price,
+                'special_max_price' => $special_max_price,
                 'href' => $this->url->customerLink('marketplace/product/product/get/' . $product['slug'] . '-p' . $product['product_id']),
             ];
         }

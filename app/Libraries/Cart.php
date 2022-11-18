@@ -413,6 +413,26 @@ class Cart {
                         $price = $product->price;
                         $weight = $product->weight;
                     }
+
+                    // Get product variant special info
+                    $product_variant_special_builder =  $this->db->table('product_variant_special');
+                    $product_variant_special_builder->select('price');
+                    
+                    $product_variant_special_builder->where('product_id', $result->product_id);
+                    $product_variant_special_builder->where('options', $result->option);
+                    $product_variant_special_builder->where('date_start < ', new Time('now'));
+                    $product_variant_special_builder->where('date_end > ', new Time('now'));
+                    
+                    $product_variant_special_builder->orderBy('priority', 'ASC');
+                    $product_variant_special_builder->orderBy('price', 'ASC');
+                    
+                    $product_variant_special_builder->limit(1);
+
+                    $product_variant_special_query = $product_variant_special_builder->get();
+
+                    if ($product_variant_special_row = $product_variant_special_query->getRow()) {
+                        $price = $product_variant_special_row->price;
+                    }
                 } else {
                     $price = $product->price;
                     $weight = $product->weight;
