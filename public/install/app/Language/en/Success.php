@@ -2,5 +2,5 @@
 
 // Success
 return [
-	'success_install' => 'Success: BukaUsahaOnline CMS has been installed successfully!',
+	'success_install' => 'Success: OpenMVM has been installed successfully!',
 ];
