@@ -47,13 +47,13 @@ class Autoload extends AutoloadConfig
         'Main\Admin' => ROOTPATH . 'main/admin',
         'Main\Marketplace' => ROOTPATH . 'main/marketplace',
         // Plugins
-        'Plugins\com_bukausahaonline\Widget_Blank' => ROOTPATH . 'plugins/com_bukausahaonline/Widget_Blank',
+        'Plugins\com_example\Widget_Blank' => ROOTPATH . 'plugins/com_example/Widget_Blank',
         // Theme Admin
         'ThemeAdmin\com_openmvm\Basic' => ROOTPATH . 'theme_admin/com_openmvm/Basic',
-        'ThemeAdmin\com_bukausahaonline\Test' => ROOTPATH . 'theme_admin/com_bukausahaonline/Test',
+        'ThemeAdmin\com_example\Test' => ROOTPATH . 'theme_admin/com_example/Test',
         // Theme Marketplace
         'ThemeMarketplace\com_openmvm\Basic' => ROOTPATH . 'theme_marketplace/com_openmvm/Basic',
-        'ThemeMarketplace\com_bukausahaonline\Test' => ROOTPATH . 'theme_marketplace/com_bukausahaonline/Test',
+        'ThemeMarketplace\com_example\Test' => ROOTPATH . 'theme_marketplace/com_example/Test',
     ];
 
     /**

@@ -96,7 +96,7 @@ class Template {
                     $selected_theme = $default_theme;
                 }
 
-                //$selected_author = 'com_bukausahaonline';
+                //$selected_author = 'com_example';
                 //$selected_theme = 'Volt';
 
                 $directory = 'theme_admin';
