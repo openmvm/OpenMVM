@@ -216,11 +216,19 @@ class Cart extends \App\Controllers\BaseController
             }
 
             if (empty($json['error'])) {
-                file_put_contents(WRITEPATH . 'temp/openmvm.log', json_encode($json_data));
                 $this->cart->remove($customer_id, $product_info['seller_id'], $product_info['product_id'], $json_data['product_variant'], $this->cart->getKey());
 
                 $json['success']['toast'] = lang('Success.cart_remove', [], $this->language->getCurrentCode());
+                
                 $json['redirect'] = $this->url->customerLink('marketplace/checkout/cart');
+
+                if (!empty($json_data['uri_string']) && $json_data['uri_string'] == 'marketplace/checkout/checkout') {
+                    $json['refresh'] = true;
+                }
+
+                if (empty($this->cart->getSellers()) && !empty($json_data['uri_string']) && ($json_data['uri_string'] == 'marketplace/checkout/checkout' || $json_data['uri_string'] == 'marketplace/checkout/cart')) {
+                    $json['refresh'] = true;
+                }
             } else {
                 // Errors
                 $json['error']['toast'] = lang('Error.form', [], $this->language->getCurrentCode());

@@ -2,6 +2,7 @@
 <div class="container">
     <div id="content" class="content">
         <h1 class="border-bottom pb-3 mb-3"><?php echo $heading_title; ?></h1>
+        <?php if (!empty($sellers)) { ?>
         <div class="row">
             <div class="col-sm-7">
                 <h3 class="border-bottom border-3 pb-3 mb-3"><?php echo lang('Heading.payment_address', [], $language_lib->getCurrentCode()); ?></h3>
@@ -18,6 +19,9 @@
                 <div id="checkout-confirm"><i class="fas fa-spinner fa-spin"></i></div>
             </div>
         </div>
+        <?php } else { ?>
+        <div><?php echo lang('Text.cart_empty', [], $language_lib->getCurrentCode()); ?></div>
+        <?php } ?>
     </div>
 </div>
 <script type="text/javascript"><!--

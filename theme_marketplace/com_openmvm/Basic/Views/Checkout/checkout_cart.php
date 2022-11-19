@@ -30,7 +30,7 @@
                             </div>
                             <?php } ?>
                             <div class="text-muted my-3"><?php echo $product['quantity']; ?> X <?php echo $product['price']; ?></div>
-                            <div class="mt-3"><a href="#" class="link-danger text-decoration-none"><i class="fas fa-trash-alt fa-fw"></i> <?php echo lang('Button.remove', [], $language_lib->getCurrentCode()); ?></a></div>
+                            <div class="mt-3"><a role="button" class="link-danger text-decoration-none" onclick="checkoutCartRemove(this, '<?php echo $product['product_id']; ?>', '<?php echo htmlentities($product['product_variant']); ?>');"><i class="fas fa-trash-alt fa-fw"></i> <?php echo lang('Button.remove', [], $language_lib->getCurrentCode()); ?></a></div>
                         </td>
                         <td class="text-end small"><span role="button" class="link-secondary me-1" onclick="subtractQuantity(this, '<?php echo $product['product_id']; ?>', '<?php echo htmlentities($product['product_variant']); ?>');"><i class="fas fa-circle-minus"></i></span><span class="d-inline-block text-center" style="width: 36px;"><?php echo $product['quantity']; ?></span><span role="button" class="link-secondary ms-1" onclick="addQuantity(this, '<?php echo $product['product_id']; ?>', '<?php echo htmlentities($product['product_variant']); ?>');"><i class="fas fa-circle-plus"></i></span></td>
                         <td class="text-end small"><?php echo $product['total']; ?></td>
@@ -167,6 +167,37 @@ function subtractQuantity(event, product_id, product_variant) {
             $( '#checkout-cart' ).load( '<?php echo $checkout_cart; ?>' );
             $( '#checkout-shipping-method' ).load( '<?php echo $checkout_shipping_method; ?>' );
             $( '#offcanvas-cart' ).load( '<?php echo base_url('marketplace/common/cart'); ?>' );
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+}
+//--></script> 
+<script type="text/javascript"><!--
+function checkoutCartRemove(event, product_id, product_variant) {
+    const userData = {};
+    userData['product_variant'] = product_variant;
+
+    $.ajax({
+        url: '<?php echo $cart_remove_url; ?>' + '?product_id=' + product_id,
+        type: 'post',
+        data: JSON.stringify(userData),
+        dataType: 'json',
+        beforeSend: function() {
+            $(event).find('i').removeClass('fa-trash-alt').addClass('fa-spinner fa-spin');
+        },
+        complete: function() {
+            
+        },
+        success: function(json) {
+            $( '#checkout-cart' ).load( '<?php echo $checkout_cart; ?>' );
+            $( '#checkout-shipping-method' ).load( '<?php echo $checkout_shipping_method; ?>' );
+            $( '#offcanvas-cart' ).load( '<?php echo base_url('marketplace/common/cart'); ?>' );
+
+            if (json['refresh']) {
+                window.location.href=window.location.href;
+            }
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

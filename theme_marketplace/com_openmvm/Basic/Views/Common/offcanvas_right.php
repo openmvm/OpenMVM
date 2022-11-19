@@ -13,6 +13,7 @@ $( '#offcanvas-cart' ).load( '<?php echo base_url('marketplace/common/cart'); ?>
 function cartRemove(event, product_id, product_variant) {
     const userData = {};
     userData['product_variant'] = product_variant;
+    userData['uri_string'] = '<?php echo $uri_string; ?>';
 
     $.ajax({
         url: '<?php echo $cart_remove_url; ?>' + '?product_id=' + product_id,
@@ -27,6 +28,10 @@ function cartRemove(event, product_id, product_variant) {
         },
         success: function(json) {
             $( '#offcanvas-cart' ).load( '<?php echo base_url('marketplace/common/cart'); ?>' );
+
+            if (json['refresh']) {
+                window.location.href=window.location.href;
+            }
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

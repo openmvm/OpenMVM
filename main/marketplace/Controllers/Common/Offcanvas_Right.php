@@ -25,6 +25,8 @@ class Offcanvas_Right extends \App\Controllers\BaseController
 
         $data['logged_in'] = $this->customer->isLoggedIn();
 
+        $data['uri_string'] = uri_string();
+
         $data['cart_remove_url'] = $this->url->customerLink('marketplace/checkout/cart/remove');
 
         // Libraries

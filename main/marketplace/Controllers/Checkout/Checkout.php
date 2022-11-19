@@ -21,6 +21,10 @@ class Checkout extends \App\Controllers\BaseController
 
     public function index()
     {
+        if (empty($this->cart->getSellers())) {
+            return redirect()->to(base_url('marketplace/checkout/cart'));
+        }
+
         $breadcrumbs[] = array(
             'text' => lang('Text.home', [], $this->language->getCurrentCode()),
             'href' => $this->url->customerLink('/'),
@@ -54,6 +58,8 @@ class Checkout extends \App\Controllers\BaseController
             $data['checkout_cart'] = $this->url->customerLink('marketplace/checkout/checkout/cart', '', true);
             $data['checkout_confirm'] = $this->url->customerLink('marketplace/checkout/checkout/confirm', '', true);
         }
+
+        $data['sellers'] = $this->cart->getSellers();
 
         // Libraries
         $data['language_lib'] = $this->language;
@@ -1094,6 +1100,8 @@ file_put_contents(WRITEPATH . 'temp/openmvm.log', isset($json['error']) ? $json[
                 // Checkout confirm
                 $data['checkout_confirm'] = $this->url->customerLink('marketplace/checkout/checkout/confirm', '', true);
             }
+
+            $data['cart_remove_url'] = $this->url->customerLink('marketplace/checkout/cart/remove');
 
             // Libraries
             $data['language_lib'] = $this->language;
