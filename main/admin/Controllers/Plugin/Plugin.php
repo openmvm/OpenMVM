@@ -202,7 +202,7 @@ class Plugin extends \App\Controllers\BaseController
             // Copy assets files
             $plugin = explode(':', $this->request->getGet('plugin'));
 
-            $asset = ROOTPATH . 'plugin/' . $plugin[0] . '/' . $plugin[1] . '/assets';
+            $asset = ROOTPATH . 'plugins/' . $plugin[0] . '/' . $plugin[1] . '/assets';
             $destination = ROOTPATH . 'public/assets';
 
             if (is_dir($asset)) {
@@ -239,12 +239,20 @@ class Plugin extends \App\Controllers\BaseController
             // Delete installed assets files
             $plugin = explode(':', $this->request->getGet('plugin'));
 
-            $asset = ROOTPATH . 'public/assets/marketplace/plugin/' . $plugin[0];
+            $admin_asset = ROOTPATH . 'public/assets/admin/plugins/' . $plugin[0];
 
-            if (is_dir($asset)) {
-                delete_files($asset, true);
+            if (is_dir($admin_asset)) {
+                delete_files($admin_asset, true);
 
-                rmdir($asset);
+                rmdir($admin_asset);
+            }
+
+            $marketplace_asset = ROOTPATH . 'public/assets/marketplace/plugins/' . $plugin[0];
+
+            if (is_dir($marketplace_asset)) {
+                delete_files($marketplace_asset, true);
+
+                rmdir($marketplace_asset);
             }
 
             $query = $this->model_extension_extension->uninstallExtension('plugin', $this->request->getGet('plugin'));
