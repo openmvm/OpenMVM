@@ -168,6 +168,7 @@ return [
     'product_variant_specials' => 'Product Variant Specials',
     'product_variants' => 'Product Variants',
     'products' => 'Products',
+    'quantity_discounts' => 'Quantity Discounts',
     'question' => 'Question',
     'questions' => 'Questions',
     'rates' => 'Rates',

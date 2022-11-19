@@ -114,6 +114,7 @@ return [
     'symbol_right' => 'Symbol Right',
     'telephone' => 'Telephone',
     'text' => 'Text',
+    'timezone' => 'Timezone',
     'title' => 'Title',
     'tracking_number' => 'Tracking Number',
     'type_your_answer_here' => 'Type your answer here...',
