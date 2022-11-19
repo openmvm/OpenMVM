@@ -80,6 +80,14 @@ class Edit extends \App\Controllers\BaseController
             $data['cover_thumb'] = $this->image->resize('no_image.png', 100, 100, true);
         }
 
+        if ($seller_info) {
+            $data['timezone'] = $seller_info['timezone'];
+        } else {
+            $data['timezone'] = '';
+        }
+
+        $data['timezones'] = $this->timezone->getList();
+
         $data['upload'] = $this->url->customerLink('marketplace/tool/upload', [], true);
 
         // Libraries

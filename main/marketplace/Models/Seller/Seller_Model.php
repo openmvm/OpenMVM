@@ -34,6 +34,7 @@ class Seller_Model extends Model
             'customer_id' => $this->customer->getId(),
             'store_name' => $data['store_name'],
             'store_description' => $data['store_description'],
+            'timezone' => $data['timezone'],
             'slug' => $this->text->slugify($data['store_name']),
             'date_added' => now(),
             'status' => 1,
@@ -64,6 +65,7 @@ class Seller_Model extends Model
         $seller_update_data = [
             'store_name' => $data['store_name'],
             'store_description' => $data['store_description'],
+            'timezone' => $data['timezone'],
             'slug' => $this->text->slugify($data['store_name']),
             'date_modified' => now(),
         ];
@@ -114,6 +116,7 @@ class Seller_Model extends Model
                 'customer_id' => $result->customer_id,
                 'store_name' => $result->store_name,
                 'store_description' => $result->store_description,
+                'timezone' => $result->timezone,
                 'slug' => $result->slug,
                 'logo' => $result->logo,
                 'cover' => $result->cover,
@@ -146,6 +149,7 @@ class Seller_Model extends Model
                 'customer_id' => $row->customer_id,
                 'store_name' => $row->store_name,
                 'store_description' => $row->store_description,
+                'timezone' => $row->timezone,
                 'slug' => $row->slug,
                 'logo' => $row->logo,
                 'cover' => $row->cover,

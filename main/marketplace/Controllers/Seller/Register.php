@@ -58,6 +58,10 @@ class Register extends \App\Controllers\BaseController
 
         $data['cover_thumb'] = $this->image->resize('no_image.png', 100, 100, true);
 
+        $data['timezone'] = '';
+
+        $data['timezones'] = $this->timezone->getList();
+
         // Libraries
         $data['language_lib'] = $this->language;
 

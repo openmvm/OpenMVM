@@ -22,6 +22,14 @@
                         <label for="input-cover" class="form-label"><?php echo lang('Entry.cover', [], $language_lib->getCurrentCode()); ?></label>
                         <div class="position-relative d-flex align-items-center border p-1" style="width: 110px; height: 110px;"><a href="javascript:void(0);" id="upload-cover" class="upload"><img src="<?php echo $cover_thumb; ?>" class="mx-auto d-block" /><input type="hidden" name="cover" value="<?php echo $cover; ?>" id="input-cover" class="form-control" /></a><span class="position-absolute bottom-0 start-0 progress-bar"></span></div>
                     </div>
+                    <div class="mb-3">
+                        <label for="input-timezone" class="form-label"><?php echo lang('Entry.timezone', [], $language_lib->getCurrentCode()); ?></label>
+                        <select name="timezone" id="input-timezone" class="form-select">
+                            <?php foreach ($timezones as $tz) { ?>
+                            <option value="<?php echo $tz['timezone']; ?>"><?php echo $tz['timezone']; ?> (UTC<?php echo $tz['offset']; ?>)</option>
+                            <?php } ?>
+                        </select>
+                    </div>
                 </fieldset>
             </div>
         </div>
