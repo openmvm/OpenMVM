@@ -26,6 +26,7 @@ return [
     'balance' => 'Balance',
     'bank_transfer' => 'Bank Transfer',
     'become_a_seller' => 'Become a Seller',
+    'buy_more_and_save' => 'Buy More & Save',
     'by' => 'By',
     'cache' => 'Cache',
     'cart_empty' => 'Your shopping cart is empty!',

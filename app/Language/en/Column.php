@@ -27,6 +27,8 @@ return [
     'invoice' => 'Invoice',
     'lastname' => 'Lastname',
     'mask' => 'Mask',
+    'max_quantity' => 'Max. Qty',
+    'min_quantity' => 'Min. Qty',
     'minimum_purchase' => 'Minimum Purchase',
     'name' => 'Name',
     'order_id' => 'Order ID',
