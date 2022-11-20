@@ -67,6 +67,31 @@
                                     <div id="product-price"><?php if ($special) { ?><s class="text-secondary me-2"><?php echo $price; ?></s><?php echo $special; ?><?php } else { ?><?php echo $price; ?><?php } ?></div>
                                     <?php } ?>
                                 </div>
+                                <?php if (!empty($product_discounts)) { ?>
+                                <div id="product-discounts">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless table-sm" style="max-width: 12rem;">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="2" class="bg-danger text-white"><?php echo lang('Text.buy_more_and_save', [], $language_lib->getCurrentCode()); ?></th>
+                                                </tr>
+                                                <tr>
+                                                    <th class="bg-light"><?php echo lang('Column.quantity', [], $language_lib->getCurrentCode()); ?></th>
+                                                    <th class="text-end bg-light"><?php echo lang('Column.price', [], $language_lib->getCurrentCode()); ?></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach ($product_discounts as $product_discount) { ?>
+                                                <tr>
+                                                    <td class="bg-light"><?php echo $product_discount['min_quantity']; ?><?php if (empty($product_discount['max_quantity'])) { ?>+<?php } else { ?>-<?php echo $product_discount['max_quantity']; ?><?php } ?></td>
+                                                    <td class="text-end bg-light"><?php echo $product_discount['price']; ?></td>
+                                                </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <?php } ?>
                                 <?php if ($is_product_option) { ?>
                                     <?php if (!empty($product_options)) { ?>
                                     <div id="product-options" class="mb-5">
@@ -436,9 +461,9 @@ $( "#button-favorite" ).on( "click", function() {
                 $('#button-favorite i').removeClass('text-danger');
             }
 
-            $('#toast-container').remove();
-
-            html = '<div id="toast-container" class="position-fixed bottom-0 end-0 p-3" style="z-index: 11;">';
+            $('.toast-container').remove();
+            
+            html = '<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11;">';
             html += '    <div id="liveToast" class="toast bg-success" role="alert" aria-live="assertive" aria-atomic="true">';
             html += '        <div class="toast-header">';
             html += '            <i class="fas fa-times-circle text-success me-1"></i>';

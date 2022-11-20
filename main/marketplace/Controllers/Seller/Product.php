@@ -394,6 +394,32 @@ class Product extends \App\Controllers\BaseController
             $data['product_specials'] = [];
         }
 
+        // Product discounts
+        if ($product_info) {
+            $data['product_discounts'] = [];
+
+            $product_discounts = $this->model_seller_product->getProductDiscounts($product_info['product_id']);
+
+            foreach ($product_discounts as $product_discount) {
+                $data['product_discounts'][] = [
+                    'product_discount_id' => $product_discount['product_discount_id'],
+                    'product_id' => $product_discount['product_id'],
+                    'seller_id' => $product_discount['seller_id'],
+                    'customer_id' => $product_discount['customer_id'],
+                    'priority' => $product_discount['priority'],
+                    'min_quantity' => $product_discount['min_quantity'],
+                    'max_quantity' => $product_discount['max_quantity'],
+                    'price' => $product_discount['price'],
+                    'date_start' => $product_discount['date_start'],
+                    'date_end' => $product_discount['date_end'],
+                    'timezone' => $product_discount['timezone'],
+                ];
+            }
+
+        } else {
+            $data['product_discounts'] = [];
+        }
+
         if ($product_info) {
             $product_id = $product_info['product_id'];
         } else {
@@ -443,10 +469,10 @@ class Product extends \App\Controllers\BaseController
         // Header
         $scripts = [
             '<script src="' . base_url() . '/assets/plugins/tinymce_6.2.0/js/tinymce/tinymce.min.js" type="text/javascript"></script>',
-            '<script src="' . base_url() . '/assets/plugins/swiper-8.4.3/swiper-bundle.min.js" type="text/javascript"></script>',
+            '<script src="' . base_url() . '/assets/plugins/swiper-8.4.4/swiper-bundle.min.js" type="text/javascript"></script>',
         ];
         $styles = [
-            '<link rel="stylesheet" href="' . base_url() . '/assets/plugins/swiper-8.4.3/swiper-bundle.min.css" />',
+            '<link rel="stylesheet" href="' . base_url() . '/assets/plugins/swiper-8.4.4/swiper-bundle.min.css" />',
         ];
         $header_params = array(
             'title' => lang('Heading.products', [], $this->language->getCurrentCode()),

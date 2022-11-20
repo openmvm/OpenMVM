@@ -184,6 +184,27 @@ class Product extends \App\Controllers\BaseController
 
             $data['quantity'] = $product_info['quantity'];
 
+            // Get product discounts
+            $data['product_discounts'] = [];
+
+            $product_discounts = $this->model_product_product->getProductDiscounts($product_info['product_id']);
+
+            foreach ($product_discounts as $product_discount) {
+                $data['product_discounts'][] = [
+                    'product_discount_id' => $product_discount['product_discount_id'],
+                    'product_id' => $product_discount['product_id'],
+                    'seller_id' => $product_discount['seller_id'],
+                    'customer_id' => $product_discount['customer_id'],
+                    'priority' => $product_discount['priority'],
+                    'min_quantity' => $product_discount['min_quantity'],
+                    'max_quantity' => $product_discount['max_quantity'],
+                    'price' => $this->currency->format($product_discount['price'], $this->currency->getCurrentCode()),
+                    'date_start' => $product_discount['date_start'],
+                    'date_end' => $product_discount['date_end'],
+                    'timezone' => $product_discount['timezone'],
+                ];
+            }
+
             // Seller
             $data['store_name'] = $seller_info['store_name'];
             $data['store_url'] = $this->url->customerLink('marketplace/seller/seller/get/' . $seller_info['slug'] . '-s' . $seller_info['seller_id']);          
@@ -258,12 +279,18 @@ class Product extends \App\Controllers\BaseController
             $data['is_product_variant_special'] = $product_info['product_variant_special'];
 
             $product_variant_special_price = $this->model_product_product->getProductVariantSpecialMinMaxPrices($product_info['product_id']);
-            $data['special_min_price'] = $this->currency->format($product_variant_special_price['min_price'], $this->currency->getCurrentCode());
-            $data['special_max_price'] = $this->currency->format($product_variant_special_price['max_price'], $this->currency->getCurrentCode());
+
+            if ($product_variant_special_price) {
+                $data['special_min_price'] = $this->currency->format($product_variant_special_price['min_price'], $this->currency->getCurrentCode());
+                $data['special_max_price'] = $this->currency->format($product_variant_special_price['max_price'], $this->currency->getCurrentCode());
+            } else {
+                $data['special_min_price'] = false;
+                $data['special_max_price'] = false;
+            }
 
             $data['get_product_variant'] = $this->url->customerLink('marketplace/product/product/get_product_variant/');    
 
-            // Add product questioin
+            // Add product question
             $data['add_product_question'] = $this->url->customerLink('marketplace/product/product/add_product_question', '', true);
 
             // Get product questions & answers
@@ -305,10 +332,10 @@ class Product extends \App\Controllers\BaseController
 
             // Header
             $scripts = [
-                '<script src="' . base_url() . '/assets/plugins/swiper-8.4.3/swiper-bundle.min.js" type="text/javascript"></script>',
+                '<script src="' . base_url() . '/assets/plugins/swiper-8.4.4/swiper-bundle.min.js" type="text/javascript"></script>',
             ];
             $styles = [
-                '<link rel="stylesheet" href="' . base_url() . '/assets/plugins/swiper-8.4.3/swiper-bundle.min.css" />',
+                '<link rel="stylesheet" href="' . base_url() . '/assets/plugins/swiper-8.4.4/swiper-bundle.min.css" />',
             ];
             $header_params = array(
                 'title' => $product_info['name'],

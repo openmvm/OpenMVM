@@ -475,6 +475,38 @@ class Product_Model extends Model
         }
     }
 
+    public function getProductDiscounts($product_id)
+    {
+        $product_discount_builder = $this->db->table('product_discount');
+
+        $product_discount_builder->where('product_id', $product_id);
+
+        $product_discount_builder->orderBy('priority', 'ASC');
+        $product_discount_builder->orderBy('min_quantity', 'ASC');
+
+        $product_discount_query = $product_discount_builder->get();
+
+        $product_discounts = [];
+
+        foreach ($product_discount_query->getResult() as $product_discount_result) {
+            $product_discounts[] = [
+                'product_discount_id' => $product_discount_result->product_discount_id,
+                'product_id' => $product_discount_result->product_id,
+                'seller_id' => $product_discount_result->seller_id,
+                'customer_id' => $product_discount_result->customer_id,
+                'priority' => $product_discount_result->priority,
+                'min_quantity' => $product_discount_result->min_quantity,
+                'max_quantity' => $product_discount_result->max_quantity,
+                'price' => $product_discount_result->price,
+                'date_start' => $product_discount_result->date_start,
+                'date_end' => $product_discount_result->date_end,
+                'timezone' => $product_discount_result->timezone,
+            ];
+        }
+
+        return $product_discounts;
+    }
+
     public function getOrderProduct($customer_id, $order_product_id)
     {
         $order_product_builder = $this->db->table('order_product op');

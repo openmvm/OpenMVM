@@ -316,6 +316,30 @@ class Product_Model extends Model
             }
         }
 
+        // Product discounts
+        if (!empty($data['product_discount'])) {
+            foreach ($data['product_discount'] as $product_discount) {
+                $product_discount_insert_builder = $this->db->table('product_discount');
+
+                $product_discount_insert_data = [
+                    'product_id' => $product_id,
+                    'seller_id' => $this->customer->getSellerId(),
+                    'customer_id' => $this->customer->getId(),
+                    'priority' => $product_discount['priority'],
+                    'min_quantity' => $product_discount['min_quantity'],
+                    'max_quantity' => $product_discount['max_quantity'],
+                    'price' => $product_discount['price'],
+                    'date_start' => $product_discount['date_start'],
+                    'date_end' => $product_discount['date_end'],
+                    'timezone' => $product_discount['timezone'],
+                ];
+                
+                $product_discount_insert_builder->insert($product_discount_insert_data);
+
+                $product_discount_id = $this->db->insertID();
+            }
+        }
+
         return $product_id;
     }
 
@@ -694,6 +718,38 @@ class Product_Model extends Model
                 $product_special_insert_builder->insert($product_special_insert_data);
 
                 $product_special_id = $this->db->insertID();
+            }
+        }
+
+        // Product discounts
+        // Delete product discount
+        $builder = $this->db->table('product_discount');
+
+        $builder->where('product_id', $product_id);
+        $builder->where('seller_id', $this->customer->getSellerId());
+        $builder->where('customer_id', $this->customer->getId());
+        $builder->delete();
+
+        if (!empty($data['product_discount'])) {
+            foreach ($data['product_discount'] as $product_discount) {
+                $product_discount_insert_builder = $this->db->table('product_discount');
+
+                $product_discount_insert_data = [
+                    'product_id' => $product_id,
+                    'seller_id' => $this->customer->getSellerId(),
+                    'customer_id' => $this->customer->getId(),
+                    'priority' => $product_discount['priority'],
+                    'min_quantity' => $product_discount['min_quantity'],
+                    'max_quantity' => $product_discount['max_quantity'],
+                    'price' => $product_discount['price'],
+                    'date_start' => $product_discount['date_start'],
+                    'date_end' => $product_discount['date_end'],
+                    'timezone' => $product_discount['timezone'],
+                ];
+                
+                $product_discount_insert_builder->insert($product_discount_insert_data);
+
+                $product_discount_id = $this->db->insertID();
             }
         }
 
@@ -1222,5 +1278,39 @@ class Product_Model extends Model
         }
 
         return $product_specials;
+    }
+
+    public function getProductDiscounts($product_id)
+    {
+        $product_discount_builder = $this->db->table('product_discount');
+
+        $product_discount_builder->where('product_id', $product_id);
+        $product_discount_builder->where('seller_id', $this->customer->getSellerId());
+        $product_discount_builder->where('customer_id', $this->customer->getId());
+
+        $product_discount_builder->orderBy('priority', 'ASC');
+        $product_discount_builder->orderBy('min_quantity', 'ASC');
+
+        $product_discount_query = $product_discount_builder->get();
+
+        $product_discounts = [];
+
+        foreach ($product_discount_query->getResult() as $product_discount_result) {
+            $product_discounts[] = [
+                'product_discount_id' => $product_discount_result->product_discount_id,
+                'product_id' => $product_discount_result->product_id,
+                'seller_id' => $product_discount_result->seller_id,
+                'customer_id' => $product_discount_result->customer_id,
+                'priority' => $product_discount_result->priority,
+                'min_quantity' => $product_discount_result->min_quantity,
+                'max_quantity' => $product_discount_result->max_quantity,
+                'price' => $product_discount_result->price,
+                'date_start' => $product_discount_result->date_start,
+                'date_end' => $product_discount_result->date_end,
+                'timezone' => $product_discount_result->timezone,
+            ];
+        }
+
+        return $product_discounts;
     }
 }

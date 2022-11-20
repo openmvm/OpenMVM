@@ -170,6 +170,56 @@
                                 </tfoot>
                             </table>
                         </div>
+                        <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.quantity_discounts', [], $language_lib->getCurrentCode()); ?></legend>
+                        <div id="product-discounts" class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th><?php echo lang('Column.priority', [], $language_lib->getCurrentCode()); ?></th>
+                                        <th><?php echo lang('Column.min_quantity', [], $language_lib->getCurrentCode()); ?></th>
+                                        <th><?php echo lang('Column.max_quantity', [], $language_lib->getCurrentCode()); ?></th>
+                                        <th><?php echo lang('Column.price', [], $language_lib->getCurrentCode()); ?></th>
+                                        <th><?php echo lang('Column.date_start', [], $language_lib->getCurrentCode()); ?></th>
+                                        <th><?php echo lang('Column.date_end', [], $language_lib->getCurrentCode()); ?></th>
+                                        <th><?php echo lang('Column.timezone', [], $language_lib->getCurrentCode()); ?></th>
+                                        <th><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $product_discount_row = 0; ?>
+                                    <?php if (!empty($product_discounts)) { ?>
+                                        <?php foreach ($product_discounts as $product_discount) { ?>
+                                        <tr id="product-discount-<?php echo $product_discount_row; ?>">
+                                            <td><input type="number" name="product_discount[<?php echo $product_discount_row; ?>][priority]" value="<?php echo $product_discount['priority']; ?>" placeholder="<?php echo lang('Entry.priority', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-<?php echo $product_discount_row; ?>-priority" /></td>
+                                            <td><input type="number" min="1" name="product_discount[<?php echo $product_discount_row; ?>][min_quantity]" value="<?php echo $product_discount['min_quantity']; ?>" placeholder="<?php echo lang('Entry.min_quantity', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-<?php echo $product_discount_row; ?>-min-quantity" /></td>
+                                            <td><input type="number" min="0" name="product_discount[<?php echo $product_discount_row; ?>][max_quantity]" value="<?php echo $product_discount['max_quantity']; ?>" placeholder="<?php echo lang('Entry.max_quantity', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-<?php echo $product_discount_row; ?>-max-quantity" /></td>
+                                            <td><input type="number" name="product_discount[<?php echo $product_discount_row; ?>][price]" value="<?php echo $product_discount['price']; ?>" placeholder="<?php echo lang('Entry.price', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-<?php echo $product_discount_row; ?>-price" /></td>
+                                            <td><input type="datetime-local" name="product_discount[<?php echo $product_discount_row; ?>][date_start]" value="<?php echo $product_discount['date_start']; ?>" placeholder="<?php echo lang('Entry.date_start', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-<?php echo $product_discount_row; ?>-date-start" /></td>
+                                            <td><input type="datetime-local" name="product_discount[<?php echo $product_discount_row; ?>][date_end]" value="<?php echo $product_discount['date_end']; ?>" placeholder="<?php echo lang('Entry.date_end', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-<?php echo $product_discount_row; ?>-date-end" /></td>
+                                            <td>
+                                                <select name="product_discount[<?php echo $product_discount_row; ?>][timezone]" class="form-select" id="input-product-discount-<?php echo $product_discount_row; ?>-timezone">
+                                                    <?php foreach ($timezones as $timezone) { ?>
+                                                        <?php if ($timezone['timezone'] == $product_discount['timezone']) { ?>
+                                                        <option value="<?php echo $timezone['timezone']; ?>" selected><?php echo $timezone['timezone']; ?> (UTC<?php echo $timezone['offset']; ?>)</option>'
+                                                        <?php } else { ?>
+                                                        <option value="<?php echo $timezone['timezone']; ?>"><?php echo $timezone['timezone']; ?> (UTC<?php echo $timezone['offset']; ?>)</option>'
+                                                        <?php } ?>
+                                                    <?php } ?>
+                                                </select>
+                                            </td>
+                                            <td class="text-end align-middle"><button type="button" class="btn btn-danger btn-sm" onclick="removeProductDiscount('<?php echo $product_discount_row; ?>');"><i class="fas fa-trash-alt"></i></button></td>
+                                        </tr>
+                                        <?php $product_discount_row++; ?>
+                                        <?php } ?>
+                                    <?php } ?>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="8" class="text-end"><button type="button" class="btn btn-primary btn-sm" onclick="addProductDiscount();"><i class="fas fa-plus"></i></button></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
                     </div>
                     <div id="product-options" class="<?php if (empty($is_product_variant)) { ?>d-none <?php } ?>mb-3">
                         <?php $product_option_row = 0; ?>
@@ -420,6 +470,37 @@ function addProductSpecial() {
 <script type="text/javascript"><!--
 function removeProductSpecial(product_special_row) {
     $('#product-special-' + product_special_row).remove();
+}
+//--></script>
+<script type="text/javascript"><!--
+var product_discount_row = '<?php echo $product_discount_row; ?>';
+
+function addProductDiscount() {
+    html = '<tr id="product-discount-' + product_discount_row + '">';
+    html += '    <td><input type="number" name="product_discount[' + product_discount_row + '][priority]" value="" placeholder="<?php echo lang('Entry.priority', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-' + product_discount_row + '-priority" /></td>';
+    html += '    <td><input type="number" min="1" name="product_discount[' + product_discount_row + '][min_quantity]" value="" placeholder="<?php echo lang('Entry.min_quantity', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-' + product_discount_row + '-min-quantity" /></td>';
+    html += '    <td><input type="number" min="0" name="product_discount[' + product_discount_row + '][max_quantity]" value="" placeholder="<?php echo lang('Entry.max_quantity', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-' + product_discount_row + '-max-quantity" /></td>';
+    html += '    <td><input type="number" name="product_discount[' + product_discount_row + '][price]" value="" placeholder="<?php echo lang('Entry.price', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-' + product_discount_row + '-price" /></td>';
+    html += '    <td><input type="datetime-local" name="product_discount[' + product_discount_row + '][date_start]" value="" placeholder="<?php echo lang('Entry.date_start', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-' + product_discount_row + '-date-start" /></td>';
+    html += '    <td><input type="datetime-local" name="product_discount[' + product_discount_row + '][date_end]" value="" placeholder="<?php echo lang('Entry.date_end', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-' + product_discount_row + '-date-end" /></td>';
+    html += '    <td>';
+    html += '        <select name="product_discount[' + product_discount_row + '][timezone]" class="form-select" id="input-product-discount-' + product_discount_row + '-timezone">';
+    <?php foreach ($timezones as $timezone) { ?>
+    html += '            <option value="<?php echo $timezone['timezone']; ?>"><?php echo $timezone['timezone']; ?> (UTC<?php echo $timezone['offset']; ?>)</option>'
+    <?php } ?>
+    html += '        </select>';
+    html += '    </td>';
+    html += '    <td class="text-end align-middle"><button type="button" class="btn btn-danger btn-sm" onclick="removeProductDiscount(\'' + product_discount_row + '\');"><i class="fas fa-trash-alt"></i></button></td>';
+    html += '</tr>';
+
+    $('#product-discounts tbody').append(html);
+
+    product_discount_row++;
+}
+//--></script>
+<script type="text/javascript"><!--
+function removeProductDiscount(product_discount_row) {
+    $('#product-discount-' + product_discount_row).remove();
 }
 //--></script>
 <script type="text/javascript"><!--
