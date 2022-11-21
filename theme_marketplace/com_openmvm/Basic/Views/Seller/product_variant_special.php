@@ -1,5 +1,5 @@
 <?php if (!empty($product_variants[0]['variant'])) { ?>
-<div class="card">
+<div class="card mb-3">
 	<div class="card-body">
 		<legend class="border-bottom pb-2 mb-3 clearfix">
 			<span class="d-inline-block"><?php echo lang('Text.product_variant_specials', [], $language_lib->getCurrentCode()); ?></span>
@@ -39,7 +39,6 @@
 											<th><?php echo lang('Column.price', [], $language_lib->getCurrentCode()); ?></th>
 											<th><?php echo lang('Column.date_start', [], $language_lib->getCurrentCode()); ?></th>
 											<th><?php echo lang('Column.date_end', [], $language_lib->getCurrentCode()); ?></th>
-											<th><?php echo lang('Column.timezone', [], $language_lib->getCurrentCode()); ?></th>
 											<th class="text-end"><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>
 										</tr>
 									</thead>
@@ -57,17 +56,6 @@
 											 	</td>
 											 	<td><input type="datetime-local" name="product_variant_special[<?php echo $key; ?>][special][<?php echo $product_variant_special_row; ?>][date_start]" value="<?php echo $product_variant_special['date_start']; ?>" id="input-product-variant-special-<?php echo $key; ?>-<?php echo $product_variant_special_row; ?>-date-start" class="form-control form-control-sm" placeholder="<?php echo lang('Entry.date_start', [], $language_lib->getCurrentCode()); ?>" /></td>
 											 	<td><input type="datetime-local" name="product_variant_special[<?php echo $key; ?>][special][<?php echo $product_variant_special_row; ?>][date_end]" value="<?php echo $product_variant_special['date_end']; ?>" id="input-product-variant-special-<?php echo $key; ?>-<?php echo $product_variant_special_row; ?>-date-end" class="form-control form-control-sm" placeholder="<?php echo lang('Entry.date_end', [], $language_lib->getCurrentCode()); ?>" /></td>
-											 	<td>
-												 	<select name="product_variant_special[<?php echo $key; ?>][special][<?php echo $product_variant_special_row; ?>][timezone]" id="input-product-variant-special-<?php echo $key; ?>-<?php echo $product_variant_special_row; ?>-timezone" class="form-select form-select-sm">
-														<?php foreach ($timezones as $timezone) { ?>
-															<?php if ($product_variant_special['timezone'] == $timezone['timezone']) { ?>
-													 		<option value="<?php echo $timezone['timezone']; ?>" selected><?php echo $timezone['timezone']; ?> (UTC<?php echo $timezone['offset']; ?>)</option>
-															<?php } else { ?>
-														 	<option value="<?php echo $timezone['timezone']; ?>"><?php echo $timezone['timezone']; ?> (UTC<?php echo $timezone['offset']; ?>)</option>
-															<?php } ?>
-														<?php } ?>
-												 	</select>
-											 	</td>
 											 	<td class="text-end align-middle"><button type="button" class="btn btn-danger btn-sm" onclick="removeProductVariantSpecial('<?php echo $key; ?>','<?php echo $product_variant_special_row; ?>');"><i class="fas fa-trash-alt fa-fw"></i></button></td>
 											</tr>
 											<?php $product_variant_special_row++; ?>
@@ -116,13 +104,6 @@ function addProductVariantSpecial(key) {
 	html += '	 </td>';
 	html += '	 <td><input type="datetime-local" name="product_variant_special[' + key + '][special][' + product_variant_special_row + '][date_start]" value="" id="input-product-variant-special-' + key + '-' + product_variant_special_row + '-date-start" class="form-control form-control-sm" placeholder="<?php echo lang('Entry.date_start', [], $language_lib->getCurrentCode()); ?>" /></td>';
 	html += '	 <td><input type="datetime-local" name="product_variant_special[' + key + '][special][' + product_variant_special_row + '][date_end]" value="" id="input-product-variant-special-' + key + '-' + product_variant_special_row + '-date-end" class="form-control form-control-sm" placeholder="<?php echo lang('Entry.date_end', [], $language_lib->getCurrentCode()); ?>" /></td>';
-	html += '	 <td>';
-	html += '		 <select name="product_variant_special[' + key + '][special][' + product_variant_special_row + '][timezone]" id="input-product-variant-special-' + key + '-' + product_variant_special_row + '-timezone" class="form-select form-select-sm">';
-	<?php foreach ($timezones as $timezone) { ?>
-	html += '			 <option value="<?php echo $timezone['timezone']; ?>"><?php echo $timezone['timezone']; ?> (UTC<?php echo $timezone['offset']; ?>)</option>';
-	<?php } ?>
-	html += '		 </select>';
-	html += '	 </td>';
 	html += '	 <td class="text-end align-middle"><button type="button" class="btn btn-danger btn-sm" onclick="removeProductVariantSpecial(\'' + key + '\',\'' + product_variant_special_row + '\');"><i class="fas fa-trash-alt fa-fw"></i></button></td>';
 	html += '</tr>';
 
