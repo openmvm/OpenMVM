@@ -166,6 +166,7 @@ return [
     'product_description' => 'Product Description',
     'product_details' => 'Product Details',
     'product_reviews' => 'Product Reviews',
+    'product_variant_discounts' => 'Product Variant Discounts',
     'product_variant_specials' => 'Product Variant Specials',
     'product_variants' => 'Product Variants',
     'products' => 'Products',

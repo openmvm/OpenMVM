@@ -88,6 +88,7 @@ return [
     'priority' => 'Priority',
     'processing_order_statuses' => 'Processing Order Statuses',
     'product_options' => 'Product Options',
+    'product_variant_discounts' => 'Product Variant Discounts',
     'product_variant_specials' => 'Product Variant Specials',
     'product_variants' => 'Product Variants',
     'quantity' => 'Quantity',

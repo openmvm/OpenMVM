@@ -17,6 +17,7 @@ return [
     'date_end' => 'Date End',
     'date_start' => 'Date Start',
     'description' => 'Description',
+    'discounts' => 'Discounts',
     'download_name' => 'Download Name',
     'email' => 'Email',
     'file' => 'File',
