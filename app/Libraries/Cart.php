@@ -433,6 +433,32 @@ class Cart {
                     if ($product_variant_special_row = $product_variant_special_query->getRow()) {
                         $price = $product_variant_special_row->price;
                     }
+
+                    // Get product variant discount info
+                    $product_variant_discount_builder =  $this->db->table('product_variant_discount');
+                    $product_variant_discount_builder->select('price');
+                    
+                    $product_variant_discount_builder->where('product_id', $result->product_id);
+                    $product_variant_discount_builder->where('options', $result->option);
+                    $product_variant_discount_builder->where('date_start < ', new Time('now'));
+                    $product_variant_discount_builder->where('date_end > ', new Time('now'));
+                    $product_variant_discount_builder->where('min_quantity <=', $result->quantity);
+                    
+                    $product_variant_discount_builder->groupStart();
+                    $product_variant_discount_builder->where('max_quantity >=', $result->quantity);
+                    $product_variant_discount_builder->orWhere('max_quantity', 0);
+                    $product_variant_discount_builder->groupEnd();
+                    
+                    $product_variant_discount_builder->orderBy('priority', 'ASC');
+                    $product_variant_discount_builder->orderBy('price', 'ASC');
+                    
+                    $product_variant_discount_builder->limit(1);
+
+                    $product_variant_discount_query = $product_variant_discount_builder->get();
+
+                    if ($product_variant_discount_row = $product_variant_discount_query->getRow()) {
+                        $price = $product_variant_discount_row->price;
+                    }
                 } else {
                     $price = $product->price;
                     $weight = $product->weight;

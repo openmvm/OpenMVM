@@ -133,7 +133,6 @@
                                         <th><?php echo lang('Column.price', [], $language_lib->getCurrentCode()); ?></th>
                                         <th><?php echo lang('Column.date_start', [], $language_lib->getCurrentCode()); ?></th>
                                         <th><?php echo lang('Column.date_end', [], $language_lib->getCurrentCode()); ?></th>
-                                        <th><?php echo lang('Column.timezone', [], $language_lib->getCurrentCode()); ?></th>
                                         <th><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>
                                     </tr>
                                 </thead>
@@ -146,17 +145,6 @@
                                             <td><input type="number" name="product_special[<?php echo $product_special_row; ?>][price]" value="<?php echo $product_special['price']; ?>" placeholder="<?php echo lang('Entry.price', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-special-<?php echo $product_special_row; ?>-price" /></td>
                                             <td><input type="datetime-local" name="product_special[<?php echo $product_special_row; ?>][date_start]" value="<?php echo $product_special['date_start']; ?>" placeholder="<?php echo lang('Entry.date_start', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-special-<?php echo $product_special_row; ?>-date-start" /></td>
                                             <td><input type="datetime-local" name="product_special[<?php echo $product_special_row; ?>][date_end]" value="<?php echo $product_special['date_end']; ?>" placeholder="<?php echo lang('Entry.date_end', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-special-<?php echo $product_special_row; ?>-date-end" /></td>
-                                            <td>
-                                                <select name="product_special[<?php echo $product_special_row; ?>][timezone]" class="form-select" id="input-product-special-<?php echo $product_special_row; ?>-timezone">
-                                                    <?php foreach ($timezones as $timezone) { ?>
-                                                        <?php if ($timezone['timezone'] == $product_special['timezone']) { ?>
-                                                        <option value="<?php echo $timezone['timezone']; ?>" selected><?php echo $timezone['timezone']; ?> (UTC<?php echo $timezone['offset']; ?>)</option>'
-                                                        <?php } else { ?>
-                                                        <option value="<?php echo $timezone['timezone']; ?>"><?php echo $timezone['timezone']; ?> (UTC<?php echo $timezone['offset']; ?>)</option>'
-                                                        <?php } ?>
-                                                    <?php } ?>
-                                                </select>
-                                            </td>
                                             <td class="text-end align-middle"><button type="button" class="btn btn-danger btn-sm" onclick="removeProductSpecial('<?php echo $product_special_row; ?>');"><i class="fas fa-trash-alt"></i></button></td>
                                         </tr>
                                         <?php $product_special_row++; ?>
@@ -165,7 +153,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="6" class="text-end"><button type="button" class="btn btn-primary btn-sm" onclick="addProductSpecial();"><i class="fas fa-plus"></i></button></td>
+                                        <td colspan="5" class="text-end"><button type="button" class="btn btn-primary btn-sm" onclick="addProductSpecial();"><i class="fas fa-plus"></i></button></td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -181,7 +169,6 @@
                                         <th><?php echo lang('Column.price', [], $language_lib->getCurrentCode()); ?></th>
                                         <th><?php echo lang('Column.date_start', [], $language_lib->getCurrentCode()); ?></th>
                                         <th><?php echo lang('Column.date_end', [], $language_lib->getCurrentCode()); ?></th>
-                                        <th><?php echo lang('Column.timezone', [], $language_lib->getCurrentCode()); ?></th>
                                         <th><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>
                                     </tr>
                                 </thead>
@@ -196,17 +183,6 @@
                                             <td><input type="number" name="product_discount[<?php echo $product_discount_row; ?>][price]" value="<?php echo $product_discount['price']; ?>" placeholder="<?php echo lang('Entry.price', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-<?php echo $product_discount_row; ?>-price" /></td>
                                             <td><input type="datetime-local" name="product_discount[<?php echo $product_discount_row; ?>][date_start]" value="<?php echo $product_discount['date_start']; ?>" placeholder="<?php echo lang('Entry.date_start', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-<?php echo $product_discount_row; ?>-date-start" /></td>
                                             <td><input type="datetime-local" name="product_discount[<?php echo $product_discount_row; ?>][date_end]" value="<?php echo $product_discount['date_end']; ?>" placeholder="<?php echo lang('Entry.date_end', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-<?php echo $product_discount_row; ?>-date-end" /></td>
-                                            <td>
-                                                <select name="product_discount[<?php echo $product_discount_row; ?>][timezone]" class="form-select" id="input-product-discount-<?php echo $product_discount_row; ?>-timezone">
-                                                    <?php foreach ($timezones as $timezone) { ?>
-                                                        <?php if ($timezone['timezone'] == $product_discount['timezone']) { ?>
-                                                        <option value="<?php echo $timezone['timezone']; ?>" selected><?php echo $timezone['timezone']; ?> (UTC<?php echo $timezone['offset']; ?>)</option>'
-                                                        <?php } else { ?>
-                                                        <option value="<?php echo $timezone['timezone']; ?>"><?php echo $timezone['timezone']; ?> (UTC<?php echo $timezone['offset']; ?>)</option>'
-                                                        <?php } ?>
-                                                    <?php } ?>
-                                                </select>
-                                            </td>
                                             <td class="text-end align-middle"><button type="button" class="btn btn-danger btn-sm" onclick="removeProductDiscount('<?php echo $product_discount_row; ?>');"><i class="fas fa-trash-alt"></i></button></td>
                                         </tr>
                                         <?php $product_discount_row++; ?>
@@ -215,7 +191,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="8" class="text-end"><button type="button" class="btn btn-primary btn-sm" onclick="addProductDiscount();"><i class="fas fa-plus"></i></button></td>
+                                        <td colspan="7" class="text-end"><button type="button" class="btn btn-primary btn-sm" onclick="addProductDiscount();"><i class="fas fa-plus"></i></button></td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -253,6 +229,7 @@
                         <div class="d-grid mb-3"><button type="button" class="btn btn-outline-primary" id="button-option-add" onclick="addProductOption();"><i class="fas fa-plus-circle"></i> <?php echo lang('Button.option_add', [], $language_lib->getCurrentCode()); ?></button></div>
                         <div id="product-variants"></div>
                         <div id="product-variant-specials"></div>
+                        <div id="product-variant-discounts"></div>
                     </div>
                     <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.shipping', [], $language_lib->getCurrentCode()); ?></legend>
                     <div class="mb-3">
@@ -452,13 +429,6 @@ function addProductSpecial() {
     html += '    <td><input type="number" name="product_special[' + product_special_row + '][price]" value="" placeholder="<?php echo lang('Entry.price', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-special-' + product_special_row + '-price" /></td>';
     html += '    <td><input type="datetime-local" name="product_special[' + product_special_row + '][date_start]" value="" placeholder="<?php echo lang('Entry.date_start', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-special-' + product_special_row + '-date-start" /></td>';
     html += '    <td><input type="datetime-local" name="product_special[' + product_special_row + '][date_end]" value="" placeholder="<?php echo lang('Entry.date_end', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-special-' + product_special_row + '-date-end" /></td>';
-    html += '    <td>';
-    html += '        <select name="product_special[' + product_special_row + '][timezone]" class="form-select" id="input-product-special-' + product_special_row + '-timezone">';
-    <?php foreach ($timezones as $timezone) { ?>
-    html += '            <option value="<?php echo $timezone['timezone']; ?>"><?php echo $timezone['timezone']; ?> (UTC<?php echo $timezone['offset']; ?>)</option>'
-    <?php } ?>
-    html += '        </select>';
-    html += '    </td>';
     html += '    <td class="text-end align-middle"><button type="button" class="btn btn-danger btn-sm" onclick="removeProductSpecial(\'' + product_special_row + '\');"><i class="fas fa-trash-alt"></i></button></td>';
     html += '</tr>';
 
@@ -483,13 +453,6 @@ function addProductDiscount() {
     html += '    <td><input type="number" name="product_discount[' + product_discount_row + '][price]" value="" placeholder="<?php echo lang('Entry.price', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-' + product_discount_row + '-price" /></td>';
     html += '    <td><input type="datetime-local" name="product_discount[' + product_discount_row + '][date_start]" value="" placeholder="<?php echo lang('Entry.date_start', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-' + product_discount_row + '-date-start" /></td>';
     html += '    <td><input type="datetime-local" name="product_discount[' + product_discount_row + '][date_end]" value="" placeholder="<?php echo lang('Entry.date_end', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-' + product_discount_row + '-date-end" /></td>';
-    html += '    <td>';
-    html += '        <select name="product_discount[' + product_discount_row + '][timezone]" class="form-select" id="input-product-discount-' + product_discount_row + '-timezone">';
-    <?php foreach ($timezones as $timezone) { ?>
-    html += '            <option value="<?php echo $timezone['timezone']; ?>"><?php echo $timezone['timezone']; ?> (UTC<?php echo $timezone['offset']; ?>)</option>'
-    <?php } ?>
-    html += '        </select>';
-    html += '    </td>';
     html += '    <td class="text-end align-middle"><button type="button" class="btn btn-danger btn-sm" onclick="removeProductDiscount(\'' + product_discount_row + '\');"><i class="fas fa-trash-alt"></i></button></td>';
     html += '</tr>';
 
@@ -673,6 +636,11 @@ function setProductOptions() {
 // Refresh product variant specials
 $( '#product-variant-specials' ).html( '<div class="text-center text-secondary"><i class="fas fa-spinner fa-spin fa-2x"></i></div>' );
 $( '#product-variant-specials' ).load( '<?php echo $product_variant_special; ?>' );
+//--></script>
+<script type="text/javascript"><!--
+// Refresh product variant discounts
+$( '#product-variant-discounts' ).html( '<div class="text-center text-secondary"><i class="fas fa-spinner fa-spin fa-2x"></i></div>' );
+$( '#product-variant-discounts' ).load( '<?php echo $product_variant_discount; ?>' );
 //--></script>
 <script type="text/javascript"><!--
 var product_download_row = '<?php echo $product_download_row; ?>';

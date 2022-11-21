@@ -265,6 +265,7 @@ $routes->group('/', function ($routes) {
                 $routes->match(['get', 'post'], 'set_product_options', '\Main\Marketplace\Controllers\Seller\Product::set_product_options', ['filter' => 'marketplace_auth']);
                 $routes->match(['get', 'post'], 'get_product_variants', '\Main\Marketplace\Controllers\Seller\Product::get_product_variants', ['filter' => 'marketplace_auth']);
                 $routes->match(['get', 'post'], 'get_product_variant_specials', '\Main\Marketplace\Controllers\Seller\Product::get_product_variant_specials', ['filter' => 'marketplace_auth']);
+                $routes->match(['get', 'post'], 'get_product_variant_discounts', '\Main\Marketplace\Controllers\Seller\Product::get_product_variant_discounts', ['filter' => 'marketplace_auth']);
                 $routes->match(['get', 'post'], 'product_download_upload', '\Main\Marketplace\Controllers\Seller\Product::product_download_upload', ['filter' => 'marketplace_auth']);
                 $routes->group('save', function ($routes) {
                     $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Product::save', ['filter' => 'marketplace_auth']);

@@ -201,7 +201,6 @@ class Product extends \App\Controllers\BaseController
                     'price' => $this->currency->format($product_discount['price'], $this->currency->getCurrentCode()),
                     'date_start' => $product_discount['date_start'],
                     'date_end' => $product_discount['date_end'],
-                    'timezone' => $product_discount['timezone'],
                 ];
             }
 
@@ -287,6 +286,9 @@ class Product extends \App\Controllers\BaseController
                 $data['special_min_price'] = false;
                 $data['special_max_price'] = false;
             }
+
+            // Product variant discounts
+            $data['is_product_variant_discount'] = $product_info['product_variant_discount'];
 
             $data['get_product_variant'] = $this->url->customerLink('marketplace/product/product/get_product_variant/');    
 
@@ -440,6 +442,28 @@ class Product extends \App\Controllers\BaseController
                     $special = false;
                 }
 
+                // Get product variant discounts
+                $product_variant_discount_data = [];
+
+                $product_variant_discounts = $this->model_product_product->getProductVariantDiscountsByOptions($product_id, $options);
+
+                foreach ($product_variant_discounts as $product_variant_discount) {
+                    $product_variant_discount_data[] = [
+                        'product_variant_discount_id' => $product_variant_discount['product_variant_discount_id'],
+                        'product_variant_id' => $product_variant_discount['product_variant_id'],
+                        'options' => $product_variant_discount['options'],
+                        'product_id' => $product_variant_discount['product_id'],
+                        'seller_id' => $product_variant_discount['seller_id'],
+                        'customer_id' => $product_variant_discount['customer_id'],
+                        'priority' => $product_variant_discount['priority'],
+                        'min_quantity' => $product_variant_discount['min_quantity'],
+                        'max_quantity' => $product_variant_discount['max_quantity'],
+                        'price' => $this->currency->format($product_variant_discount['price'], $this->currency->getCurrentCode()),
+                        'date_start' => $product_variant_discount['date_start'],
+                        'date_end' => $product_variant_discount['date_end'],
+                    ];
+                }
+
                 $json['product_variant'] = [
                     'product_variant_id' => $product_variant_info['product_variant_id'],
                     'product_id' => $product_variant_info['product_id'],
@@ -450,6 +474,7 @@ class Product extends \App\Controllers\BaseController
                     'minimum_purchase' => $product_variant_info['minimum_purchase'],
                     'price' => $this->currency->format($product_variant_info['price'], $this->currency->getCurrentCode()),
                     'special' => $special,
+                    'discount' => $product_variant_discount_data,
                     'weight' => $product_variant_info['weight'],
                     'weight_class_id' => $product_variant_info['weight_class_id'],
                 ];

@@ -105,6 +105,7 @@ class Product_Model extends Model
                 'category_id_path' => $row->category_id_path,
                 'product_option' => $row->product_option,
                 'product_variant_special' => $row->product_variant_special,
+                'product_variant_discount' => $row->product_variant_discount,
                 'price' => $row->price,
                 'special' => $row->special,
                 'quantity' => $row->quantity,
@@ -421,7 +422,6 @@ class Product_Model extends Model
                 'price' => $product_variant_special_row->price,
                 'date_start' => $product_variant_special_row->date_start,
                 'date_end' => $product_variant_special_row->date_end,
-                'timezone' => $product_variant_special_row->timezone,
             ];
         }
 
@@ -475,11 +475,49 @@ class Product_Model extends Model
         }
     }
 
+    public function getProductVariantDiscountsByOptions($product_id, $options)
+    {
+        $product_variant_discount_builder = $this->db->table('product_variant_discount');
+
+        $product_variant_discount_builder->where('product_id', $product_id);
+        $product_variant_discount_builder->where('options', $options);
+        $product_variant_discount_builder->where('date_start < ', new Time('now'));
+        $product_variant_discount_builder->where('date_end > ', new Time('now'));
+
+        $product_variant_discount_builder->orderBy('priority', 'ASC');
+        $product_variant_discount_builder->orderBy('min_quantity', 'ASC');
+
+        $product_variant_discount_query = $product_variant_discount_builder->get();
+
+        $product_variant_discounts = [];
+
+        foreach ($product_variant_discount_query->getResult() as $product_variant_discount) {
+            $product_variant_discounts[] = [
+                'product_variant_discount_id' => $product_variant_discount->product_variant_discount_id,
+                'product_variant_id' => $product_variant_discount->product_variant_id,
+                'options' => $product_variant_discount->options,
+                'product_id' => $product_variant_discount->product_id,
+                'seller_id' => $product_variant_discount->seller_id,
+                'customer_id' => $product_variant_discount->customer_id,
+                'priority' => $product_variant_discount->priority,
+                'min_quantity' => $product_variant_discount->min_quantity,
+                'max_quantity' => $product_variant_discount->max_quantity,
+                'price' => $product_variant_discount->price,
+                'date_start' => $product_variant_discount->date_start,
+                'date_end' => $product_variant_discount->date_end,
+            ];
+        }
+
+        return $product_variant_discounts;
+    }
+
     public function getProductDiscounts($product_id)
     {
         $product_discount_builder = $this->db->table('product_discount');
 
         $product_discount_builder->where('product_id', $product_id);
+        $product_discount_builder->where('date_start < ', new Time('now'));
+        $product_discount_builder->where('date_end > ', new Time('now'));
 
         $product_discount_builder->orderBy('priority', 'ASC');
         $product_discount_builder->orderBy('min_quantity', 'ASC');
@@ -500,7 +538,6 @@ class Product_Model extends Model
                 'price' => $product_discount_result->price,
                 'date_start' => $product_discount_result->date_start,
                 'date_end' => $product_discount_result->date_end,
-                'timezone' => $product_discount_result->timezone,
             ];
         }
 

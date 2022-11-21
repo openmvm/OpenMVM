@@ -67,31 +67,6 @@
                                     <div id="product-price"><?php if ($special) { ?><s class="text-secondary me-2"><?php echo $price; ?></s><?php echo $special; ?><?php } else { ?><?php echo $price; ?><?php } ?></div>
                                     <?php } ?>
                                 </div>
-                                <?php if (!empty($product_discounts)) { ?>
-                                <div id="product-discounts">
-                                    <div class="table-responsive">
-                                        <table class="table table-borderless table-sm" style="max-width: 12rem;">
-                                            <thead>
-                                                <tr>
-                                                    <th colspan="2" class="bg-danger text-white"><?php echo lang('Text.buy_more_and_save', [], $language_lib->getCurrentCode()); ?></th>
-                                                </tr>
-                                                <tr>
-                                                    <th class="bg-light"><?php echo lang('Column.quantity', [], $language_lib->getCurrentCode()); ?></th>
-                                                    <th class="text-end bg-light"><?php echo lang('Column.price', [], $language_lib->getCurrentCode()); ?></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php foreach ($product_discounts as $product_discount) { ?>
-                                                <tr>
-                                                    <td class="bg-light"><?php echo $product_discount['min_quantity']; ?><?php if (empty($product_discount['max_quantity'])) { ?>+<?php } else { ?>-<?php echo $product_discount['max_quantity']; ?><?php } ?></td>
-                                                    <td class="text-end bg-light"><?php echo $product_discount['price']; ?></td>
-                                                </tr>
-                                                <?php } ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <?php } ?>
                                 <?php if ($is_product_option) { ?>
                                     <?php if (!empty($product_options)) { ?>
                                     <div id="product-options" class="mb-5">
@@ -108,6 +83,37 @@
                                             <?php } ?>
                                         </div>
                                         <?php } ?>
+                                    </div>
+                                    <?php } ?>
+                                <?php } ?>
+                                <?php if ($is_product_option) { ?>
+                                    <?php if ($is_product_variant_discount) { ?>
+                                    <div id="product-variant-discounts"></div>
+                                    <?php } ?>
+                                <?php } else { ?>
+                                    <?php if (!empty($product_discounts)) { ?>
+                                    <div id="product-discounts">
+                                        <div class="table-responsive">
+                                            <table class="table table-borderless table-sm" style="max-width: 12rem;">
+                                                <thead>
+                                                    <tr>
+                                                        <th colspan="2" class="bg-danger text-white"><?php echo lang('Text.buy_more_and_save', [], $language_lib->getCurrentCode()); ?></th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="bg-light"><?php echo lang('Column.quantity', [], $language_lib->getCurrentCode()); ?></th>
+                                                        <th class="text-end bg-light"><?php echo lang('Column.price', [], $language_lib->getCurrentCode()); ?></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php foreach ($product_discounts as $product_discount) { ?>
+                                                    <tr>
+                                                        <td class="bg-light"><?php echo $product_discount['min_quantity']; ?><?php if (empty($product_discount['max_quantity'])) { ?>+<?php } else { ?>-<?php echo $product_discount['max_quantity']; ?><?php } ?></td>
+                                                        <td class="text-end bg-light"><?php echo $product_discount['price']; ?></td>
+                                                    </tr>
+                                                    <?php } ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                     <?php } ?>
                                 <?php } ?>
@@ -286,6 +292,43 @@ function getProductVariant() {
                 }
 
                 $('#product-variant-price').html(html);
+
+                if (json['product_variant']['discount'].length !== 0) {
+                    discount = '    <div class="table-responsive">';
+                    discount += '        <table class="table table-borderless table-sm" style="max-width: 12rem;">';
+                    discount += '            <thead>';
+                    discount += '                <tr>';
+                    discount += '                    <th colspan="2" class="bg-danger text-white"><?php echo lang('Text.buy_more_and_save', [], $language_lib->getCurrentCode()); ?></th>';
+                    discount += '                </tr>';
+                    discount += '                <tr>';
+                    discount += '                    <th class="bg-light"><?php echo lang('Column.quantity', [], $language_lib->getCurrentCode()); ?></th>';
+                    discount += '                    <th class="text-end bg-light"><?php echo lang('Column.price', [], $language_lib->getCurrentCode()); ?></th>';
+                    discount += '                </tr>';
+                    discount += '            </thead>';
+                    discount += '            <tbody>';
+                    for (i = 0; i < json['product_variant']['discount'].length; i++) {
+                        product_discount = json['product_variant']['discount'][i];
+                        discount += '                <tr>';
+                        discount += '                    <td class="bg-light">' + product_discount['min_quantity'];
+                        if (product_discount['max_quantity'] == 0) {
+                            discount += '+';
+                        } else {
+                            discount += '-' + product_discount['max_quantity'];
+                        }
+                        discount += '                    </td>';
+                        discount += '                    <td class="text-end bg-light">'+ product_discount['price'] + '</td>';
+                        discount += '                </tr>';
+                    }
+                    discount += '            </tbody>';
+                    discount += '        </table>';
+                    discount += '    </div>';
+
+                    $('#product-variant-discounts').html('');
+                    $('#product-variant-discounts').html(discount);
+                } else {
+                    $('#product-variant-discounts').html('');
+                }
+
                 $('#product-quantity').html();
                 $('#product-quantity').html(json['product_variant']['quantity']);
 
