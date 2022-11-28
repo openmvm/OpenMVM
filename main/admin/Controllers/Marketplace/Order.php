@@ -636,7 +636,13 @@ class Order extends \App\Controllers\BaseController
                 $comment[$order_status_description['language_id']] = $order_status_description['message'];
             }
 
-            $this->model_marketplace_order->addOrderStatusHistory($json_data['order_id'], $json_data['seller_id'], $json_data['order_status_id'], $comment, $json_data['notify']);
+            if (!empty($json_data['notify'])) {
+                $notify = true;
+            } else {
+                $notify = false;
+            }
+
+            $this->model_marketplace_order->addOrderStatusHistory($json_data['order_id'], $json_data['seller_id'], $json_data['order_status_id'], $comment, $notify);
 
             $json = [
                 'order_id' => $json_data['order_id'],

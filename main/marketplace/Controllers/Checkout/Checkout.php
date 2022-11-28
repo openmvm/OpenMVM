@@ -805,6 +805,8 @@ class Checkout extends \App\Controllers\BaseController
             $option_data = $options;
 
             asort($option_data);
+        } else {
+            $option_data = null;
         }
             
         $cart_product = $this->cart->getProduct($customer_id, $seller_id, $product_id, $option_data);
@@ -828,7 +830,7 @@ class Checkout extends \App\Controllers\BaseController
         } else {
             $json['error'] = lang('Error.product_minimum_purchase', ['minimum_purchase' => $minimum_purchase], $this->language->getCurrentCode());
         }
-file_put_contents(WRITEPATH . 'temp/openmvm.log', isset($json['error']) ? $json['error'] : 'empty!');
+
         return $this->response->setJSON($json);
     }
 
