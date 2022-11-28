@@ -691,9 +691,99 @@ class Cart {
                         $price = $product->price;
                         $weight = $product->weight;
                     }
+
+                    // Get product variant special info
+                    $product_variant_special_builder =  $this->db->table('product_variant_special');
+                    $product_variant_special_builder->select('price');
+                    
+                    $product_variant_special_builder->where('product_id', $row->product_id);
+                    $product_variant_special_builder->where('options', $row->option);
+                    $product_variant_special_builder->where('date_start < ', new Time('now'));
+                    $product_variant_special_builder->where('date_end > ', new Time('now'));
+                    
+                    $product_variant_special_builder->orderBy('priority', 'ASC');
+                    $product_variant_special_builder->orderBy('price', 'ASC');
+                    
+                    $product_variant_special_builder->limit(1);
+
+                    $product_variant_special_query = $product_variant_special_builder->get();
+
+                    if ($product_variant_special_row = $product_variant_special_query->getRow()) {
+                        $price = $product_variant_special_row->price;
+                    }
+
+                    // Get product variant discount info
+                    $product_variant_discount_builder =  $this->db->table('product_variant_discount');
+                    $product_variant_discount_builder->select('price');
+                    
+                    $product_variant_discount_builder->where('product_id', $row->product_id);
+                    $product_variant_discount_builder->where('options', $row->option);
+                    $product_variant_discount_builder->where('date_start < ', new Time('now'));
+                    $product_variant_discount_builder->where('date_end > ', new Time('now'));
+                    $product_variant_discount_builder->where('min_quantity <=', $row->quantity);
+                    
+                    $product_variant_discount_builder->groupStart();
+                    $product_variant_discount_builder->where('max_quantity >=', $row->quantity);
+                    $product_variant_discount_builder->orWhere('max_quantity', 0);
+                    $product_variant_discount_builder->groupEnd();
+                    
+                    $product_variant_discount_builder->orderBy('priority', 'ASC');
+                    $product_variant_discount_builder->orderBy('price', 'ASC');
+                    
+                    $product_variant_discount_builder->limit(1);
+
+                    $product_variant_discount_query = $product_variant_discount_builder->get();
+
+                    if ($product_variant_discount_row = $product_variant_discount_query->getRow()) {
+                        $price = $product_variant_discount_row->price;
+                    }
                 } else {
                     $price = $product->price;
                     $weight = $product->weight;
+
+                    // Product specials
+                    $product_special_builder =  $this->db->table('product_special');
+                    $product_special_builder->select('price');
+                    
+                    $product_special_builder->where('product_id', $row->product_id);
+                    $product_special_builder->where('date_start < ', new Time('now'));
+                    $product_special_builder->where('date_end > ', new Time('now'));
+                    
+                    $product_special_builder->orderBy('priority', 'ASC');
+                    $product_special_builder->orderBy('price', 'ASC');
+                    
+                    $product_special_builder->limit(1);
+
+                    $product_special_query = $product_special_builder->get();
+
+                    if ($product_special_row = $product_special_query->getRow()) {
+                        $price = $product_special_row->price;
+                    }
+
+                    // Product discounts
+                    $product_discount_builder =  $this->db->table('product_discount');
+                    $product_discount_builder->select('price');
+                    
+                    $product_discount_builder->where('product_id', $row->product_id);
+                    $product_discount_builder->where('date_start < ', new Time('now'));
+                    $product_discount_builder->where('date_end > ', new Time('now'));
+                    $product_discount_builder->where('min_quantity <=', $row->quantity);
+                    
+                    $product_discount_builder->groupStart();
+                    $product_discount_builder->where('max_quantity >=', $row->quantity);
+                    $product_discount_builder->orWhere('max_quantity', 0);
+                    $product_discount_builder->groupEnd();
+                    
+                    $product_discount_builder->orderBy('priority', 'ASC');
+                    $product_discount_builder->orderBy('price', 'ASC');
+                    
+                    $product_discount_builder->limit(1);
+
+                    $product_discount_query = $product_discount_builder->get();
+
+                    if ($product_discount_row = $product_discount_query->getRow()) {
+                        $price = $product_discount_row->price;
+                    }
                 }
 
                 $product_data = [
