@@ -11,6 +11,7 @@
 					<th class="text-nowrap"><?php echo lang('Column.product_variant', [], $language_lib->getCurrentCode()); ?></th>
 					<th><?php echo lang('Column.sku', [], $language_lib->getCurrentCode()); ?></th>
 					<th><?php echo lang('Column.quantity', [], $language_lib->getCurrentCode()); ?></th>
+					<th><?php echo lang('Column.subtract_stock', [], $language_lib->getCurrentCode()); ?></th>
 					<th><?php echo lang('Column.minimum_purchase', [], $language_lib->getCurrentCode()); ?></th>
 					<th><?php echo lang('Column.price', [], $language_lib->getCurrentCode()); ?></th>
 					<th><?php echo lang('Column.weight', [], $language_lib->getCurrentCode()); ?></th>
@@ -28,6 +29,12 @@
 					</td>
 					<td class="align-middle"><input type="text" name="product_variant[<?php echo $key; ?>][sku]" value="<?php echo $value['sku']; ?>" id="input-product-variant-sku-<?php echo $value['key']; ?>" class="form-control form-control-sm" /></td>
 					<td class="align-middle"><input type="number" name="product_variant[<?php echo $key; ?>][quantity]" value="<?php echo $value['quantity']; ?>" id="input-product-variant-quantity-<?php echo $value['key']; ?>" class="form-control form-control-sm" /></td>
+					<td class="align-middle">
+						<div class="form-check form-switch">
+							<input name="product_variant[<?php echo $key; ?>][subtract_stock]" value="1" class="form-check-input" type="checkbox" role="switch" id="input-product-variant-subtract-stock-<?php echo $value['key']; ?>"<?php if ($value['subtract_stock']) { ?> checked<?php } ?>>
+							<label class="form-check-label" for="input-product-variant-subtract-stock-<?php echo $value['key']; ?>"></label>
+						</div>
+					</td>
 					<td class="align-middle"><input type="number" name="product_variant[<?php echo $key; ?>][minimum_purchase]" value="<?php echo $value['minimum_purchase']; ?>" id="input-product-variant-minimum-purchase-<?php echo $value['key']; ?>" class="form-control form-control-sm" /></td>
 					<td class="align-middle">
 						<div class="input-group input-group-sm">

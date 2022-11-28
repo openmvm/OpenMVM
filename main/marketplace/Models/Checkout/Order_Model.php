@@ -101,7 +101,6 @@ class Order_Model extends Model
                 $order_product_insert_builder->insert($order_product_insert_data);
             }
         }
-        file_put_contents(WRITEPATH . 'temp/openmvm.log', json_encode($data['checkout_shipping_method']));
 
         // Order shipping method
         if (!empty($data['checkout_shipping_method'])) {
@@ -274,6 +273,90 @@ class Order_Model extends Model
         return $order_id;
     }
 
+    public function getOrder($order_id)
+    {
+        $order_builder = $this->db->table('order');
+        
+        $order_builder->where('order_id', $order_id);
+
+        $order_query = $order_builder->get();
+
+        $order = [];
+
+        if ($row = $order_query->getRow()) {
+            $order = [
+                'order_id' => $row->order_id,
+                'invoice' => $row->invoice,
+                'customer_id' => $row->customer_id,
+                'customer_group_id' => $row->customer_group_id,
+                'firstname' => $row->firstname,
+                'lastname' => $row->lastname,
+                'email' => $row->email,
+                'telephone' => $row->telephone,
+                'payment_firstname' => $row->payment_firstname,
+                'payment_lastname' => $row->payment_lastname,
+                'payment_address_1' => $row->payment_address_1,
+                'payment_address_2' => $row->payment_address_2,
+                'payment_city' => $row->payment_city,
+                'payment_country_id' => $row->payment_country_id,
+                'payment_country' => $row->payment_country,
+                'payment_zone_id' => $row->payment_zone_id,
+                'payment_zone' => $row->payment_zone,
+                'payment_telephone' => $row->payment_telephone,
+                'payment_method_code' => $row->payment_method_code,
+                'payment_method_title' => $row->payment_method_title,
+                'payment_method_text' => $row->payment_method_text,
+                'shipping_firstname' => $row->shipping_firstname,
+                'shipping_lastname' => $row->shipping_lastname,
+                'shipping_address_1' => $row->shipping_address_1,
+                'shipping_address_2' => $row->shipping_address_2,
+                'shipping_city' => $row->shipping_city,
+                'shipping_country_id' => $row->shipping_country_id,
+                'shipping_country' => $row->shipping_country,
+                'shipping_zone_id' => $row->shipping_zone_id,
+                'shipping_zone' => $row->shipping_zone,
+                'shipping_telephone' => $row->shipping_telephone,
+                'total' => $row->total,
+                'order_status_id' => $row->order_status_id,
+                'currency_id' => $row->currency_id,
+                'currency_code' => $row->currency_code,
+                'currency_value' => $row->currency_value,
+                'date_added' => $row->date_added,
+                'date_modified' => $row->date_modified,
+            ];
+        }
+
+        return $order;
+    }
+
+    public function getOrderProducts($order_id)
+    {
+        $order_product_builder = $this->db->table('order_product');
+
+        $order_product_builder->where('order_id', $order_id);
+
+        $order_product_query = $order_product_builder->get();
+
+        $order_products = [];
+
+        foreach ($order_product_query->getResult() as $result) {
+            $order_products[] = [
+                'order_product_id' => $result->order_product_id,
+                'order_id' => $result->order_id,
+                'seller_id' => $result->seller_id,
+                'product_id' => $result->product_id,
+                'name' => $result->name,
+                'quantity' => $result->quantity,
+                'price' => $result->price,
+                'option' => $result->option,
+                'option_ids' => $result->option_ids,
+                'total' => $result->total,
+            ];
+        }
+
+        return $order_products;
+    }
+
     public function editOrderPaymentMethodText($customer_id, $order_id, $text = '')
     {
         $order_update_builder = $this->db->table('order');
@@ -291,32 +374,65 @@ class Order_Model extends Model
 
     public function addOrderStatusHistory($order_id, $seller_id, $order_status_id, $comment = [], $notify = false)
     {
-        // Update order status id
-        $order_update_builder = $this->db->table('order');
+        // Get order
+        $order_info = $this->getOrder($order_id);
 
-        $order_update_data = [
-            'order_status_id' => $order_status_id,
-        ];
-        
-        $order_update_builder->where('order_id', $order_id);
-        $order_update_builder->update($order_update_data);
+        if ($order_info) {
+            // Stock subtraction
+            if (!in_array($order_info['order_status_id'], $this->setting->get('setting_stock_subtraction_order_statuses')) && in_array($order_status_id, $this->setting->get('setting_stock_subtraction_order_statuses'))) {
+                // Get order products
+                $order_products = $this->getOrderProducts($order_id);
 
-        // Add order status history
-        $order_status_history_insert_builder = $this->db->table('order_status_history');
+                foreach ($order_products as $order_product) {
+                    if (!empty(json_decode($order_product['option_ids'], true))) {
+                        // Update quantity
+                        $product_variant_update_builder = $this->db->table('product_variant');
 
-        $order_status_history_insert_data = [
-            'order_id' => $order_id,
-            'seller_id' => $seller_id,
-            'order_status_id' => $order_status_id,
-            'comment' => json_encode($comment),
-            'notify' => ($notify) ? 1 : 0,
-            'date_added' => new Time('now'),
-        ];
-        
-        $order_status_history_insert_builder->insert($order_status_history_insert_data);
+                        $product_variant_update_builder->set('quantity', 'quantity-' . $order_product['quantity'], false);
 
-        $order_status_history_id = $this->db->insertID();
+                        $product_variant_update_builder->where('product_id', $order_product['product_id']);
+                        $product_variant_update_builder->where('options', $order_product['option_ids']);
+                        $product_variant_update_builder->where('subtract_stock', 1);
+                        $product_variant_update_builder->update();
+                    } else {
+                        // Update quantity
+                        $product_update_builder = $this->db->table('product');
 
-        return true;
+                        $product_update_builder->set('quantity', 'quantity-' . $order_product['quantity'], false);
+
+                        $product_update_builder->where('product_id', $order_product['product_id']);
+                        $product_update_builder->where('subtract_stock', 1);
+                        $product_update_builder->update();
+                    }
+                }
+            }
+
+            // Update order status id
+            $order_update_builder = $this->db->table('order');
+
+            $order_update_data = [
+                'order_status_id' => $order_status_id,
+            ];
+            
+            $order_update_builder->where('order_id', $order_id);
+            $order_update_builder->update($order_update_data);
+
+            // Add order status history
+            $order_status_history_insert_builder = $this->db->table('order_status_history');
+
+            $order_status_history_insert_data = [
+                'order_id' => $order_id,
+                'seller_id' => $seller_id,
+                'order_status_id' => $order_status_id,
+                'comment' => json_encode($comment),
+                'notify' => ($notify) ? 1 : 0,
+                'date_added' => new Time('now'),
+            ];
+            
+            $order_status_history_insert_builder->insert($order_status_history_insert_data);
+
+            $order_status_history_id = $this->db->insertID();
+
+        }
     }
 }

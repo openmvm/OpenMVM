@@ -172,6 +172,8 @@ class Setting extends \App\Controllers\BaseController
 
         $data['setting_completed_order_statuses'] = $this->model_system_setting->getSettingValue('setting_completed_order_statuses');
 
+        $data['setting_stock_subtraction_order_statuses'] = $this->model_system_setting->getSettingValue('setting_stock_subtraction_order_statuses');
+
         $data['setting_non_rejectable_order_statuses'] = $this->model_system_setting->getSettingValue('setting_non_rejectable_order_statuses');
 
         $data['setting_rejected_order_status'] = $this->model_localisation_order_status->getOrderStatusDescription($this->model_system_setting->getSettingValue('setting_rejected_order_status_id'));

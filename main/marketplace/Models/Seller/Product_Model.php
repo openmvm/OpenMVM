@@ -10,7 +10,7 @@ class Product_Model extends Model
     protected $table = 'product';
     protected $primaryKey = 'product_id';
     protected $useAutoIncrement = true;
-    protected $allowedFields = ['product_id', 'seller_id', 'customer_id', 'category_id_path', 'price', 'weight', 'weight_class_id', 'date_added', 'date_modified', 'status'];
+    protected $allowedFields = ['product_id', 'seller_id', 'customer_id', 'category_id_path', 'price', 'quantity', 'subtract_stock', 'weight', 'weight_class_id', 'date_added', 'date_modified', 'status'];
     protected $useTimestamps = false;
     /**
      * Constructor.
@@ -34,8 +34,15 @@ class Product_Model extends Model
 
         if (!empty($data['is_product_variant'])) {
             $product_option = 1;
+            $subtract_stock = 0;
         } else {
             $product_option = 0;
+
+            if (!empty($data['subtract_stock'])) {
+                $subtract_stock = 1;
+            } else {
+                $subtract_stock = 0;
+            }
         }
 
         if (!empty($data['is_product_variant_special'])) {
@@ -59,6 +66,7 @@ class Product_Model extends Model
             'product_variant_discount' => $product_variant_discount,
             'price' => (float)$data['price'],
             'quantity' => $data['quantity'],
+            'subtract_stock' => $subtract_stock,
             'minimum_purchase' => $data['minimum_purchase'],
             'requires_shipping' => $data['requires_shipping'],
             'weight' => $data['weight'],
@@ -180,6 +188,13 @@ class Product_Model extends Model
         // Product variants
         if (!empty($data['product_variant'])) {
             foreach ($data['product_variant'] as $product_variant) {
+                // Subtract stock
+                if (!empty($product_variant['subtract_stock'])) {
+                    $product_variant_subtract_stock = 1;
+                } else {
+                    $product_variant_subtract_stock = 0;
+                }
+
                 // Insert product variant
                 $option_data = [];
 
@@ -200,6 +215,7 @@ class Product_Model extends Model
                     'options' => json_encode($option_data),
                     'sku' => $product_variant['sku'],
                     'quantity' => $product_variant['quantity'],
+                    'subtract_stock' => $product_variant_subtract_stock,
                     'minimum_purchase' => $product_variant['minimum_purchase'],
                     'price' => $product_variant['price'],
                     'weight' => $product_variant['weight'],
@@ -405,8 +421,15 @@ class Product_Model extends Model
 
         if (!empty($data['is_product_variant'])) {
             $product_option = 1;
+            $subtract_stock = 0;
         } else {
             $product_option = 0;
+
+            if (!empty($data['subtract_stock'])) {
+                $subtract_stock = 1;
+            } else {
+                $subtract_stock = 0;
+            }
         }
 
         if (!empty($data['is_product_variant_special'])) {
@@ -428,6 +451,7 @@ class Product_Model extends Model
             'product_variant_discount' => $product_variant_discount,
             'price' => (float)$data['price'],
             'quantity' => $data['quantity'],
+            'subtract_stock' => $subtract_stock,
             'minimum_purchase' => $data['minimum_purchase'],
             'requires_shipping' => $data['requires_shipping'],
             'weight' => $data['weight'],
@@ -609,6 +633,13 @@ class Product_Model extends Model
 
         if (!empty($data['product_variant'])) {
             foreach ($data['product_variant'] as $product_variant) {
+                // Subtract stock
+                if (!empty($product_variant['subtract_stock'])) {
+                    $product_variant_subtract_stock = 1;
+                } else {
+                    $product_variant_subtract_stock = 0;
+                }
+
                 // Insert product variant
                 $option_data = [];
 
@@ -629,6 +660,7 @@ class Product_Model extends Model
                     'options' => json_encode($option_data),
                     'sku' => $product_variant['sku'],
                     'quantity' => $product_variant['quantity'],
+                    'subtract_stock' => $product_variant_subtract_stock,
                     'minimum_purchase' => $product_variant['minimum_purchase'],
                     'price' => $product_variant['price'],
                     'weight' => $product_variant['weight'],
@@ -920,6 +952,7 @@ class Product_Model extends Model
                 'product_variant_discount' => $result->product_variant_discount,
                 'price' => $result->price,
                 'quantity' => $result->quantity,
+                'subtract_stock' => $result->subtract_stock,
                 'minimum_purchase' => $result->minimum_purchase,
                 'requires_shipping' => $result->requires_shipping,
                 'weight' => $result->weight,
@@ -958,6 +991,7 @@ class Product_Model extends Model
                 'product_variant_discount' => $row->product_variant_discount,
                 'price' => $row->price,
                 'quantity' => $row->quantity,
+                'subtract_stock' => $row->subtract_stock,
                 'minimum_purchase' => $row->minimum_purchase,
                 'requires_shipping' => $row->requires_shipping,
                 'weight' => $row->weight,
@@ -1179,6 +1213,7 @@ class Product_Model extends Model
                 'customer_id' => $row->customer_id,
                 'sku' => $row->sku,
                 'quantity' => $row->quantity,
+                'subtract_stock' => $row->subtract_stock,
                 'minimum_purchase' => $row->minimum_purchase,
                 'price' => $row->price,
                 'weight' => $row->weight,

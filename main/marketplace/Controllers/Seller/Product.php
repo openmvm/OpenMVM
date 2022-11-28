@@ -251,6 +251,12 @@ class Product extends \App\Controllers\BaseController
         }
 
         if ($product_info) {
+            $data['subtract_stock'] = $product_info['subtract_stock'];
+        } else {
+            $data['subtract_stock'] = 0;
+        }
+
+        if ($product_info) {
             $data['minimum_purchase'] = $product_info['minimum_purchase'];
         } else {
             $data['minimum_purchase'] = 1;
@@ -571,6 +577,7 @@ class Product extends \App\Controllers\BaseController
                         if ($product_variant['option'] === $selected_option_data_1) {
                             $sku = $product_variant['sku'];
                             $quantity = $product_variant['quantity'];
+                            $subtract_stock = $product_variant['subtract_stock'];
                             $minimum_purchase = $product_variant['minimum_purchase'];
                             $price = $product_variant['price'];
                             $weight = $product_variant['weight'];
@@ -580,6 +587,7 @@ class Product extends \App\Controllers\BaseController
                         } else {
                             $sku = '';
                             $quantity = 0;
+                            $subtract_stock = 1;
                             $minimum_purchase = 1;
                             $price = 0;
                             $weight = 0;
@@ -590,6 +598,7 @@ class Product extends \App\Controllers\BaseController
             } elseif ($product_variant_info) {
                 $sku = $product_variant_info['sku'];
                 $quantity = $product_variant_info['quantity'];
+                $subtract_stock = $product_variant_info['subtract_stock'];
                 $minimum_purchase = $product_variant_info['minimum_purchase'];
                 $price = $product_variant_info['price'];
                 $weight = $product_variant_info['weight'];
@@ -597,6 +606,7 @@ class Product extends \App\Controllers\BaseController
             } else {
                 $sku = '';
                 $quantity = 0;
+                $subtract_stock = 1;
                 $minimum_purchase = 1;
                 $price = 0;
                 $weight = 0;
@@ -607,6 +617,7 @@ class Product extends \App\Controllers\BaseController
                 'key' => $product_variant_key,
                 'sku' => $sku,
                 'quantity' => $quantity,
+                'subtract_stock' => $subtract_stock,
                 'minimum_purchase' => $minimum_purchase,
                 'price' => $price,
                 'weight' => $weight,

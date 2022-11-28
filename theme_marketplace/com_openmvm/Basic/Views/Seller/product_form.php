@@ -96,7 +96,17 @@
                         </div>
                         <div class="mb-3">
                             <label for="input-quantity" class="form-label"><?php echo lang('Entry.quantity', [], $language_lib->getCurrentCode()); ?></label>
-                            <input type="number" min="0" name="quantity" value="<?php echo $quantity; ?>" class="form-control" id="input-quantity" placeholder="<?php echo lang('Entry.quantity', [], $language_lib->getCurrentCode()); ?>" aria-label="<?php echo lang('Entry.quantity', [], $language_lib->getCurrentCode()); ?>" />
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <input type="number" min="0" name="quantity" value="<?php echo $quantity; ?>" class="form-control" id="input-quantity" placeholder="<?php echo lang('Entry.quantity', [], $language_lib->getCurrentCode()); ?>" aria-label="<?php echo lang('Entry.quantity', [], $language_lib->getCurrentCode()); ?>" />
+                                </div>
+                                <div class="col-sm-6 d-flex align-items-center">
+                                    <div class="form-check form-switch">
+                                        <input name="subtract_stock" value="1" class="form-check-input" type="checkbox" role="switch" id="input-subtract-stock"<?php if (!empty($subtract_stock)) { ?> checked<?php } ?>>
+                                        <label class="form-check-label" for="input-subtract-stock"><?php echo lang('Entry.subtract_stock', [], $language_lib->getCurrentCode()); ?></label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="input-minimum-purchase" class="form-label"><?php echo lang('Entry.minimum_purchase', [], $language_lib->getCurrentCode()); ?></label>

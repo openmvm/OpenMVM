@@ -343,6 +343,21 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="mb-3">
+                                <div class="form-label"><?php echo lang('Entry.stock_subtraction_order_statuses'); ?></div>
+                                <div class="card overflow-auto" style="height: 120px;">
+                                    <div class="card-body">
+                                        <?php foreach ($order_statuses as $order_status) { ?>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="setting_stock_subtraction_order_statuses[]" value="<?php echo $order_status['order_status_id']; ?>" id="stock-subtraction-order-statuses-<?php echo $order_status['order_status_id']; ?>"<?php if ($setting_stock_subtraction_order_statuses !== null && in_array($order_status['order_status_id'], $setting_stock_subtraction_order_statuses)) { ?> checked<?php } ?>>
+                                            <label class="form-check-label" for="stock-subtraction-order-statuses-<?php echo $order_status['order_status_id']; ?>">
+                                                <?php echo $order_status['name']; ?>
+                                            </label>
+                                        </div>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
                             <legend class="lead border-bottom border-warning pb-2 mb-3"><?php echo lang('Text.seller'); ?></legend>
                             <div class="mb-3">
                                 <div class="form-label"><?php echo lang('Entry.non_rejectable_order_statuses'); ?></div>

@@ -140,12 +140,17 @@ class Cart extends \App\Controllers\BaseController
             $product_quantity_in_cart = 0;
         }
 
-        // If quantity is below minimum purchase
         if (empty($this->request->getPost('product_variant'))) {
+            // If quantity is below minimum purchase
             $minimum_quantity_added_to_cart = (int)$product_info['minimum_purchase'] - (int)$product_quantity_in_cart;
 
             if ($this->request->getPost('quantity') < $minimum_quantity_added_to_cart) {
                 $json['error'] = lang('Error.product_minimum_purchase', ['minimum_purchase' => $product_info['minimum_purchase']], $this->language->getCurrentCode());
+            }
+
+            // If quantity is above stock
+            if ($this->request->getPost('quantity') > (int)$product_info['quantity']) {
+                $json['error'] = lang('Error.product_not_in_stock', [], $this->language->getCurrentCode());
             }
         }
 
@@ -164,11 +169,17 @@ class Cart extends \App\Controllers\BaseController
                 $product_variant_minimum_purchase = 1;
             }
 
+            // If quantity is below minimum purchase
             $minimum_quantity_added_to_cart = (int)$product_variant_minimum_purchase - (int)$product_quantity_in_cart;
 
             if ($this->request->getPost('quantity') < $minimum_quantity_added_to_cart) {
                 $json['error'] = lang('Error.product_minimum_purchase', ['minimum_purchase' => $product_variant_minimum_purchase], $this->language->getCurrentCode());
                 //$json['error'] = json_encode($product_variant_minimum_purchase);
+            }
+
+            // If quantity is above stock
+            if ($this->request->getPost('quantity') > (int)$product_variant_info['quantity']) {
+                $json['error'] = lang('Error.product_not_in_stock', [], $this->language->getCurrentCode());
             }
         }
 
