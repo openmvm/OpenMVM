@@ -55,6 +55,7 @@ return [
     'status' => 'Status',
     'string' => 'String',
     'sub_total' => 'Sub Total',
+    'subtract_stock' => 'Subtract Stock',
     'target' => 'Target',
     'text' => 'Text',
     'timezone' => 'Time Zone',

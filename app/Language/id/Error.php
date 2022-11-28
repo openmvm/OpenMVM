@@ -21,6 +21,7 @@ return [
     'please_login' => 'Please login!',
     'product_minimum_purchase' => 'This product has a minimum purchase quantity of {minimum_purchase}',
     'product_not_found' => 'Product not found!',
+    'product_not_in_stock' => 'This products is not available in the desired quantity or not in stock!',
     'reset_password_confirm' => 'Reset password failed! Please contact us for assistance.',
     'select_product_options' => 'Please select product options to purchase this product!',
     'shipping_address_not_found' => 'Shipping address not found! Please add an address.',
