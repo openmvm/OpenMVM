@@ -214,6 +214,9 @@ $routes->group('/', function ($routes) {
                     $routes->match(['get', 'post'], '/', '\Main\Admin\Controllers\Customer\Customer::save', ['filter' => 'admin_auth']);
                     $routes->match(['get', 'post'], '(:num)', '\Main\Admin\Controllers\Customer\Customer::save', ['filter' => 'admin_auth']);
                 });
+                $routes->match(['get', 'post'], 'add_transaction', '\Main\Admin\Controllers\Customer\Customer::add_transaction', ['filter' => 'admin_auth']);
+                $routes->match(['get', 'post'], 'wallet', '\Main\Admin\Controllers\Customer\Customer::wallet', ['filter' => 'admin_auth']);
+                $routes->match(['get', 'post'], 'wallet_balance', '\Main\Admin\Controllers\Customer\Customer::wallet_balance', ['filter' => 'admin_auth']);
             });
             // Customer group
             $routes->group('customer_group', function ($routes) {

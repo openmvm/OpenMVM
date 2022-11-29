@@ -35,7 +35,7 @@
                         <button class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" type="button" role="tab" aria-controls="general" aria-selected="true"><?php echo lang('Tab.general'); ?></button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+                        <button class="nav-link" id="wallet-tab" data-bs-toggle="tab" data-bs-target="#wallet" type="button" role="tab" aria-controls="wallet" aria-selected="false"><?php echo lang('Tab.wallet'); ?></button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
@@ -181,12 +181,66 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                    <div class="tab-pane" id="wallet" role="tabpanel" aria-labelledby="wallet-tab">
+                        <div class="clearfix mb-3">
+                            <span class="lead float-start"><?php echo lang('Text.balance'); ?>: <strong id="wallet-balance"><?php echo $wallet_balance; ?></strong></span>
+                            <button type="button" id="button-add-transaction" class="btn btn-primary btn-sm float-end" data-bs-toggle="modal" data-bs-target="#add-transaction-modal"><i class="fas fa-plus-circle fa-fw"></i> <?php echo lang('Button.add_new'); ?></button>
+                        </div>
+                        <legend class="lead border-bottom border-warning pb-2 mb-3"><?php echo lang('Text.transactions'); ?></legend>
+                        <div id="customer-wallet"></div>
+                    </div>
                     <div class="tab-pane" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
                 </div>
             </div>
         </div>
         <?php echo form_close(); ?>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="add-transaction-modal" tabindex="-1" aria-labelledby="add-transaction-modal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="add-transaction-modal-label"><?php echo lang('Text.transaction_add'); ?></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <?php echo form_open('', ['id' => 'form-transaction-add']); ?>
+                <fieldset>
+                    <div class="mb-3 required">
+                        <label for="input-transaction-amount" class="form-label"><?php echo lang('Entry.amount'); ?></label>
+                        <div class="input-group mb-3">
+                            <?php if (!empty($default_currency['symbol_left'])) { ?><span class="input-group-text" id="addon-symbol-left"><?php echo $default_currency['code']; ?> <?php echo $default_currency['symbol_left']; ?></span><?php } ?>
+                            <input type="number" name="amount" value="" id="input-transaction-amount" class="form-control" placeholder="<?php echo lang('Entry.amount'); ?>" aria-label="<?php echo lang('Entry.amount'); ?>">
+                            <?php if (!empty($default_currency['symbol_right'])) { ?><span class="input-group-text" id="addon-symbol-right"><?php echo $default_currency['symbol_right']; ?> <?php echo $default_currency['code']; ?></span><?php } ?>
+                        </div>
+                    </div>
+                    <div class="mb-3 required">
+                        <label for="input-transaction-description" class="form-label"><?php echo lang('Entry.description'); ?></label>
+                        <?php foreach ($languages as $language) { ?>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><img src="<?php echo base_url('/assets/flags/' . $language['code'] . '.png'); ?>" /></span>
+                            <textarea rows="3" name="description[<?php echo $language['language_id']; ?>" id="input-transaction-description-<?php echo $language['language_id']; ?>" class="form-control" placeholder="<?php echo lang('Entry.description'); ?>" aria-label="<?php echo lang('Entry.description'); ?>"></textarea>
+                        </div>
+                        <?php } ?>
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-transaction-comment" class="form-label"><?php echo lang('Entry.comment'); ?></label>
+                        <?php foreach ($languages as $language) { ?>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><img src="<?php echo base_url('/assets/flags/' . $language['code'] . '.png'); ?>" /></span>
+                            <textarea rows="3" name="comment[<?php echo $language['language_id']; ?>" id="input-transaction-comment-<?php echo $language['language_id']; ?>" class="form-control" placeholder="<?php echo lang('Entry.comment'); ?>" aria-label="<?php echo lang('Entry.comment'); ?>"></textarea>
+                        </div>
+                        <?php } ?>
+                    </div>
+                </fieldset>
+                <?php echo form_close(); ?>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?php echo lang('Button.close'); ?></button>
+                <button type="button" class="btn btn-primary" id="button-transaction-add" onclick="addTransaction();"><i class="fas fa-save fa-fw"></i> <?php echo lang('Button.submit'); ?></button>
+            </div>
+        </div>
     </div>
 </div>
 <script type="text/javascript"><!--
@@ -261,6 +315,75 @@ function removeAddress(customer_address_row) {
     customerAddressFirstTab.show()
 }
 //--></script> 
+<script type="text/javascript"><!--
+$('#customer-wallet').load('<?php echo $wallet_url; ?>');
+//--></script> 
+<script type="text/javascript"><!--
+function addTransaction() {
+    var transaction_inputs = $('#form-transaction-add').find('textarea, input').serializeJSON();
+
+    $.ajax({
+        url: '<?php echo $add_transaction_url; ?>',
+        type: 'post',
+        dataType: 'json',
+        data: JSON.stringify(transaction_inputs),
+        beforeSend: function() {
+            $('#button-transaction-add i').removeClass('fa-save').addClass('fa-spinner fa-spin');
+        },
+        complete: function() {
+            $('#button-transaction-add i').removeClass('fa-spinner fa-spin').addClass('fa-save');
+        },
+        success: function(json) {
+            $('.text-danger').remove();
+
+            if (json['error']) {
+                for (var key in json['error']) {
+                    $('#input-' + key).parent().after('<div class="text-danger small">' + json['error'][key] + '</div>');
+                }
+            }
+
+            if (json['success']) {
+                $('#customer-wallet').load('<?php echo $wallet_url; ?>');
+
+                getWalletBalance();
+
+                $('#form-transaction-add')[0].reset();
+
+                $('#add-transaction-modal').modal('hide');
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+}
+
+function getWalletBalance() {
+    $.ajax({
+        url: '<?php echo $wallet_balance_url; ?>',
+        type: 'post',
+        dataType: 'json',
+        data: {},
+        beforeSend: function() {
+        },
+        complete: function() {
+        },
+        success: function(json) {
+            $('#wallet-balance').html(json['wallet_balance']);
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+}
+//--></script>
+<script type="text/javascript"><!--
+const addTransactionModal = document.getElementById('add-transaction-modal');
+
+addTransactionModal.addEventListener('hidden.bs.modal', event => {
+    $('#form-transaction-add')[0].reset();
+});
+//--></script>
 <script type="text/javascript"><!--
 function country(element, index, zone_id) {
     $.ajax({

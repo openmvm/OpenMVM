@@ -11,7 +11,10 @@ class Customer extends \App\Controllers\BaseController
     {
         $this->model_customer_customer_group = new \Main\Admin\Models\Customer\Customer_Group_Model();
         $this->model_customer_customer = new \Main\Admin\Models\Customer\Customer_Model();
+        $this->model_customer_wallet = new \Main\Admin\Models\Customer\Wallet_Model();
         $this->model_localisation_country = new \Main\Admin\Models\Localisation\Country_Model();
+        $this->model_localisation_currency = new \Main\Admin\Models\Localisation\Currency_Model();
+        $this->model_localisation_language = new \Main\Admin\Models\Localisation\Language_Model();
     }
 
     public function index()
@@ -219,11 +222,30 @@ class Customer extends \App\Controllers\BaseController
             $data['customer_addresses'] = [];
         }
 
+        // Customer wallet
+        $data['wallets'] = [];
+
+        if ($customer_info) {
+            $customer_id = $customer_info['customer_id'];
+        } else {
+            $customer_id = 0;
+        }
+
+        $wallet_balance = $this->model_customer_wallet->getTotalAmount($customer_id);
+
+        $data['wallet_balance'] = $this->currency->format($wallet_balance, $this->currency->getCurrentCode());
+
+        $data['wallet_url'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/customer/customer/wallet', ['customer_id' => $customer_id]);
+        $data['wallet_balance_url'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/customer/customer/wallet_balance', ['customer_id' => $customer_id]);
+        $data['add_transaction_url'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/customer/customer/add_transaction', ['customer_id' => $customer_id]);
+
         $data['countries'] = $this->model_localisation_country->getCountries();
+        $data['languages'] = $this->model_localisation_language->getLanguages();
+        $data['default_currency'] = $this->model_localisation_currency->getCurrency($this->setting->get('setting_admin_currency_id'));
 
         $data['validation'] = $this->validation;
 
-        $data['cancel'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/common/dashboard');
+        $data['cancel'] = $this->url->administratorLink(env('app.adminUrlSegment') . '/customer/customer');
 
         $data['administrator_token'] = $this->administrator->getToken();
 
@@ -405,6 +427,112 @@ class Customer extends \App\Controllers\BaseController
                     }
                 }
             }
+        }
+
+        return $this->response->setJSON($json);
+    }
+
+    public function add_transaction()
+    {
+        $json = [];
+
+        if ($this->request->getMethod() == 'post') {
+            if (!$this->administrator->hasPermission('modify', 'Customer/Customer')) {
+                $json['error']['toast'] = lang('Error.modify_permission');
+            } else {
+                if (!empty($this->request->getGet('customer_id'))) {
+                    $json_data = $this->request->getJSON(true);
+
+                    $this->validation->setRule('amount', lang('Entry.amount'), 'required');
+
+                    $languages = $this->model_localisation_language->getlanguages();
+
+                    foreach ($languages as $language) {
+                        $this->validation->setRule('description.' . $language['language_id'], lang('Entry.description') . ' ' . lang('Text.in') . ' ' . $language['name'], 'required');
+                    }
+
+                    if ($this->validation->withRequest($this->request)->run($json_data)) {
+                        // Query
+                        $query = $this->model_customer_wallet->addWallet($this->request->getGet('customer_id'), $json_data);
+
+                        $json['success']['toast'] = lang('Success.transaction_add');
+                    } else {
+                        // Errors
+                        $json['error']['toast'] = lang('Error.form');
+
+                        if ($this->validation->hasError('amount')) {
+                            $json['error']['transaction-amount'] = $this->validation->getError('amount');
+                        }
+
+                        $languages = $this->model_localisation_language->getlanguages();
+
+                        foreach ($languages as $language) {
+                            if ($this->validation->hasError('description.' . $language['language_id'])) {
+                                $json['error']['transaction-description-' . $language['language_id']] = $this->validation->getError('description.' . $language['language_id']);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $this->response->setJSON($json);
+    }
+
+    public function wallet()
+    {
+        // Customer wallet
+        $data['wallets'] = [];
+
+        if (!empty($this->request->getGet('customer_id'))) {
+            $customer_id = $this->request->getGet('customer_id');
+        } else {
+            $customer_id = 0;
+        }
+
+        $wallets = $this->model_customer_wallet->getWallets($customer_id);
+
+        foreach ($wallets as $wallet) {
+            $data['wallets'][] = [
+                'wallet_id' => $wallet['wallet_id'],
+                'customer_id' => $wallet['customer_id'],
+                'amount' => $this->currency->format($wallet['amount'], $this->currency->getCurrentCode()),
+                'description' => $wallet['description'][$this->language->getCurrentId()],
+                'comment' => $wallet['comment'][$this->language->getCurrentId()],
+                'date_added' => date(lang('Common.datetime_format'), strtotime($wallet['date_added'])),
+            ];
+        }
+
+        $wallet_balance = $this->model_customer_wallet->getTotalAmount($customer_id);
+
+        $data['wallet_balance'] = $this->currency->format($wallet_balance, $this->currency->getCurrentCode());
+
+        // Generate view
+        $template_setting = [
+            'location' => 'ThemeAdmin',
+            'author' => 'com_openmvm',
+            'theme' => 'Basic',
+            'view' => 'Customer\wallet',
+            'permission' => 'Customer/Customer',
+            'override' => false,
+        ];
+        return $this->template->render($template_setting, $data);
+    }
+
+    public function wallet_balance()
+    {
+        $json = [];
+
+        if ($this->request->getMethod() == 'post') {
+            if (!empty($this->request->getGet('customer_id'))) {
+                $customer_id = $this->request->getGet('customer_id');
+            } else {
+                $customer_id = 0;
+            }
+
+            $wallet_balance = $this->model_customer_wallet->getTotalAmount($customer_id);
+
+            $json['wallet_balance'] = $this->currency->format($wallet_balance, $this->currency->getCurrentCode());
         }
 
         return $this->response->setJSON($json);
