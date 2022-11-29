@@ -16,7 +16,6 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col"><?php echo lang('Column.date_added', [], $language_lib->getCurrentCode()); ?></th>
                         <th scope="col"><?php echo lang('Column.amount', [], $language_lib->getCurrentCode()); ?></th>
                         <th scope="col"><?php echo lang('Column.description', [], $language_lib->getCurrentCode()); ?></th>
@@ -26,11 +25,10 @@
                 <tbody>
                     <?php foreach ($wallets as $wallet) { ?>
                     <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
+                        <td><?php echo $wallet['date_added']; ?></td>
+                        <td><?php echo $wallet['amount']; ?></td>
+                        <td><?php echo $wallet['description']; ?></td>
+                        <td><?php echo $wallet['comment']; ?></td>
                     </tr>
                     <?php } ?>
                 </tbody>
