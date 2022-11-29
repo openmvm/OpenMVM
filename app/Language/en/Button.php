@@ -4,6 +4,7 @@
 return [
     'accept_order' => 'Accept Order',
     'add' => 'Add',
+    'add_new' => 'Add New',
     'add_to_cart' => 'Add to Cart',
     'address_add' => 'Add an Address',
     'all' => 'All',

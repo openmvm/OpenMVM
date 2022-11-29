@@ -14,5 +14,6 @@ return [
     'options' => 'Options',
     'order_statuses' => 'Order Statuses',
     'rate' => 'Rate',
+    'wallet' => 'Wallet',
     'widget_layouts' => 'Widget Layouts',
 ];

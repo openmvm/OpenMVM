@@ -214,6 +214,7 @@ return [
     'total_order_amount' => 'Total Order Amount',
     'tracking_number_add' => 'Add a Tracking Number',
     'tracking_number_edit' => 'Edit Tracking Number',
+    'transaction_add' => 'Add Transaction',
     'transactions' => 'Transactions',
     'uninstall' => 'Uninstall',
     'unnamed_widget' => 'Unnamed Widget',

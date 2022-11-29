@@ -4,6 +4,7 @@
 return [
     'accept_order' => 'Accept Order',
     'add' => 'Tambah',
+    'add_new' => 'Add New',
     'add_to_cart' => 'Masuk Keranjang',
     'address_add' => 'Tambah Alamat',
     'all' => 'Semua',
