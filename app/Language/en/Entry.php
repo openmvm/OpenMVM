@@ -80,6 +80,7 @@ return [
     'option' => 'Option',
     'order_status' => 'Order Status',
     'page' => 'Page',
+    'paid_order_status' => 'Paid Order Status',
     'parent' => 'Parent',
     'passconf' => 'Password Confirmation',
     'password' => 'Password',

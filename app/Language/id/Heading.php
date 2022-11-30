@@ -86,6 +86,7 @@ return [
     'tracking_number' => 'Tracking Number',
     'update_admin_theme' => 'Update Admin Theme',
     'upload_a_new_admin_theme' => 'Upload a New Admin Theme',
+    'wallet' => 'Wallet',
     'weight_based' => 'Weight Based',
     'weight_classes' => 'Weight Classes',
     'widgets' => 'Widgets',
