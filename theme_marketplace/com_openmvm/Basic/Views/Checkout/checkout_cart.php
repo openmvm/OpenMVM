@@ -115,6 +115,7 @@ function addQuantity(event, product_id, product_variant) {
             
             $( '#checkout-cart' ).load( '<?php echo $checkout_cart; ?>' );
             $( '#checkout-shipping-method' ).load( '<?php echo $checkout_shipping_method; ?>' );
+            $( '#checkout-payment-method' ).load( '<?php echo $checkout_payment_method; ?>' );
             $( '#offcanvas-cart' ).load( '<?php echo base_url('marketplace/common/cart'); ?>' );
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -166,6 +167,7 @@ function subtractQuantity(event, product_id, product_variant) {
             
             $( '#checkout-cart' ).load( '<?php echo $checkout_cart; ?>' );
             $( '#checkout-shipping-method' ).load( '<?php echo $checkout_shipping_method; ?>' );
+            $( '#checkout-payment-method' ).load( '<?php echo $checkout_payment_method; ?>' );
             $( '#offcanvas-cart' ).load( '<?php echo base_url('marketplace/common/cart'); ?>' );
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -193,6 +195,7 @@ function checkoutCartRemove(event, product_id, product_variant) {
         success: function(json) {
             $( '#checkout-cart' ).load( '<?php echo $checkout_cart; ?>' );
             $( '#checkout-shipping-method' ).load( '<?php echo $checkout_shipping_method; ?>' );
+            $( '#checkout-payment-method' ).load( '<?php echo $checkout_payment_method; ?>' );
             $( '#offcanvas-cart' ).load( '<?php echo base_url('marketplace/common/cart'); ?>' );
 
             if (json['refresh']) {

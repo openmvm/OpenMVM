@@ -58,6 +58,10 @@
                         $('#checkout-shipping-method-' + seller_id + ' .form-check-input').prop('disabled', false);
                     },
                     success: function(json) {
+                        // Refresh payment methods
+                        $( '#checkout-payment-method' ).html( '<i class="fas fa-spinner fa-spin"></i>' );
+                        $( '#checkout-payment-method' ).load( '<?php echo $checkout_payment_method; ?>' );
+
                         // Refresh checkout cart
                         $( '#checkout-cart' ).html( '<i class="fas fa-spinner fa-spin"></i>' );
                         $( '#checkout-cart' ).load( '<?php echo $checkout_cart; ?>' );
