@@ -9,11 +9,11 @@ class Checkout extends \App\Controllers\BaseController
      */
     public function __construct()
     {
+        $this->model_component_component = new \Main\Marketplace\Models\Component\Component_Model();
         $this->model_customer_customer = new \Main\Marketplace\Models\Customer\Customer_Model();
         $this->model_customer_customer_address = new \Main\Marketplace\Models\Customer\Customer_Address_Model();
         $this->model_localisation_country = new \Main\Marketplace\Models\Localisation\Country_Model();
         $this->model_localisation_zone = new \Main\Marketplace\Models\Localisation\Zone_Model();
-        $this->model_component_component = new \Main\Marketplace\Models\Component\Component_Model();
         $this->model_product_product = new \Main\Marketplace\Models\Product\Product_Model();
         $this->model_seller_seller = new \Main\Marketplace\Models\Seller\Seller_Model();
         $this->model_checkout_order = new \Main\Marketplace\Models\Checkout\Order_Model();
@@ -288,7 +288,9 @@ class Checkout extends \App\Controllers\BaseController
             $this->session->set('checkout_payment_address_id', $this->request->getGet('customer_address_id'));
 
             // Remove the checkout payment method session
-            $this->session->remove('checkout_payment_method_code');
+            if ($this->session->has('checkout_payment_method_code')) {
+                $this->session->remove('checkout_payment_method_code');
+            }
         }
 
         return $this->response->setJSON($json);
@@ -461,6 +463,11 @@ class Checkout extends \App\Controllers\BaseController
             }
         }
 
+        // Remove the checkout payment method session
+        if ($this->session->has('checkout_payment_method_code')) {
+            $this->session->remove('checkout_payment_method_code');
+        }
+
         return $this->response->setJSON($json);
     }
 
@@ -622,6 +629,11 @@ class Checkout extends \App\Controllers\BaseController
             ];
 
             $this->session->set('checkout_shipping_method_' . $this->request->getGet('seller_id'), $shipping_method_data);
+
+            // Remove the checkout payment method session
+            if ($this->session->has('checkout_payment_method_code')) {
+                $this->session->remove('checkout_payment_method_code');
+            }
         }
 
         return $this->response->setJSON($json);
@@ -637,6 +649,56 @@ class Checkout extends \App\Controllers\BaseController
                 $customer_address_id = 0;
             }
 
+            // Get cart sellers
+            $data['sellers'] = [];
+
+            if (!empty($this->request->getGet('seller_id'))) {
+                $seller_info = $this->model_seller_seller->getSeller($this->request->getGet('seller_id'));
+
+                if ($seller_info) {
+                    $sellers = [$seller_info];
+                } else {
+                    $sellers = [];
+                }
+            } else {
+                $sellers = $this->cart->getSellers();
+            }
+
+            $total_order_amount = 0;
+
+            foreach ($sellers as $seller) {
+                // Get order totals
+                $order_totals = [];
+                $order_total = 0;
+
+                $order_total_data = [
+                    'totals' => &$order_totals,
+                    'taxes'  => &$taxes,
+                    'total'  => &$order_total
+                ];
+
+                $results = $this->model_component_component->getInstalledComponents('order_total');
+
+                foreach ($results as $key => $value) {
+                    $sort_order[$key] = $this->setting->get('component_order_total_' . strtolower($value['value']). '_sort_order');
+                }
+
+                array_multisort($sort_order, SORT_ASC, $results);
+
+                foreach ($results as $result) {
+                    if ($this->setting->get('component_order_total_' . strtolower($result['value']) . '_status')) {
+                        $namespace = '\Main\Marketplace\Models\Component\Order_Total\\' . $result['value'] . '_Model';
+
+                        $this->{'model_component_order_total_' . strtolower($result['value'])} = new $namespace;
+
+                        $this->{'model_component_order_total_' . strtolower($result['value'])}->getTotal($order_total_data, $seller['seller_id']);
+
+                    }
+                }
+
+                $total_order_amount += $order_total;
+            }
+
             // Get available payment methods
             $data['payment_methods'] = [];
 
@@ -647,7 +709,7 @@ class Checkout extends \App\Controllers\BaseController
 
                 $this->{'model_component_payment_method_' . strtolower($payment_method['value'])} = new $namespace;
 
-                $method = $this->{'model_component_payment_method_' . strtolower($payment_method['value'])}->method($customer_address_id);
+                $method = $this->{'model_component_payment_method_' . strtolower($payment_method['value'])}->method($customer_address_id, $total_order_amount);
 
                 if ($method) {
                     $data['payment_methods'][] = [
@@ -823,6 +885,11 @@ class Checkout extends \App\Controllers\BaseController
             // Remove shipping method session
             if ($this->session->has('checkout_shipping_method_' . $seller_id)) {
                 $this->session->remove('checkout_shipping_method_' . $seller_id);
+            }
+
+            // Remove the checkout payment method session
+            if ($this->session->has('checkout_payment_method_code')) {
+                $this->session->remove('checkout_payment_method_code');
             }
 
             $json['message'] = $options;

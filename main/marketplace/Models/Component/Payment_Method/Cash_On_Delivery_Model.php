@@ -35,11 +35,15 @@ class Cash_On_Delivery_Model extends Model
         $this->model_seller_seller = new \Main\Marketplace\Models\Seller\Seller_Model();
     }
 
-    public function method($customer_address_id = 0)
+    public function method($customer_address_id = 0, $total)
     {
         $method_data = [];
 
         if (!$this->setting->get('component_payment_method_cash_on_delivery_status')) {
+            return false;
+        }
+
+        if ($this->setting->get('component_payment_method_cash_on_delivery_amount') > 0 && $this->setting->get('component_payment_method_cash_on_delivery_amount') > $total) {
             return false;
         }
 
