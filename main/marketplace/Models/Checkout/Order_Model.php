@@ -20,6 +20,7 @@ class Order_Model extends Model
         $this->db = \Config\Database::connect();
 
         // Libraries
+        $this->language = new \App\Libraries\Language();
         $this->setting = new \App\Libraries\Setting();
     }
 
@@ -405,6 +406,62 @@ class Order_Model extends Model
                         $product_update_builder->update();
                     }
                 }
+            }
+
+            // Send wallet balance to seller's wallet
+            if ($order_status_id == $this->setting->get('setting_completed_order_status_id')) {
+                $wallet_temp_builder = $this->db->table('wallet_temp');
+                
+                $wallet_temp_builder->where('order_id', $order_id);
+                $wallet_temp_builder->where('seller_id', $seller_id);
+                $wallet_temp_builder->where('customer_id', $seller_id);
+
+                $wallet_temp_query = $wallet_temp_builder->get();
+
+                foreach ($wallet_temp_query->getResult() as $wallet_temp_result) {
+                    // Get languages
+                    $language_builder = $this->db->table('language');
+
+                    $language_query = $language_builder->get();
+
+                    $languages = [];
+
+                    foreach ($language_query->getResult() as $language_result) {
+                        $languages[] = [
+                            'language_id' => $language_result->language_id,
+                        ];
+                    }
+
+                    // Wallet description
+                    $wallet_description = [];
+
+                    foreach ($languages as $language) {
+                        $wallet_description[$language['language_id']] = lang('Text.order_payment_seller', ['order_id' => $order_id], $this->language->getCurrentCode());
+                    }
+
+                    // Add wallet
+                    $wallet_insert_builder = $this->db->table('wallet');
+
+                    $wallet_insert_data = [
+                        'customer_id' => $wallet_temp_result->customer_id,
+                        'amount' => $wallet_temp_result->amount,
+                        'description' => json_encode($wallet_description),
+                        'comment' => '',
+                        'date_added' => new Time('now'),
+                    ];
+                    
+                    $wallet_insert_builder->insert($wallet_insert_data);
+
+                    $wallet_id = $this->db->insertID();
+                }
+
+                // Delete wallet temp for this order
+                $wallet_temp_delete_builder = $this->db->table('wallet_temp');
+
+                $wallet_temp_delete_builder->where('order_id', $order_id);
+                $wallet_temp_delete_builder->where('seller_id', $seller_id);
+                $wallet_temp_delete_builder->where('customer_id', $seller_id);
+                $wallet_temp_delete_builder->delete();
             }
 
             // Update order status id
