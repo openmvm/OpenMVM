@@ -17,7 +17,7 @@
 	<li>Browse / search products</li>
 	<li>One-page checkout</li>
 	<li>Single store / Multi store checkout</li>
-	<li>Payment methods (Bank Transfer, Cash on Delivery)</li>
+	<li>Payment methods (Bank Transfer, Cash on Delivery, Wallet)</li>
 	<li>Shipping methods (Flat Rate, Weight Based Shipping, Zone Based Shipping)</li>
 	<li>Order totals (Sub Total, Shipping, Total)</li>
 	<li>Reset password</li>
@@ -30,6 +30,7 @@
 	<li>[In Progress] Minimum purchase</li>
 	<li>[In Progress] Product specials</li>
 	<li>[In Progress] Quantity discounts</li>
+	<li>[In Progress] Customers can make purchases using their Wallet balance</li>
 </ul>
 
 <h4>Administrator (back-end) features:</h4>
