@@ -497,8 +497,8 @@ class Customer extends \App\Controllers\BaseController
                 'wallet_id' => $wallet['wallet_id'],
                 'customer_id' => $wallet['customer_id'],
                 'amount' => $this->currency->format($wallet['amount'], $this->currency->getCurrentCode()),
-                'description' => $wallet['description'][$this->language->getCurrentId()],
-                'comment' => $wallet['comment'][$this->language->getCurrentId()],
+                'description' => isset($wallet['description'][$this->language->getCurrentId()]) ? $wallet['description'][$this->language->getCurrentId()] : '',
+                'comment' => isset($wallet['comment'][$this->language->getCurrentId()]) ? $wallet['comment'][$this->language->getCurrentId()] : '',
                 'date_added' => date(lang('Common.datetime_format'), strtotime($wallet['date_added'])),
             ];
         }

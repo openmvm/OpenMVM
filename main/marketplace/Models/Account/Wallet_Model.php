@@ -3,6 +3,7 @@
 namespace Main\Marketplace\Models\Account;
 
 use CodeIgniter\Model;
+use CodeIgniter\I18n\Time;
 
 class Wallet_Model extends Model
 {
