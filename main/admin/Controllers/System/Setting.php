@@ -201,6 +201,10 @@ class Setting extends \App\Controllers\BaseController
 
         $data['setting_canceled_order_status_id'] = $this->model_system_setting->getSettingValue('setting_canceled_order_status_id');
 
+        $data['setting_paid_order_status'] = $this->model_localisation_order_status->getOrderStatusDescription($this->model_system_setting->getSettingValue('setting_paid_order_status_id'));
+
+        $data['setting_paid_order_status_id'] = $this->model_system_setting->getSettingValue('setting_paid_order_status_id');
+
         $data['setting_completed_order_status'] = $this->model_localisation_order_status->getOrderStatusDescription($this->model_system_setting->getSettingValue('setting_completed_order_status_id'));
 
         $data['setting_completed_order_status_id'] = $this->model_system_setting->getSettingValue('setting_completed_order_status_id');

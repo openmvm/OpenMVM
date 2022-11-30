@@ -376,8 +376,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="input-rejected-order-status" class="form-label"><?php echo lang('Entry.rejected_order_status'); ?></label>
-                                <input type="text" name="setting_rejected_order_status" value="<?php echo $setting_rejected_order_status['name']; ?>" id="input-rejected-order-status" class="form-control order-status-autocomplete" placeholder="<?php echo lang('Entry.rejected_order_status'); ?>">
-                                <input type="hidden" name="setting_rejected_order_status_id" value="<?php echo $setting_rejected_order_status_id; ?>" id="input-rejected-order-status-id" class="form-control" placeholder="<?php echo lang('Entry.rejected_order_status'); ?>">
+                                <input type="text" name="setting_rejected_order_status" value="<?php echo isset($setting_rejected_order_status['name']) ? $setting_rejected_order_status['name'] : ''; ?>" id="input-rejected-order-status" class="form-control order-status-autocomplete" placeholder="<?php echo lang('Entry.rejected_order_status'); ?>">
+                                <input type="hidden" name="setting_rejected_order_status_id" value="<?php echo isset($setting_rejected_order_status_id) ? $setting_rejected_order_status_id : ''; ?>" id="input-rejected-order-status-id" class="form-control" placeholder="<?php echo lang('Entry.rejected_order_status'); ?>">
                             </div>
                             <div class="mb-3">
                                 <div class="form-label"><?php echo lang('Entry.non_acceptable_order_statuses'); ?></div>
@@ -396,18 +396,18 @@
                             </div>
                             <div class="mb-3">
                                 <label for="input-accepted-order-status" class="form-label"><?php echo lang('Entry.accepted_order_status'); ?></label>
-                                <input type="text" name="setting_accepted_order_status" value="<?php echo $setting_accepted_order_status['name']; ?>" id="input-accepted-order-status" class="form-control order-status-autocomplete" placeholder="<?php echo lang('Entry.accepted_order_status'); ?>">
-                                <input type="hidden" name="setting_accepted_order_status_id" value="<?php echo $setting_accepted_order_status_id; ?>" id="input-accepted-order-status-id" class="form-control" placeholder="<?php echo lang('Entry.accepted_order_status'); ?>">
+                                <input type="text" name="setting_accepted_order_status" value="<?php echo isset($setting_accepted_order_status['name']) ? $setting_accepted_order_status['name'] : ''; ?>" id="input-accepted-order-status" class="form-control order-status-autocomplete" placeholder="<?php echo lang('Entry.accepted_order_status'); ?>">
+                                <input type="hidden" name="setting_accepted_order_status_id" value="<?php echo isset($setting_accepted_order_status_id) ? $setting_accepted_order_status_id : ''; ?>" id="input-accepted-order-status-id" class="form-control" placeholder="<?php echo lang('Entry.accepted_order_status'); ?>">
                             </div>
                             <div class="mb-3">
                                 <label for="input-shipped-order-status" class="form-label"><?php echo lang('Entry.shipped_order_status'); ?></label>
-                                <input type="text" name="setting_shipped_order_status" value="<?php echo $setting_shipped_order_status['name']; ?>" id="input-shipped-order-status" class="form-control order-status-autocomplete" placeholder="<?php echo lang('Entry.shipped_order_status'); ?>">
-                                <input type="hidden" name="setting_shipped_order_status_id" value="<?php echo $setting_shipped_order_status_id; ?>" id="input-shipped-order-status-id" class="form-control" placeholder="<?php echo lang('Entry.shipped_order_status'); ?>">
+                                <input type="text" name="setting_shipped_order_status" value="<?php echo isset($setting_shipped_order_status['name']) ? $setting_shipped_order_status['name'] : ''; ?>" id="input-shipped-order-status" class="form-control order-status-autocomplete" placeholder="<?php echo lang('Entry.shipped_order_status'); ?>">
+                                <input type="hidden" name="setting_shipped_order_status_id" value="<?php echo isset($setting_shipped_order_status_id) ? $setting_shipped_order_status_id : ''; ?>" id="input-shipped-order-status-id" class="form-control" placeholder="<?php echo lang('Entry.shipped_order_status'); ?>">
                             </div>
                             <div class="mb-3">
                                 <label for="input-delivered-order-status" class="form-label"><?php echo lang('Entry.delivered_order_status'); ?></label>
-                                <input type="text" name="setting_delivered_order_status" value="<?php echo $setting_delivered_order_status['name']; ?>" id="input-delivered-order-status" class="form-control order-status-autocomplete" placeholder="<?php echo lang('Entry.delivered_order_status'); ?>">
-                                <input type="hidden" name="setting_delivered_order_status_id" value="<?php echo $setting_delivered_order_status_id; ?>" id="input-delivered-order-status-id" class="form-control" placeholder="<?php echo lang('Entry.delivered_order_status'); ?>">
+                                <input type="text" name="setting_delivered_order_status" value="<?php echo isset($setting_delivered_order_status['name']) ? $setting_delivered_order_status['name'] : ''; ?>" id="input-delivered-order-status" class="form-control order-status-autocomplete" placeholder="<?php echo lang('Entry.delivered_order_status'); ?>">
+                                <input type="hidden" name="setting_delivered_order_status_id" value="<?php echo isset($setting_delivered_order_status_id) ? $setting_delivered_order_status_id : ''; ?>" id="input-delivered-order-status-id" class="form-control" placeholder="<?php echo lang('Entry.delivered_order_status'); ?>">
                             </div>
                             <legend class="lead border-bottom border-warning pb-2 mb-3"><?php echo lang('Text.customer'); ?></legend>
                             <div class="mb-3">
@@ -427,13 +427,18 @@
                             </div>
                             <div class="mb-3">
                                 <label for="input-canceled-order-status" class="form-label"><?php echo lang('Entry.canceled_order_status'); ?></label>
-                                <input type="text" name="setting_canceled_order_status" value="<?php echo $setting_canceled_order_status['name']; ?>" id="input-canceled-order-status" class="form-control order-status-autocomplete" placeholder="<?php echo lang('Entry.canceled_order_status'); ?>">
-                                <input type="hidden" name="setting_canceled_order_status_id" value="<?php echo $setting_canceled_order_status_id; ?>" id="input-canceled-order-status-id" class="form-control" placeholder="<?php echo lang('Entry.canceled_order_status'); ?>">
+                                <input type="text" name="setting_canceled_order_status" value="<?php echo isset($setting_canceled_order_status['name']) ? $setting_canceled_order_status['name'] : ''; ?>" id="input-canceled-order-status" class="form-control order-status-autocomplete" placeholder="<?php echo lang('Entry.canceled_order_status'); ?>">
+                                <input type="hidden" name="setting_canceled_order_status_id" value="<?php echo isset($setting_canceled_order_status_id) ? $setting_canceled_order_status_id : ''; ?>" id="input-canceled-order-status-id" class="form-control" placeholder="<?php echo lang('Entry.canceled_order_status'); ?>">
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-paid-order-status" class="form-label"><?php echo lang('Entry.paid_order_status'); ?></label>
+                                <input type="text" name="setting_paid_order_status" value="<?php echo isset($setting_paid_order_status['name']) ? $setting_paid_order_status['name'] : ''; ?>" id="input-paid-order-status" class="form-control order-status-autocomplete" placeholder="<?php echo lang('Entry.paid_order_status'); ?>">
+                                <input type="hidden" name="setting_paid_order_status_id" value="<?php echo isset($setting_paid_order_status_id) ? $setting_paid_order_status_id : ''; ?>" id="input-paid-order-status-id" class="form-control" placeholder="<?php echo lang('Entry.paid_order_status'); ?>">
                             </div>
                             <div class="mb-3">
                                 <label for="input-completed-order-status" class="form-label"><?php echo lang('Entry.completed_order_status'); ?></label>
-                                <input type="text" name="setting_completed_order_status" value="<?php echo $setting_completed_order_status['name']; ?>" id="input-completed-order-status" class="form-control order-status-autocomplete" placeholder="<?php echo lang('Entry.completed_order_status'); ?>">
-                                <input type="hidden" name="setting_completed_order_status_id" value="<?php echo $setting_completed_order_status_id; ?>" id="input-completed-order-status-id" class="form-control" placeholder="<?php echo lang('Entry.completed_order_status'); ?>">
+                                <input type="text" name="setting_completed_order_status" value="<?php echo isset($setting_completed_order_status['name']) ? $setting_completed_order_status['name'] : ''; ?>" id="input-completed-order-status" class="form-control order-status-autocomplete" placeholder="<?php echo lang('Entry.completed_order_status'); ?>">
+                                <input type="hidden" name="setting_completed_order_status_id" value="<?php echo isset($setting_completed_order_status_id) ? $setting_completed_order_status_id : ''; ?>" id="input-completed-order-status-id" class="form-control" placeholder="<?php echo lang('Entry.completed_order_status'); ?>">
                             </div>
                         </fieldset>
                     </div>
