@@ -898,6 +898,10 @@ class Checkout extends \App\Controllers\BaseController
             $json['error'] = lang('Error.product_minimum_purchase', ['minimum_purchase' => $minimum_purchase], $this->language->getCurrentCode());
         }
 
+        if (empty($this->cart->getSellers())) {
+            $json['refresh'] = true;
+        }
+
         return $this->response->setJSON($json);
     }
 
@@ -1337,6 +1341,7 @@ class Checkout extends \App\Controllers\BaseController
             // Order totals
             $order_data['total'] = 0;
             $order_data['totals'] = [];
+            $totals = [];
 
             foreach ($sellers as $seller) {
                 // Get order totals

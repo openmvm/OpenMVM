@@ -237,7 +237,8 @@ class Cart extends \App\Controllers\BaseController
                     $json['refresh'] = true;
                 }
 
-                if (empty($this->cart->getSellers()) && !empty($json_data['uri_string']) && ($json_data['uri_string'] == 'marketplace/checkout/checkout' || $json_data['uri_string'] == 'marketplace/checkout/cart')) {
+                //if (empty($this->cart->getSellers()) && !empty($json_data['uri_string']) && ($json_data['uri_string'] == 'marketplace/checkout/checkout' || $json_data['uri_string'] == 'marketplace/checkout/cart')) {
+                if (empty($this->cart->getSellers())) {
                     $json['refresh'] = true;
                 }
             } else {

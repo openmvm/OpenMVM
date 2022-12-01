@@ -13,310 +13,344 @@
                 </div>
             </div>
             <div class="card-body">
-                <fieldset>
-                    <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.general', [], $language_lib->getCurrentCode()); ?></legend>
-                    <div class="mb-3">
-                        <label for="input-status" class="form-label"><?php echo lang('Entry.status', [], $language_lib->getCurrentCode()); ?></label>
-                        <select name="status" id="input-status" class="form-select">
-                            <?php if ($status) { ?>
-                            <option value="0"><?php echo lang('Text.disabled', [], $language_lib->getCurrentCode()); ?></option>
-                            <option value="1" selected="selected"><?php echo lang('Text.enabled', [], $language_lib->getCurrentCode()); ?></option>
-                            <?php } else { ?>
-                            <option value="0" selected="selected"><?php echo lang('Text.disabled', [], $language_lib->getCurrentCode()); ?></option>
-                            <option value="1"><?php echo lang('Text.enabled', [], $language_lib->getCurrentCode()); ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="input-category" class="form-label"><?php echo lang('Entry.category', [], $language_lib->getCurrentCode()); ?></label>
-                        <select name="category_id_path" class="form-select" id="input-category">
-                            <?php foreach ($categories as $category) { ?>
-                                <?php if ($category['category_id_path'] == $category_id_path) { ?>
-                                <option value="<?php echo $category['category_id_path']; ?>" selected="selected"><?php echo $category['category_path']; ?></option>
+                <ul class="nav nav-tabs mb-3" id="product-form-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general-tab-pane" type="button" role="tab" aria-controls="general-tab-pane" aria-selected="true"><?php echo lang('Tab.general', [], $language_lib->getCurrentCode()); ?></button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="detail-tab" data-bs-toggle="tab" data-bs-target="#detail-tab-pane" type="button" role="tab" aria-controls="detail-tab-pane" aria-selected="false"><?php echo lang('Tab.details', [], $language_lib->getCurrentCode()); ?></button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="special-tab" data-bs-toggle="tab" data-bs-target="#special-tab-pane" type="button" role="tab" aria-controls="special-tab-pane" aria-selected="false"><?php echo lang('Tab.specials', [], $language_lib->getCurrentCode()); ?></button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="quantity-discount-tab" data-bs-toggle="tab" data-bs-target="#quantity-discount-tab-pane" type="button" role="tab" aria-controls="quantity-discount-tab-pane" aria-selected="false"><?php echo lang('Tab.quantity_discounts', [], $language_lib->getCurrentCode()); ?></button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="image-tab" data-bs-toggle="tab" data-bs-target="#image-tab-pane" type="button" role="tab" aria-controls="image-tab-pane" aria-selected="false"><?php echo lang('Tab.images', [], $language_lib->getCurrentCode()); ?></button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="download-tab" data-bs-toggle="tab" data-bs-target="#download-tab-pane" type="button" role="tab" aria-controls="download-tab-pane" aria-selected="false"><?php echo lang('Tab.downloads', [], $language_lib->getCurrentCode()); ?></button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="product-form-tab-content">
+                    <div class="tab-pane show active" id="general-tab-pane" role="tabpanel" aria-labelledby="general-tab" tabindex="0">
+                        <div class="mb-3">
+                            <label for="input-status" class="form-label"><?php echo lang('Entry.status', [], $language_lib->getCurrentCode()); ?></label>
+                            <select name="status" id="input-status" class="form-select">
+                                <?php if ($status) { ?>
+                                <option value="0"><?php echo lang('Text.disabled', [], $language_lib->getCurrentCode()); ?></option>
+                                <option value="1" selected="selected"><?php echo lang('Text.enabled', [], $language_lib->getCurrentCode()); ?></option>
                                 <?php } else { ?>
-                                <option value="<?php echo $category['category_id_path']; ?>"><?php echo $category['category_path']; ?></option>
+                                <option value="0" selected="selected"><?php echo lang('Text.disabled', [], $language_lib->getCurrentCode()); ?></option>
+                                <option value="1"><?php echo lang('Text.enabled', [], $language_lib->getCurrentCode()); ?></option>
                                 <?php } ?>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="input-category" class="form-label"><?php echo lang('Entry.category', [], $language_lib->getCurrentCode()); ?></label>
+                            <select name="category_id_path" class="form-select" id="input-category">
+                                <?php foreach ($categories as $category) { ?>
+                                    <?php if ($category['category_id_path'] == $category_id_path) { ?>
+                                    <option value="<?php echo $category['category_id_path']; ?>" selected="selected"><?php echo $category['category_path']; ?></option>
+                                    <?php } else { ?>
+                                    <option value="<?php echo $category['category_id_path']; ?>"><?php echo $category['category_path']; ?></option>
+                                    <?php } ?>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <ul class="nav nav-tabs mb-3" id="product-description-tab" role="tablist">
+                            <?php foreach ($languages as $language) { ?>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="language-<?php echo $language['language_id']; ?>-product-description-tab" data-bs-toggle="tab" data-bs-target="#language-<?php echo $language['language_id']; ?>-product-description-content" type="button" role="tab" aria-controls="language-<?php echo $language['language_id']; ?>-product-description-content" aria-selected="false"><img src="<?php echo base_url('assets/flags/' . $language['code'] . '.png'); ?>" /> <?php echo $language['name']; ?></button>
+                            </li>
                             <?php } ?>
-                        </select>
-                    </div>
-                    <ul class="nav nav-tabs mb-3" id="product-description-tab" role="tablist">
-                        <?php foreach ($languages as $language) { ?>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="language-<?php echo $language['language_id']; ?>-product-description-tab" data-bs-toggle="tab" data-bs-target="#language-<?php echo $language['language_id']; ?>-product-description-content" type="button" role="tab" aria-controls="language-<?php echo $language['language_id']; ?>-product-description-content" aria-selected="false"><img src="<?php echo base_url('assets/flags/' . $language['code'] . '.png'); ?>" /> <?php echo $language['name']; ?></button>
-                        </li>
-                        <?php } ?>
-                    </ul>
-                    <div class="tab-content" id="myTabContent">
-                        <?php foreach ($languages as $language) { ?>
-                        <div class="tab-pane fade" id="language-<?php echo $language['language_id']; ?>-product-description-content" role="tabpanel" aria-labelledby="language-<?php echo $language['language_id']; ?>-product-description-tab">
-                            <div class="mb-3 required">
-                                <label for="input-product-description-name-language-<?php echo $language['language_id']; ?>" class="form-label"><?php echo lang('Entry.name', [], $language_lib->getCurrentCode()); ?></label>
-                                <input type="text" name="product_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($product_description[$language['language_id']]['name']) ? htmlentities($product_description[$language['language_id']]['name']) : ''; ?>" id="input-product-description-name-language-<?php echo $language['language_id']; ?>" class="form-control" placeholder="<?php echo lang('Entry.name', [], $language_lib->getCurrentCode()); ?>" />
-                                <?php if (!empty($error_product_description[$language['language_id']]['name'])) { ?><div class="text-danger small"><?php echo $error_product_description[$language['language_id']]['name']; ?></div><?php } ?>
+                        </ul>
+                        <div class="tab-content" id="product-description-tab-content">
+                            <?php foreach ($languages as $language) { ?>
+                            <div class="tab-pane" id="language-<?php echo $language['language_id']; ?>-product-description-content" role="tabpanel" aria-labelledby="language-<?php echo $language['language_id']; ?>-product-description-tab">
+                                <div class="mb-3 required">
+                                    <label for="input-product-description-name-language-<?php echo $language['language_id']; ?>" class="form-label"><?php echo lang('Entry.name', [], $language_lib->getCurrentCode()); ?></label>
+                                    <input type="text" name="product_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($product_description[$language['language_id']]['name']) ? htmlentities($product_description[$language['language_id']]['name']) : ''; ?>" id="input-product-description-name-language-<?php echo $language['language_id']; ?>" class="form-control" placeholder="<?php echo lang('Entry.name', [], $language_lib->getCurrentCode()); ?>" />
+                                    <?php if (!empty($error_product_description[$language['language_id']]['name'])) { ?><div class="text-danger small"><?php echo $error_product_description[$language['language_id']]['name']; ?></div><?php } ?>
+                                </div>
+                                <div class="mb-3 required">
+                                    <label for="input-product-description-description-language-<?php echo $language['language_id']; ?>" class="form-label"><?php echo lang('Entry.description', [], $language_lib->getCurrentCode()); ?></label>
+                                    <textarea name="product_description[<?php echo $language['language_id']; ?>][description]" id="input-product-description-description-language-<?php echo $language['language_id']; ?>" class="form-control editor" placeholder="<?php echo lang('Entry.description', [], $language_lib->getCurrentCode()); ?>"><?php echo isset($product_description[$language['language_id']]['description']) ? htmlentities($product_description[$language['language_id']]['description']) : ''; ?></textarea>
+                                    <?php if (!empty($error_product_description[$language['language_id']]['description'])) { ?><div class="text-danger small"><?php echo $error_product_description[$language['language_id']]['description']; ?></div><?php } ?>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="input-product-description-meta-title-language-<?php echo $language['language_id']; ?>" class="form-label"><?php echo lang('Entry.meta_title', [], $language_lib->getCurrentCode()); ?></label>
+                                    <input type="text" name="product_description[<?php echo $language['language_id']; ?>][meta_title]" value="<?php echo isset($product_description[$language['language_id']]['meta_title']) ? htmlentities($product_description[$language['language_id']]['meta_title']) : ''; ?>" id="input-product-description-meta-title-language-<?php echo $language['language_id']; ?>" class="form-control" placeholder="<?php echo lang('Entry.meta_title', [], $language_lib->getCurrentCode()); ?>" />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="input-product-description-meta-description-language-<?php echo $language['language_id']; ?>" class="form-label"><?php echo lang('Entry.meta_description', [], $language_lib->getCurrentCode()); ?></label>
+                                    <textarea rows="5" name="product_description[<?php echo $language['language_id']; ?>][meta_description]" id="input-product-description-meta-description-language-<?php echo $language['language_id']; ?>" class="form-control" placeholder="<?php echo lang('Entry.meta_description', [], $language_lib->getCurrentCode()); ?>"><?php echo isset($product_description[$language['language_id']]['meta_description']) ? htmlentities($product_description[$language['language_id']]['meta_description']) : ''; ?></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="input-product-description-meta-keywords-language-<?php echo $language['language_id']; ?>" class="form-label"><?php echo lang('Entry.meta_keywords', [], $language_lib->getCurrentCode()); ?></label>
+                                    <input type="text" name="product_description[<?php echo $language['language_id']; ?>][meta_keywords]" value="<?php echo isset($product_description[$language['language_id']]['meta_keywords']) ? htmlentities($product_description[$language['language_id']]['meta_keywords']) : ''; ?>" id="input-product-description-meta-keywords-language-<?php echo $language['language_id']; ?>" class="form-control" placeholder="<?php echo lang('Entry.meta_keywords', [], $language_lib->getCurrentCode()); ?>" />
+                                </div>
                             </div>
-                            <div class="mb-3 required">
-                                <label for="input-product-description-description-language-<?php echo $language['language_id']; ?>" class="form-label"><?php echo lang('Entry.description', [], $language_lib->getCurrentCode()); ?></label>
-                                <textarea name="product_description[<?php echo $language['language_id']; ?>][description]" id="input-product-description-description-language-<?php echo $language['language_id']; ?>" class="form-control editor" placeholder="<?php echo lang('Entry.description', [], $language_lib->getCurrentCode()); ?>"><?php echo isset($product_description[$language['language_id']]['description']) ? htmlentities($product_description[$language['language_id']]['description']) : ''; ?></textarea>
-                                <?php if (!empty($error_product_description[$language['language_id']]['description'])) { ?><div class="text-danger small"><?php echo $error_product_description[$language['language_id']]['description']; ?></div><?php } ?>
-                            </div>
-                            <div class="mb-3">
-                                <label for="input-product-description-meta-title-language-<?php echo $language['language_id']; ?>" class="form-label"><?php echo lang('Entry.meta_title', [], $language_lib->getCurrentCode()); ?></label>
-                                <input type="text" name="product_description[<?php echo $language['language_id']; ?>][meta_title]" value="<?php echo isset($product_description[$language['language_id']]['meta_title']) ? htmlentities($product_description[$language['language_id']]['meta_title']) : ''; ?>" id="input-product-description-meta-title-language-<?php echo $language['language_id']; ?>" class="form-control" placeholder="<?php echo lang('Entry.meta_title', [], $language_lib->getCurrentCode()); ?>" />
-                            </div>
-                            <div class="mb-3">
-                                <label for="input-product-description-meta-description-language-<?php echo $language['language_id']; ?>" class="form-label"><?php echo lang('Entry.meta_description', [], $language_lib->getCurrentCode()); ?></label>
-                                <textarea rows="5" name="product_description[<?php echo $language['language_id']; ?>][meta_description]" id="input-product-description-meta-description-language-<?php echo $language['language_id']; ?>" class="form-control" placeholder="<?php echo lang('Entry.meta_description', [], $language_lib->getCurrentCode()); ?>"><?php echo isset($product_description[$language['language_id']]['meta_description']) ? htmlentities($product_description[$language['language_id']]['meta_description']) : ''; ?></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="input-product-description-meta-keywords-language-<?php echo $language['language_id']; ?>" class="form-label"><?php echo lang('Entry.meta_keywords', [], $language_lib->getCurrentCode()); ?></label>
-                                <input type="text" name="product_description[<?php echo $language['language_id']; ?>][meta_keywords]" value="<?php echo isset($product_description[$language['language_id']]['meta_keywords']) ? htmlentities($product_description[$language['language_id']]['meta_keywords']) : ''; ?>" id="input-product-description-meta-keywords-language-<?php echo $language['language_id']; ?>" class="form-control" placeholder="<?php echo lang('Entry.meta_keywords', [], $language_lib->getCurrentCode()); ?>" />
-                            </div>
-                        </div>
-                        <?php } ?>
-                    </div>
-                    <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.product_details', [], $language_lib->getCurrentCode()); ?></legend>
-                    <div id="input-is-product-variant-container" class="mb-3">
-                        <div class="form-check form-switch">
-                            <input name="is_product_variant" class="form-check-input" type="checkbox" role="switch" id="input-is-product-variant"<?php if (!empty($is_product_variant)) { ?> checked<?php } ?>>
-                            <label class="form-check-label" for="input-is-product-variant"><?php echo lang('Entry.product_variants', [], $language_lib->getCurrentCode()); ?></label>
+                            <?php } ?>
                         </div>
                     </div>
-                    <div id="product-default"<?php if (!empty($is_product_variant)) { ?> class="d-none"<?php } ?>>
+                    <div class="tab-pane" id="detail-tab-pane" role="tabpanel" aria-labelledby="detail-tab" tabindex="0">
                         <div class="mb-3">
-                            <label for="input-sku" class="form-label"><?php echo lang('Entry.sku', [], $language_lib->getCurrentCode()); ?></label>
-                            <input type="text" name="sku" value="<?php echo $sku; ?>" class="form-control" id="input-sku" placeholder="<?php echo lang('Entry.sku', [], $language_lib->getCurrentCode()); ?>" aria-label="<?php echo lang('Entry.sku', [], $language_lib->getCurrentCode()); ?>" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="input-price" class="form-label"><?php echo lang('Entry.price', [], $language_lib->getCurrentCode()); ?></label>
-                            <div class="input-group">
-                                <?php if (!empty($default_currency['symbol_left'])) { ?><span class="input-group-text"><?php echo $default_currency['code']; ?> <?php echo $default_currency['symbol_left']; ?></span><?php } ?>
-                                <input type="number" min="0" step="any" name="price" value="<?php echo $price; ?>" class="form-control" id="input-price" placeholder="<?php echo lang('Entry.price', [], $language_lib->getCurrentCode()); ?>" aria-label="<?php echo lang('Entry.price', [], $language_lib->getCurrentCode()); ?>" aria-describedby="input-group-price" />
-                                <?php if (!empty($default_currency['symbol_right'])) { ?><span class="input-group-text"><?php echo $default_currency['symbol_right']; ?> <?php echo $default_currency['code']; ?></span><?php } ?>
+                            <div class="form-label"><?php echo lang('Entry.requires_shipping', [], $language_lib->getCurrentCode()); ?></div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="requires_shipping" id="input-requires-shipping-yes" value="1"<?php if ($requires_shipping == 1) { ?> checked<?php } ?>>
+                                <label class="form-check-label" for="input-requires-shipping-yes"><?php echo lang('Text.yes', [], $language_lib->getCurrentCode()); ?></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="requires_shipping" id="input-requires-shipping-no" value="0"<?php if ($requires_shipping == 0) { ?> checked<?php } ?>>
+                                <label class="form-check-label" for="input-requires-shipping-no"><?php echo lang('Text.no', [], $language_lib->getCurrentCode()); ?></label>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="input-quantity" class="form-label"><?php echo lang('Entry.quantity', [], $language_lib->getCurrentCode()); ?></label>
+                        <div id="input-is-product-variant-container" class="mb-3">
+                            <div class="form-check form-switch">
+                                <input name="is_product_variant" class="form-check-input" type="checkbox" role="switch" id="input-is-product-variant"<?php if (!empty($is_product_variant)) { ?> checked<?php } ?>>
+                                <label class="form-check-label" for="input-is-product-variant"><?php echo lang('Entry.product_variants', [], $language_lib->getCurrentCode()); ?></label>
+                            </div>
+                        </div>
+                        <div id="product-default-details"<?php if (!empty($is_product_variant)) { ?> class="d-none"<?php } ?>>
+                            <div class="mb-3">
+                                <label for="input-sku" class="form-label"><?php echo lang('Entry.sku', [], $language_lib->getCurrentCode()); ?></label>
+                                <input type="text" name="sku" value="<?php echo $sku; ?>" class="form-control" id="input-sku" placeholder="<?php echo lang('Entry.sku', [], $language_lib->getCurrentCode()); ?>" aria-label="<?php echo lang('Entry.sku', [], $language_lib->getCurrentCode()); ?>" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-price" class="form-label"><?php echo lang('Entry.price', [], $language_lib->getCurrentCode()); ?></label>
+                                <div class="input-group">
+                                    <?php if (!empty($default_currency['symbol_left'])) { ?><span class="input-group-text"><?php echo $default_currency['code']; ?> <?php echo $default_currency['symbol_left']; ?></span><?php } ?>
+                                    <input type="number" min="0" step="any" name="price" value="<?php echo $price; ?>" class="form-control" id="input-price" placeholder="<?php echo lang('Entry.price', [], $language_lib->getCurrentCode()); ?>" aria-label="<?php echo lang('Entry.price', [], $language_lib->getCurrentCode()); ?>" aria-describedby="input-group-price" />
+                                    <?php if (!empty($default_currency['symbol_right'])) { ?><span class="input-group-text"><?php echo $default_currency['symbol_right']; ?> <?php echo $default_currency['code']; ?></span><?php } ?>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-quantity" class="form-label"><?php echo lang('Entry.quantity', [], $language_lib->getCurrentCode()); ?></label>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <input type="number" min="0" name="quantity" value="<?php echo $quantity; ?>" class="form-control" id="input-quantity" placeholder="<?php echo lang('Entry.quantity', [], $language_lib->getCurrentCode()); ?>" aria-label="<?php echo lang('Entry.quantity', [], $language_lib->getCurrentCode()); ?>" />
+                                    </div>
+                                    <div class="col-sm-6 d-flex align-items-center">
+                                        <div class="form-check form-switch">
+                                            <input name="subtract_stock" value="1" class="form-check-input" type="checkbox" role="switch" id="input-subtract-stock"<?php if (!empty($subtract_stock)) { ?> checked<?php } ?>>
+                                            <label class="form-check-label" for="input-subtract-stock"><?php echo lang('Entry.subtract_stock', [], $language_lib->getCurrentCode()); ?></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-minimum-purchase" class="form-label"><?php echo lang('Entry.minimum_purchase', [], $language_lib->getCurrentCode()); ?></label>
+                                <input type="number" min="1" name="minimum_purchase" value="<?php echo $minimum_purchase; ?>" class="form-control" id="input-minimum-purchase" placeholder="<?php echo lang('Entry.minimum_purchase', [], $language_lib->getCurrentCode()); ?>" aria-label="<?php echo lang('Entry.minimum_purchase', [], $language_lib->getCurrentCode()); ?>" />
+                            </div>
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <input type="number" min="0" name="quantity" value="<?php echo $quantity; ?>" class="form-control" id="input-quantity" placeholder="<?php echo lang('Entry.quantity', [], $language_lib->getCurrentCode()); ?>" aria-label="<?php echo lang('Entry.quantity', [], $language_lib->getCurrentCode()); ?>" />
+                                    <div class="mb-3">
+                                        <label for="input-weight" class="form-label"><?php echo lang('Entry.weight', [], $language_lib->getCurrentCode()); ?></label>
+                                        <input type="number" min="0" step="any" name="weight" value="<?php echo $weight; ?>" class="form-control" id="input-weight" placeholder="<?php echo lang('Entry.weight', [], $language_lib->getCurrentCode()); ?>" aria-label="<?php echo lang('Entry.weight', [], $language_lib->getCurrentCode()); ?>" />
+                                    </div>
                                 </div>
-                                <div class="col-sm-6 d-flex align-items-center">
-                                    <div class="form-check form-switch">
-                                        <input name="subtract_stock" value="1" class="form-check-input" type="checkbox" role="switch" id="input-subtract-stock"<?php if (!empty($subtract_stock)) { ?> checked<?php } ?>>
-                                        <label class="form-check-label" for="input-subtract-stock"><?php echo lang('Entry.subtract_stock', [], $language_lib->getCurrentCode()); ?></label>
+                                <div class="col-sm-6">
+                                    <div class="mb-3">
+                                        <label for="input-weight-class" class="form-label"><?php echo lang('Entry.weight_class', [], $language_lib->getCurrentCode()); ?></label>
+                                        <select name="weight_class_id" class="form-select" id="input-weight-class">
+                                            <?php foreach ($weight_classes as $weight_class) { ?>
+                                                <?php if ($weight_class['weight_class_id'] == $weight_class_id) { ?>
+                                                <option value="<?php echo $weight_class['weight_class_id']; ?>" selected="selected"><?php echo $weight_class['title']; ?></option>
+                                                <?php } else { ?>
+                                                <option value="<?php echo $weight_class['weight_class_id']; ?>"><?php echo $weight_class['title']; ?></option>
+                                                <?php } ?>
+                                            <?php } ?>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div id="product-options-details" class="<?php if (empty($is_product_variant)) { ?>d-none <?php } ?>mb-3">
+                            <?php $product_option_row = 0; ?>
+                            <?php if (!empty($product_options)) { ?>
+                                <?php foreach ($product_options as $product_option) { ?>
+                                <div id="product-option-<?php echo $product_option_row; ?>" class="position-relative bg-light mb-1 p-3">
+                                    <span role="button" class="text-secondary position-absolute top-0 end-0 small" onclick="removeProductOption('<?php echo $product_option_row; ?>');"><span class="fa-stack" style="font-size: 0.5em;"><i class="fas fa-circle fa-stack-2x text-danger"></i><i class="fas fa-times fa-stack-1x text-light"></i></span></span>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-2"><label for="input-option-<?php echo $product_option_row; ?>" class="form-label"><?php echo lang('Entry.option', [], $language_lib->getCurrentCode()); ?></label></div>
+                                        <div class="col-sm-10">
+                                           <input type="text" name="product_option[<?php echo $product_option_row; ?>][option]" value="<?php echo $product_option['option']; ?>" id="input-option-<?php echo $product_option_row; ?>" class="form-control" placeholder="<?php echo lang('Entry.option', [], $language_lib->getCurrentCode()); ?>">
+                                           <input type="hidden" name="product_option[<?php echo $product_option_row; ?>][option_id]" value="<?php echo $product_option['option_id']; ?>" id="input-option-<?php echo $product_option_row; ?>-id" class="form-control" placeholder="<?php echo lang('Entry.option', [], $language_lib->getCurrentCode()); ?>">
+
+                                            <?php if (!empty($product_option['option_value'])) { ?>
+                                            <div id="option-values-<?php echo $product_option_row; ?>" class="card mt-1">
+                                                <div class="card-body">
+                                                    <?php foreach ($product_option['option_value'] as $option_value) { ?>
+                                                    <input type="checkbox" name="product_option[<?php echo $product_option_row; ?>][option_value][]" value="<?php echo $option_value['option_value_id']; ?>" class="btn-check" id="input-option-value-<?php echo $product_option_row; ?>-<?php echo $product_option['option_id']; ?>-<?php echo $option_value['option_value_id']; ?>" autocomplete="off" onclick="setProductOptions();"<?php if (in_array($option_value['option_value_id'], $product_option['product_option_value'])) { ?> checked<?php } ?>>
+                                                    <label class="btn btn-outline-primary shadow-none" for="input-option-value-<?php echo $product_option_row; ?>-<?php echo $product_option['option_id']; ?>-<?php echo $option_value['option_value_id']; ?>"><?php echo $option_value['description']['name']; ?></label>
+                                                    <?php } ?>
+                                                </div>
+                                            </div>
+                                            <?php } ?>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php $product_option_row++; ?>
+                                <?php } ?>
+                            <?php } ?>
+                            <div class="d-grid mb-3"><button type="button" class="btn btn-outline-primary" id="button-option-add" onclick="addProductOption();"><i class="fas fa-plus-circle"></i> <?php echo lang('Button.option_add', [], $language_lib->getCurrentCode()); ?></button></div>
+                            <div id="product-variants"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="special-tab-pane" role="tabpanel" aria-labelledby="special-tab" tabindex="0">
+                        <div id="product-default-specials"<?php if (!empty($is_product_variant)) { ?> class="d-none"<?php } ?>>
+                            <div id="product-specials" class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th><?php echo lang('Column.priority', [], $language_lib->getCurrentCode()); ?></th>
+                                            <th><?php echo lang('Column.price', [], $language_lib->getCurrentCode()); ?></th>
+                                            <th><?php echo lang('Column.date_start', [], $language_lib->getCurrentCode()); ?></th>
+                                            <th><?php echo lang('Column.date_end', [], $language_lib->getCurrentCode()); ?></th>
+                                            <th><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php $product_special_row = 0; ?>
+                                        <?php if (!empty($product_specials)) { ?>
+                                            <?php foreach ($product_specials as $product_special) { ?>
+                                            <tr id="product-special-<?php echo $product_special_row; ?>">
+                                                <td><input type="number" name="product_special[<?php echo $product_special_row; ?>][priority]" value="<?php echo $product_special['priority']; ?>" placeholder="<?php echo lang('Entry.priority', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-special-<?php echo $product_special_row; ?>-priority" /></td>
+                                                <td><input type="number" name="product_special[<?php echo $product_special_row; ?>][price]" value="<?php echo $product_special['price']; ?>" placeholder="<?php echo lang('Entry.price', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-special-<?php echo $product_special_row; ?>-price" /></td>
+                                                <td><input type="datetime-local" name="product_special[<?php echo $product_special_row; ?>][date_start]" value="<?php echo $product_special['date_start']; ?>" placeholder="<?php echo lang('Entry.date_start', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-special-<?php echo $product_special_row; ?>-date-start" /></td>
+                                                <td><input type="datetime-local" name="product_special[<?php echo $product_special_row; ?>][date_end]" value="<?php echo $product_special['date_end']; ?>" placeholder="<?php echo lang('Entry.date_end', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-special-<?php echo $product_special_row; ?>-date-end" /></td>
+                                                <td class="text-end align-middle"><button type="button" class="btn btn-danger btn-sm" onclick="removeProductSpecial('<?php echo $product_special_row; ?>');"><i class="fas fa-trash-alt"></i></button></td>
+                                            </tr>
+                                            <?php $product_special_row++; ?>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="5" class="text-end"><button type="button" class="btn btn-primary btn-sm" onclick="addProductSpecial();"><i class="fas fa-plus"></i></button></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="product-options-specials" class="<?php if (empty($is_product_variant)) { ?>d-none <?php } ?>mb-3">
+                            <div id="product-variant-specials"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="quantity-discount-tab-pane" role="tabpanel" aria-labelledby="quantity-discount-tab" tabindex="0">
+                        <div id="product-default-quantity-discounts"<?php if (!empty($is_product_variant)) { ?> class="d-none"<?php } ?>>
+                            <div id="product-discounts" class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th><?php echo lang('Column.priority', [], $language_lib->getCurrentCode()); ?></th>
+                                            <th><?php echo lang('Column.min_quantity', [], $language_lib->getCurrentCode()); ?></th>
+                                            <th><?php echo lang('Column.max_quantity', [], $language_lib->getCurrentCode()); ?></th>
+                                            <th><?php echo lang('Column.price', [], $language_lib->getCurrentCode()); ?></th>
+                                            <th><?php echo lang('Column.date_start', [], $language_lib->getCurrentCode()); ?></th>
+                                            <th><?php echo lang('Column.date_end', [], $language_lib->getCurrentCode()); ?></th>
+                                            <th><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php $product_discount_row = 0; ?>
+                                        <?php if (!empty($product_discounts)) { ?>
+                                            <?php foreach ($product_discounts as $product_discount) { ?>
+                                            <tr id="product-discount-<?php echo $product_discount_row; ?>">
+                                                <td><input type="number" name="product_discount[<?php echo $product_discount_row; ?>][priority]" value="<?php echo $product_discount['priority']; ?>" placeholder="<?php echo lang('Entry.priority', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-<?php echo $product_discount_row; ?>-priority" /></td>
+                                                <td><input type="number" min="1" name="product_discount[<?php echo $product_discount_row; ?>][min_quantity]" value="<?php echo $product_discount['min_quantity']; ?>" placeholder="<?php echo lang('Entry.min_quantity', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-<?php echo $product_discount_row; ?>-min-quantity" /></td>
+                                                <td><input type="number" min="0" name="product_discount[<?php echo $product_discount_row; ?>][max_quantity]" value="<?php echo $product_discount['max_quantity']; ?>" placeholder="<?php echo lang('Entry.max_quantity', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-<?php echo $product_discount_row; ?>-max-quantity" /></td>
+                                                <td><input type="number" name="product_discount[<?php echo $product_discount_row; ?>][price]" value="<?php echo $product_discount['price']; ?>" placeholder="<?php echo lang('Entry.price', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-<?php echo $product_discount_row; ?>-price" /></td>
+                                                <td><input type="datetime-local" name="product_discount[<?php echo $product_discount_row; ?>][date_start]" value="<?php echo $product_discount['date_start']; ?>" placeholder="<?php echo lang('Entry.date_start', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-<?php echo $product_discount_row; ?>-date-start" /></td>
+                                                <td><input type="datetime-local" name="product_discount[<?php echo $product_discount_row; ?>][date_end]" value="<?php echo $product_discount['date_end']; ?>" placeholder="<?php echo lang('Entry.date_end', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-<?php echo $product_discount_row; ?>-date-end" /></td>
+                                                <td class="text-end align-middle"><button type="button" class="btn btn-danger btn-sm" onclick="removeProductDiscount('<?php echo $product_discount_row; ?>');"><i class="fas fa-trash-alt"></i></button></td>
+                                            </tr>
+                                            <?php $product_discount_row++; ?>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="7" class="text-end"><button type="button" class="btn btn-primary btn-sm" onclick="addProductDiscount();"><i class="fas fa-plus"></i></button></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            
+                        </div>
+                        <div id="product-options-quantity-discounts" class="<?php if (empty($is_product_variant)) { ?>d-none <?php } ?>mb-3">
+                            <div id="product-variant-discounts"></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="image-tab-pane" role="tabpanel" aria-labelledby="image-tab" tabindex="0">
+                        <div class="mb-3">
+                            <label for="input-main-image" class="form-label"><?php echo lang('Entry.main_image', [], $language_lib->getCurrentCode()); ?></label>
+                            <div><a href="javascript:void(0);" id="upload-main-image" class="position-relative d-table-cell upload"><img src="<?php echo $thumb; ?>" class="border p-1" /><span class="progress-bar"></span><input type="hidden" name="main_image" value="<?php echo $main_image; ?>" id="main-image" class="form-control" /></a></div>
                         </div>
                         <div class="mb-3">
-                            <label for="input-minimum-purchase" class="form-label"><?php echo lang('Entry.minimum_purchase', [], $language_lib->getCurrentCode()); ?></label>
-                            <input type="number" min="1" name="minimum_purchase" value="<?php echo $minimum_purchase; ?>" class="form-control" id="input-minimum-purchase" placeholder="<?php echo lang('Entry.minimum_purchase', [], $language_lib->getCurrentCode()); ?>" aria-label="<?php echo lang('Entry.minimum_purchase', [], $language_lib->getCurrentCode()); ?>" />
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="mb-3">
-                                    <label for="input-weight" class="form-label"><?php echo lang('Entry.weight', [], $language_lib->getCurrentCode()); ?></label>
-                                    <input type="number" min="0" step="any" name="weight" value="<?php echo $weight; ?>" class="form-control" id="input-weight" placeholder="<?php echo lang('Entry.weight', [], $language_lib->getCurrentCode()); ?>" aria-label="<?php echo lang('Entry.weight', [], $language_lib->getCurrentCode()); ?>" />
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="mb-3">
-                                    <label for="input-weight-class" class="form-label"><?php echo lang('Entry.weight_class', [], $language_lib->getCurrentCode()); ?></label>
-                                    <select name="weight_class_id" class="form-select" id="input-weight-class">
-                                        <?php foreach ($weight_classes as $weight_class) { ?>
-                                            <?php if ($weight_class['weight_class_id'] == $weight_class_id) { ?>
-                                            <option value="<?php echo $weight_class['weight_class_id']; ?>" selected="selected"><?php echo $weight_class['title']; ?></option>
-                                            <?php } else { ?>
-                                            <option value="<?php echo $weight_class['weight_class_id']; ?>"><?php echo $weight_class['title']; ?></option>
-                                            <?php } ?>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.specials', [], $language_lib->getCurrentCode()); ?></legend>
-                        <div id="product-specials" class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th><?php echo lang('Column.priority', [], $language_lib->getCurrentCode()); ?></th>
-                                        <th><?php echo lang('Column.price', [], $language_lib->getCurrentCode()); ?></th>
-                                        <th><?php echo lang('Column.date_start', [], $language_lib->getCurrentCode()); ?></th>
-                                        <th><?php echo lang('Column.date_end', [], $language_lib->getCurrentCode()); ?></th>
-                                        <th><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php $product_special_row = 0; ?>
-                                    <?php if (!empty($product_specials)) { ?>
-                                        <?php foreach ($product_specials as $product_special) { ?>
-                                        <tr id="product-special-<?php echo $product_special_row; ?>">
-                                            <td><input type="number" name="product_special[<?php echo $product_special_row; ?>][priority]" value="<?php echo $product_special['priority']; ?>" placeholder="<?php echo lang('Entry.priority', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-special-<?php echo $product_special_row; ?>-priority" /></td>
-                                            <td><input type="number" name="product_special[<?php echo $product_special_row; ?>][price]" value="<?php echo $product_special['price']; ?>" placeholder="<?php echo lang('Entry.price', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-special-<?php echo $product_special_row; ?>-price" /></td>
-                                            <td><input type="datetime-local" name="product_special[<?php echo $product_special_row; ?>][date_start]" value="<?php echo $product_special['date_start']; ?>" placeholder="<?php echo lang('Entry.date_start', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-special-<?php echo $product_special_row; ?>-date-start" /></td>
-                                            <td><input type="datetime-local" name="product_special[<?php echo $product_special_row; ?>][date_end]" value="<?php echo $product_special['date_end']; ?>" placeholder="<?php echo lang('Entry.date_end', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-special-<?php echo $product_special_row; ?>-date-end" /></td>
-                                            <td class="text-end align-middle"><button type="button" class="btn btn-danger btn-sm" onclick="removeProductSpecial('<?php echo $product_special_row; ?>');"><i class="fas fa-trash-alt"></i></button></td>
-                                        </tr>
-                                        <?php $product_special_row++; ?>
-                                        <?php } ?>
+                            <label for="input-additional-images" class="form-label"><?php echo lang('Entry.additional_images', [], $language_lib->getCurrentCode()); ?></label>
+                            <div id="additional-images" class="clearfix">
+                                <?php $additional_image_row = 0; ?>
+                                <?php if (!empty($additional_images)) { ?>
+                                    <?php foreach ($additional_images as $additional_image) { ?>
+                                    <div class="position-relative float-start me-1"><a href="javascript:void(0);" id="upload-main-image-<?php echo $additional_image_row; ?>" class="position-relative d-table-cell upload"><img src="<?php echo $additional_image['thumb']; ?>" class="border p-1" /><span class="progress-bar"></span><input type="hidden" name="additional_image[<?php echo $additional_image_row; ?>]" value="<?php echo $additional_image['image']; ?>" id="additional-image-<?php echo $additional_image_row; ?>" class="form-control" /></a><span class="position-absolute top-0 end-0" style="z-index: 999999;" onclick="$(this).parent().remove();"><span class="fa-stack" style="font-size: 0.5em;"><i class="fas fa-circle fa-stack-2x text-danger"></i><i class="fas fa-times fa-stack-1x text-light"></i></span></span></div>
+                                    <?php $additional_image_row++; ?>
                                     <?php } ?>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="5" class="text-end"><button type="button" class="btn btn-primary btn-sm" onclick="addProductSpecial();"><i class="fas fa-plus"></i></button></td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                        <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.quantity_discounts', [], $language_lib->getCurrentCode()); ?></legend>
-                        <div id="product-discounts" class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th><?php echo lang('Column.priority', [], $language_lib->getCurrentCode()); ?></th>
-                                        <th><?php echo lang('Column.min_quantity', [], $language_lib->getCurrentCode()); ?></th>
-                                        <th><?php echo lang('Column.max_quantity', [], $language_lib->getCurrentCode()); ?></th>
-                                        <th><?php echo lang('Column.price', [], $language_lib->getCurrentCode()); ?></th>
-                                        <th><?php echo lang('Column.date_start', [], $language_lib->getCurrentCode()); ?></th>
-                                        <th><?php echo lang('Column.date_end', [], $language_lib->getCurrentCode()); ?></th>
-                                        <th><?php echo lang('Column.action', [], $language_lib->getCurrentCode()); ?></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php $product_discount_row = 0; ?>
-                                    <?php if (!empty($product_discounts)) { ?>
-                                        <?php foreach ($product_discounts as $product_discount) { ?>
-                                        <tr id="product-discount-<?php echo $product_discount_row; ?>">
-                                            <td><input type="number" name="product_discount[<?php echo $product_discount_row; ?>][priority]" value="<?php echo $product_discount['priority']; ?>" placeholder="<?php echo lang('Entry.priority', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-<?php echo $product_discount_row; ?>-priority" /></td>
-                                            <td><input type="number" min="1" name="product_discount[<?php echo $product_discount_row; ?>][min_quantity]" value="<?php echo $product_discount['min_quantity']; ?>" placeholder="<?php echo lang('Entry.min_quantity', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-<?php echo $product_discount_row; ?>-min-quantity" /></td>
-                                            <td><input type="number" min="0" name="product_discount[<?php echo $product_discount_row; ?>][max_quantity]" value="<?php echo $product_discount['max_quantity']; ?>" placeholder="<?php echo lang('Entry.max_quantity', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-<?php echo $product_discount_row; ?>-max-quantity" /></td>
-                                            <td><input type="number" name="product_discount[<?php echo $product_discount_row; ?>][price]" value="<?php echo $product_discount['price']; ?>" placeholder="<?php echo lang('Entry.price', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-<?php echo $product_discount_row; ?>-price" /></td>
-                                            <td><input type="datetime-local" name="product_discount[<?php echo $product_discount_row; ?>][date_start]" value="<?php echo $product_discount['date_start']; ?>" placeholder="<?php echo lang('Entry.date_start', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-<?php echo $product_discount_row; ?>-date-start" /></td>
-                                            <td><input type="datetime-local" name="product_discount[<?php echo $product_discount_row; ?>][date_end]" value="<?php echo $product_discount['date_end']; ?>" placeholder="<?php echo lang('Entry.date_end', [], $language_lib->getCurrentCode()); ?>" class="form-control" id="input-product-discount-<?php echo $product_discount_row; ?>-date-end" /></td>
-                                            <td class="text-end align-middle"><button type="button" class="btn btn-danger btn-sm" onclick="removeProductDiscount('<?php echo $product_discount_row; ?>');"><i class="fas fa-trash-alt"></i></button></td>
-                                        </tr>
-                                        <?php $product_discount_row++; ?>
-                                        <?php } ?>
-                                    <?php } ?>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan="7" class="text-end"><button type="button" class="btn btn-primary btn-sm" onclick="addProductDiscount();"><i class="fas fa-plus"></i></button></td>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                                <?php } ?>
+                                <div role="button" id="button-upload-additional-image" class="float-start border p-1" onclick="addAdditionalImage();"><div class="d-flex justify-content-center align-items-center text-center bg-light" style="width: 100px; height: 100px;"><i class="fas fa-plus-circle fa-2x text-secondary"></i></div></div>
+                            </div>
                         </div>
                     </div>
-                    <div id="product-options" class="<?php if (empty($is_product_variant)) { ?>d-none <?php } ?>mb-3">
-                        <?php $product_option_row = 0; ?>
-                        <?php if (!empty($product_options)) { ?>
-                            <?php foreach ($product_options as $product_option) { ?>
-                            <div id="product-option-<?php echo $product_option_row; ?>" class="position-relative bg-light mb-1 p-3">
-                                <span role="button" class="text-secondary position-absolute top-0 end-0 small" onclick="removeProductOption('<?php echo $product_option_row; ?>');"><span class="fa-stack" style="font-size: 0.5em;"><i class="fas fa-circle fa-stack-2x text-danger"></i><i class="fas fa-times fa-stack-1x text-light"></i></span></span>
-                                <div class="row mb-3">
-                                    <div class="col-sm-2"><label for="input-option-<?php echo $product_option_row; ?>" class="form-label"><?php echo lang('Entry.option', [], $language_lib->getCurrentCode()); ?></label></div>
-                                    <div class="col-sm-10">
-                                       <input type="text" name="product_option[<?php echo $product_option_row; ?>][option]" value="<?php echo $product_option['option']; ?>" id="input-option-<?php echo $product_option_row; ?>" class="form-control" placeholder="<?php echo lang('Entry.option', [], $language_lib->getCurrentCode()); ?>">
-                                       <input type="hidden" name="product_option[<?php echo $product_option_row; ?>][option_id]" value="<?php echo $product_option['option_id']; ?>" id="input-option-<?php echo $product_option_row; ?>-id" class="form-control" placeholder="<?php echo lang('Entry.option', [], $language_lib->getCurrentCode()); ?>">
-
-                                        <?php if (!empty($product_option['option_value'])) { ?>
-                                        <div id="option-values-<?php echo $product_option_row; ?>" class="card mt-1">
-                                            <div class="card-body">
-                                                <?php foreach ($product_option['option_value'] as $option_value) { ?>
-                                                <input type="checkbox" name="product_option[<?php echo $product_option_row; ?>][option_value][]" value="<?php echo $option_value['option_value_id']; ?>" class="btn-check" id="input-option-value-<?php echo $product_option_row; ?>-<?php echo $product_option['option_id']; ?>-<?php echo $option_value['option_value_id']; ?>" autocomplete="off" onclick="setProductOptions();"<?php if (in_array($option_value['option_value_id'], $product_option['product_option_value'])) { ?> checked<?php } ?>>
-                                                <label class="btn btn-outline-primary shadow-none" for="input-option-value-<?php echo $product_option_row; ?>-<?php echo $product_option['option_id']; ?>-<?php echo $option_value['option_value_id']; ?>"><?php echo $option_value['description']['name']; ?></label>
+                    <div class="tab-pane" id="download-tab-pane" role="tabpanel" aria-labelledby="download-tab" tabindex="0">
+                        <div class="table-responsive">
+                            <table id="product-downloads" class="table table-stripped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th><?php echo lang('Column.name', [], $language_lib->getCurrentCode()); ?></th>
+                                        <th><?php echo lang('Column.filename', [], $language_lib->getCurrentCode()); ?></th>
+                                        <th><?php echo lang('Column.mask', [], $language_lib->getCurrentCode()); ?></th>
+                                        <th class="text-end"><?php echo lang('Column.upload', [], $language_lib->getCurrentCode()); ?></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $product_download_row = 0; ?>
+                                    <?php if (!empty($product_downloads)) { ?>
+                                        <?php foreach ($product_downloads as $product_download) { ?>
+                                        <tr id="row-product-download-<?php echo $product_download_row; ?>">
+                                            <td class="align-middle">
+                                                <?php foreach ($languages as $language) { ?>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="input-group-product-download-<?php echo $product_download_row; ?>-<?php echo $language['language_id']; ?>"><img src="<?php echo base_url('assets/flags/' . $language['code'] . '.png'); ?>" /></span>
+                                                    <input type="text" name="product_download[<?php echo $product_download_row; ?>][description][<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($product_download['description'][$language['language_id']]['name']) ? $product_download['description'][$language['language_id']]['name'] : ''; ?>" class="form-control" placeholder="<?php echo lang('Entry.name', [], $language_lib->getCurrentCode()); ?>" aria-label="<?php echo lang('Entry.name', [], $language_lib->getCurrentCode()); ?>" aria-describedby="input-group-product-download-<?php echo $product_download_row; ?>-<?php echo $language['language_id']; ?>">
+                                                </div>
                                                 <?php } ?>
-                                            </div>
-                                        </div>
+                                            </td>
+                                            <td class="align-middle">
+                                                <div>
+                                                    <input type="text" name="product_download[<?php echo $product_download_row; ?>][filename]" value="<?php echo $product_download['filename']; ?>" class="form-control" id="input-product-download-filename-<?php echo $product_download_row; ?>" placeholder="<?php echo lang('Entry.filename', [], $language_lib->getCurrentCode()); ?>" readonly>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle">
+                                                <div>
+                                                    <input type="text" name="product_download[<?php echo $product_download_row; ?>][mask]" value="<?php echo $product_download['mask']; ?>" class="form-control" id="input-product-download-mask-<?php echo $product_download_row; ?>" placeholder="<?php echo lang('Entry.mask', [], $language_lib->getCurrentCode()); ?>" readonly>
+                                                </div>
+                                            </td>
+                                            <td class="align-middle text-end"><div class="d-grid"><button type="button" id="button-product-download-upload-<?php echo $product_download_row; ?>" class="btn btn-primary product-download-upload"><i class="fas fa-upload me-2"></i><?php echo lang('Button.upload', [], $language_lib->getCurrentCode()); ?></button><span class="progress-bar mt-2"></span></div></td>
+                                        </tr>
+                                        <?php $product_download_row++; ?>
                                         <?php } ?>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <?php $product_option_row++; ?>
-                            <?php } ?>
-                        <?php } ?>
-                        <div class="d-grid mb-3"><button type="button" class="btn btn-outline-primary" id="button-option-add" onclick="addProductOption();"><i class="fas fa-plus-circle"></i> <?php echo lang('Button.option_add', [], $language_lib->getCurrentCode()); ?></button></div>
-                        <div id="product-variants"></div>
-                        <div id="product-variant-specials"></div>
-                        <div id="product-variant-discounts"></div>
-                    </div>
-                    <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.shipping', [], $language_lib->getCurrentCode()); ?></legend>
-                    <div class="mb-3">
-                        <div class="form-label"><?php echo lang('Entry.requires_shipping', [], $language_lib->getCurrentCode()); ?></div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="requires_shipping" id="input-requires-shipping-yes" value="1"<?php if ($requires_shipping == 1) { ?> checked<?php } ?>>
-                            <label class="form-check-label" for="input-requires-shipping-yes"><?php echo lang('Text.yes', [], $language_lib->getCurrentCode()); ?></label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="requires_shipping" id="input-requires-shipping-no" value="0"<?php if ($requires_shipping == 0) { ?> checked<?php } ?>>
-                            <label class="form-check-label" for="input-requires-shipping-no"><?php echo lang('Text.no', [], $language_lib->getCurrentCode()); ?></label>
-                        </div>
-                    </div>
-                    <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.images', [], $language_lib->getCurrentCode()); ?></legend>
-                    <div class="mb-3">
-                        <label for="input-main-image" class="form-label"><?php echo lang('Entry.main_image', [], $language_lib->getCurrentCode()); ?></label>
-                        <div><a href="javascript:void(0);" id="upload-main-image" class="position-relative d-table-cell upload"><img src="<?php echo $thumb; ?>" class="border p-1" /><span class="progress-bar"></span><input type="hidden" name="main_image" value="<?php echo $main_image; ?>" id="main-image" class="form-control" /></a></div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="input-additional-images" class="form-label"><?php echo lang('Entry.additional_images', [], $language_lib->getCurrentCode()); ?></label>
-                        <div id="additional-images" class="clearfix">
-                            <?php $additional_image_row = 0; ?>
-                            <?php if (!empty($additional_images)) { ?>
-                                <?php foreach ($additional_images as $additional_image) { ?>
-                                <div class="position-relative float-start me-1"><a href="javascript:void(0);" id="upload-main-image-<?php echo $additional_image_row; ?>" class="position-relative d-table-cell upload"><img src="<?php echo $additional_image['thumb']; ?>" class="border p-1" /><span class="progress-bar"></span><input type="hidden" name="additional_image[<?php echo $additional_image_row; ?>]" value="<?php echo $additional_image['image']; ?>" id="additional-image-<?php echo $additional_image_row; ?>" class="form-control" /></a><span class="position-absolute top-0 end-0" style="z-index: 999999;" onclick="$(this).parent().remove();"><span class="fa-stack" style="font-size: 0.5em;"><i class="fas fa-circle fa-stack-2x text-danger"></i><i class="fas fa-times fa-stack-1x text-light"></i></span></span></div>
-                                <?php $additional_image_row++; ?>
-                                <?php } ?>
-                            <?php } ?>
-                            <div role="button" id="button-upload-additional-image" class="float-start border p-1" onclick="addAdditionalImage();"><div class="d-flex justify-content-center align-items-center text-center bg-light" style="width: 100px; height: 100px;"><i class="fas fa-plus-circle fa-2x text-secondary"></i></div></div>
-                        </div>
-                    </div>
-                    <legend class="lead border-bottom border-warning pb-2"><?php echo lang('Text.downloads', [], $language_lib->getCurrentCode()); ?></legend>
-                    <div class="table-responsive">
-                        <table id="product-downloads" class="table table-stripped table-hover">
-                            <thead>
-                                <tr>
-                                    <th><?php echo lang('Column.name', [], $language_lib->getCurrentCode()); ?></th>
-                                    <th><?php echo lang('Column.filename', [], $language_lib->getCurrentCode()); ?></th>
-                                    <th><?php echo lang('Column.mask', [], $language_lib->getCurrentCode()); ?></th>
-                                    <th class="text-end"><?php echo lang('Column.upload', [], $language_lib->getCurrentCode()); ?></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php $product_download_row = 0; ?>
-                                <?php if (!empty($product_downloads)) { ?>
-                                    <?php foreach ($product_downloads as $product_download) { ?>
-                                    <tr id="row-product-download-<?php echo $product_download_row; ?>">
-                                        <td class="align-middle">
-                                            <?php foreach ($languages as $language) { ?>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="input-group-product-download-<?php echo $product_download_row; ?>-<?php echo $language['language_id']; ?>"><img src="<?php echo base_url('assets/flags/' . $language['code'] . '.png'); ?>" /></span>
-                                                <input type="text" name="product_download[<?php echo $product_download_row; ?>][description][<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($product_download['description'][$language['language_id']]['name']) ? $product_download['description'][$language['language_id']]['name'] : ''; ?>" class="form-control" placeholder="<?php echo lang('Entry.name', [], $language_lib->getCurrentCode()); ?>" aria-label="<?php echo lang('Entry.name', [], $language_lib->getCurrentCode()); ?>" aria-describedby="input-group-product-download-<?php echo $product_download_row; ?>-<?php echo $language['language_id']; ?>">
-                                            </div>
-                                            <?php } ?>
-                                        </td>
-                                        <td class="align-middle">
-                                            <div>
-                                                <input type="text" name="product_download[<?php echo $product_download_row; ?>][filename]" value="<?php echo $product_download['filename']; ?>" class="form-control" id="input-product-download-filename-<?php echo $product_download_row; ?>" placeholder="<?php echo lang('Entry.filename', [], $language_lib->getCurrentCode()); ?>" readonly>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle">
-                                            <div>
-                                                <input type="text" name="product_download[<?php echo $product_download_row; ?>][mask]" value="<?php echo $product_download['mask']; ?>" class="form-control" id="input-product-download-mask-<?php echo $product_download_row; ?>" placeholder="<?php echo lang('Entry.mask', [], $language_lib->getCurrentCode()); ?>" readonly>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle text-end"><div class="d-grid"><button type="button" id="button-product-download-upload-<?php echo $product_download_row; ?>" class="btn btn-primary product-download-upload"><i class="fas fa-upload me-2"></i><?php echo lang('Button.upload', [], $language_lib->getCurrentCode()); ?></button><span class="progress-bar mt-2"></span></div></td>
-                                    </tr>
-                                    <?php $product_download_row++; ?>
                                     <?php } ?>
-                                <?php } ?>
-                                <tr id="row-product-download-add">
-                                    <td colspan="4" class="text-end"><button type="button" id="button-product-download-add" class="btn btn-primary" onclick="addProductDownload();"><i class="fas fa-circle-plus me-2"></i><?php echo lang('Button.add', [], $language_lib->getCurrentCode()); ?></button></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                    <tr id="row-product-download-add">
+                                        <td colspan="4" class="text-end"><button type="button" id="button-product-download-add" class="btn btn-primary" onclick="addProductDownload();"><i class="fas fa-circle-plus me-2"></i><?php echo lang('Button.add', [], $language_lib->getCurrentCode()); ?></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </fieldset>
+                </div>
             </div>
         </div>
         <?php echo form_close(); ?>
@@ -339,11 +373,23 @@ $(document).ready(function() {
 <script type="text/javascript"><!--
 $('input#input-is-product-variant').click(function() {
     if ($('input#input-is-product-variant').is(':checked')) {
-        $('#product-default').addClass('d-none');
-        $('#product-options').removeClass('d-none');
+        $('#product-default-details').addClass('d-none');
+        $('#product-options-details').removeClass('d-none');
+
+        $('#product-default-specials').addClass('d-none');
+        $('#product-options-specials').removeClass('d-none');
+
+        $('#product-default-quantity-discounts').addClass('d-none');
+        $('#product-options-quantity-discounts').removeClass('d-none');
     } else {
-        $('#product-default').removeClass('d-none');
-        $('#product-options').addClass('d-none');
+        $('#product-default-details').removeClass('d-none');
+        $('#product-options-details').addClass('d-none');
+
+        $('#product-default-specials').removeClass('d-none');
+        $('#product-options-specials').addClass('d-none');
+
+        $('#product-default-quantity-discounts').removeClass('d-none');
+        $('#product-options-quantity-discounts').addClass('d-none');
     }
 });
 //--></script>
@@ -574,7 +620,7 @@ function productOptionAutocomplete(product_option_row) {
     };
 }
 
-$('#product-options .col-sm-10').each(function(index, element) {
+$('#product-options-details .col-sm-10').each(function(index, element) {
     productOptionAutocomplete(index);
 });
 
@@ -618,7 +664,7 @@ function getProductOptionValues(option_id,product_option_row) {
 setProductOptions();
 
 function setProductOptions() {
-    var product_options = $('#product-options').find('select, textarea, input').serializeJSON();
+    var product_options = $('#product-options-details').find('select, textarea, input').serializeJSON();
 
     $.ajax({
         url: '<?php echo $set_product_options; ?>',
@@ -635,6 +681,14 @@ function setProductOptions() {
             // Refresh product variants
             $( '#product-variants' ).html( '<div class="text-center text-secondary"><i class="fas fa-spinner fa-spin fa-2x"></i></div>' );
             $( '#product-variants' ).load( '<?php echo $product_variant; ?>' );
+
+            // Refresh product variant specials
+            $( '#product-variant-specials' ).html( '<div class="text-center text-secondary"><i class="fas fa-spinner fa-spin fa-2x"></i></div>' );
+            $( '#product-variant-specials' ).load( '<?php echo $product_variant_special; ?>' );
+            
+            // Refresh product variant discounts
+            $( '#product-variant-discounts' ).html( '<div class="text-center text-secondary"><i class="fas fa-spinner fa-spin fa-2x"></i></div>' );
+            $( '#product-variant-discounts' ).load( '<?php echo $product_variant_discount; ?>' );
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
