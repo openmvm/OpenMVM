@@ -78,6 +78,7 @@ return [
     'footer' => 'Footer',
     'forbidden' => 'Forbidden',
     'forgot_password' => 'Forgot Password?',
+    'free_checkout' => 'Free Checkout',
     'from' => 'From',
     'general' => 'General',
     'geo_zones' => 'Geo Zones',

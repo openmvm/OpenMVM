@@ -27,6 +27,7 @@ return [
     'error' => 'Error',
     'error_logs' => 'Error Logs',
     'flat_rate' => 'Flat Rate',
+    'free_checkout' => 'Free Checkout',
     'geo_zones' => 'Geo Zones',
     'google_analytics_4' => 'Google Analytics 4',
     'home' => 'Home',
