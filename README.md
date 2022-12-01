@@ -17,7 +17,7 @@
 	<li>Browse / search products</li>
 	<li>One-page checkout</li>
 	<li>Single store / Multi store checkout</li>
-	<li>Payment methods (Bank Transfer, Cash on Delivery, Wallet)</li>
+	<li>Payment methods (Bank Transfer, Cash on Delivery, Wallet, Free Checkout)</li>
 	<li>Shipping methods (Flat Rate, Weight Based Shipping, Zone Based Shipping)</li>
 	<li>Order totals (Sub Total, Shipping, Total)</li>
 	<li>Reset password</li>
