@@ -131,6 +131,11 @@ $routes->group('/', function ($routes) {
                     $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Component\Payment_Method\Cash_On_Delivery::index');
                     $routes->match(['get', 'post'], 'confirm', '\Main\Marketplace\Controllers\Component\Payment_Method\Cash_On_Delivery::confirm');
                 });
+                // Free Checkout
+                $routes->group('free_checkout', function ($routes) {
+                    $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Component\Payment_Method\Free_Checkout::index');
+                    $routes->match(['get', 'post'], 'confirm', '\Main\Marketplace\Controllers\Component\Payment_Method\Free_Checkout::confirm');
+                });
                 // Wallet
                 $routes->group('wallet', function ($routes) {
                     $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Component\Payment_Method\Wallet::index');

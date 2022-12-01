@@ -181,6 +181,11 @@ $routes->group('/', function ($routes) {
                     $routes->match(['get', 'post'], '/', '\Main\Admin\Controllers\Component\Payment_Method\Cash_On_Delivery::index', ['filter' => 'admin_auth']);
                     $routes->match(['get', 'post'], 'save', '\Main\Admin\Controllers\Component\Payment_Method\Cash_On_Delivery::save', ['filter' => 'admin_auth']);
                 });
+                // Free Checkout
+                $routes->group('Free_Checkout', function ($routes) {
+                    $routes->match(['get', 'post'], '/', '\Main\Admin\Controllers\Component\Payment_Method\Free_Checkout::index', ['filter' => 'admin_auth']);
+                    $routes->match(['get', 'post'], 'save', '\Main\Admin\Controllers\Component\Payment_Method\Free_Checkout::save', ['filter' => 'admin_auth']);
+                });
                 // Wallet
                 $routes->group('Wallet', function ($routes) {
                     $routes->match(['get', 'post'], '/', '\Main\Admin\Controllers\Component\Payment_Method\Wallet::index', ['filter' => 'admin_auth']);
