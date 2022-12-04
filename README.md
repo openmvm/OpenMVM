@@ -27,10 +27,6 @@
 	<li>Product ratings and reviews</li>
 	<li>Customer questions and answers</li>
 	<li>Digital products and downloads</li>
-	<li>[In Progress] Minimum purchase</li>
-	<li>[In Progress] Product specials</li>
-	<li>[In Progress] Quantity discounts</li>
-	<li>[In Progress] Customers can make purchases using their Wallet balance</li>
 </ul>
 
 <h4>Administrator (back-end) features:</h4>
@@ -65,6 +61,16 @@
 	<li>Enable / disable view caching</li>
 	<li>Enable / disable development mode</li>
 	<li>Update order status history</li>
+</ul>
+
+<h4>In Progress features:</h4>
+<ul>
+	<li>[In Progress] Minimum purchase</li>
+	<li>[In Progress] Product specials</li>
+	<li>[In Progress] Quantity discounts</li>
+	<li>[In Progress] Customers can make purchases using their Wallet balance</li>
+	<li>[In Progress] Seller Dashboard</li>
+	<li>[In Progress] Store front / Seller page</li>
 </ul>
 
 <h3>How to Install:</h3>
