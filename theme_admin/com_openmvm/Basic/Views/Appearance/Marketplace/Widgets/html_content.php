@@ -31,7 +31,7 @@
             </div>
             <div class="card-body">
                 <div class="mb-3 required">
-                    <label for="input-username" class="form-label"><?php echo lang('Entry.name'); ?></label>
+                    <label for="input-name" class="form-label"><?php echo lang('Entry.name'); ?></label>
                     <input type="text" name="name" value="<?php echo $name; ?>" id="input-name" class="form-control" placeholder="<?php echo lang('Entry.name'); ?>">
                     <?php if (!empty($error_name)) { ?><div class="text-danger small"><?php echo $error_name; ?></div><?php } ?>
                 </div>
