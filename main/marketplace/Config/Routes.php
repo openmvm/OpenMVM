@@ -193,6 +193,19 @@ $routes->group('/', function ($routes) {
         });
         // Seller
         $routes->group('seller', function ($routes) {
+            // Seller Category
+            $routes->group('seller_category', function ($routes) {
+                $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Seller_Category::index', ['filter' => 'marketplace_auth']);
+                $routes->match(['get', 'post'], 'add', '\Main\Marketplace\Controllers\Seller\Seller_Category::add', ['filter' => 'marketplace_auth']);
+                $routes->match(['get', 'post'], 'edit/(:num)', '\Main\Marketplace\Controllers\Seller\Seller_Category::edit', ['filter' => 'marketplace_auth']);
+                $routes->match(['get', 'post'], 'delete', '\Main\Marketplace\Controllers\Seller\Seller_Category::delete', ['filter' => 'marketplace_auth']);
+                $routes->group('save', function ($routes) {
+                    $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Seller_Category::save', ['filter' => 'marketplace_auth']);
+                    $routes->match(['get', 'post'], '(:num)', '\Main\Marketplace\Controllers\Seller\Seller_Category::save', ['filter' => 'marketplace_auth']);
+                });
+                $routes->match(['get', 'post'], 'autocomplete', '\Main\Marketplace\Controllers\Seller\Seller_Category::autocomplete', ['filter' => 'marketplace_auth']);
+                $routes->match(['get', 'post'], 'get/(:any)/(:any)', '\Main\Marketplace\Controllers\Seller\Seller_Category::get/$1/$2');
+            });
             // Component
             $routes->group('component', function ($routes) {
                 // Shipping method
@@ -306,6 +319,7 @@ $routes->group('/', function ($routes) {
             $routes->group('seller', function ($routes) {
                 $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Seller::index');
                 $routes->match(['get', 'post'], 'get/(:any)', '\Main\Marketplace\Controllers\Seller\Seller::get/$1');
+                $routes->match(['get', 'post'], 'get_seller_categories', '\Main\Marketplace\Controllers\Seller\Seller::get_seller_categories');
             });
         });
         // Tool

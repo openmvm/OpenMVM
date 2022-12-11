@@ -10,7 +10,7 @@ class Product_Model extends Model
     protected $table = 'product';
     protected $primaryKey = 'product_id';
     protected $useAutoIncrement = true;
-    protected $allowedFields = ['product_id', 'seller_id', 'customer_id', 'category_id_path', 'price', 'quantity', 'subtract_stock', 'weight', 'weight_class_id', 'date_added', 'date_modified', 'status'];
+    protected $allowedFields = ['product_id', 'seller_id', 'customer_id', 'category_id_path', 'seller_category_id_path', 'price', 'quantity', 'subtract_stock', 'weight', 'weight_class_id', 'date_added', 'date_modified', 'status'];
     protected $useTimestamps = false;
     /**
      * Constructor.
@@ -61,6 +61,7 @@ class Product_Model extends Model
             'seller_id' => $this->customer->getSellerId(),
             'customer_id' => $this->customer->getId(),
             'category_id_path' => $data['category_id_path'],
+            'seller_category_id_path' => $data['seller_category_id_path'],
             'product_option' => $product_option,
             'product_variant_special' => $product_variant_special,
             'product_variant_discount' => $product_variant_discount,
@@ -143,6 +144,20 @@ class Product_Model extends Model
             ];
             
             $product_to_category_insert_builder->insert($product_to_category_insert_data);
+        }
+
+        // Product to seller category
+        $seller_category_ids = explode('_', $data['seller_category_id_path']);
+
+        foreach ($seller_category_ids as $seller_category_id) {
+            $product_to_seller_category_insert_builder = $this->db->table('product_to_seller_category');
+
+            $product_to_seller_category_insert_data = [
+                'product_id' => $product_id,
+                'seller_category_id' => $seller_category_id,
+            ];
+            
+            $product_to_seller_category_insert_builder->insert($product_to_seller_category_insert_data);
         }
 
         // Product option
@@ -446,6 +461,7 @@ class Product_Model extends Model
 
         $product_update_data = [
             'category_id_path' => $data['category_id_path'],
+            'seller_category_id_path' => $data['seller_category_id_path'],
             'product_option' => $product_option,
             'product_variant_special' => $product_variant_special,
             'product_variant_discount' => $product_variant_discount,
@@ -548,6 +564,26 @@ class Product_Model extends Model
             ];
             
             $product_to_category_insert_builder->insert($product_to_category_insert_data);
+        }
+
+        // Delete product to seller category
+        $product_to_seller_category_delete_builder = $this->db->table('product_to_seller_category');
+
+        $product_to_seller_category_delete_builder->where('product_id', $product_id);
+        $product_to_seller_category_delete_builder->delete();
+
+        // Product to seller category
+        $seller_category_ids = explode('_', $data['seller_category_id_path']);
+
+        foreach ($seller_category_ids as $seller_category_id) {
+            $product_to_seller_category_insert_builder = $this->db->table('product_to_seller_category');
+
+            $product_to_seller_category_insert_data = [
+                'product_id' => $product_id,
+                'seller_category_id' => $seller_category_id,
+            ];
+            
+            $product_to_seller_category_insert_builder->insert($product_to_seller_category_insert_data);
         }
 
         // Product option
@@ -929,6 +965,12 @@ class Product_Model extends Model
 
         $builder->where('product_id', $product_id);
         $builder->delete();
+
+        // Delete product to seller category
+        $builder = $this->db->table('product_to_seller_category');
+
+        $builder->where('product_id', $product_id);
+        $builder->delete();
     }
 
     public function getProducts($data = [])
@@ -986,6 +1028,7 @@ class Product_Model extends Model
                 'seller_id' => $row->seller_id,
                 'customer_id' => $row->customer_id,
                 'category_id_path' => $row->category_id_path,
+                'seller_category_id_path' => $row->seller_category_id_path,
                 'product_option' => $row->product_option,
                 'product_variant_special' => $row->product_variant_special,
                 'product_variant_discount' => $row->product_variant_discount,

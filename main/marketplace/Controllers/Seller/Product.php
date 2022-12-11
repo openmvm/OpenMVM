@@ -16,6 +16,7 @@ class Product extends \App\Controllers\BaseController
         $this->model_product_category = new \Main\Marketplace\Models\Product\Category_Model();
         $this->model_seller_product = new \Main\Marketplace\Models\Seller\Product_Model();
         $this->model_seller_option = new \Main\Marketplace\Models\Seller\Option_Model();
+        $this->model_seller_seller_category = new \Main\Marketplace\Models\Seller\Seller_Category_Model();
     }
 
     public function index()
@@ -227,6 +228,12 @@ class Product extends \App\Controllers\BaseController
         }
 
         if ($product_info) {
+            $data['seller_category_id_path'] = $product_info['seller_category_id_path'];
+        } else {
+            $data['seller_category_id_path'] = '';
+        }
+
+        if ($product_info) {
             $data['is_product_variant'] = $product_info['product_option'];
         } else {
             $data['is_product_variant'] = '';
@@ -363,7 +370,6 @@ class Product extends \App\Controllers\BaseController
             $data['product_downloads'] = [];
         }
 
-
         // Categories
         $data['categories'] = [];
 
@@ -373,6 +379,18 @@ class Product extends \App\Controllers\BaseController
             $data['categories'][] = [
                 'category_id_path' => $category['category_id_path'],
                 'category_path' => $category['category_path'],
+            ];
+        }
+
+        // Seller Categories
+        $data['seller_categories'] = [];
+
+        $seller_categories = $this->model_seller_seller_category->getSellerCategories([], $this->customer->getSellerId(), $this->customer->getId());
+
+        foreach ($seller_categories as $seller_category) {
+            $data['seller_categories'][] = [
+                'seller_category_id_path' => $seller_category['seller_category_id_path'],
+                'seller_category_path' => $seller_category['name'],
             ];
         }
 

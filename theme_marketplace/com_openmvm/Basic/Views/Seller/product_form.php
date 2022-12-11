@@ -59,6 +59,18 @@
                                 <?php } ?>
                             </select>
                         </div>
+                        <div class="mb-3">
+                            <label for="input-seller-category" class="form-label"><?php echo lang('Entry.seller_category', [], $language_lib->getCurrentCode()); ?></label>
+                            <select name="seller_category_id_path" class="form-select" id="input-seller-category">
+                                <?php foreach ($seller_categories as $seller_category) { ?>
+                                    <?php if ($seller_category['seller_category_id_path'] == $seller_category_id_path) { ?>
+                                    <option value="<?php echo $seller_category['seller_category_id_path']; ?>" selected="selected"><?php echo $seller_category['seller_category_path']; ?></option>
+                                    <?php } else { ?>
+                                    <option value="<?php echo $seller_category['seller_category_id_path']; ?>"><?php echo $seller_category['seller_category_path']; ?></option>
+                                    <?php } ?>
+                                <?php } ?>
+                            </select>
+                        </div>
                         <ul class="nav nav-tabs mb-3" id="product-description-tab" role="tablist">
                             <?php foreach ($languages as $language) { ?>
                             <li class="nav-item" role="presentation">

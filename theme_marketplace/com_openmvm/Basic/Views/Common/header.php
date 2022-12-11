@@ -65,6 +65,7 @@
                                 <li><h6 class="dropdown-header"><?php echo lang('Text.seller', [], $language_lib->getCurrentCode()); ?></h6></li>
                                 <li><a class="dropdown-item small" href="<?php echo $seller_dashboard; ?>"><?php echo lang('Text.seller_dashboard', [], $language_lib->getCurrentCode()); ?></a></li>
                                 <li><a class="dropdown-item small" href="<?php echo $seller_edit; ?>"><?php echo lang('Text.seller_edit', [], $language_lib->getCurrentCode()); ?></a></li>
+                                <li><a class="dropdown-item small" href="<?php echo $seller_category; ?>"><?php echo lang('Text.categories', [], $language_lib->getCurrentCode()); ?></a></li>
                                 <li><a class="dropdown-item small" href="<?php echo $seller_product; ?>"><?php echo lang('Text.products', [], $language_lib->getCurrentCode()); ?></a></li>
                                 <li><a class="dropdown-item small" href="<?php echo $seller_option; ?>"><?php echo lang('Text.options', [], $language_lib->getCurrentCode()); ?></a></li>
                                 <li><a class="dropdown-item small" href="<?php echo $seller_order; ?>"><?php echo lang('Text.orders', [], $language_lib->getCurrentCode()); ?></a></li>

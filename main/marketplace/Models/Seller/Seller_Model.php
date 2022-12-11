@@ -3,6 +3,7 @@
 namespace Main\Marketplace\Models\Seller;
 
 use CodeIgniter\Model;
+use CodeIgniter\I18n\Time;
 
 class Seller_Model extends Model
 {
@@ -19,8 +20,9 @@ class Seller_Model extends Model
         $this->db = \Config\Database::connect();
 
         // Libraries
-        $this->setting = new \App\Libraries\Setting();
         $this->customer = new \App\Libraries\Customer();
+        $this->language = new \App\Libraries\Language();
+        $this->setting = new \App\Libraries\Setting();
         $this->text = new \App\Libraries\Text();
         // Helpers
         helper('date');
@@ -160,5 +162,107 @@ class Seller_Model extends Model
         }
 
         return $seller;
+    }
+
+    public function getProducts($data = [], $seller_id)
+    {
+        if (!empty($data['filter_seller_category_id'])) {
+            if (!empty($data['filter_sub_category'])) {
+                $builder = $this->db->table('seller_category_path cp');
+ 
+                $builder->join('product_to_seller_category p2c', 'cp.seller_category_id = p2c.seller_category_id', 'left');
+            } else {
+                $builder = $this->db->table('product_to_seller_category p2c');
+            }
+
+            $builder->join('product p', 'p2c.product_id = p.product_id', 'left');
+        } else {
+            $builder = $this->db->table('product p');
+        }
+
+        $builder->select("p.product_id");
+
+        $builder->select("(SELECT price FROM " . $this->db->getPrefix() . "product_special ps WHERE ps.product_id = p.product_id AND (ps.date_start < '" . new Time('now') . "' AND ps.date_end > '" . new Time('now') . "') ORDER BY ps.priority ASC, ps.price ASC LIMIT 1) AS special");
+
+        $builder->join('product_description pd', 'p.product_id = pd.product_id', 'left');
+
+        $builder->where('pd.language_id', $this->language->getCurrentId());
+        $builder->where('p.seller_id', $seller_id);
+        $builder->where('p.status', 1);
+
+        if (!empty($data['filter_seller_category_id'])) {
+            if (!empty($data['filter_sub_category'])) {
+                $builder->where('cp.path_id', $data['filter_seller_category_id']);
+            } else {
+                $builder->where('p2c.seller_category_id', $data['filter_seller_category_id']);
+            }
+        }
+
+        if (!empty($data['filter_seller_id'])) {
+            $builder->where('p.seller_id', $data['filter_seller_id']);
+        }
+
+        if (!empty($data['filter_name'])) {
+            //$builder->like('pd.name', $data['filter_name']);
+            $builder->where('MATCH (pd.name) AGAINST ("' . $data['filter_name'] . '" IN BOOLEAN MODE)', null, false);
+        }
+
+        $product_query = $builder->get();
+
+        $product_data = [];
+
+        foreach ($product_query->getResult() as $result) {
+            $product_data[$result->product_id] = $this->getProduct($result->product_id);
+        }
+
+        return $product_data;
+    }
+
+    public function getProduct($product_id)
+    {
+        $builder = $this->db->table('product p');
+
+        $builder->select("*, pd.name AS name, (SELECT price FROM " . $this->db->getPrefix() . "product_special ps WHERE ps.product_id = p.product_id AND (ps.date_start < '" . new Time('now') . "' AND ps.date_end > '" . new Time('now') . "') ORDER BY ps.priority ASC, ps.price ASC LIMIT 1) AS special");
+        
+        $builder->join('product_description pd', 'p.product_id = pd.product_id', 'left');
+
+        $builder->where('p.product_id', $product_id);
+        $builder->where('pd.language_id', $this->language->getCurrentId());
+        $builder->where('p.status', 1);
+
+        $product_query = $builder->get();
+
+        $product = [];
+
+        if ($row = $product_query->getRow()) {
+            $product = [
+                'product_id' => $row->product_id,
+                'seller_id' => $row->seller_id,
+                'customer_id' => $row->customer_id,
+                'category_id_path' => $row->category_id_path,
+                'product_option' => $row->product_option,
+                'product_variant_special' => $row->product_variant_special,
+                'product_variant_discount' => $row->product_variant_discount,
+                'price' => $row->price,
+                'special' => $row->special,
+                'quantity' => $row->quantity,
+                'minimum_purchase' => $row->minimum_purchase,
+                'weight' => $row->quantity,
+                'weight_class_id' => $row->weight_class_id,
+                'main_image' => $row->main_image,
+                'sku' => $row->sku,
+                'date_added' => $row->date_added,
+                'date_modified' => $row->date_modified,
+                'status' => $row->status,
+                'name' => $row->name,
+                'description' => $row->description,
+                'meta_title' => $row->meta_title,
+                'meta_description' => $row->meta_description,
+                'meta_keywords' => $row->meta_keywords,
+                'slug' => $row->slug,
+            ];
+        }
+
+        return $product;
     }
 }

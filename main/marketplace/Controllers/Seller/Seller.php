@@ -13,6 +13,7 @@ class Seller extends \App\Controllers\BaseController
         $this->model_product_category = new \Main\Marketplace\Models\Product\Category_Model();
         $this->model_product_product = new \Main\Marketplace\Models\Product\Product_Model();
         $this->model_seller_seller = new \Main\Marketplace\Models\Seller\Seller_Model();
+        $this->model_seller_seller_category = new \Main\Marketplace\Models\Seller\Seller_Category_Model();
     }
 
     public function index()
@@ -70,7 +71,7 @@ class Seller extends \App\Controllers\BaseController
             'active' => false,
         );
 
-        // Get product ID
+        // Get seller ID
         $explode = explode('-', $seller);
 
         $seller_id = str_replace('s', '', end($explode));
@@ -88,7 +89,11 @@ class Seller extends \App\Controllers\BaseController
             $data['heading_title'] = $seller_info['store_name'];
             $data['description'] = nl2br($seller_info['store_description']);
 
+            $data['link_id'] = 'home';
+
             // Get seller products
+            $data['products'] = [];
+
             $filter_data = [
                 'filter_seller_id' => $seller_id,
             ];
@@ -148,9 +153,14 @@ class Seller extends \App\Controllers\BaseController
                 ];
             }
 
+            $data['store_url'] = $this->url->customerLink('marketplace/seller/seller/get/' . $seller_info['slug'] . '-s' . $seller_info['seller_id']);
+            $data['get_seller_categories_url'] = $this->url->customerLink('marketplace/seller/seller/get_seller_categories', ['seller_id' => $seller_id]);
+
             // Libraries
             $data['language_lib'] = $this->language;
 
+            // Widget
+            $data['marketplace_common_widget'] = $this->marketplace_common_widget;
             // Header
             $header_params = array(
                 'title' => $seller_info['store_name'],
@@ -197,5 +207,62 @@ class Seller extends \App\Controllers\BaseController
             ];
             return $this->template->render($template_setting, $data);
         }
+    }
+
+    public function get_seller_categories()
+    {
+        $json = [];
+
+        if (!empty($this->request->getPost('parent_id'))) {
+            $parent_id = $this->request->getPost('parent_id');
+        } else {
+            $parent_id = 0;
+        }
+
+        if (!empty($this->request->getGet('seller_id'))) {
+            $seller_id = $this->request->getGet('seller_id');
+        } else {
+            $seller_id = 0;
+        }
+
+        // Get seller info
+        $seller_info = $this->model_seller_seller->getSeller($seller_id);
+
+        // Get seller categories
+        $json['seller_categories'] = [];
+
+        $seller_categories = $this->model_seller_seller_category->getSellerCategoriesByParentId(0, $seller_id);
+
+        foreach ($seller_categories as $seller_category) {
+            // Level 2
+            $seller_category_children_data = [];
+
+            $seller_category_children = $this->model_seller_seller_category->getSellerCategoriesByParentId($seller_category['seller_category_id'], $seller_id);
+
+            foreach ($seller_category_children as $seller_category_child) {
+                $seller_category_children_data[] = [
+                    'seller_category_id' => $seller_category_child['seller_category_id'],
+                    'name' => $seller_category_child['name'],
+                    'parent_id' => $seller_category_child['parent_id'],
+                    'image' => $seller_category_child['image'],
+                    'sort_order' => $seller_category_child['sort_order'],
+                    'status' => $seller_category_child['status'],
+                    'href' => $this->url->customerLink('marketplace/seller/seller_category/get/' . $seller_info['slug'] . '-s' . $seller_info['seller_id'] . '/' . $seller_category_child['slug'] . '-sc' . $seller_category_child['seller_category_id']),
+                ];
+            }
+
+            $json['seller_categories'][] = [
+                'seller_category_id' => $seller_category['seller_category_id'],
+                'name' => $seller_category['name'],
+                'parent_id' => $seller_category['parent_id'],
+                'image' => $seller_category['image'],
+                'sort_order' => $seller_category['sort_order'],
+                'status' => $seller_category['status'],
+                'href' => $this->url->customerLink('marketplace/seller/seller_category/get/' . $seller_info['slug'] . '-s' . $seller_info['seller_id'] . '/' . $seller_category['slug'] . '-sc' . $seller_category['seller_category_id']),
+                'children' => $seller_category_children_data,
+            ];
+        }
+
+        return $this->response->setJSON($json);
     }
 }
