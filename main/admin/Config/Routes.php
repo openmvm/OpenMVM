@@ -105,6 +105,14 @@ $routes->group('/', function ($routes) {
                         $routes->match(['get', 'post'], 'edit/(:num)', '\Main\Admin\Controllers\Appearance\Marketplace\Widgets\Page::index', ['filter' => 'admin_auth']);
                         $routes->match(['get', 'post'], 'save/(:num)', '\Main\Admin\Controllers\Appearance\Marketplace\Widgets\Page::save', ['filter' => 'admin_auth']);
                     });
+                    $routes->group('Seller_Description', function ($routes) {
+                        $routes->match(['get', 'post'], 'edit/(:num)', '\Main\Admin\Controllers\Appearance\Marketplace\Widgets\Seller_Description::index', ['filter' => 'admin_auth']);
+                        $routes->match(['get', 'post'], 'save/(:num)', '\Main\Admin\Controllers\Appearance\Marketplace\Widgets\Seller_Description::save', ['filter' => 'admin_auth']);
+                    });
+                    $routes->group('Seller_Featured_Product', function ($routes) {
+                        $routes->match(['get', 'post'], 'edit/(:num)', '\Main\Admin\Controllers\Appearance\Marketplace\Widgets\Seller_Featured_Product::index', ['filter' => 'admin_auth']);
+                        $routes->match(['get', 'post'], 'save/(:num)', '\Main\Admin\Controllers\Appearance\Marketplace\Widgets\Seller_Featured_Product::save', ['filter' => 'admin_auth']);
+                    });
                 });
             });
         });
