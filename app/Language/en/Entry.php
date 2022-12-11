@@ -100,6 +100,7 @@ return [
     'requires_shipping' => 'Requires Shipping',
     'review' => 'Review',
     'route' => 'Route',
+    'seller_category' => 'Seller Category',
     'shipped_order_status' => 'Shipped Order Status',
     'show' => 'Show',
     'show_sub_categories' => 'Show Sub Categories',

@@ -27,6 +27,7 @@ return [
     'edit' => 'Ubah',
     'favorite' => 'Favorite',
     'give_an_answer' => 'Give an Answer',
+    'home' => 'Beranda',
     'install' => 'Pasang',
     'login' => 'Masuk',
     'logout' => 'Keluar',

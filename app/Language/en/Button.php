@@ -27,6 +27,7 @@ return [
     'edit' => 'Edit',
     'favorite' => 'Favorite',
     'give_an_answer' => 'Give an Answer',
+    'home' => 'Home',
     'install' => 'Install',
     'login' => 'Login',
     'logout' => 'Logout',
