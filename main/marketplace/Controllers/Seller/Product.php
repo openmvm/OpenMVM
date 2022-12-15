@@ -234,6 +234,12 @@ class Product extends \App\Controllers\BaseController
         }
 
         if ($product_info) {
+            $data['featured'] = $product_info['featured'];
+        } else {
+            $data['featured'] = '';
+        }
+
+        if ($product_info) {
             $data['is_product_variant'] = $product_info['product_option'];
         } else {
             $data['is_product_variant'] = '';

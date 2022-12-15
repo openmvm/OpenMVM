@@ -10,7 +10,7 @@ class Product_Model extends Model
     protected $table = 'product';
     protected $primaryKey = 'product_id';
     protected $useAutoIncrement = true;
-    protected $allowedFields = ['product_id', 'seller_id', 'customer_id', 'category_id_path', 'seller_category_id_path', 'price', 'quantity', 'subtract_stock', 'weight', 'weight_class_id', 'date_added', 'date_modified', 'status'];
+    protected $allowedFields = ['product_id', 'seller_id', 'customer_id', 'category_id_path', 'seller_category_id_path', 'price', 'quantity', 'subtract_stock', 'weight', 'weight_class_id', 'featured', 'date_added', 'date_modified', 'status'];
     protected $useTimestamps = false;
     /**
      * Constructor.
@@ -31,6 +31,12 @@ class Product_Model extends Model
     public function addProduct($data = [])
     {
         $product_insert_builder = $this->db->table('product');
+
+        if (!empty($data['featured'])) {
+            $featured = 1;
+        } else {
+            $featured = 0;
+        }
 
         if (!empty($data['is_product_variant'])) {
             $product_option = 1;
@@ -73,6 +79,7 @@ class Product_Model extends Model
             'weight' => $data['weight'],
             'weight_class_id' => $data['weight_class_id'],
             'sku' => $data['sku'],
+            'featured' => $featured,
             'date_added' => new Time('now'),
             'date_modified' => new Time('now'),
             'status' => $data['status'],
@@ -434,6 +441,12 @@ class Product_Model extends Model
     {
         $product_update_builder = $this->db->table('product');
 
+        if (!empty($data['featured'])) {
+            $featured = 1;
+        } else {
+            $featured = 0;
+        }
+
         if (!empty($data['is_product_variant'])) {
             $product_option = 1;
             $subtract_stock = 0;
@@ -473,6 +486,7 @@ class Product_Model extends Model
             'weight' => $data['weight'],
             'weight_class_id' => $data['weight_class_id'],
             'sku' => $data['sku'],
+            'featured' => $featured,
             'date_modified' => new Time('now'),
             'status' => $data['status'],
         ];
@@ -1001,6 +1015,7 @@ class Product_Model extends Model
                 'weight_class_id' => $result->weight_class_id,
                 'main_image' => $result->main_image,
                 'sku' => $result->sku,
+                'featured' => $result->featured,
                 'date_added' => $result->date_added,
                 'date_modified' => $result->date_modified,
                 'status' => $result->status,
@@ -1041,6 +1056,7 @@ class Product_Model extends Model
                 'weight_class_id' => $row->weight_class_id,
                 'main_image' => $row->main_image,
                 'sku' => $row->sku,
+                'featured' => $row->featured,
                 'date_added' => $row->date_added,
                 'date_modified' => $row->date_modified,
                 'status' => $row->status,

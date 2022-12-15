@@ -71,6 +71,12 @@
                                 <?php } ?>
                             </select>
                         </div>
+                        <div class="mb-3">
+                            <div class="form-check form-switch">
+                                <input name="featured" class="form-check-input" type="checkbox" role="switch" id="input-featured"<?php if ($featured) { ?> checked<?php } ?>>
+                                <label class="form-check-label" for="input-featured"><?php echo lang('Text.featured', [], $language_lib->getCurrentCode()); ?></label>
+                            </div>
+                        </div>
                         <ul class="nav nav-tabs mb-3" id="product-description-tab" role="tablist">
                             <?php foreach ($languages as $language) { ?>
                             <li class="nav-item" role="presentation">

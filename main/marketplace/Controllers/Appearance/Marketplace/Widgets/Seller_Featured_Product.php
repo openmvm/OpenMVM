@@ -2,7 +2,7 @@
 
 namespace Main\Marketplace\Controllers\Appearance\Marketplace\Widgets;
 
-class Seller_featured_Product extends \App\Controllers\BaseController
+class Seller_Featured_Product extends \App\Controllers\BaseController
 {
     /**
      * Constructor.
@@ -47,6 +47,7 @@ class Seller_featured_Product extends \App\Controllers\BaseController
 
             $filter_data = [
                 'filter_seller_id' => $seller_id,
+                'filter_featured' => 1,
             ];
 
             $products = $this->model_product_product->getProducts($filter_data);
@@ -79,10 +80,15 @@ class Seller_featured_Product extends \App\Controllers\BaseController
 
                 // Get product variant special min max prices
                 if (!empty($product['product_option'])) {
-                    $product_variant_special_price = $this->model_product_product->getProductVariantSpecialMinMaxPrices($product['product_id']);
+                    if (!empty($product['product_variant_special'])) {
+                        $product_variant_special_price = $this->model_product_product->getProductVariantSpecialMinMaxPrices($product['product_id']);
 
-                    $special_min_price = $this->currency->format($product_variant_special_price['min_price'], $this->currency->getCurrentCode());
-                    $special_max_price = $this->currency->format($product_variant_price['max_price'], $this->currency->getCurrentCode());
+                        $special_min_price = $this->currency->format($product_variant_special_price['min_price'], $this->currency->getCurrentCode());
+                        $special_max_price = $this->currency->format($product_variant_special_price['max_price'], $this->currency->getCurrentCode());
+                    } else {
+                        $special_min_price = null;
+                        $special_max_price = null;
+                    }
                 } else {
                     $special_min_price = null;
                     $special_max_price = null;
@@ -103,7 +109,7 @@ class Seller_featured_Product extends \App\Controllers\BaseController
                     'href' => $this->url->customerLink('marketplace/product/product/get/' . $product['slug'] . '-p' . $product['product_id']),
                 ];
             }
-file_put_contents(WRITEPATH . 'temp/openmvm.log', json_encode($data['products']));
+
             $data['widget'] = $widget++;
 
             // Generate view
