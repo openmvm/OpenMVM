@@ -105,6 +105,14 @@ $routes->group('/', function ($routes) {
                         $routes->match(['get', 'post'], 'edit/(:num)', '\Main\Admin\Controllers\Appearance\Marketplace\Widgets\Page::index', ['filter' => 'admin_auth']);
                         $routes->match(['get', 'post'], 'save/(:num)', '\Main\Admin\Controllers\Appearance\Marketplace\Widgets\Page::save', ['filter' => 'admin_auth']);
                     });
+                    $routes->group('Seller_Bestseller_Product', function ($routes) {
+                        $routes->match(['get', 'post'], 'edit/(:num)', '\Main\Admin\Controllers\Appearance\Marketplace\Widgets\Seller_Bestseller_Product::index', ['filter' => 'admin_auth']);
+                        $routes->match(['get', 'post'], 'save/(:num)', '\Main\Admin\Controllers\Appearance\Marketplace\Widgets\Seller_Bestseller_Product::save', ['filter' => 'admin_auth']);
+                    });
+                    $routes->group('Seller_Category', function ($routes) {
+                        $routes->match(['get', 'post'], 'edit/(:num)', '\Main\Admin\Controllers\Appearance\Marketplace\Widgets\Seller_Category::index', ['filter' => 'admin_auth']);
+                        $routes->match(['get', 'post'], 'save/(:num)', '\Main\Admin\Controllers\Appearance\Marketplace\Widgets\Seller_Category::save', ['filter' => 'admin_auth']);
+                    });
                     $routes->group('Seller_Description', function ($routes) {
                         $routes->match(['get', 'post'], 'edit/(:num)', '\Main\Admin\Controllers\Appearance\Marketplace\Widgets\Seller_Description::index', ['filter' => 'admin_auth']);
                         $routes->match(['get', 'post'], 'save/(:num)', '\Main\Admin\Controllers\Appearance\Marketplace\Widgets\Seller_Description::save', ['filter' => 'admin_auth']);
@@ -112,6 +120,14 @@ $routes->group('/', function ($routes) {
                     $routes->group('Seller_Featured_Product', function ($routes) {
                         $routes->match(['get', 'post'], 'edit/(:num)', '\Main\Admin\Controllers\Appearance\Marketplace\Widgets\Seller_Featured_Product::index', ['filter' => 'admin_auth']);
                         $routes->match(['get', 'post'], 'save/(:num)', '\Main\Admin\Controllers\Appearance\Marketplace\Widgets\Seller_Featured_Product::save', ['filter' => 'admin_auth']);
+                    });
+                    $routes->group('Seller_Latest_Product', function ($routes) {
+                        $routes->match(['get', 'post'], 'edit/(:num)', '\Main\Admin\Controllers\Appearance\Marketplace\Widgets\Seller_Latest_Product::index', ['filter' => 'admin_auth']);
+                        $routes->match(['get', 'post'], 'save/(:num)', '\Main\Admin\Controllers\Appearance\Marketplace\Widgets\Seller_Latest_Product::save', ['filter' => 'admin_auth']);
+                    });
+                    $routes->group('Seller_Special_Product', function ($routes) {
+                        $routes->match(['get', 'post'], 'edit/(:num)', '\Main\Admin\Controllers\Appearance\Marketplace\Widgets\Seller_Special_Product::index', ['filter' => 'admin_auth']);
+                        $routes->match(['get', 'post'], 'save/(:num)', '\Main\Admin\Controllers\Appearance\Marketplace\Widgets\Seller_Special_Product::save', ['filter' => 'admin_auth']);
                     });
                 });
             });
