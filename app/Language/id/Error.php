@@ -23,6 +23,7 @@ return [
     'product_not_found' => 'Product not found!',
     'product_not_in_stock' => 'This products is not available in the desired quantity or not in stock!',
     'reset_password_confirm' => 'Reset password failed! Please contact us for assistance.',
+    'search_keywords' => 'Please enter search keywords!',
     'select_product_options' => 'Please select product options to purchase this product!',
     'shipping_address_not_found' => 'Shipping address not found! Please add an address.',
     'shipping_method_not_available' => 'No available shipping methods!',
