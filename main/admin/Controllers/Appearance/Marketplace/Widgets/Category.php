@@ -54,13 +54,13 @@ class Category extends \App\Controllers\BaseController
             $data['name'] = '';
         }
 
-        if ($widget_info) {
+        if ($widget_info['setting']) {
             $data['display'] = $widget_info['setting']['display'];
         } else {
             $data['display'] = '';
         }
 
-        if ($widget_info) {
+        if ($widget_info['setting']) {
             $data['column'] = $widget_info['setting']['column'];
         } else {
             $data['column'] = '';
@@ -74,7 +74,7 @@ class Category extends \App\Controllers\BaseController
 
         if ($this->request->getPost('category')) {
             $data['categories'] = $this->request->getPost('category');
-        } elseif ($widget_info) {
+        } elseif ($widget_info['setting']) {
             if (!empty($widget_info['setting']['category'])) {
                 $categories = $widget_info['setting']['category'];
 

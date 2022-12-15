@@ -151,10 +151,15 @@ class Category extends \App\Controllers\BaseController
 
                 // Get product variant special min max prices
                 if (!empty($product['product_option'])) {
-                    $product_variant_special_price = $this->model_product_product->getProductVariantSpecialMinMaxPrices($product['product_id']);
+                    if (!empty($product['product_variant_special'])) {
+                        $product_variant_special_price = $this->model_product_product->getProductVariantSpecialMinMaxPrices($product['product_id']);
 
-                    $special_min_price = $this->currency->format($product_variant_special_price['min_price'], $this->currency->getCurrentCode());
-                    $special_max_price = $this->currency->format($product_variant_price['max_price'], $this->currency->getCurrentCode());
+                        $special_min_price = $this->currency->format($product_variant_special_price['min_price'], $this->currency->getCurrentCode());
+                        $special_max_price = $this->currency->format($product_variant_special_price['max_price'], $this->currency->getCurrentCode());
+                    } else {
+                        $special_min_price = null;
+                        $special_max_price = null;
+                    }
                 } else {
                     $special_min_price = null;
                     $special_max_price = null;

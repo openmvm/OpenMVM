@@ -515,7 +515,7 @@ class Seller_Category_Model extends Model
         return $seller_category_descriptions;
     }
 
-    public function getSellerCategoryDescription($seller_category_id, $seller_id)
+    public function getSellerCategoryDescription($seller_category_id, $seller_id, $customer_id = null)
     {
         $builder = $this->db->table('seller_category_description');
         
