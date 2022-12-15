@@ -12,7 +12,25 @@
     <div id="content" class="content">
         <div class="card shadow rounded-0 mb-3">
             <div class="card-body">
-                <h1 class="mb-5"><?php echo $heading_title; ?></h1>
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <h2 class="p-0 m-0"><?php echo $heading_title; ?></h2>
+                        <div class="lead text-uppercase"><?php echo $lead; ?></div>
+                    </div>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-5">
+                        <div id="form-seller-product-search" class="input-group">
+                            <input type="text" name="keyword" class="form-control" id="input-seller-product-search-keyword" placeholder="<?php echo lang('Text.search_in_this_shop', [], $language_lib->getCurrentCode()); ?>" aria-label="<?php echo lang('Entry.keyword', [], $language_lib->getCurrentCode()); ?>">
+                            <input type="hidden" name="type" value="shop" />
+                            <button class="btn btn-outline-secondary dropdown-toggle" id="input-seller-product-search-type" type="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo lang('Text.in_this_shop', [], $language_lib->getCurrentCode()); ?></button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" id="button-seller-product-search-shop" role="button" onclick="changeSearchType('shop');"><?php echo lang('Text.in_this_shop', [], $language_lib->getCurrentCode()); ?><i class="fas fa-check fa-fw text-danger ms-2 mt-1 float-end"></i></a></li>
+                                <li><a class="dropdown-item" id="button-seller-product-search-marketplace" role="button" onclick="changeSearchType('marketplace');"><?php echo lang('Text.in_the_marketplace', [], $language_lib->getCurrentCode()); ?><i class="fas fa-times fa-fw ms-2 mt-1 float-end" style="color: transparent;">&nbsp;</i></a></li>
+                            </ul>
+                            <button id="button-seller-product-search" class="btn btn-danger" type="button"><i class="fas fa-search fa-fw"></i></button>
+                        </div>                        
+                    </div>
+                </div>
                 <div>
                     <a href="<?php echo $store_url; ?>" class="btn btn-<?php if ($link_id == 'home') { ?>primary<?php } else { ?>light<?php } ?> rounded-0"><?php echo lang('Button.home', [], $language_lib->getCurrentCode()); ?></a>
                     <div id="seller-categories" class="d-inline-block"></div>
@@ -226,6 +244,51 @@ $(document).ready(function() {
     displayResults();
     // Bind event listener
     $(window).resize(displayResults);
+});
+//--></script>
+<script type="text/javascript"><!--
+function changeSearchType(type) {
+    $('#button-seller-product-search-shop i').remove();
+    $('#button-seller-product-search-marketplace i').remove();
+
+    if (type == 'shop') {
+        $('#input-seller-product-search-keyword').attr('placeholder', '<?php echo lang('Text.search_in_this_shop', [], $language_lib->getCurrentCode()); ?>');
+        $('#input-seller-product-search-type').html('<?php echo lang('Text.in_this_shop', [], $language_lib->getCurrentCode()); ?>');
+        $('#button-seller-product-search-shop').append('<i class="fas fa-check fa-fw text-danger ms-2 mt-1 float-end"></i>');
+        $('#button-seller-product-search-marketplace i').remove();
+        $('#button-seller-product-search-marketplace').append('<i class="fas fa-times fa-fw ms-2 mt-1 float-end" style="color: transparent;">&nbsp;</i>');
+
+        $('#form-seller-product-search input[name="type"]').val('shop');
+    } else {
+        $('#input-seller-product-search-keyword').attr('placeholder', '<?php echo lang('Text.search_in_the_marketplace', [], $language_lib->getCurrentCode()); ?>');
+        $('#input-seller-product-search-type').html('<?php echo lang('Text.in_the_marketplace', [], $language_lib->getCurrentCode()); ?>');
+        $('#button-seller-product-search-marketplace').append('<i class="fas fa-check fa-fw text-danger ms-2 mt-1 float-end"></i>');
+        $('#button-seller-product-search-shop i').remove();
+        $('#button-seller-product-search-shop').append('<i class="fas fa-times fa-fw ms-2 mt-1 float-end" style="color: transparent;">&nbsp;</i>');
+
+        $('#form-seller-product-search input[name="type"]').val('marketplace');
+    }
+}
+//--></script>
+<script type="text/javascript"><!--
+$('body').on('click', '#button-seller-product-search', function() {
+    seller = '<?php echo $seller_slug; ?>';
+
+    if ($('#form-seller-product-search input[name="keyword"]').val() !== '') {
+        keyword = $('#form-seller-product-search input[name="keyword"]').val();
+    } else {
+        alert('<?php echo lang('Error.search_keywords', [], $language_lib->getCurrentCode()); ?>');
+    }
+
+    type = $('#form-seller-product-search input[name="type"]').val();
+
+    if (type == 'shop') {
+        url = '<?php echo $seller_product_search_url; ?>' + '/' + seller + '/' + keyword + '?type=' + type;
+    } else {
+        url = '<?php echo $product_search_url; ?>' + '?keyword=' + keyword;
+    }
+
+    window.location.href = url;
 });
 //--></script>
 <?php echo $footer; ?>

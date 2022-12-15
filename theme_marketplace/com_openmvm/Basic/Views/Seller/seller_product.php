@@ -11,12 +11,18 @@
                     <div class="col-md-3"></div>
                     <div class="col-md-5">
                         <div id="form-seller-product-search" class="input-group">
-                            <input type="text" name="keyword" class="form-control" id="input-seller-product-search-keyword" placeholder="<?php echo lang('Text.search_in_this_shop', [], $language_lib->getCurrentCode()); ?>" aria-label="<?php echo lang('Entry.keyword', [], $language_lib->getCurrentCode()); ?>">
-                            <input type="hidden" name="type" value="shop" />
-                            <button class="btn btn-outline-secondary dropdown-toggle" id="input-seller-product-search-type" type="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo lang('Text.in_this_shop', [], $language_lib->getCurrentCode()); ?></button>
+                            <input type="text" name="keyword" value="<?php echo $keyword; ?>" class="form-control" id="input-seller-product-search-keyword" placeholder="<?php echo lang('Text.search_in_this_shop', [], $language_lib->getCurrentCode()); ?>" aria-label="<?php echo lang('Entry.keyword', [], $language_lib->getCurrentCode()); ?>">
+                            <input type="hidden" name="type" value="<?php echo $type; ?>" />
+                            <button class="btn btn-outline-secondary dropdown-toggle" id="input-seller-product-search-type" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <?php if ($type == 'marketplace') { ?>
+                                    <?php echo lang('Text.in_the_marketplace', [], $language_lib->getCurrentCode()); ?>
+                                <?php } else { ?>
+                                    <?php echo lang('Text.in_this_shop', [], $language_lib->getCurrentCode()); ?>
+                                <?php } ?>
+                            </button>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" id="button-seller-product-search-shop" role="button" onclick="changeSearchType('shop');"><?php echo lang('Text.in_this_shop', [], $language_lib->getCurrentCode()); ?><i class="fas fa-check fa-fw text-danger ms-2 mt-1 float-end"></i></a></li>
-                                <li><a class="dropdown-item" id="button-seller-product-search-marketplace" role="button" onclick="changeSearchType('marketplace');"><?php echo lang('Text.in_the_marketplace', [], $language_lib->getCurrentCode()); ?><i class="fas fa-times fa-fw ms-2 mt-1 float-end" style="color: transparent;">&nbsp;</i></a></li>
+                                <li><a class="dropdown-item" id="button-seller-product-search-shop" role="button" onclick="changeSearchType('shop');"><?php echo lang('Text.in_this_shop', [], $language_lib->getCurrentCode()); ?><?php if ($type == 'shop') { ?><i class="fas fa-check fa-fw text-danger ms-2 mt-1 float-end"></i><?php } else { ?><i class="fas fa-times fa-fw ms-2 mt-1 float-end" style="color: transparent;">&nbsp;</i></a><?php } ?></a></li>
+                                <li><a class="dropdown-item" id="button-seller-product-search-marketplace" role="button" onclick="changeSearchType('marketplace');"><?php echo lang('Text.in_the_marketplace', [], $language_lib->getCurrentCode()); ?><?php if ($type == 'marketplace') { ?><i class="fas fa-check fa-fw text-danger ms-2 mt-1 float-end"></i><?php } else { ?><i class="fas fa-times fa-fw ms-2 mt-1 float-end" style="color: transparent;">&nbsp;</i></a><?php } ?></a></li>
                             </ul>
                             <button id="button-seller-product-search" class="btn btn-danger" type="button"><i class="fas fa-search fa-fw"></i></button>
                         </div>                        

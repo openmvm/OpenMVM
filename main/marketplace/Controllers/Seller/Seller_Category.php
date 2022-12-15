@@ -396,6 +396,25 @@ class Seller_Category extends \App\Controllers\BaseController
             $seller_category_info = $this->model_seller_seller_category->getSellerCategory($seller_category_id, $seller_id);
 
             if ($seller_category_info) {
+                // Get path seller category ID 
+                $seller_category_id_path = $this->model_seller_seller_category->getSellerCategoryIdPath($seller_category_info['seller_category_id']);
+
+                $seller_category_ids = explode('_', $seller_category_id_path);
+
+                if (!empty($seller_category_ids[0])) {
+                    foreach ($seller_category_ids as $category_id) {
+                        $seller_category_description_path = $this->model_seller_seller_category->getSellerCategoryDescription($category_id, $seller_id);
+            
+                        if ($seller_category_description_path) {
+                            $breadcrumbs[] = array(
+                                'text' => $seller_category_description_path['name'],
+                                'href' => $this->url->customerLink('marketplace/seller/seller_category/get/' . $seller_category_description_path['slug'] . '-sc' . $category_id),
+                                'active' => false,
+                            );
+                        }
+                    }
+                }
+
                 // Get seller category description
                 $seller_category_description = $this->model_seller_seller_category->getSellerCategoryDescription($seller_category_id, $seller_id);
 
@@ -407,26 +426,8 @@ class Seller_Category extends \App\Controllers\BaseController
                     );
                 }
 
-                $data['heading_title'] = $seller_info['store_name'] . ' - ' . $seller_category_description['name'];
-
-                // Get path seller category ID 
-                $seller_category_id_path = $this->model_seller_seller_category->getSellerCategoryIdPath($seller_category_info['seller_category_id']);
-
-                $seller_category_ids = explode('_', $seller_category_id_path);
-
-                if (!empty($seller_category_ids[0])) {
-                    foreach ($seller_category_ids as $seller_category_id) {
-                        $seller_category_description_path = $this->model_seller_seller_category->getSellerCategoryDescription($seller_category_id, $seller_id);
-            
-                        if ($seller_category_description_path) {
-                            $breadcrumbs[] = array(
-                                'text' => $seller_category_description_path['name'],
-                                'href' => $this->url->customerLink('marketplace/seller/seller_category/get/' . $seller_category_description_path['slug'] . '-sc' . $seller_category_id),
-                                'active' => false,
-                            );
-                        }
-                    }
-                }
+                $data['heading_title'] = $seller_info['store_name'];
+                $data['lead'] = $seller_category_description['name'];
 
                 // Get products
                 $data['products'] = [];
@@ -495,6 +496,9 @@ class Seller_Category extends \App\Controllers\BaseController
 
                 $data['store_url'] = $this->url->customerLink('marketplace/seller/seller/get/' . $seller_info['slug'] . '-s' . $seller_info['seller_id']);
                 $data['get_seller_categories_url'] = $this->url->customerLink('marketplace/seller/seller/get_seller_categories', ['seller_id' => $seller_id]);
+                $data['product_search_url'] = $this->url->customerLink('marketplace/product/search');
+                $data['seller_product_search_url'] = $this->url->customerLink('marketplace/seller/seller/product');
+                $data['seller_slug'] = $seller_info['slug'] . '-s' . $seller_info['seller_id'];
 
                 // Libraries
                 $data['language_lib'] = $this->language;

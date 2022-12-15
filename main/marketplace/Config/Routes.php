@@ -320,6 +320,7 @@ $routes->group('/', function ($routes) {
                 $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Seller::index');
                 $routes->match(['get', 'post'], 'get/(:any)', '\Main\Marketplace\Controllers\Seller\Seller::get/$1');
                 $routes->match(['get', 'post'], 'get_seller_categories', '\Main\Marketplace\Controllers\Seller\Seller::get_seller_categories');
+                $routes->match(['get', 'post'], 'product/(:any)/(:any)', '\Main\Marketplace\Controllers\Seller\Seller::product/$1/$2');
             });
         });
         // Tool
