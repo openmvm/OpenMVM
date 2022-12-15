@@ -65,9 +65,41 @@ class Product_Model extends Model
             $builder->where('p.seller_id', $data['filter_seller_id']);
         }
 
+        if (!empty($data['filter_featured'])) {
+            $builder->where('p.featured', $data['filter_featured']);
+        }
+
         if (!empty($data['filter_name'])) {
             //$builder->like('pd.name', $data['filter_name']);
             $builder->where('MATCH (pd.name) AGAINST ("' . $data['filter_name'] . '" IN BOOLEAN MODE)', null, false);
+        }
+
+        $builder->groupBy('p.product_id');
+
+        if (!empty($data['sort'])) {
+            $sort = $data['sort'];
+        } else {
+            $sort = 'p.date_added';
+        }
+
+        if (!empty($data['order'])) {
+            $order = $data['order'];
+        } else {
+            $order = 'DESC';
+        }
+
+        $builder->orderBy($sort, $order);
+
+        if (!empty($data['start']) || !empty($data['limit'])) {
+            if ($data['start'] < 0) {
+                $data['start'] = 0;
+            }
+
+            if ($data['limit'] < 1) {
+                $data['limit'] = 20;
+            }
+
+            $builder->limit($data['limit'], $data['start']);
         }
 
         $product_query = $builder->get();
@@ -114,6 +146,7 @@ class Product_Model extends Model
                 'weight_class_id' => $row->weight_class_id,
                 'main_image' => $row->main_image,
                 'sku' => $row->sku,
+                'featured' => $row->featured,
                 'date_added' => $row->date_added,
                 'date_modified' => $row->date_modified,
                 'status' => $row->status,
@@ -572,5 +605,95 @@ class Product_Model extends Model
         }
 
         return $order_product;
+    }
+
+    public function getProductSpecials($seller_id)
+    {
+        $product_specials = [];
+
+        $products = $this->getProducts(['filter_seller_id' => $seller_id]);
+
+        foreach ($products as $product) {
+            if (!empty($product['product_option'])) {
+                if (!empty($product['product_variant_special'])) {
+                    $product_variant_builder = $this->db->table('product_variant');
+
+                    $product_variant_builder->where('product_id', $product['product_id']);
+
+                    $product_variant_query = $product_variant_builder->get();
+
+                    $product_variant_special = false;
+
+                    foreach ($product_variant_query->getResult() as $product_variant) {
+                        // Get product variant special
+                        $product_variant_special_builder = $this->db->table('product_variant_special');
+
+                        $product_variant_special_builder->where('product_id', $product['product_id']);
+                        $product_variant_special_builder->where('options', $product_variant->options);
+                        $product_variant_special_builder->where('date_start < ', new Time('now'));
+                        $product_variant_special_builder->where('date_end > ', new Time('now'));
+
+                        $product_variant_special_builder->orderBy('priority', 'ASC');
+                        $product_variant_special_builder->orderBy('price', 'ASC');
+
+                        $product_variant_special_builder->limit(1);
+
+                        $product_variant_special_query = $product_variant_special_builder->get();
+
+                        if ($product_variant_special_row = $product_variant_special_query->getRow()) {
+                            $product_variant_special = true;
+
+                            break;
+                        }
+                    }
+
+                    if ($product_variant_special) {
+                        $product_specials[$product['product_id']] = $this->getProduct($product['product_id']);
+                    }
+                }
+            } else {
+                $product_special_builder = $this->db->table('product_special');
+                
+                $product_special_builder->where('product_id', $product['product_id']);
+                $product_special_builder->where('seller_id', $seller_id);
+                $product_special_builder->where('date_start < ', new Time('now'));
+                $product_special_builder->where('date_end > ', new Time('now'));
+
+                $product_special_query = $product_special_builder->get();
+
+                if ($row = $product_special_query->getRow()) {
+                    $product_specials[$row->product_id] = $this->getProduct($row->product_id);
+                }
+            }
+        }
+
+        return $product_specials;
+    }
+
+    public function getProductBestSellers($seller_id)
+    {
+        $product_bestsellers = [];
+
+        $builder = $this->db->table('order_product op');
+        $builder->select('op.product_id, SUM(op.quantity) AS total');
+        $builder->join('order o', 'op.order_id = o.order_id', 'left');
+        $builder->join('product p', 'op.product_id = p.product_id', 'left');
+
+        $builder->where('o.order_status_id', $this->setting->get('setting_completed_order_status_id'));
+        $builder->where('p.seller_id', $seller_id);
+        $builder->where('p.status', 1);
+
+        $builder->groupBy('op.product_id');
+        $builder->orderBy('total', 'DESC');
+
+        $query = $builder->get();
+
+        $product_bestsellers = [];
+
+        foreach ($query->getResult() as $result) {
+            $product_bestsellers[$result->product_id] = $this->getProduct($result->product_id);
+        }
+
+        return $product_bestsellers;
     }
 }
