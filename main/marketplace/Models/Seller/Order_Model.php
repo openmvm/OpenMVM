@@ -29,8 +29,33 @@ class Order_Model extends Model
 
         $order_builder->where('order_product.seller_id', $seller_id);
         $order_builder->where('order.order_status_id >', 0);
-        $order_builder->orderBy('order.date_added', 'DESC');
         $order_builder->groupBy('order.order_id');
+
+        if (!empty($data['sort'])) {
+            $sort = $data['sort'];
+        } else {
+            $sort = 'order.date_added';
+        }
+
+        if (!empty($data['order'])) {
+            $order = $data['order'];
+        } else {
+            $order = 'DESC';
+        }
+
+        $order_builder->orderBy($sort, $order);
+
+        if (!empty($data['start']) || !empty($data['limit'])) {
+            if ($data['start'] < 0) {
+                $data['start'] = 0;
+            }
+
+            if ($data['limit'] < 1) {
+                $data['limit'] = 20;
+            }
+
+            $order_builder->limit($data['limit'], $data['start']);
+        }
 
         $order_query = $order_builder->get();
 
@@ -187,6 +212,37 @@ class Order_Model extends Model
         return $order_products;
     }
 
+    public function getTotalOrderProducts($order_id, $seller_id)
+    {
+        $order_product_builder = $this->db->table('order_product');
+        $order_product_builder->select('COUNT(order_product_id) AS total');
+
+        $order_product_builder->where('order_id', $order_id);
+        $order_product_builder->where('seller_id', $seller_id);
+        $order_product_builder->orderBy('name', 'ASC');
+
+        $order_product_query = $order_product_builder->get();
+
+        if ($row = $order_product_query->getRow()) {
+            return $row->total;
+        } else {
+            return 0;
+        }
+    }
+
+    public function getTotalOrderProductQuantity($order_id, $seller_id)
+    {
+        $quantity = 0;
+
+        $order_products = $this->getOrderProducts($order_id, $seller_id);
+
+        foreach ($order_products as $order_product) {
+            $quantity += $order_product['quantity'];
+        }
+
+        return $quantity;
+    }
+
     public function getOrderShipping($order_id, $seller_id)
     {
         $order_shipping_builder = $this->db->table('order_shipping');
@@ -336,4 +392,62 @@ class Order_Model extends Model
         return $order_status_history;
     }
 
+    public function getTotalRevenue($seller_id)
+    {
+        $order_builder = $this->db->table('order_total ot');
+        $order_builder->join('order o', 'ot.order_id = o.order_id');
+
+        $order_builder->select('SUM(ot.value) AS total');
+        
+        $order_builder->where('ot.seller_id', $seller_id);
+        $order_builder->where('ot.code', 'sub_total');
+        $order_builder->where('o.order_status_id', $this->setting->get('setting_completed_order_status_id'));
+
+        $order_query = $order_builder->get();
+
+        if ($row = $order_query->getRow()) {
+            return $row->total;
+        } else {
+            return 0;
+        }
+    }
+
+    public function getTotalOrders($seller_id)
+    {
+        $order_builder = $this->db->table('order_total ot');
+        $order_builder->join('order o', 'ot.order_id = o.order_id');
+
+        $order_builder->select('COUNT(o.order_id) AS total');
+        
+        $order_builder->where('ot.seller_id', $seller_id);
+        $order_builder->where('ot.code', 'sub_total');
+        $order_builder->where('o.order_status_id', $this->setting->get('setting_completed_order_status_id'));
+
+        $order_query = $order_builder->get();
+
+        if ($row = $order_query->getRow()) {
+            return $row->total;
+        } else {
+            return 0;
+        }
+    }
+
+    public function getTotalSoldQuantity($seller_id)
+    {
+        $order_builder = $this->db->table('order_product op');
+        $order_builder->join('order o', 'op.order_id = o.order_id');
+
+        $order_builder->select('SUM(op.quantity) AS total');
+        
+        $order_builder->where('op.seller_id', $seller_id);
+        $order_builder->where('o.order_status_id', $this->setting->get('setting_completed_order_status_id'));
+
+        $order_query = $order_builder->get();
+
+        if ($row = $order_query->getRow()) {
+            return $row->total;
+        } else {
+            return 0;
+        }
+    }
 }
