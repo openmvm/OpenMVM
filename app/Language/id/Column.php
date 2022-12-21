@@ -62,6 +62,8 @@ return [
     'title' => 'Title',
     'total' => 'Total',
     'total_order_amount' => 'Total Order Amount',
+    'total_products' => 'Total Products',
+    'total_quantity' => 'Total Quantity',
     'tracking_number' => 'Tracking Number',
     'unit' => 'Unit',
     'upload' => 'Upload',

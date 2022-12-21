@@ -33,6 +33,7 @@ return [
     'logout' => 'Logout',
     'mark_as_delivered' => 'Mark as Delivered',
     'marketplace' => 'Marketplace',
+    'more' => 'More',
     'no' => 'No',
     'option_add' => 'Add Option',
     'option_apply' => 'Apply Options',
