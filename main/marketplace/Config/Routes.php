@@ -73,6 +73,22 @@ $routes->group('/', function ($routes) {
             // Wishlist
             $routes->match(['get', 'post'], 'wishlist', '\Main\Marketplace\Controllers\Account\Wishlist::index', ['filter' => 'marketplace_auth']);
         });
+        // Appearance
+        $routes->group('appearance', function ($routes) {
+            // Marketplace
+            $routes->group('marketplace', function ($routes) {
+                // Widgets
+                $routes->group('widgets', function ($routes) {
+                    // Seller Dashboard Chart
+                    $routes->group('seller_dashboard_chart', function ($routes) {
+                        $routes->match(['get', 'post'], 'get_orders', '\Main\Marketplace\Controllers\Appearance\Marketplace\Widgets\Seller_Dashboard_Chart::get_orders', ['filter' => 'marketplace_auth']);
+                        $routes->match(['get', 'post'], 'get_revenue', '\Main\Marketplace\Controllers\Appearance\Marketplace\Widgets\Seller_Dashboard_Chart::get_revenue', ['filter' => 'marketplace_auth']);
+                        $routes->match(['get', 'post'], 'get_months', '\Main\Marketplace\Controllers\Appearance\Marketplace\Widgets\Seller_Dashboard_Chart::get_months', ['filter' => 'marketplace_auth']);
+                        $routes->match(['get', 'post'], 'get_days', '\Main\Marketplace\Controllers\Appearance\Marketplace\Widgets\Seller_Dashboard_Chart::get_days', ['filter' => 'marketplace_auth']);
+                    });
+                });
+            });
+        });
         // Checkout
         $routes->group('checkout', function ($routes) {
             // Cart
