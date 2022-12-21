@@ -51,6 +51,7 @@ abstract class BaseController extends Controller
         
         // Libraries
         $this->administrator = new \App\Libraries\Administrator();
+        $this->calendar = new \App\Libraries\Calendar();
         $this->cart = new \App\Libraries\Cart();
         $this->currency = new \App\Libraries\Currency();
         $this->customer = new \App\Libraries\Customer();
