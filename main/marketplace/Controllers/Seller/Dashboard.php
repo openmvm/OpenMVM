@@ -33,6 +33,9 @@ class Dashboard extends \App\Controllers\BaseController
 
         $data['heading_title'] = lang('Heading.dashboard', [], $this->language->getCurrentCode());
 
+        // Widget
+        $data['marketplace_common_widget'] = $this->marketplace_common_widget;
+
         // Header
         $header_params = array(
             'title' => lang('Heading.dashboard', [], $this->language->getCurrentCode()),
