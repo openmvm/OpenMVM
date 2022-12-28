@@ -124,9 +124,9 @@ _modules/*
 
 # Netbeans
 nbproject/
-build/
+# build/
 nbbuild/
-dist/
+# dist/
 nbdist/
 nbactions.xml
 nb-configuration.xml
