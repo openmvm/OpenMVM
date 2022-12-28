@@ -50,6 +50,8 @@ class Seller_Dashboard_Chart extends \App\Controllers\BaseController
 
                 arsort($data['years']);
 
+                $data['current_year'] = date("Y");
+
                 $data['url_appearance_marketplace_widget_seller_dashboard_chart_get_orders'] = $this->url->customerLink('marketplace/appearance/marketplace/widgets/seller_dashboard_chart/get_orders', '', true);
                 $data['url_appearance_marketplace_widget_seller_dashboard_chart_get_revenue'] = $this->url->customerLink('marketplace/appearance/marketplace/widgets/seller_dashboard_chart/get_revenue', '', true);
                 $data['url_appearance_marketplace_widget_seller_dashboard_chart_get_months'] = $this->url->customerLink('marketplace/appearance/marketplace/widgets/seller_dashboard_chart/get_months', '', true);

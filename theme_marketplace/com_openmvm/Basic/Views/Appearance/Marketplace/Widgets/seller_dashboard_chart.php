@@ -21,9 +21,9 @@
 				</div>
 				<div id="container-input-seller-dashboard-chart-year" class="form-group d-inline-block mb-3 d-none">
 					<select name="year" id="input-seller-dashboard-chart-year" class="form-select">
-						<option value="0"><?php echo lang('Text.select_year', [], $language_lib->getCurrentCode()); ?></option>
+						<option value=""><?php echo lang('Text.select_year', [], $language_lib->getCurrentCode()); ?></option>
 						<?php foreach ($years as $year) { ?>
-						<option value="<?php echo $year; ?>"><?php echo $year; ?></option>
+						<option value="<?php echo $year; ?>"<?php if ($year == $current_year) { ?> selected<?php } ?>><?php echo $year; ?></option>
 						<?php } ?>
 					</select>
 				</div>
@@ -39,9 +39,11 @@
 	</div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="<?php echo base_url('assets/plugins/chart.js-4.1.0/dist/chart.umd.js'); ?>"></script>
 
 <script>
+	getChart();
+	
 	$('body').on('change', '#input-seller-dashboard-chart-data', function() {
 		getChart();
 	});
@@ -60,8 +62,6 @@
 			$('select#input-seller-dashboard-chart-day').trigger('change');
 		}
 	});
-
-	getChart();
 
 	function getChart() {
 		var data = $('#input-seller-dashboard-chart-data').val();
@@ -162,10 +162,11 @@ $('body').on('change', 'select#input-seller-dashboard-chart-year', function() {
 			
 			$('select#input-seller-dashboard-chart-month').html(html);
 			$('#container-input-seller-dashboard-chart-month').removeClass('d-none');
+
 			$('select#input-seller-dashboard-chart-month').trigger('change');
 			$('select#input-seller-dashboard-chart-day').trigger('change');
 
-			if ($('#input-seller-dashboard-chart-year').val() != '' && $('#input-seller-dashboard-chart-year').val() != '0') {
+			if ($('#input-seller-dashboard-chart-year').val() != '') {
 				getChart();
 			}
 		},
@@ -209,7 +210,7 @@ $('body').on('change', 'select#input-seller-dashboard-chart-month', function() {
 			$('select#input-seller-dashboard-chart-day').html(html);
 			$('#container-input-seller-dashboard-chart-day').removeClass('d-none');
 
-			if ($('#input-seller-dashboard-chart-month').val() != '' && $('#input-seller-dashboard-chart-month').val() != '0') {
+			if ($('#input-seller-dashboard-chart-month').val() != '') {
 				getChart();
 			}
 		},
@@ -238,7 +239,7 @@ $('body').on('change', 'select#input-seller-dashboard-chart-day', function() {
 			$('select#input-seller-dashboard-chart-day').prop('disabled', false);
 		},
 		success: function(json) {
-			if ($('#input-seller-dashboard-chart-day').val() != '' && $('#input-seller-dashboard-chart-day').val() != '0') {
+			if ($('#input-seller-dashboard-chart-day').val() != '') {
 				getChart();
 			}
 		},
