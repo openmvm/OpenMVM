@@ -19,7 +19,7 @@
 <script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-3.6.1.min.js" type="text/javascript"></script>
 <script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-ui-1.13.2/jquery-ui.min.js" type="text/javascript"></script>
 <script src="<?php echo $base; ?>/assets/plugins/jquery/jquery-serializejson/jquery.serializejson.min.js" type="text/javascript"></script>
-<script src="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+<script src="<?php echo $base; ?>/assets/plugins/bootstrap-5.3.0-alpha1-dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
 <script src="<?php echo $base; ?>/assets/plugins/swipenav/js/jquery-swipe-nav-plugin.js" type="text/javascript"></script>
 <script src="<?php echo $base; ?>/assets/marketplace/theme/com_openmvm/basic/js/basic.js" type="text/javascript"></script>
 <?php if (!empty($scripts)) { ?>
@@ -28,7 +28,7 @@
 	<?php } ?>
 <?php } ?>
 <link href="<?php echo $base; ?>/assets/plugins/jquery/jquery-ui-1.13.2/jquery-ui.min.css" rel="stylesheet" media="screen" />
-<link href="<?php echo $base; ?>/assets/plugins/bootstrap-5.2.2-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="<?php echo $base; ?>/assets/plugins/bootstrap-5.3.0-alpha1-dist/css/bootstrap.min.css" rel="stylesheet" media="screen" />
 <link href="<?php echo $base; ?>/assets/plugins/fontawesome-free-6.2.1-web/css/all.min.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo $base; ?>/assets/plugins/swipenav/css/jquery-swipe-nav.css" rel="stylesheet" media="screen" />
 <link href="<?php echo $base; ?>/assets/marketplace/theme/com_openmvm/basic/css/basic.css?v=1.0.1" rel="stylesheet" type="text/css" />
@@ -43,7 +43,7 @@
     <?php } ?>
 <?php } ?>
 </head>
-<body class="bg-light">
+<body>
 <div id="header" class="header">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-1">
         <div class="container-fluid">
@@ -70,6 +70,7 @@
                                 <li><a class="dropdown-item small" href="<?php echo $seller_option; ?>"><?php echo lang('Text.options', [], $language_lib->getCurrentCode()); ?></a></li>
                                 <li><a class="dropdown-item small" href="<?php echo $seller_order; ?>"><?php echo lang('Text.orders', [], $language_lib->getCurrentCode()); ?></a></li>
                                 <li><a class="dropdown-item small" href="<?php echo $seller_product_question; ?>"><?php echo lang('Text.questions', [], $language_lib->getCurrentCode()); ?></a></li>
+                                <li><a class="dropdown-item small" href="<?php echo $seller_faq; ?>"><?php echo lang('Text.faqs', [], $language_lib->getCurrentCode()); ?></a></li>
                                 <li><a class="dropdown-item small" href="<?php echo $seller_geo_zone; ?>"><?php echo lang('Text.geo_zones', [], $language_lib->getCurrentCode()); ?></a></li>
                                 <li><a class="dropdown-item small" href="<?php echo $seller_shipping_method; ?>"><?php echo lang('Text.shipping_methods', [], $language_lib->getCurrentCode()); ?></a></li>
                             </ul>
