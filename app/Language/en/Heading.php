@@ -80,6 +80,8 @@ return [
     'seller_dashboard_stat' => 'Seller Dashboard Stat',
     'seller_description' => 'Seller Description',
     'seller_edit' => 'Edit Seller Info',
+    'seller_faq' => 'Seller FAQ',
+    'seller_faqs' => 'Seller FAQs',
     'seller_featured_products' => 'Seller Featured Products',
     'seller_latest_products' => 'Seller Latest Products',
     'seller_menu' => 'Seller Menu',

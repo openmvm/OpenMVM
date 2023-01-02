@@ -10,6 +10,7 @@ return [
     'list_of_currencies' => 'List of currencies',
     'list_of_customer_groups' => 'List of customer groups',
     'list_of_customers' => 'List of customers',
+    'list_of_faqs' => 'List of FAQs',
     'list_of_files' => 'List of files',
     'list_of_geo_zones' => 'List of geo zones',
     'list_of_images' => 'List of images',
