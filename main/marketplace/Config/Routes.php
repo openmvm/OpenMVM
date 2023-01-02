@@ -222,6 +222,18 @@ $routes->group('/', function ($routes) {
                 $routes->match(['get', 'post'], 'autocomplete', '\Main\Marketplace\Controllers\Seller\Seller_Category::autocomplete', ['filter' => 'marketplace_auth']);
                 $routes->match(['get', 'post'], 'get/(:any)/(:any)', '\Main\Marketplace\Controllers\Seller\Seller_Category::get/$1/$2');
             });
+            // Seller Faq
+            $routes->group('seller_faq', function ($routes) {
+                $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Seller_Faq::index', ['filter' => 'marketplace_auth']);
+                $routes->match(['get', 'post'], 'add', '\Main\Marketplace\Controllers\Seller\Seller_Faq::add', ['filter' => 'marketplace_auth']);
+                $routes->match(['get', 'post'], 'edit/(:num)', '\Main\Marketplace\Controllers\Seller\Seller_Faq::edit', ['filter' => 'marketplace_auth']);
+                $routes->match(['get', 'post'], 'delete', '\Main\Marketplace\Controllers\Seller\Seller_Faq::delete', ['filter' => 'marketplace_auth']);
+                $routes->group('save', function ($routes) {
+                    $routes->match(['get', 'post'], '/', '\Main\Marketplace\Controllers\Seller\Seller_Faq::save', ['filter' => 'marketplace_auth']);
+                    $routes->match(['get', 'post'], '(:num)', '\Main\Marketplace\Controllers\Seller\Seller_Faq::save', ['filter' => 'marketplace_auth']);
+                });
+                $routes->match(['get', 'post'], 'get/(:any)/(:any)', '\Main\Marketplace\Controllers\Seller\Seller_Faq::get/$1/$2');
+            });
             // Component
             $routes->group('component', function ($routes) {
                 // Shipping method
